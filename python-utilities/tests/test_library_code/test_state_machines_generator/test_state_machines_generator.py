@@ -140,7 +140,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
                                                     'output_type': 'insert',
                                                     'output_table': 'db1.sch1.table1',
                                                     'container_memory': 2048,
-                                                    'next_step_functions': ['SP-23', 'SP-24']
+                                                    'next_step_functions': ['SP-22', 'SP-23', 'SP-24']
                                                 }
                                             }
                                         }
@@ -298,7 +298,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
         self.assertTaskStateEquals(
             expected_etl_name='ETL-102',
             expected_ecs_memory=2048,
-            expected_next_state='Load_type_choice',
+            expected_next_state='Load_type_choice_1',
             expected_resource_suffix='.waitForTaskToken',
             expect_to_have_end=False,
             null_result_path=False,
@@ -348,6 +348,14 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             expected_target_table='table2',
             expected_step_function_name='SP-22',
             actual_state=etl101['States']['ETL-101 Next Step Functions']['Branches'][1]['States']['SP-22_message']
+        )
+
+    def test_duplicate_message_state_name_is_suffixed_to_ensure_uniqueness(self):
+        etl102 = self.state_machines['SP-11']['States']['StartAt Parallel']['Branches'][1]
+        self.assertMessageStateEquals(
+            expected_target_table='table2',
+            expected_step_function_name='SP-22',
+            actual_state=etl102['States']['ETL-102 Next Step Functions']['Branches'][0]['States']['SP-22_message_1']
         )
 
     def test_sfn_with_more_etls_than_its_parallel_limit_splits_etls_into_parallel_groups_that_each_run_in_series(self):

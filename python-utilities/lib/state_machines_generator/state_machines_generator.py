@@ -30,7 +30,12 @@ def generate_all_state_machines(data_warehouse_metadata: DataWarehouseMetadata,
                 for step_function in table.step_functions:
                     step_functions[step_function.name] = step_function
     # generate all ETL and GROUP state machine dicts
-    all_state_machines = ETLStateMachineGenerator(step_functions).generate()
+    all_state_machines = {}
+    for step_function_name, step_function in step_functions.items():
+        # if a non-group step function has no ETLs (which, admittedly, probably won't happen), don't include it in the output
+        if not step_function.etls:
+            continue
+        all_state_machines[step_function_name] = ETLStateMachineGenerator(step_function_name, step_functions).generate()
     for group_state_machine_generator in group_generators:
         subgroup_collection = group_state_machine_generator.generate(list(step_functions.values()))
         all_state_machines.update(subgroup_collection)
@@ -113,8 +118,11 @@ class GroupStateMachineGenerator:
 
 class ETLStateMachineGenerator:
 
-    def __init__(self, state_machine_metadata: Dict[str, StepFunctionMetadata]):
+    def __init__(self, step_function_name: str, state_machine_metadata: Dict[str, StepFunctionMetadata]):
+        self.step_function = state_machine_metadata[step_function_name]
         self.state_machine_metadata = state_machine_metadata
+        self.name_registry = self.NameRegistry()
+        self.choice_state_count = 0
 
     def generate(self) -> Dict[str, dict]:
         """Generate AWS state machine config dicts for all step functions defined in the given state_machine_metadata.
@@ -122,57 +130,77 @@ class ETLStateMachineGenerator:
         Generated state machines will execute one-to-many ETLs and cause zero-to-many subsequent messages to be placed
         on the EDW SQS queue to trigger "next step functions" as described in the provided metadata.
         """
-        all_state_machines = {}
-        for step_function in self.state_machine_metadata.values():
-            # if a non-group step function has no ETLs (which, admittedly, probably won't happen), don't include it in the output
-            if not step_function.etls:
-                continue
-            # state machine has 1 ETL (e.g. a standard history_octane step function)
-            elif len(step_function.etls) == 1:
-                etl = step_function.etls[0]
-                state_machine = self.create_single_etl_state_machine(
-                    comment=f'{step_function.name} - {etl.description}',
-                    start_at_etl=etl
-                )
-            # state machine has multiple ETLs which need to be triggered in parallel
+        # state machine has 1 ETL (e.g. a standard history_octane step function)
+        if len(self.step_function.etls) == 1:
+            etl = self.step_function.etls[0]
+            state_machine = self.create_single_etl_state_machine(
+                comment=f'{self.step_function.name} - {etl.description}',
+                start_at_etl=etl
+            )
+        # state machine has multiple ETLs which need to be triggered in parallel
+        else:
+            target_table_str = f'{self.step_function.primary_target_table.database}.{self.step_function.primary_target_table.schema}.{self.step_function.primary_target_table.table}'
+            state_machine = create_state_machine_scaffold(
+                comment=f'{self.step_function.name} - Multiple ETLs affecting {target_table_str}',
+                start_at='StartAt Parallel'
+            )
+            start_at_parallel_state = create_parallel_state()
+            state_machine['States']['StartAt Parallel'] = start_at_parallel_state
+            sorted_etls = sorted(self.step_function.etls, key=lambda etl: etl.process_name)
+            # number of ETLs exceed the parallel_limit and the ETLs must be broken out into parallelized chains of sequential ETLs
+            if self.step_function.has_parallel_limit and (len(sorted_etls) > self.step_function.parallel_limit):
+                next_state_lookup = self.ETLLatticeNextStateLookup(etls=sorted_etls, parallel_limit=self.step_function.parallel_limit)
+                for i, etl in enumerate(sorted_etls):
+                    if etl.next_step_functions:
+                        raise ValueError(
+                            'The behavior of a parallel-limited/latticed ETL with next_step_functions is undefined. Unable to proceed.')
+                    etl_group_number = i % self.step_function.parallel_limit
+                    # if the child state machine for a given parallel sub-group doesn't exist yet, create it
+                    if len(start_at_parallel_state['Branches']) <= etl_group_number:
+                        start_at_parallel_state['Branches'].append(create_state_machine_scaffold(
+                            comment=f'Sequential ETL chain beginning with {etl.process_name} ({etl.description})',
+                            start_at=etl.process_name
+                        ))
+                    start_at_parallel_state['Branches'][etl_group_number]['States'][etl.process_name] = self.create_etl_task_state(
+                        etl=etl,
+                        next_state_name=next_state_lookup.get_next_state_name(etl.process_name),
+                        pass_state_input_as_output=True
+                    )
+            # number of ETLs is within parallel_limit (or limit is not defined)
             else:
-                target_table_str = f'{step_function.primary_target_table.database}.{step_function.primary_target_table.schema}.{step_function.primary_target_table.table}'
-                state_machine = create_state_machine_scaffold(
-                    comment=f'{step_function.name} - Multiple ETLs affecting {target_table_str}',
-                    start_at='StartAt Parallel'
-                )
-                start_at_parallel_state = create_parallel_state()
-                state_machine['States']['StartAt Parallel'] = start_at_parallel_state
-                sorted_etls = sorted(step_function.etls, key=lambda etl: etl.process_name)
-                # number of ETLs exceed the parallel_limit and the ETLs must be broken out into parallelized chains of sequential ETLs
-                if step_function.has_parallel_limit and (len(sorted_etls) > step_function.parallel_limit):
-                    next_state_lookup = self.ETLLatticeNextStateLookup(etls=sorted_etls, parallel_limit=step_function.parallel_limit)
-                    for i, etl in enumerate(sorted_etls):
-                        if etl.next_step_functions:
-                            raise ValueError(
-                                'The behavior of a parallel-limited/latticed ETL with next_step_functions is undefined. Unable to proceed.')
-                        etl_group_number = i % step_function.parallel_limit
-                        # if the child state machine for a given parallel sub-group doesn't exist yet, create it
-                        if len(start_at_parallel_state['Branches']) <= etl_group_number:
-                            start_at_parallel_state['Branches'].append(create_state_machine_scaffold(
-                                comment=f'Sequential ETL chain beginning with {etl.process_name} ({etl.description})',
-                                start_at=etl.process_name
-                            ))
-                        start_at_parallel_state['Branches'][etl_group_number]['States'][etl.process_name] = self.create_etl_task_state(
-                            etl=etl,
-                            next_state_name=next_state_lookup.get_next_state_name(etl.process_name),
-                            pass_state_input_as_output=True
-                        )
-                # number of ETLs is within parallel_limit (or limit is not defined)
-                else:
-                    for etl in sorted_etls:
-                        child_state_machine_config = self.create_single_etl_state_machine(
-                            comment=f'{etl.process_name} - {etl.description}',
-                            start_at_etl=etl
-                        )
-                        start_at_parallel_state['Branches'].append(child_state_machine_config)
-            all_state_machines[step_function.name] = state_machine
-        return all_state_machines
+                for etl in sorted_etls:
+                    child_state_machine_config = self.create_single_etl_state_machine(
+                        comment=f'{etl.process_name} - {etl.description}',
+                        start_at_etl=etl
+                    )
+                    start_at_parallel_state['Branches'].append(child_state_machine_config)
+        return state_machine
+
+    class NameRegistry:
+        """A class to keep track of how many times each state name in the state machine has been used.
+
+        This class is mainly used to ensure that all message state names in the
+        state machine are unique in the case of multiple ETLs each triggering some
+        of the same "next_step_functions". All state names within a state machine
+        must be globally unique according to the AWS state language specification.
+        """
+
+        def __init__(self):
+            self._name_suffixes = {}
+
+        def make_unique_state_name(self, raw_name: str):
+            """Generate a new version of the given state name that is guaranteed to be globally unique in the state machine."""
+            if raw_name not in self._name_suffixes:
+                self._name_suffixes[raw_name] = 1
+                return raw_name  # base case: no suffix required if name is already unique
+            else:
+                unique_name = f'{raw_name}_{self._name_suffixes[raw_name]}'
+                self._name_suffixes[raw_name] += 1
+                # cover case where a future state's attempted *raw* name is the same as this state's raw name + suffix
+                # e.g. the second "Success" state is given the name "Success_1". If another state's *raw* name is "Success_1",
+                # then it would be given the name "Success_1_1" by this method
+                self._name_suffixes[unique_name] = 1
+                return unique_name
 
     class ETLLatticeNextStateLookup:
         """A map-like class facilitating lookup of the next ETL state in a sequential chain given the name of the current state.
@@ -193,6 +221,12 @@ class ETLStateMachineGenerator:
 
         def get_next_state_name(self, current_state_name: str) -> str:
             return self._lookup[current_state_name]
+
+    def get_choice_state_suffix(self) -> str:
+        if self.choice_state_count < 2:
+            return ''
+        else:
+            return f'_{self.choice_state_count - 1}'
 
     def create_single_etl_state_machine(self, comment: str, start_at_etl: ETLMetadata) -> dict:
         """Create a dict defining an AWS state machine that executes a single ETL.
@@ -226,7 +260,8 @@ class ETLStateMachineGenerator:
         # add key for main ETL first (but don't populate it yet) to ensure human-friendly state ordering in final output
         state_machine['States'][start_at_etl.process_name] = None
         if start_at_etl.next_step_functions:
-            next_state_name = 'Load_type_choice'
+            self.choice_state_count += 1
+            next_state_name = f'Load_type_choice{self.get_choice_state_suffix()}'
             self.add_states_to_trigger_next_step_functions(start_at_etl, state_machine)
         else:
             next_state_name = None
@@ -247,7 +282,8 @@ class ETLStateMachineGenerator:
         :param state_machine: the state machine to which to add the new states
         """
         if len(etl.next_step_functions) == 1:  # directly trigger the single message state after the choice state
-            message_state_name = make_message_state_name(etl.next_step_functions[0])
+            raw_message_state_name = make_message_state_name(etl.next_step_functions[0])
+            message_state_name = self.name_registry.make_unique_state_name(raw_message_state_name)
             self.add_load_type_choice(state_machine, next_state_name=message_state_name)
             next_step_function = self.get_step_function_metadata(etl.next_step_functions[0])
             state_machine['States'][message_state_name] = create_message_state(next_step_function)
@@ -256,7 +292,8 @@ class ETLStateMachineGenerator:
             self.add_load_type_choice(state_machine, next_state_name=parallel_state_name)
             state_machine['States'][parallel_state_name] = create_parallel_state()
             for next_step_function_name in sorted(etl.next_step_functions):
-                message_state_name = make_message_state_name(next_step_function_name)
+                raw_message_state_name = make_message_state_name(next_step_function_name)
+                message_state_name = self.name_registry.make_unique_state_name(raw_message_state_name)
                 message_state_machine_config = create_state_machine_scaffold(
                     comment=f'Send message to bi-managed-mdi-2-full-check-queue for {next_step_function_name}',
                     start_at=message_state_name
@@ -344,26 +381,26 @@ class ETLStateMachineGenerator:
 
         return task_state
 
-    @staticmethod
-    def add_load_type_choice(state_machine: dict, next_state_name: str) -> None:
+    def add_load_type_choice(self, state_machine: dict, next_state_name: str) -> None:
         """Create an AWS Choice state configuration that branches to a Success state if the previous step outputted a load_type of NONE.
 
         :param state_machine: a state machine dict to which to add the Choice and Success states
         :param next_state_name: the state to branch to if the preceding ETL *did*
         have output
         """
-        state_machine['States']['Load_type_choice'] = {
+        success_state_name = f'Success{self.get_choice_state_suffix()}'
+        state_machine['States'][f'Load_type_choice{self.get_choice_state_suffix()}'] = {
             'Type': 'Choice',
             'Choices': [
                 {
                     'Variable': '$.load_type',
                     'StringEquals': 'NONE',
-                    'Next': 'Success'
+                    'Next': success_state_name
                 }
             ],
             'Default': next_state_name
         }
-        state_machine['States']['Success'] = {'Type': 'Succeed'}
+        state_machine['States'][success_state_name] = {'Type': 'Succeed'}
 
 
 #
