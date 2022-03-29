@@ -402,9 +402,9 @@ step_functions:
         truncate_table: false
         container_memory: 2048
         next_step_functions:
-        - SP-300001-delete
-        - SP-200020
         - SP-200019
+        - SP-200020
+        - SP-300001-delete
         input_sql: |-
           --finding records to insert into history_octane.deal
           SELECT staging_table.d_pid

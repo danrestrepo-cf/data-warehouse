@@ -28,8 +28,8 @@ step_functions:
         truncate_table: false
         container_memory: 2048
         next_step_functions:
-        - SP-200018
         - SP-200014
+        - SP-200018
         input_sql: |-
           --finding records to insert into history_octane.qualifying_rate_type
           SELECT staging_table.code

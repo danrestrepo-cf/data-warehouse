@@ -1070,10 +1070,10 @@ step_functions:
         truncate_table: false
         container_memory: 4096
         next_step_functions:
-        - SP-200021
-        - SP-200006
-        - SP-200005-insert-update
         - SP-200004
+        - SP-200005-insert-update
+        - SP-200006
+        - SP-200021
         input_sql: |-
           --finding records to insert into history_octane.borrower
           SELECT staging_table.b_pid

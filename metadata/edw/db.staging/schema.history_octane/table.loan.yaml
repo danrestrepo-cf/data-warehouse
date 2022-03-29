@@ -776,12 +776,12 @@ step_functions:
         truncate_table: false
         container_memory: 4096
         next_step_functions:
-        - SP-300001-insert-update
-        - SP-300001-delete
-        - SP-200016
-        - SP-200015
-        - SP-200014
         - SP-200012
+        - SP-200014
+        - SP-200015
+        - SP-200016
+        - SP-300001-delete
+        - SP-300001-insert-update
         input_sql: |-
           --finding records to insert into history_octane.loan
           SELECT staging_table.l_pid

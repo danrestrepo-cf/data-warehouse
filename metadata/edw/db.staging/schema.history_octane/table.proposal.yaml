@@ -1450,11 +1450,11 @@ step_functions:
         truncate_table: false
         container_memory: 4096
         next_step_functions:
-        - SP-200014
-        - SP-200020
-        - SP-200019
-        - SP-300001-delete
         - SP-200012
+        - SP-200014
+        - SP-200019
+        - SP-200020
+        - SP-300001-delete
         input_sql: |-
           --finding records to insert into history_octane.proposal
           SELECT staging_table.prp_pid
