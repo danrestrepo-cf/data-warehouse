@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100527 - ETL to insert records into staging.history_octane.hmda_action_type using staging.staging_octane.hmda_action_type as the primary source",
-    "StartAt": "SP-100527",
+    "StartAt": "ETL-100527",
     "States": {
-        "SP-100527": {
+        "ETL-100527": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100527"
+                                    "Value": "ETL-100527"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

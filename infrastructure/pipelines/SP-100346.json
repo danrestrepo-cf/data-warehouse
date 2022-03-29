@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100346 - ETL to insert records into staging.history_octane.deal_sap using staging.staging_octane.deal_sap as the primary source",
-    "StartAt": "SP-100346",
+    "StartAt": "ETL-100346",
     "States": {
-        "SP-100346": {
+        "ETL-100346": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100346"
+                                    "Value": "ETL-100346"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

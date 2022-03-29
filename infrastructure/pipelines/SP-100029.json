@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100029 - ETL to insert records into staging.history_octane.hoepa_thresholds using staging.staging_octane.hoepa_thresholds as the primary source",
-    "StartAt": "SP-100029",
+    "StartAt": "ETL-100029",
     "States": {
-        "SP-100029": {
+        "ETL-100029": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100029"
+                                    "Value": "ETL-100029"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

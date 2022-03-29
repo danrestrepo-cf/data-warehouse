@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100505 - ETL to insert records into staging.history_octane.export_type using staging.staging_octane.export_type as the primary source",
-    "StartAt": "SP-100505",
+    "StartAt": "ETL-100505",
     "States": {
-        "SP-100505": {
+        "ETL-100505": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100505"
+                                    "Value": "ETL-100505"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

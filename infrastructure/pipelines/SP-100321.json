@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100321 - ETL to insert records into staging.history_octane.bid_pool_lender_lock using staging.staging_octane.bid_pool_lender_lock as the primary source",
-    "StartAt": "SP-100321",
+    "StartAt": "ETL-100321",
     "States": {
-        "SP-100321": {
+        "ETL-100321": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100321"
+                                    "Value": "ETL-100321"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

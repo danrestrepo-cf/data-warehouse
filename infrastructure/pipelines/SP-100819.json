@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100819 - ETL to insert records into staging.history_octane.construction_permit_requested_by_type using staging.staging_octane.construction_permit_requested_by_type as the primary source",
-    "StartAt": "SP-100819",
+    "StartAt": "ETL-100819",
     "States": {
-        "SP-100819": {
+        "ETL-100819": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100819"
+                                    "Value": "ETL-100819"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100218 - ETL to insert records into staging.history_octane.arm_index_rate using staging.staging_octane.arm_index_rate as the primary source",
-    "StartAt": "SP-100218",
+    "StartAt": "ETL-100218",
     "States": {
-        "SP-100218": {
+        "ETL-100218": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100218"
+                                    "Value": "ETL-100218"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

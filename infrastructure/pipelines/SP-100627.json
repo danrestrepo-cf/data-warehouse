@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100627 - ETL to insert records into staging.history_octane.property_repairs_required_type using staging.staging_octane.property_repairs_required_type as the primary source",
-    "StartAt": "SP-100627",
+    "StartAt": "ETL-100627",
     "States": {
-        "SP-100627": {
+        "ETL-100627": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100627"
+                                    "Value": "ETL-100627"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100080 - ETL to insert records into staging.history_octane.deal_housing_counselor_candidate using staging.staging_octane.deal_housing_counselor_candidate as the primary source",
-    "StartAt": "SP-100080",
+    "StartAt": "ETL-100080",
     "States": {
-        "SP-100080": {
+        "ETL-100080": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100080"
+                                    "Value": "ETL-100080"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

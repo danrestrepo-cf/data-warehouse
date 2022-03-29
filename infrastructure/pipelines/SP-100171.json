@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100171 - ETL to insert records into staging.history_octane.rental_income using staging.staging_octane.rental_income as the primary source",
-    "StartAt": "SP-100171",
+    "StartAt": "ETL-100171",
     "States": {
-        "SP-100171": {
+        "ETL-100171": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100171"
+                                    "Value": "ETL-100171"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

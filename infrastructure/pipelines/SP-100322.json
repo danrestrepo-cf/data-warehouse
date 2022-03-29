@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100322 - ETL to insert records into staging.history_octane.lender_concession_request using staging.staging_octane.lender_concession_request as the primary source",
-    "StartAt": "SP-100322",
+    "StartAt": "ETL-100322",
     "States": {
-        "SP-100322": {
+        "ETL-100322": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100322"
+                                    "Value": "ETL-100322"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

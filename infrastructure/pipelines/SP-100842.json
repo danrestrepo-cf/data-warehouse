@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100842 - ETL to insert records into staging.history_octane.smart_doc_validity_date_case using staging.staging_octane.smart_doc_validity_date_case as the primary source",
-    "StartAt": "SP-100842",
+    "StartAt": "ETL-100842",
     "States": {
-        "SP-100842": {
+        "ETL-100842": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100842"
+                                    "Value": "ETL-100842"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

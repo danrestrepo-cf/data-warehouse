@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100602 - ETL to insert records into staging.history_octane.other_income_type using staging.staging_octane.other_income_type as the primary source",
-    "StartAt": "SP-100602",
+    "StartAt": "ETL-100602",
     "States": {
-        "SP-100602": {
+        "ETL-100602": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100602"
+                                    "Value": "ETL-100602"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

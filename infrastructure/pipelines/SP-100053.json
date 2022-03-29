@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100053 - ETL to insert records into staging.history_octane.site_allowed_ip using staging.staging_octane.site_allowed_ip as the primary source",
-    "StartAt": "SP-100053",
+    "StartAt": "ETL-100053",
     "States": {
-        "SP-100053": {
+        "ETL-100053": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100053"
+                                    "Value": "ETL-100053"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

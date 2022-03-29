@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100435 - ETL to insert records into staging.history_octane.charge_payer_type using staging.staging_octane.charge_payer_type as the primary source",
-    "StartAt": "SP-100435",
+    "StartAt": "ETL-100435",
     "States": {
-        "SP-100435": {
+        "ETL-100435": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100435"
+                                    "Value": "ETL-100435"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

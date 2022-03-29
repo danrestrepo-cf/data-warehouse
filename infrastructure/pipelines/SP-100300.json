@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100300 - ETL to insert records into staging.history_octane.deal_message_log using staging.staging_octane.deal_message_log as the primary source",
-    "StartAt": "SP-100300",
+    "StartAt": "ETL-100300",
     "States": {
-        "SP-100300": {
+        "ETL-100300": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100300"
+                                    "Value": "ETL-100300"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

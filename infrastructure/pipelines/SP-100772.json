@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100772 - ETL to insert records into staging.history_octane.mi_input_type using staging.staging_octane.mi_input_type as the primary source",
-    "StartAt": "SP-100772",
+    "StartAt": "ETL-100772",
     "States": {
-        "SP-100772": {
+        "ETL-100772": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100772"
+                                    "Value": "ETL-100772"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

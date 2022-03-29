@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100464 - ETL to insert records into staging.history_octane.criteria_pid_operand_type using staging.staging_octane.criteria_pid_operand_type as the primary source",
-    "StartAt": "SP-100464",
+    "StartAt": "ETL-100464",
     "States": {
-        "SP-100464": {
+        "ETL-100464": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100464"
+                                    "Value": "ETL-100464"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

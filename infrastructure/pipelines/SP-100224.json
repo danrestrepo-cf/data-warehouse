@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100224 - ETL to insert records into staging.history_octane.loan_limit_table using staging.staging_octane.loan_limit_table as the primary source",
-    "StartAt": "SP-100224",
+    "StartAt": "ETL-100224",
     "States": {
-        "SP-100224": {
+        "ETL-100224": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100224"
+                                    "Value": "ETL-100224"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

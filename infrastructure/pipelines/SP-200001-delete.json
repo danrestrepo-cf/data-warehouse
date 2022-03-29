@@ -1,18 +1,18 @@
 {
-    "Comment": "SP-200001-delete - ETL to delete from loan_lender_user_access",
-    "StartAt": "SP-200001-delete",
+    "Comment": "SP-200001-delete - Multiple ETLs affecting staging.star_loan.loan_lender_user_access",
+    "StartAt": "StartAt Parallel",
     "States": {
-        "SP-200001-delete": {
+        "StartAt Parallel": {
             "Type": "Parallel",
             "End": true,
             "Branches": [
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 0-4",
-                    "StartAt": "SP-200001-delete-0",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-0 (ETL to delete records from staging.star_loan.loan_lender_user_access_0 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-0",
                     "States": {
-                        "SP-200001-delete-0": {
+                        "ETL-200001-delete-0": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -35,7 +35,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-0"
+                                                    "Value": "ETL-200001-delete-0"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -51,21 +51,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-1"
+                            "Next": "ETL-200001-delete-27"
                         },
-                        "SP-200001-delete-1": {
+                        "ETL-200001-delete-27": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -88,7 +78,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-1"
+                                                    "Value": "ETL-200001-delete-27"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -104,21 +94,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-2"
+                            "Next": "ETL-200001-delete-45"
                         },
-                        "SP-200001-delete-2": {
+                        "ETL-200001-delete-45": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -141,7 +121,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-2"
+                                                    "Value": "ETL-200001-delete-45"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -157,21 +137,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-3"
+                            "Next": "ETL-200001-delete-63"
                         },
-                        "SP-200001-delete-3": {
+                        "ETL-200001-delete-63": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -194,7 +164,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-3"
+                                                    "Value": "ETL-200001-delete-63"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -210,19 +180,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-4"
+                            "Next": "ETL-200001-delete-81"
                         },
-                        "SP-200001-delete-4": {
+                        "ETL-200001-delete-81": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -247,7 +207,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-4"
+                                                    "Value": "ETL-200001-delete-81"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -263,27 +223,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 5-9",
-                    "StartAt": "SP-200001-delete-5",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-1 (ETL to delete records from staging.star_loan.loan_lender_user_access_1 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-1",
                     "States": {
-                        "SP-200001-delete-5": {
+                        "ETL-200001-delete-1": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -306,7 +256,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-5"
+                                                    "Value": "ETL-200001-delete-1"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -322,21 +272,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-6"
+                            "Next": "ETL-200001-delete-28"
                         },
-                        "SP-200001-delete-6": {
+                        "ETL-200001-delete-28": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -359,7 +299,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-6"
+                                                    "Value": "ETL-200001-delete-28"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -375,21 +315,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-7"
+                            "Next": "ETL-200001-delete-46"
                         },
-                        "SP-200001-delete-7": {
+                        "ETL-200001-delete-46": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -412,7 +342,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-7"
+                                                    "Value": "ETL-200001-delete-46"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -428,21 +358,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-8"
+                            "Next": "ETL-200001-delete-64"
                         },
-                        "SP-200001-delete-8": {
+                        "ETL-200001-delete-64": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -465,7 +385,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-8"
+                                                    "Value": "ETL-200001-delete-64"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -481,19 +401,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-9"
+                            "Next": "ETL-200001-delete-82"
                         },
-                        "SP-200001-delete-9": {
+                        "ETL-200001-delete-82": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -518,7 +428,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-9"
+                                                    "Value": "ETL-200001-delete-82"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -534,27 +444,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 10-14",
-                    "StartAt": "SP-200001-delete-10",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-10 (ETL to delete records from staging.star_loan.loan_lender_user_access_10 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-10",
                     "States": {
-                        "SP-200001-delete-10": {
+                        "ETL-200001-delete-10": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -577,7 +477,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-10"
+                                                    "Value": "ETL-200001-delete-10"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -593,21 +493,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-11"
+                            "Next": "ETL-200001-delete-29"
                         },
-                        "SP-200001-delete-11": {
+                        "ETL-200001-delete-29": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -630,7 +520,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-11"
+                                                    "Value": "ETL-200001-delete-29"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -646,21 +536,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-12"
+                            "Next": "ETL-200001-delete-47"
                         },
-                        "SP-200001-delete-12": {
+                        "ETL-200001-delete-47": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -683,7 +563,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-12"
+                                                    "Value": "ETL-200001-delete-47"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -699,21 +579,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-13"
+                            "Next": "ETL-200001-delete-65"
                         },
-                        "SP-200001-delete-13": {
+                        "ETL-200001-delete-65": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -736,7 +606,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-13"
+                                                    "Value": "ETL-200001-delete-65"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -752,19 +622,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-14"
+                            "Next": "ETL-200001-delete-83"
                         },
-                        "SP-200001-delete-14": {
+                        "ETL-200001-delete-83": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -789,7 +649,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-14"
+                                                    "Value": "ETL-200001-delete-83"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -805,27 +665,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 15-19",
-                    "StartAt": "SP-200001-delete-15",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-11 (ETL to delete records from staging.star_loan.loan_lender_user_access_11 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-11",
                     "States": {
-                        "SP-200001-delete-15": {
+                        "ETL-200001-delete-11": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -848,7 +698,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-15"
+                                                    "Value": "ETL-200001-delete-11"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -864,21 +714,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-16"
+                            "Next": "ETL-200001-delete-3"
                         },
-                        "SP-200001-delete-16": {
+                        "ETL-200001-delete-3": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -901,7 +741,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-16"
+                                                    "Value": "ETL-200001-delete-3"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -917,21 +757,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-17"
+                            "Next": "ETL-200001-delete-48"
                         },
-                        "SP-200001-delete-17": {
+                        "ETL-200001-delete-48": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -954,7 +784,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-17"
+                                                    "Value": "ETL-200001-delete-48"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -970,21 +800,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-18"
+                            "Next": "ETL-200001-delete-66"
                         },
-                        "SP-200001-delete-18": {
+                        "ETL-200001-delete-66": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1007,7 +827,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-18"
+                                                    "Value": "ETL-200001-delete-66"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1023,19 +843,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-19"
+                            "Next": "ETL-200001-delete-84"
                         },
-                        "SP-200001-delete-19": {
+                        "ETL-200001-delete-84": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -1060,7 +870,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-19"
+                                                    "Value": "ETL-200001-delete-84"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1076,27 +886,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 20-24",
-                    "StartAt": "SP-200001-delete-20",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-12 (ETL to delete records from staging.star_loan.loan_lender_user_access_12 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-12",
                     "States": {
-                        "SP-200001-delete-20": {
+                        "ETL-200001-delete-12": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1119,7 +919,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-20"
+                                                    "Value": "ETL-200001-delete-12"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1135,21 +935,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-21"
+                            "Next": "ETL-200001-delete-30"
                         },
-                        "SP-200001-delete-21": {
+                        "ETL-200001-delete-30": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1172,7 +962,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-21"
+                                                    "Value": "ETL-200001-delete-30"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1188,21 +978,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-22"
+                            "Next": "ETL-200001-delete-49"
                         },
-                        "SP-200001-delete-22": {
+                        "ETL-200001-delete-49": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1225,7 +1005,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-22"
+                                                    "Value": "ETL-200001-delete-49"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1241,21 +1021,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-23"
+                            "Next": "ETL-200001-delete-67"
                         },
-                        "SP-200001-delete-23": {
+                        "ETL-200001-delete-67": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1278,7 +1048,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-23"
+                                                    "Value": "ETL-200001-delete-67"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1294,19 +1064,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-24"
+                            "Next": "ETL-200001-delete-85"
                         },
-                        "SP-200001-delete-24": {
+                        "ETL-200001-delete-85": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -1331,7 +1091,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-24"
+                                                    "Value": "ETL-200001-delete-85"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1347,27 +1107,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 25-29",
-                    "StartAt": "SP-200001-delete-25",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-13 (ETL to delete records from staging.star_loan.loan_lender_user_access_13 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-13",
                     "States": {
-                        "SP-200001-delete-25": {
+                        "ETL-200001-delete-13": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1390,7 +1140,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-25"
+                                                    "Value": "ETL-200001-delete-13"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1406,21 +1156,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-26"
+                            "Next": "ETL-200001-delete-31"
                         },
-                        "SP-200001-delete-26": {
+                        "ETL-200001-delete-31": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1443,7 +1183,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-26"
+                                                    "Value": "ETL-200001-delete-31"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1459,21 +1199,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-27"
+                            "Next": "ETL-200001-delete-5"
                         },
-                        "SP-200001-delete-27": {
+                        "ETL-200001-delete-5": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1496,7 +1226,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-27"
+                                                    "Value": "ETL-200001-delete-5"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1512,21 +1242,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-28"
+                            "Next": "ETL-200001-delete-68"
                         },
-                        "SP-200001-delete-28": {
+                        "ETL-200001-delete-68": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1549,7 +1269,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-28"
+                                                    "Value": "ETL-200001-delete-68"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1565,19 +1285,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-29"
+                            "Next": "ETL-200001-delete-86"
                         },
-                        "SP-200001-delete-29": {
+                        "ETL-200001-delete-86": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -1602,7 +1312,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-29"
+                                                    "Value": "ETL-200001-delete-86"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1618,27 +1328,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 30-34",
-                    "StartAt": "SP-200001-delete-30",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-14 (ETL to delete records from staging.star_loan.loan_lender_user_access_14 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-14",
                     "States": {
-                        "SP-200001-delete-30": {
+                        "ETL-200001-delete-14": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1661,7 +1361,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-30"
+                                                    "Value": "ETL-200001-delete-14"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1677,21 +1377,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-31"
+                            "Next": "ETL-200001-delete-32"
                         },
-                        "SP-200001-delete-31": {
+                        "ETL-200001-delete-32": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1714,7 +1404,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-31"
+                                                    "Value": "ETL-200001-delete-32"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1730,21 +1420,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-32"
+                            "Next": "ETL-200001-delete-50"
                         },
-                        "SP-200001-delete-32": {
+                        "ETL-200001-delete-50": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1767,7 +1447,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-32"
+                                                    "Value": "ETL-200001-delete-50"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1783,21 +1463,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-33"
+                            "Next": "ETL-200001-delete-69"
                         },
-                        "SP-200001-delete-33": {
+                        "ETL-200001-delete-69": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1820,7 +1490,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-33"
+                                                    "Value": "ETL-200001-delete-69"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1836,19 +1506,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-34"
+                            "Next": "ETL-200001-delete-87"
                         },
-                        "SP-200001-delete-34": {
+                        "ETL-200001-delete-87": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -1873,7 +1533,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-34"
+                                                    "Value": "ETL-200001-delete-87"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1889,27 +1549,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 35-39",
-                    "StartAt": "SP-200001-delete-35",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-15 (ETL to delete records from staging.star_loan.loan_lender_user_access_15 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-15",
                     "States": {
-                        "SP-200001-delete-35": {
+                        "ETL-200001-delete-15": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1932,7 +1582,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-35"
+                                                    "Value": "ETL-200001-delete-15"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -1948,21 +1598,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-36"
+                            "Next": "ETL-200001-delete-33"
                         },
-                        "SP-200001-delete-36": {
+                        "ETL-200001-delete-33": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1985,7 +1625,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-36"
+                                                    "Value": "ETL-200001-delete-33"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2001,21 +1641,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-37"
+                            "Next": "ETL-200001-delete-51"
                         },
-                        "SP-200001-delete-37": {
+                        "ETL-200001-delete-51": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2038,7 +1668,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-37"
+                                                    "Value": "ETL-200001-delete-51"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2054,21 +1684,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-38"
+                            "Next": "ETL-200001-delete-7"
                         },
-                        "SP-200001-delete-38": {
+                        "ETL-200001-delete-7": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2091,7 +1711,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-38"
+                                                    "Value": "ETL-200001-delete-7"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2107,19 +1727,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-39"
+                            "Next": "ETL-200001-delete-88"
                         },
-                        "SP-200001-delete-39": {
+                        "ETL-200001-delete-88": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -2144,7 +1754,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-39"
+                                                    "Value": "ETL-200001-delete-88"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2160,27 +1770,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 40-44",
-                    "StartAt": "SP-200001-delete-40",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-16 (ETL to delete records from staging.star_loan.loan_lender_user_access_16 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-16",
                     "States": {
-                        "SP-200001-delete-40": {
+                        "ETL-200001-delete-16": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2203,7 +1803,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-40"
+                                                    "Value": "ETL-200001-delete-16"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2219,21 +1819,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-41"
+                            "Next": "ETL-200001-delete-34"
                         },
-                        "SP-200001-delete-41": {
+                        "ETL-200001-delete-34": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2256,7 +1846,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-41"
+                                                    "Value": "ETL-200001-delete-34"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2272,21 +1862,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-42"
+                            "Next": "ETL-200001-delete-52"
                         },
-                        "SP-200001-delete-42": {
+                        "ETL-200001-delete-52": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2309,7 +1889,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-42"
+                                                    "Value": "ETL-200001-delete-52"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2325,21 +1905,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-43"
+                            "Next": "ETL-200001-delete-70"
                         },
-                        "SP-200001-delete-43": {
+                        "ETL-200001-delete-70": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2362,7 +1932,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-43"
+                                                    "Value": "ETL-200001-delete-70"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2378,19 +1948,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-44"
+                            "Next": "ETL-200001-delete-89"
                         },
-                        "SP-200001-delete-44": {
+                        "ETL-200001-delete-89": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -2415,7 +1975,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-44"
+                                                    "Value": "ETL-200001-delete-89"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2431,27 +1991,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 45-49",
-                    "StartAt": "SP-200001-delete-45",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-17 (ETL to delete records from staging.star_loan.loan_lender_user_access_17 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-17",
                     "States": {
-                        "SP-200001-delete-45": {
+                        "ETL-200001-delete-17": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2474,7 +2024,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-45"
+                                                    "Value": "ETL-200001-delete-17"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2490,21 +2040,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-46"
+                            "Next": "ETL-200001-delete-35"
                         },
-                        "SP-200001-delete-46": {
+                        "ETL-200001-delete-35": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2527,7 +2067,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-46"
+                                                    "Value": "ETL-200001-delete-35"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2543,21 +2083,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-47"
+                            "Next": "ETL-200001-delete-53"
                         },
-                        "SP-200001-delete-47": {
+                        "ETL-200001-delete-53": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2580,7 +2110,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-47"
+                                                    "Value": "ETL-200001-delete-53"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2596,21 +2126,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-48"
+                            "Next": "ETL-200001-delete-71"
                         },
-                        "SP-200001-delete-48": {
+                        "ETL-200001-delete-71": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2633,7 +2153,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-48"
+                                                    "Value": "ETL-200001-delete-71"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2649,19 +2169,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-49"
+                            "Next": "ETL-200001-delete-9"
                         },
-                        "SP-200001-delete-49": {
+                        "ETL-200001-delete-9": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -2686,7 +2196,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-49"
+                                                    "Value": "ETL-200001-delete-9"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2702,27 +2212,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 50-54",
-                    "StartAt": "SP-200001-delete-50",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-18 (ETL to delete records from staging.star_loan.loan_lender_user_access_18 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-18",
                     "States": {
-                        "SP-200001-delete-50": {
+                        "ETL-200001-delete-18": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2745,7 +2245,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-50"
+                                                    "Value": "ETL-200001-delete-18"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2761,21 +2261,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-51"
+                            "Next": "ETL-200001-delete-36"
                         },
-                        "SP-200001-delete-51": {
+                        "ETL-200001-delete-36": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2798,7 +2288,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-51"
+                                                    "Value": "ETL-200001-delete-36"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2814,21 +2304,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-52"
+                            "Next": "ETL-200001-delete-54"
                         },
-                        "SP-200001-delete-52": {
+                        "ETL-200001-delete-54": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2851,7 +2331,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-52"
+                                                    "Value": "ETL-200001-delete-54"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2867,21 +2347,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-53"
+                            "Next": "ETL-200001-delete-72"
                         },
-                        "SP-200001-delete-53": {
+                        "ETL-200001-delete-72": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2904,7 +2374,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-53"
+                                                    "Value": "ETL-200001-delete-72"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2920,19 +2390,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-54"
+                            "Next": "ETL-200001-delete-90"
                         },
-                        "SP-200001-delete-54": {
+                        "ETL-200001-delete-90": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -2957,7 +2417,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-54"
+                                                    "Value": "ETL-200001-delete-90"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -2973,27 +2433,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 55-59",
-                    "StartAt": "SP-200001-delete-55",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-19 (ETL to delete records from staging.star_loan.loan_lender_user_access_19 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-19",
                     "States": {
-                        "SP-200001-delete-55": {
+                        "ETL-200001-delete-19": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3016,7 +2466,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-55"
+                                                    "Value": "ETL-200001-delete-19"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3032,21 +2482,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-56"
+                            "Next": "ETL-200001-delete-37"
                         },
-                        "SP-200001-delete-56": {
+                        "ETL-200001-delete-37": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3069,7 +2509,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-56"
+                                                    "Value": "ETL-200001-delete-37"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3085,21 +2525,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-57"
+                            "Next": "ETL-200001-delete-55"
                         },
-                        "SP-200001-delete-57": {
+                        "ETL-200001-delete-55": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3122,7 +2552,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-57"
+                                                    "Value": "ETL-200001-delete-55"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3138,21 +2568,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-58"
+                            "Next": "ETL-200001-delete-73"
                         },
-                        "SP-200001-delete-58": {
+                        "ETL-200001-delete-73": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3175,7 +2595,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-58"
+                                                    "Value": "ETL-200001-delete-73"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3191,19 +2611,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-59"
+                            "Next": "ETL-200001-delete-91"
                         },
-                        "SP-200001-delete-59": {
+                        "ETL-200001-delete-91": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -3228,7 +2638,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-59"
+                                                    "Value": "ETL-200001-delete-91"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3244,27 +2654,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 60-64",
-                    "StartAt": "SP-200001-delete-60",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-2 (ETL to delete records from staging.star_loan.loan_lender_user_access_2 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-2",
                     "States": {
-                        "SP-200001-delete-60": {
+                        "ETL-200001-delete-2": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3287,7 +2687,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-60"
+                                                    "Value": "ETL-200001-delete-2"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3303,21 +2703,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-61"
+                            "Next": "ETL-200001-delete-38"
                         },
-                        "SP-200001-delete-61": {
+                        "ETL-200001-delete-38": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3340,7 +2730,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-61"
+                                                    "Value": "ETL-200001-delete-38"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3356,21 +2746,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-62"
+                            "Next": "ETL-200001-delete-56"
                         },
-                        "SP-200001-delete-62": {
+                        "ETL-200001-delete-56": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3393,7 +2773,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-62"
+                                                    "Value": "ETL-200001-delete-56"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3409,21 +2789,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-63"
+                            "Next": "ETL-200001-delete-74"
                         },
-                        "SP-200001-delete-63": {
+                        "ETL-200001-delete-74": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3446,7 +2816,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-63"
+                                                    "Value": "ETL-200001-delete-74"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3462,19 +2832,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-64"
+                            "Next": "ETL-200001-delete-92"
                         },
-                        "SP-200001-delete-64": {
+                        "ETL-200001-delete-92": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -3499,7 +2859,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-64"
+                                                    "Value": "ETL-200001-delete-92"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3515,27 +2875,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 65-69",
-                    "StartAt": "SP-200001-delete-65",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-20 (ETL to delete records from staging.star_loan.loan_lender_user_access_20 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-20",
                     "States": {
-                        "SP-200001-delete-65": {
+                        "ETL-200001-delete-20": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3558,7 +2908,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-65"
+                                                    "Value": "ETL-200001-delete-20"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3574,21 +2924,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-66"
+                            "Next": "ETL-200001-delete-39"
                         },
-                        "SP-200001-delete-66": {
+                        "ETL-200001-delete-39": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3611,7 +2951,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-66"
+                                                    "Value": "ETL-200001-delete-39"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3627,21 +2967,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-67"
+                            "Next": "ETL-200001-delete-57"
                         },
-                        "SP-200001-delete-67": {
+                        "ETL-200001-delete-57": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3664,7 +2994,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-67"
+                                                    "Value": "ETL-200001-delete-57"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3680,21 +3010,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-68"
+                            "Next": "ETL-200001-delete-75"
                         },
-                        "SP-200001-delete-68": {
+                        "ETL-200001-delete-75": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3717,7 +3037,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-68"
+                                                    "Value": "ETL-200001-delete-75"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3733,19 +3053,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-69"
+                            "Next": "ETL-200001-delete-93"
                         },
-                        "SP-200001-delete-69": {
+                        "ETL-200001-delete-93": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -3770,7 +3080,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-69"
+                                                    "Value": "ETL-200001-delete-93"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3786,27 +3096,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 70-74",
-                    "StartAt": "SP-200001-delete-70",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-21 (ETL to delete records from staging.star_loan.loan_lender_user_access_21 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-21",
                     "States": {
-                        "SP-200001-delete-70": {
+                        "ETL-200001-delete-21": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3829,7 +3129,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-70"
+                                                    "Value": "ETL-200001-delete-21"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3845,21 +3145,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-71"
+                            "Next": "ETL-200001-delete-4"
                         },
-                        "SP-200001-delete-71": {
+                        "ETL-200001-delete-4": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3882,7 +3172,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-71"
+                                                    "Value": "ETL-200001-delete-4"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3898,21 +3188,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-72"
+                            "Next": "ETL-200001-delete-58"
                         },
-                        "SP-200001-delete-72": {
+                        "ETL-200001-delete-58": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3935,7 +3215,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-72"
+                                                    "Value": "ETL-200001-delete-58"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -3951,21 +3231,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-73"
+                            "Next": "ETL-200001-delete-76"
                         },
-                        "SP-200001-delete-73": {
+                        "ETL-200001-delete-76": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3988,7 +3258,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-73"
+                                                    "Value": "ETL-200001-delete-76"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4004,19 +3274,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-74"
+                            "Next": "ETL-200001-delete-94"
                         },
-                        "SP-200001-delete-74": {
+                        "ETL-200001-delete-94": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -4041,7 +3301,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-74"
+                                                    "Value": "ETL-200001-delete-94"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4057,27 +3317,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 75-79",
-                    "StartAt": "SP-200001-delete-75",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-22 (ETL to delete records from staging.star_loan.loan_lender_user_access_22 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-22",
                     "States": {
-                        "SP-200001-delete-75": {
+                        "ETL-200001-delete-22": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4100,7 +3350,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-75"
+                                                    "Value": "ETL-200001-delete-22"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4116,21 +3366,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-76"
+                            "Next": "ETL-200001-delete-40"
                         },
-                        "SP-200001-delete-76": {
+                        "ETL-200001-delete-40": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4153,7 +3393,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-76"
+                                                    "Value": "ETL-200001-delete-40"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4169,21 +3409,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-77"
+                            "Next": "ETL-200001-delete-59"
                         },
-                        "SP-200001-delete-77": {
+                        "ETL-200001-delete-59": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4206,7 +3436,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-77"
+                                                    "Value": "ETL-200001-delete-59"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4222,21 +3452,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-78"
+                            "Next": "ETL-200001-delete-77"
                         },
-                        "SP-200001-delete-78": {
+                        "ETL-200001-delete-77": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4259,7 +3479,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-78"
+                                                    "Value": "ETL-200001-delete-77"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4275,19 +3495,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-79"
+                            "Next": "ETL-200001-delete-95"
                         },
-                        "SP-200001-delete-79": {
+                        "ETL-200001-delete-95": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -4312,7 +3522,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-79"
+                                                    "Value": "ETL-200001-delete-95"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4328,27 +3538,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 80-84",
-                    "StartAt": "SP-200001-delete-80",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-23 (ETL to delete records from staging.star_loan.loan_lender_user_access_23 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-23",
                     "States": {
-                        "SP-200001-delete-80": {
+                        "ETL-200001-delete-23": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4371,7 +3571,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-80"
+                                                    "Value": "ETL-200001-delete-23"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4387,21 +3587,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-81"
+                            "Next": "ETL-200001-delete-41"
                         },
-                        "SP-200001-delete-81": {
+                        "ETL-200001-delete-41": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4424,7 +3614,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-81"
+                                                    "Value": "ETL-200001-delete-41"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4440,21 +3630,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-82"
+                            "Next": "ETL-200001-delete-6"
                         },
-                        "SP-200001-delete-82": {
+                        "ETL-200001-delete-6": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4477,7 +3657,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-82"
+                                                    "Value": "ETL-200001-delete-6"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4493,21 +3673,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-83"
+                            "Next": "ETL-200001-delete-78"
                         },
-                        "SP-200001-delete-83": {
+                        "ETL-200001-delete-78": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4530,7 +3700,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-83"
+                                                    "Value": "ETL-200001-delete-78"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4546,19 +3716,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-84"
+                            "Next": "ETL-200001-delete-96"
                         },
-                        "SP-200001-delete-84": {
+                        "ETL-200001-delete-96": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -4583,7 +3743,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-84"
+                                                    "Value": "ETL-200001-delete-96"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4599,27 +3759,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 85-89",
-                    "StartAt": "SP-200001-delete-85",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-24 (ETL to delete records from staging.star_loan.loan_lender_user_access_24 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-24",
                     "States": {
-                        "SP-200001-delete-85": {
+                        "ETL-200001-delete-24": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4642,7 +3792,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-85"
+                                                    "Value": "ETL-200001-delete-24"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4658,21 +3808,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-86"
+                            "Next": "ETL-200001-delete-42"
                         },
-                        "SP-200001-delete-86": {
+                        "ETL-200001-delete-42": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4695,7 +3835,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-86"
+                                                    "Value": "ETL-200001-delete-42"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4711,21 +3851,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-87"
+                            "Next": "ETL-200001-delete-60"
                         },
-                        "SP-200001-delete-87": {
+                        "ETL-200001-delete-60": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4748,7 +3878,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-87"
+                                                    "Value": "ETL-200001-delete-60"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4764,21 +3894,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-88"
+                            "Next": "ETL-200001-delete-79"
                         },
-                        "SP-200001-delete-88": {
+                        "ETL-200001-delete-79": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4801,7 +3921,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-88"
+                                                    "Value": "ETL-200001-delete-79"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4817,19 +3937,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-89"
+                            "Next": "ETL-200001-delete-97"
                         },
-                        "SP-200001-delete-89": {
+                        "ETL-200001-delete-97": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -4854,7 +3964,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-89"
+                                                    "Value": "ETL-200001-delete-97"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4870,27 +3980,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 90-94",
-                    "StartAt": "SP-200001-delete-90",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-25 (ETL to delete records from staging.star_loan.loan_lender_user_access_25 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-25",
                     "States": {
-                        "SP-200001-delete-90": {
+                        "ETL-200001-delete-25": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4913,7 +4013,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-90"
+                                                    "Value": "ETL-200001-delete-25"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4929,21 +4029,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-91"
+                            "Next": "ETL-200001-delete-43"
                         },
-                        "SP-200001-delete-91": {
+                        "ETL-200001-delete-43": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4966,7 +4056,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-91"
+                                                    "Value": "ETL-200001-delete-43"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -4982,21 +4072,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-92"
+                            "Next": "ETL-200001-delete-61"
                         },
-                        "SP-200001-delete-92": {
+                        "ETL-200001-delete-61": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -5019,7 +4099,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-92"
+                                                    "Value": "ETL-200001-delete-61"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -5035,21 +4115,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-93"
+                            "Next": "ETL-200001-delete-8"
                         },
-                        "SP-200001-delete-93": {
+                        "ETL-200001-delete-8": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -5072,7 +4142,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-93"
+                                                    "Value": "ETL-200001-delete-8"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -5088,19 +4158,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-94"
+                            "Next": "ETL-200001-delete-98"
                         },
-                        "SP-200001-delete-94": {
+                        "ETL-200001-delete-98": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -5125,7 +4185,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-94"
+                                                    "Value": "ETL-200001-delete-98"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -5141,27 +4201,17 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }
                 },
                 {
-                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 95-99",
-                    "StartAt": "SP-200001-delete-95",
+                    "Comment": "Sequential ETL chain beginning with ETL-200001-delete-26 (ETL to delete records from staging.star_loan.loan_lender_user_access_26 using staging.history_octane.deal_lender_user as the primary source)",
+                    "StartAt": "ETL-200001-delete-26",
                     "States": {
-                        "SP-200001-delete-95": {
+                        "ETL-200001-delete-26": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -5184,7 +4234,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-95"
+                                                    "Value": "ETL-200001-delete-26"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -5200,21 +4250,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-96"
+                            "Next": "ETL-200001-delete-44"
                         },
-                        "SP-200001-delete-96": {
+                        "ETL-200001-delete-44": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -5237,7 +4277,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-96"
+                                                    "Value": "ETL-200001-delete-44"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -5253,21 +4293,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-97"
+                            "Next": "ETL-200001-delete-62"
                         },
-                        "SP-200001-delete-97": {
+                        "ETL-200001-delete-62": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -5290,7 +4320,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-97"
+                                                    "Value": "ETL-200001-delete-62"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -5306,21 +4336,11 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-98"
+                            "Next": "ETL-200001-delete-80"
                         },
-                        "SP-200001-delete-98": {
+                        "ETL-200001-delete-80": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -5343,7 +4363,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-98"
+                                                    "Value": "ETL-200001-delete-80"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -5359,19 +4379,9 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "Next": "SP-200001-delete-99"
+                            "Next": "ETL-200001-delete-99"
                         },
-                        "SP-200001-delete-99": {
+                        "ETL-200001-delete-99": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
                             "ResultPath": null,
@@ -5396,7 +4406,7 @@
                                             "Environment": [
                                                 {
                                                     "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-99"
+                                                    "Value": "ETL-200001-delete-99"
                                                 },
                                                 {
                                                     "Name": "INPUT_DATA",
@@ -5412,16 +4422,6 @@
                                     ]
                                 }
                             },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
                             "End": true
                         }
                     }

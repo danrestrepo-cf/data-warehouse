@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100625 - ETL to insert records into staging.history_octane.property_repairs_holdback_calc_type using staging.staging_octane.property_repairs_holdback_calc_type as the primary source",
-    "StartAt": "SP-100625",
+    "StartAt": "ETL-100625",
     "States": {
-        "SP-100625": {
+        "ETL-100625": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100625"
+                                    "Value": "ETL-100625"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

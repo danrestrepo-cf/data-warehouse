@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100643 - ETL to insert records into staging.history_octane.req_decision_status_type using staging.staging_octane.req_decision_status_type as the primary source",
-    "StartAt": "SP-100643",
+    "StartAt": "ETL-100643",
     "States": {
-        "SP-100643": {
+        "ETL-100643": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100643"
+                                    "Value": "ETL-100643"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

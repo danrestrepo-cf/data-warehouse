@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100657 - ETL to insert records into staging.history_octane.solar_panel_type using staging.staging_octane.solar_panel_type as the primary source",
-    "StartAt": "SP-100657",
+    "StartAt": "ETL-100657",
     "States": {
-        "SP-100657": {
+        "ETL-100657": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100657"
+                                    "Value": "ETL-100657"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

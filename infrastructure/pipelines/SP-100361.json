@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100361 - ETL to insert records into staging.history_octane.deal_note_comment using staging.staging_octane.deal_note_comment as the primary source",
-    "StartAt": "SP-100361",
+    "StartAt": "ETL-100361",
     "States": {
-        "SP-100361": {
+        "ETL-100361": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100361"
+                                    "Value": "ETL-100361"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

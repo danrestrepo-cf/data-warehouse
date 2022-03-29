@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100010 - ETL to insert records into staging.history_octane.deal_du using staging.staging_octane.deal_du as the primary source",
-    "StartAt": "SP-100010",
+    "StartAt": "ETL-100010",
     "States": {
-        "SP-100010": {
+        "ETL-100010": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100010"
+                                    "Value": "ETL-100010"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

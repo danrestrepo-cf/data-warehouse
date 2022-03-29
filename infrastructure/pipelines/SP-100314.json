@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100314 - ETL to insert records into staging.history_octane.borrower_credit_inquiry using staging.staging_octane.borrower_credit_inquiry as the primary source",
-    "StartAt": "SP-100314",
+    "StartAt": "ETL-100314",
     "States": {
-        "SP-100314": {
+        "ETL-100314": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100314"
+                                    "Value": "ETL-100314"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

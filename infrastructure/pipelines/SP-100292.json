@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100292 - ETL to insert records into staging.history_octane.bid_pool_file using staging.staging_octane.bid_pool_file as the primary source",
-    "StartAt": "SP-100292",
+    "StartAt": "ETL-100292",
     "States": {
-        "SP-100292": {
+        "ETL-100292": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100292"
+                                    "Value": "ETL-100292"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

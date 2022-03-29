@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100357 - ETL to insert records into staging.history_octane.deal_data_vendor_document_import using staging.staging_octane.deal_data_vendor_document_import as the primary source",
-    "StartAt": "SP-100357",
+    "StartAt": "ETL-100357",
     "States": {
-        "SP-100357": {
+        "ETL-100357": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100357"
+                                    "Value": "ETL-100357"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

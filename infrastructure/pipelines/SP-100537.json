@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100537 - ETL to insert records into staging.history_octane.interim_funder_mers_registration_type using staging.staging_octane.interim_funder_mers_registration_type as the primary source",
-    "StartAt": "SP-100537",
+    "StartAt": "ETL-100537",
     "States": {
-        "SP-100537": {
+        "ETL-100537": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100537"
+                                    "Value": "ETL-100537"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

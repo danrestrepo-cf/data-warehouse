@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100037 - ETL to insert records into staging.history_octane.mortech_account using staging.staging_octane.mortech_account as the primary source",
-    "StartAt": "SP-100037",
+    "StartAt": "ETL-100037",
     "States": {
-        "SP-100037": {
+        "ETL-100037": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100037"
+                                    "Value": "ETL-100037"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

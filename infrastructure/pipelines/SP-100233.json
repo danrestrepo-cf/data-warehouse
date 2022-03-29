@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100233 - ETL to insert records into staging.history_octane.mcr_snapshot using staging.staging_octane.mcr_snapshot as the primary source",
-    "StartAt": "SP-100233",
+    "StartAt": "ETL-100233",
     "States": {
-        "SP-100233": {
+        "ETL-100233": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100233"
+                                    "Value": "ETL-100233"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

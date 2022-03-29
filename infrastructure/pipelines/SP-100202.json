@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100202 - ETL to insert records into staging.history_octane.wf_step_deal_check_definition using staging.staging_octane.wf_step_deal_check_definition as the primary source",
-    "StartAt": "SP-100202",
+    "StartAt": "ETL-100202",
     "States": {
-        "SP-100202": {
+        "ETL-100202": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100202"
+                                    "Value": "ETL-100202"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

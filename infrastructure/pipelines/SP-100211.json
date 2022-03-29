@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100211 - ETL to insert records into staging.history_octane.smart_ledger_plan_case_group using staging.staging_octane.smart_ledger_plan_case_group as the primary source",
-    "StartAt": "SP-100211",
+    "StartAt": "ETL-100211",
     "States": {
-        "SP-100211": {
+        "ETL-100211": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100211"
+                                    "Value": "ETL-100211"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100901 - ETL to insert records into staging.history_octane.config_note using staging.staging_octane.config_note as the primary source",
-    "StartAt": "SP-100901",
+    "StartAt": "ETL-100901",
     "States": {
-        "SP-100901": {
+        "ETL-100901": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100901"
+                                    "Value": "ETL-100901"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

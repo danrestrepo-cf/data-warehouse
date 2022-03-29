@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100223 - ETL to insert records into staging.history_octane.lender_lock_id_ticker using staging.staging_octane.lender_lock_id_ticker as the primary source",
-    "StartAt": "SP-100223",
+    "StartAt": "ETL-100223",
     "States": {
-        "SP-100223": {
+        "ETL-100223": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100223"
+                                    "Value": "ETL-100223"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

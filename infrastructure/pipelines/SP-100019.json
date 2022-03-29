@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100019 - ETL to insert records into staging.history_octane.account using staging.staging_octane.account as the primary source",
-    "StartAt": "SP-100019",
+    "StartAt": "ETL-100019",
     "States": {
-        "SP-100019": {
+        "ETL-100019": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100019"
+                                    "Value": "ETL-100019"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

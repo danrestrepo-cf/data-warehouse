@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100636 - ETL to insert records into staging.history_octane.qualified_mortgage_status_type using staging.staging_octane.qualified_mortgage_status_type as the primary source",
-    "StartAt": "SP-100636",
+    "StartAt": "ETL-100636",
     "States": {
-        "SP-100636": {
+        "ETL-100636": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100636"
+                                    "Value": "ETL-100636"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100140 - ETL to insert records into staging.history_octane.master_property_insurance using staging.staging_octane.master_property_insurance as the primary source",
-    "StartAt": "SP-100140",
+    "StartAt": "ETL-100140",
     "States": {
-        "SP-100140": {
+        "ETL-100140": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100140"
+                                    "Value": "ETL-100140"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100234 - ETL to insert records into staging.history_octane.role_config_export_permission using staging.staging_octane.role_config_export_permission as the primary source",
-    "StartAt": "SP-100234",
+    "StartAt": "ETL-100234",
     "States": {
-        "SP-100234": {
+        "ETL-100234": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100234"
+                                    "Value": "ETL-100234"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

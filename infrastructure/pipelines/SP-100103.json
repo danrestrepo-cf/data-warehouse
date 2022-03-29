@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100103 - ETL to insert records into staging.history_octane.mercury_network_status_request using staging.staging_octane.mercury_network_status_request as the primary source",
-    "StartAt": "SP-100103",
+    "StartAt": "ETL-100103",
     "States": {
-        "SP-100103": {
+        "ETL-100103": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100103"
+                                    "Value": "ETL-100103"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100624 - ETL to insert records into staging.history_octane.property_category_type using staging.staging_octane.property_category_type as the primary source",
-    "StartAt": "SP-100624",
+    "StartAt": "ETL-100624",
     "States": {
-        "SP-100624": {
+        "ETL-100624": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100624"
+                                    "Value": "ETL-100624"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

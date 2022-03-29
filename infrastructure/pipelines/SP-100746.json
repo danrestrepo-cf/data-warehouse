@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100746 - ETL to insert records into staging.history_octane.hmda_ethnicity_2017_type using staging.staging_octane.hmda_ethnicity_2017_type as the primary source",
-    "StartAt": "SP-100746",
+    "StartAt": "ETL-100746",
     "States": {
-        "SP-100746": {
+        "ETL-100746": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100746"
+                                    "Value": "ETL-100746"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

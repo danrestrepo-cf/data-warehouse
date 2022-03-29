@@ -1,8 +1,8 @@
 {
     "Comment": "SP-400002-insert-update - ETL to insert_update records into staging.data_mart_business_applications.edw_current_parent_nodes using staging.history_octane.org_node as the primary source",
-    "StartAt": "SP-400002-insert-update",
+    "StartAt": "ETL-400002-insert-update",
     "States": {
-        "SP-400002-insert-update": {
+        "ETL-400002-insert-update": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-400002-insert-update"
+                                    "Value": "ETL-400002-insert-update"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

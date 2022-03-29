@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100668 - ETL to insert records into staging.history_octane.title_manner_held_type using staging.staging_octane.title_manner_held_type as the primary source",
-    "StartAt": "SP-100668",
+    "StartAt": "ETL-100668",
     "States": {
-        "SP-100668": {
+        "ETL-100668": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100668"
+                                    "Value": "ETL-100668"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

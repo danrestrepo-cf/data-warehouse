@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100266 - ETL to insert records into staging.history_octane.company_license using staging.staging_octane.company_license as the primary source",
-    "StartAt": "SP-100266",
+    "StartAt": "ETL-100266",
     "States": {
-        "SP-100266": {
+        "ETL-100266": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100266"
+                                    "Value": "ETL-100266"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

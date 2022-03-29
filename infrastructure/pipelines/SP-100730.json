@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100730 - ETL to insert records into staging.history_octane.doc_approval_type using staging.staging_octane.doc_approval_type as the primary source",
-    "StartAt": "SP-100730",
+    "StartAt": "ETL-100730",
     "States": {
-        "SP-100730": {
+        "ETL-100730": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100730"
+                                    "Value": "ETL-100730"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

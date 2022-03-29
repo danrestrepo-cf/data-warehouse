@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100121 - ETL to insert records into staging.history_octane.du_special_feature_code using staging.staging_octane.du_special_feature_code as the primary source",
-    "StartAt": "SP-100121",
+    "StartAt": "ETL-100121",
     "States": {
-        "SP-100121": {
+        "ETL-100121": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100121"
+                                    "Value": "ETL-100121"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100495 - ETL to insert records into staging.history_octane.du_recommendation_type using staging.staging_octane.du_recommendation_type as the primary source",
-    "StartAt": "SP-100495",
+    "StartAt": "ETL-100495",
     "States": {
-        "SP-100495": {
+        "ETL-100495": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100495"
+                                    "Value": "ETL-100495"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

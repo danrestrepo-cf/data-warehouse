@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100536 - ETL to insert records into staging.history_octane.interest_only_type using staging.staging_octane.interest_only_type as the primary source",
-    "StartAt": "SP-100536",
+    "StartAt": "ETL-100536",
     "States": {
-        "SP-100536": {
+        "ETL-100536": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100536"
+                                    "Value": "ETL-100536"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

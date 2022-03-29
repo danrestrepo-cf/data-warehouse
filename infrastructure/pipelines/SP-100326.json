@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100326 - ETL to insert records into staging.history_octane.profit_margin_detail using staging.staging_octane.profit_margin_detail as the primary source",
-    "StartAt": "SP-100326",
+    "StartAt": "ETL-100326",
     "States": {
-        "SP-100326": {
+        "ETL-100326": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100326"
+                                    "Value": "ETL-100326"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

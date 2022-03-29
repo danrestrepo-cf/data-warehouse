@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100732 - ETL to insert records into staging.history_octane.doc_package_delivery_method_type using staging.staging_octane.doc_package_delivery_method_type as the primary source",
-    "StartAt": "SP-100732",
+    "StartAt": "ETL-100732",
     "States": {
-        "SP-100732": {
+        "ETL-100732": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100732"
+                                    "Value": "ETL-100732"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

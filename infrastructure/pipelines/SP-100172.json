@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100172 - ETL to insert records into staging.history_octane.borrower_public_record using staging.staging_octane.borrower_public_record as the primary source",
-    "StartAt": "SP-100172",
+    "StartAt": "ETL-100172",
     "States": {
-        "SP-100172": {
+        "ETL-100172": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100172"
+                                    "Value": "ETL-100172"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

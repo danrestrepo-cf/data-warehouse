@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100288 - ETL to insert records into staging.history_octane.rate_sheet using staging.staging_octane.rate_sheet as the primary source",
-    "StartAt": "SP-100288",
+    "StartAt": "ETL-100288",
     "States": {
-        "SP-100288": {
+        "ETL-100288": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100288"
+                                    "Value": "ETL-100288"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

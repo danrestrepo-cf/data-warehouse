@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100151 - ETL to insert records into staging.history_octane.lender_lock_major using staging.staging_octane.lender_lock_major as the primary source",
-    "StartAt": "SP-100151",
+    "StartAt": "ETL-100151",
     "States": {
-        "SP-100151": {
+        "ETL-100151": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100151"
+                                    "Value": "ETL-100151"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

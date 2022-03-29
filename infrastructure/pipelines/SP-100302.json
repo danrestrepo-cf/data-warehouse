@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100302 - ETL to insert records into staging.history_octane.appraisal_order_request using staging.staging_octane.appraisal_order_request as the primary source",
-    "StartAt": "SP-100302",
+    "StartAt": "ETL-100302",
     "States": {
-        "SP-100302": {
+        "ETL-100302": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100302"
+                                    "Value": "ETL-100302"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

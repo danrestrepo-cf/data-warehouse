@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100467 - ETL to insert records into staging.history_octane.deal_check_type using staging.staging_octane.deal_check_type as the primary source",
-    "StartAt": "SP-100467",
+    "StartAt": "ETL-100467",
     "States": {
-        "SP-100467": {
+        "ETL-100467": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100467"
+                                    "Value": "ETL-100467"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

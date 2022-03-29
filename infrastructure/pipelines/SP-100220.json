@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100220 - ETL to insert records into staging.history_octane.channel using staging.staging_octane.channel as the primary source",
-    "StartAt": "SP-100220",
+    "StartAt": "ETL-100220",
     "States": {
-        "SP-100220": {
+        "ETL-100220": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100220"
+                                    "Value": "ETL-100220"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

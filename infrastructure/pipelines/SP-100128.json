@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100128 - ETL to insert records into staging.history_octane.borrower_dependent using staging.staging_octane.borrower_dependent as the primary source",
-    "StartAt": "SP-100128",
+    "StartAt": "ETL-100128",
     "States": {
-        "SP-100128": {
+        "ETL-100128": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100128"
+                                    "Value": "ETL-100128"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

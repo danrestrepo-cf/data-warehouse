@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100809 - ETL to insert records into staging.history_octane.veteran_status_type using staging.staging_octane.veteran_status_type as the primary source",
-    "StartAt": "SP-100809",
+    "StartAt": "ETL-100809",
     "States": {
-        "SP-100809": {
+        "ETL-100809": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100809"
+                                    "Value": "ETL-100809"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

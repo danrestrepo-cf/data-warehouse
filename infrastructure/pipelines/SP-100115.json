@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100115 - ETL to insert records into staging.history_octane.custom_form using staging.staging_octane.custom_form as the primary source",
-    "StartAt": "SP-100115",
+    "StartAt": "ETL-100115",
     "States": {
-        "SP-100115": {
+        "ETL-100115": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100115"
+                                    "Value": "ETL-100115"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

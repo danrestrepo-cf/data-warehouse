@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100776 - ETL to insert records into staging.history_octane.mortgage_type using staging.staging_octane.mortgage_type as the primary source",
-    "StartAt": "SP-100776",
+    "StartAt": "ETL-100776",
     "States": {
-        "SP-100776": {
+        "ETL-100776": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100776"
+                                    "Value": "ETL-100776"
                                 },
                                 {
                                     "Name": "INPUT_DATA",
@@ -53,12 +53,12 @@
                     "Next": "Success"
                 }
             ],
-            "Default": "Parallel"
+            "Default": "ETL-100776 Next Step Functions"
         },
         "Success": {
             "Type": "Succeed"
         },
-        "Parallel": {
+        "ETL-100776 Next Step Functions": {
             "Type": "Parallel",
             "End": true,
             "Branches": [

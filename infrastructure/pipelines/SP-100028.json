@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100028 - ETL to insert records into staging.history_octane.account_grant_program using staging.staging_octane.account_grant_program as the primary source",
-    "StartAt": "SP-100028",
+    "StartAt": "ETL-100028",
     "States": {
-        "SP-100028": {
+        "ETL-100028": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100028"
+                                    "Value": "ETL-100028"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

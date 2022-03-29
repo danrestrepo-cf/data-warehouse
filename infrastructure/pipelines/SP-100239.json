@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100239 - ETL to insert records into staging.history_octane.role_performer_assign using staging.staging_octane.role_performer_assign as the primary source",
-    "StartAt": "SP-100239",
+    "StartAt": "ETL-100239",
     "States": {
-        "SP-100239": {
+        "ETL-100239": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100239"
+                                    "Value": "ETL-100239"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

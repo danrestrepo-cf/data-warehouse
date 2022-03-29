@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100693 - ETL to insert records into staging.history_octane.wf_step_timeout_type using staging.staging_octane.wf_step_timeout_type as the primary source",
-    "StartAt": "SP-100693",
+    "StartAt": "ETL-100693",
     "States": {
-        "SP-100693": {
+        "ETL-100693": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100693"
+                                    "Value": "ETL-100693"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

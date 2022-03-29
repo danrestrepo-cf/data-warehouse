@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100743 - ETL to insert records into staging.history_octane.fund_source_type using staging.staging_octane.fund_source_type as the primary source",
-    "StartAt": "SP-100743",
+    "StartAt": "ETL-100743",
     "States": {
-        "SP-100743": {
+        "ETL-100743": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100743"
+                                    "Value": "ETL-100743"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

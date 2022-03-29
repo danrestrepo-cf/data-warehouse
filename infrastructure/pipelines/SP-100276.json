@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100276 - ETL to insert records into staging.history_octane.branch_account_executive using staging.staging_octane.branch_account_executive as the primary source",
-    "StartAt": "SP-100276",
+    "StartAt": "ETL-100276",
     "States": {
-        "SP-100276": {
+        "ETL-100276": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100276"
+                                    "Value": "ETL-100276"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100062 - ETL to insert records into staging.history_octane.contractor using staging.staging_octane.contractor as the primary source",
-    "StartAt": "SP-100062",
+    "StartAt": "ETL-100062",
     "States": {
-        "SP-100062": {
+        "ETL-100062": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100062"
+                                    "Value": "ETL-100062"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

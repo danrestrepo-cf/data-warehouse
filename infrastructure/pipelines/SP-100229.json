@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100229 - ETL to insert records into staging.history_octane.mortgage_credit_certificate_issuer using staging.staging_octane.mortgage_credit_certificate_issuer as the primary source",
-    "StartAt": "SP-100229",
+    "StartAt": "ETL-100229",
     "States": {
-        "SP-100229": {
+        "ETL-100229": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100229"
+                                    "Value": "ETL-100229"
                                 },
                                 {
                                     "Name": "INPUT_DATA",
