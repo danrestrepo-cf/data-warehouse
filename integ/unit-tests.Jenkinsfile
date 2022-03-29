@@ -32,6 +32,11 @@ pipeline {
                 }
             }
         }
+        stage('Install requisite python libraries') {
+            steps {
+                sh 'pip3 install -r ./python-utilities/requirements.txt'
+            }
+        }
         stage("Test via Jenkins agent") {
             steps {
                 dir("./pentaho/test") {
