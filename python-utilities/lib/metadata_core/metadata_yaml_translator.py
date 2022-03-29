@@ -644,7 +644,7 @@ class MetadataWriter:
     @staticmethod
     def write_table_metadata_yaml_file(output_file_path: str, metadata: dict):
         """Write the given metadata dict to a YAML file."""
-        with open(output_file_path, 'w') as output_file:
+        with open(output_file_path, 'w', newline='\n') as output_file:
             yaml.dump(metadata, output_file, default_flow_style=False, sort_keys=False)
 
     @staticmethod

@@ -57,7 +57,7 @@ def main():
                                 # modify metadata to adhere to new structure
                                 update_structure(table_yaml, database, schema)
                                 # overwrite file with new structure
-                                with open(table_file.path, 'w') as file:
+                                with open(table_file.path, 'w', newline='\n') as file:
                                     yaml.dump(table_yaml, file, default_flow_style=False, sort_keys=False)
 
 

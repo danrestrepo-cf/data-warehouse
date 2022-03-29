@@ -77,9 +77,8 @@ def format_data_for_outputting(state_machine_configs: dict) -> dict:
 
 def write_to_file(file_contents: str, file_path: str):
     try:
-        f = open(file_path, "w")
-        f.write(file_contents)
-        f.close()
+        with open(file_path, "w", newline='\n') as file:
+            file.write(file_contents)
     except Exception as e:
         print(f"Could not open or save file {file_path}!")
         print(f"The file's contents would have been: {str(file_contents)}")
