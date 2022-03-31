@@ -63,3 +63,7 @@ ALTER TABLE history_octane.proposal_construction
 
 ALTER TABLE history_octane.lender_user
     RENAME COLUMN lu_esign_only TO lu_esign_by_email;
+
+--star_loan
+ALTER TABLE star_loan.lender_user_dim
+    RENAME COLUMN esign_only_flag TO esign_by_email_flag;
