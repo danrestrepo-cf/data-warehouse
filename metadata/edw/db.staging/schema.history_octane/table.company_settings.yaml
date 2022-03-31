@@ -77,6 +77,10 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.cs_fha_non_supervised_mortgagee
+  cs_fha_origination_sponsored:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.cs_fha_origination_sponsored
   cs_fha_settings_present:
     data_type: VARCHAR(128)
     source:
@@ -178,6 +182,7 @@ etls:
            , staging_table.cs_fha_settings_present
            , staging_table.cs_va_settings_present
            , staging_table.cs_usda_settings_present
+           , staging_table.cs_fha_origination_sponsored
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.company_settings staging_table
@@ -208,6 +213,7 @@ etls:
            , history_table.cs_fha_settings_present
            , history_table.cs_va_settings_present
            , history_table.cs_usda_settings_present
+           , history_table.cs_fha_origination_sponsored
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.company_settings history_table
