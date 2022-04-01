@@ -93,10 +93,17 @@ pipeline {
                 sh "./edw-metadata-maintenance.sh ${env.CONFIG_METADATA_MAINTENANCE_FILENAME}"
             }
         }
+        stage('Run EDW step function generator') {
+            steps {
+                dir('./python-utilities/scripts/') {
+                    sh "python3 ./generate_edw_step_function_inventory.py"
+                }
+            }
+        }
     }
     post {
         always {
-            archiveArtifacts artifacts: "**/metadata/**/*.yaml, **/${env.CONFIG_METADATA_MAINTENANCE_FILENAME}"
+            archiveArtifacts artifacts: "**/metadata/**/*.yaml, **/${env.CONFIG_METADATA_MAINTENANCE_FILENAME}, **/infrastructure/pipelines/*.json"
             zoom(currentBuild.currentResult)
             cleanWs()
         }
@@ -105,7 +112,6 @@ pipeline {
         }
     }
 }
-
 
 def zoom(status) {
     wrap([$class: 'BuildUser']) {
