@@ -1,0 +1,35 @@
+name: org_node_doc
+primary_key:
+- ond_pid
+foreign_keys:
+  fk_org_node_doc_1:
+    columns:
+    - ond_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fk_org_node_doc_2:
+    columns:
+    - ond_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: staging_octane
+      table: org_node
+columns:
+  ond_account_pid:
+    data_type: BIGINT
+  ond_description:
+    data_type: VARCHAR(256)
+  ond_name:
+    data_type: VARCHAR(128)
+  ond_org_node_pid:
+    data_type: BIGINT
+  ond_pid:
+    data_type: BIGINT
+  ond_url:
+    data_type: VARCHAR(2048)
+  ond_version:
+    data_type: INTEGER

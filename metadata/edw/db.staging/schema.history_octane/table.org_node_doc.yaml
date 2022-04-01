@@ -1,0 +1,100 @@
+name: org_node_doc
+primary_source_table: staging.staging_octane.org_node_doc
+primary_key:
+- ond_pid
+- ond_version
+foreign_keys:
+  fk_org_node_doc_1:
+    columns:
+    - ond_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_org_node_doc_2:
+    columns:
+    - ond_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: history_octane
+      table: org_node
+columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  ond_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ond_account_pid
+  ond_description:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.ond_description
+  ond_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ond_name
+  ond_org_node_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ond_org_node_pid
+  ond_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ond_pid
+  ond_url:
+    data_type: VARCHAR(2048)
+    source:
+      field: primary_source_table.columns.ond_url
+  ond_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ond_version
+etls:
+  SP-100908:
+    input_type: table
+    output_type: insert
+    json_output_field: ond_pid
+    truncate_table: false
+    container_memory: 2048
+    input_sql: |-
+      --finding records to insert into history_octane.org_node_doc
+      SELECT staging_table.ond_pid
+           , staging_table.ond_version
+           , staging_table.ond_account_pid
+           , staging_table.ond_org_node_pid
+           , staging_table.ond_name
+           , staging_table.ond_description
+           , staging_table.ond_url
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.org_node_doc staging_table
+      LEFT JOIN history_octane.org_node_doc history_table
+                ON staging_table.ond_pid = history_table.ond_pid
+                    AND staging_table.ond_version = history_table.ond_version
+      WHERE history_table.ond_pid IS NULL
+      UNION ALL
+      SELECT history_table.ond_pid
+           , history_table.ond_version + 1
+           , history_table.ond_account_pid
+           , history_table.ond_org_node_pid
+           , history_table.ond_name
+           , history_table.ond_description
+           , history_table.ond_url
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.org_node_doc history_table
+      LEFT JOIN staging_octane.org_node_doc staging_table
+                ON staging_table.ond_pid = history_table.ond_pid
+      WHERE staging_table.ond_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.org_node_doc deleted_records
+          WHERE deleted_records.ond_pid = history_table.ond_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

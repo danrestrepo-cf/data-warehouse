@@ -107,10 +107,10 @@ columns:
     source:
       field: primary_source_table.columns.lu_allow_external_ip
     update_flag: true
-  esign_only_flag:
+  esign_by_email_flag:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.lu_esign_only
+      field: primary_source_table.columns.lu_esign_by_email
     update_flag: true
   fax_use_branch_flag:
     data_type: BOOLEAN
@@ -321,7 +321,7 @@ etls:
                , primary_table.lu_allow_external_ip AS allow_external_ip_flag
                , primary_table.lu_total_workload_cap AS total_workload_cap
                , primary_table.lu_schedule_once_booking_page_id AS schedule_once_booking_page_id
-               , primary_table.lu_esign_only AS esign_only_flag
+               , primary_table.lu_esign_by_email AS esign_by_email_flag
                , primary_table.lu_smart_app_enabled AS smart_app_enabled_flag
                , primary_table.lu_default_credit_bureau_type AS default_credit_bureau_code
                , primary_table.lu_originator_id AS originator_id
