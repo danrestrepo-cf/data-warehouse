@@ -163,10 +163,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lu_email_signature_title
-  lu_esign_only:
+  lu_esign_by_email:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.lu_esign_only
+      field: primary_source_table.columns.lu_esign_by_email
   lu_fax:
     data_type: VARCHAR(32)
     source:
@@ -413,7 +413,7 @@ etls:
            , staging_table.lu_total_workload_cap
            , staging_table.lu_schedule_once_booking_page_id
            , staging_table.lu_performer_team_pid
-           , staging_table.lu_esign_only
+           , staging_table.lu_esign_by_email
            , staging_table.lu_smart_app_enabled
            , staging_table.lu_default_lead_source_pid
            , staging_table.lu_default_credit_bureau_type
@@ -486,7 +486,7 @@ etls:
            , history_table.lu_total_workload_cap
            , history_table.lu_schedule_once_booking_page_id
            , history_table.lu_performer_team_pid
-           , history_table.lu_esign_only
+           , history_table.lu_esign_by_email
            , history_table.lu_smart_app_enabled
            , history_table.lu_default_lead_source_pid
            , history_table.lu_default_credit_bureau_type
