@@ -142,7 +142,6 @@ def generate_history_octane_metadata(octane_metadata: DataWarehouseMetadata,
 
     current_max_process_number = determine_max_process_number(yaml_history_octane_metadata)
 
-    metadata_with_history_octane = copy.deepcopy(octane_metadata)
     history_octane_schema = SchemaMetadata('history_octane')
     metadata_with_history_octane.get_database('staging').add_schema(history_octane_schema)
     for staging_table in staging_octane_schema.tables:
@@ -161,7 +160,7 @@ def generate_history_octane_metadata(octane_metadata: DataWarehouseMetadata,
         history_table.add_column(ColumnMetadata(name='data_source_deleted_flag', data_type='BOOLEAN'))
         history_table.add_column(ColumnMetadata(name='etl_batch_id', data_type='TEXT'))
         for staging_fk in staging_table.foreign_keys:
-            foreign_table_path = staging_fk.table
+            foreign_table_path = copy.copy(staging_fk.table)
             foreign_table_path.schema = 'history_octane'
             history_fk = ForeignKeyMetadata(
                 name=staging_fk.name,
