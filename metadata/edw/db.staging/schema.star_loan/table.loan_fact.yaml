@@ -219,6 +219,14 @@ foreign_keys:
       - dwid
       schema: star_loan
       table: borrower_lending_profile_dim
+  fk_loan_fact__b1_borrower_hmda_collection_dwid:
+    columns:
+    - b1_borrower_hmda_collection_dwid
+    references:
+      columns:
+      - dwid
+      schema: star_loan
+      table: borrower_hmda_collection_dim
   fk_loan_fact__primary_application_dwid:
     columns:
     - primary_application_dwid
@@ -875,6 +883,9 @@ columns:
     data_type: BIGINT
     update_flag: true
   b1_borrower_lending_profile_dwid:
+    data_type: BIGINT
+    update_flag: true
+  b1_borrower_hmda_collection_dwid:
     data_type: BIGINT
     update_flag: true
   primary_application_dwid:

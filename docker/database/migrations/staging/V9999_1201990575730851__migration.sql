@@ -29,3 +29,9 @@ CREATE INDEX idx_borrower_lkup__data_source_integration_id ON star_loan.borrower
 CREATE INDEX idx_borrower_lkup__borrower_diwd ON star_loan.borrower_lkup (borrower_dwid);
 CREATE INDEX idx_borrower_lkup__borrower_pid ON star_loan.borrower_lkup (borrower_pid);
 CREATE INDEX idx_borrower_lkup__borrower_hmda_collection_dwid ON star_loan.borrower_lkup (borrower_hmda_collection_dwid);
+
+--add unique dim column to loan_fact
+ALTER TABLE star_loan.loan_fact
+    ADD COLUMN b1_borrower_hmda_collection_dwid BIGINT;
+
+CREATE INDEX idx_loan_fact__b1_borrower_hmda_collection_dwid ON star_loan.loan_fact (b1_borrower_hmda_collection_dwid);
