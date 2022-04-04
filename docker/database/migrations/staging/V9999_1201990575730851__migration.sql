@@ -3,6 +3,11 @@
 -- https://app.asana.com/0/0/1201990575730851
 --
 
+--remove unique dim foreign key from borrower_dim
+ALTER TABLE star_loan.borrower_dim
+    DROP COLUMN borrower_hmda_collection_dwid;
+
+--create new lookup table for borrower-related unique dim dwids
 CREATE TABLE star_loan.borrower_lkup (
     dwid BIGSERIAL NOT NULL
         CONSTRAINT pk_borrower_lkup
