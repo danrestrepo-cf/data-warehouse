@@ -1,8 +1,8 @@
 {
     "Comment": "SP-200001-delete - Multiple ETLs affecting staging.star_loan.loan_lender_user_access",
-    "StartAt": "StartAt Parallel",
+    "StartAt": "StartAt_Parallel",
     "States": {
-        "StartAt Parallel": {
+        "StartAt_Parallel": {
             "Type": "Parallel",
             "End": true,
             "Branches": [
