@@ -2375,8 +2375,7 @@ step_functions:
                   FROM star_loan.borrower_lkup
               ) AS b1_borrower_lkup
                         ON borrower_b1_dim.dwid = b1_borrower_lkup.borrower_dwid
-                            AND b1_borrower_lkup.data_source_dwid = 1
-              -- star_loan.lender_user_dim: collateral_to_custodian
+                  -- star_loan.lender_user_dim: collateral_to_custodian
               LEFT JOIN (
                   SELECT lender_user_dim.*
                        , <<lender_user_dim_partial_load_condition>> AS include_record
