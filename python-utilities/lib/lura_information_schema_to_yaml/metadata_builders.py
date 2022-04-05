@@ -240,9 +240,9 @@ def remove_deleted_table_metadata_from_table(table_metadata: TableMetadata) -> T
         print(f"      Removing FK '{table_metadata_fk.name}")
         table_metadata.remove_foreign_key(table_metadata_fk.name)
 
-    # remove data from columns
+    # remove metadata from columns
     for column in table_metadata.columns:
-        print(f"      Removing data from column '{table_metadata.name}.{column.name}'")
+        print(f"      Removing metadata from column '{table_metadata.name}.{column.name}'")
         remove_deleted_column_metadata_from_column(column)
 
     return table_metadata

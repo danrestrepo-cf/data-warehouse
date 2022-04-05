@@ -66,6 +66,7 @@ class TestDeleteStepMetadataComparisonFunctions(unittest.TestCase):
                                                         'hardcoded_data_source': 'Octane',
                                                         'input_type': 'table',
                                                         'output_type': 'delete',
+                                                        # testing that output_table doesn't always match the ETL's parent metadata object
                                                         'output_table': 'staging.star_loan.table22'
                                                     }
                                                 }

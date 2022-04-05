@@ -67,6 +67,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
                                                         'hardcoded_data_source': 'Octane',
                                                         'input_type': 'table',
                                                         'output_type': 'insert',
+                                                        # testing that output_table doesn't always match the ETL's parent metadata object
                                                         'output_table': 'staging.history_octane.table22',
                                                         'truncate_table': False
                                                     }

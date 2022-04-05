@@ -142,10 +142,10 @@ class ETLStateMachineGenerator:
             target_table_str = f'{self.step_function.primary_target_table.database}.{self.step_function.primary_target_table.schema}.{self.step_function.primary_target_table.table}'
             state_machine = create_state_machine_scaffold(
                 comment=f'{self.step_function.name} - Multiple ETLs affecting {target_table_str}',
-                start_at='StartAt Parallel'
+                start_at='StartAt_Parallel'
             )
             start_at_parallel_state = create_parallel_state()
-            state_machine['States']['StartAt Parallel'] = start_at_parallel_state
+            state_machine['States']['StartAt_Parallel'] = start_at_parallel_state
             sorted_etls = sorted(self.step_function.etls, key=lambda etl: etl.process_name)
             # number of ETLs exceed the parallel_limit and the ETLs must be broken out into parallelized chains of sequential ETLs
             if self.step_function.has_parallel_limit and (len(sorted_etls) > self.step_function.parallel_limit):
@@ -288,7 +288,7 @@ class ETLStateMachineGenerator:
             next_step_function = self.get_step_function_metadata(etl.next_step_functions[0])
             state_machine['States'][message_state_name] = create_message_state(next_step_function)
         else:  # there are multiple next_step_functions which need to be wrapped in a parallel state
-            parallel_state_name = f'{etl.process_name} Next Step Functions'
+            parallel_state_name = f'{etl.process_name}_Next_Step_Functions'
             self.add_load_type_choice(state_machine, next_state_name=parallel_state_name)
             state_machine['States'][parallel_state_name] = create_parallel_state()
             for next_step_function_name in sorted(etl.next_step_functions):

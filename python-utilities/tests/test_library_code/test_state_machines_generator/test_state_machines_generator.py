@@ -281,11 +281,11 @@ class TestNonGroupStateMachines(StateMachineTestCase):
         )
 
     def test_sfn_with_multiple_etls_starts_at_a_parallel_step_which_triggers_all_etls(self):
-        self.assertEqual('StartAt Parallel', self.state_machines['SP-11']['StartAt'])
-        self.assertEqual('Parallel', self.state_machines['SP-11']['States']['StartAt Parallel']['Type'])
-        self.assertTrue(self.state_machines['SP-11']['States']['StartAt Parallel']['End'])
-        self.assertEqual('ETL-101', self.state_machines['SP-11']['States']['StartAt Parallel']['Branches'][0]['StartAt'])
-        self.assertEqual('ETL-102', self.state_machines['SP-11']['States']['StartAt Parallel']['Branches'][1]['StartAt'])
+        self.assertEqual('StartAt_Parallel', self.state_machines['SP-11']['StartAt'])
+        self.assertEqual('Parallel', self.state_machines['SP-11']['States']['StartAt_Parallel']['Type'])
+        self.assertTrue(self.state_machines['SP-11']['States']['StartAt_Parallel']['End'])
+        self.assertEqual('ETL-101', self.state_machines['SP-11']['States']['StartAt_Parallel']['Branches'][0]['StartAt'])
+        self.assertEqual('ETL-102', self.state_machines['SP-11']['States']['StartAt_Parallel']['Branches'][1]['StartAt'])
         self.assertTaskStateEquals(
             expected_etl_name='ETL-101',
             expected_ecs_memory=4096,
@@ -293,7 +293,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             expected_resource_suffix='.waitForTaskToken',
             expect_to_have_end=False,
             null_result_path=False,
-            actual_state=self.state_machines['SP-11']['States']['StartAt Parallel']['Branches'][0]['States']['ETL-101']
+            actual_state=self.state_machines['SP-11']['States']['StartAt_Parallel']['Branches'][0]['States']['ETL-101']
         )
         self.assertTaskStateEquals(
             expected_etl_name='ETL-102',
@@ -302,60 +302,60 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             expected_resource_suffix='.waitForTaskToken',
             expect_to_have_end=False,
             null_result_path=False,
-            actual_state=self.state_machines['SP-11']['States']['StartAt Parallel']['Branches'][1]['States']['ETL-102']
+            actual_state=self.state_machines['SP-11']['States']['StartAt_Parallel']['Branches'][1]['States']['ETL-102']
         )
 
     def test_sfn_with_1_etl_and_multiple_next_step_functions_kicks_off_a_parallel_state_triggering_all_message_states(self):
         self.assertChoiceStateEquals(
-            expected_next_state_name='ETL-202 Next Step Functions',
+            expected_next_state_name='ETL-202_Next_Step_Functions',
             actual_state=self.state_machines['SP-22']['States']['Load_type_choice']
         )
         self.assertHasSuccessState(self.state_machines['SP-22'])
-        self.assertEqual('Parallel', self.state_machines['SP-22']['States']['ETL-202 Next Step Functions']['Type'])
-        self.assertTrue(self.state_machines['SP-22']['States']['ETL-202 Next Step Functions']['End'])
+        self.assertEqual('Parallel', self.state_machines['SP-22']['States']['ETL-202_Next_Step_Functions']['Type'])
+        self.assertTrue(self.state_machines['SP-22']['States']['ETL-202_Next_Step_Functions']['End'])
         self.assertEqual('SP-23_message',
-                         self.state_machines['SP-22']['States']['ETL-202 Next Step Functions']['Branches'][0]['StartAt'])
+                         self.state_machines['SP-22']['States']['ETL-202_Next_Step_Functions']['Branches'][0]['StartAt'])
         self.assertEqual('SP-24_message',
-                         self.state_machines['SP-22']['States']['ETL-202 Next Step Functions']['Branches'][1]['StartAt'])
+                         self.state_machines['SP-22']['States']['ETL-202_Next_Step_Functions']['Branches'][1]['StartAt'])
         self.assertMessageStateEquals(
             expected_target_table='table2',
             expected_step_function_name='SP-23',
-            actual_state=self.state_machines['SP-22']['States']['ETL-202 Next Step Functions']['Branches'][0]['States']['SP-23_message']
+            actual_state=self.state_machines['SP-22']['States']['ETL-202_Next_Step_Functions']['Branches'][0]['States']['SP-23_message']
         )
         self.assertMessageStateEquals(
             expected_target_table='table2',
             expected_step_function_name='SP-24',
-            actual_state=self.state_machines['SP-22']['States']['ETL-202 Next Step Functions']['Branches'][1]['States']['SP-24_message']
+            actual_state=self.state_machines['SP-22']['States']['ETL-202_Next_Step_Functions']['Branches'][1]['States']['SP-24_message']
         )
 
     def test_sfn_with_multiple_etls_and_multiple_next_step_functions_kicks_off_a_parallel_state_triggering_all_message_states(self):
-        etl101 = self.state_machines['SP-11']['States']['StartAt Parallel']['Branches'][0]
+        etl101 = self.state_machines['SP-11']['States']['StartAt_Parallel']['Branches'][0]
         self.assertChoiceStateEquals(
-            expected_next_state_name='ETL-101 Next Step Functions',
+            expected_next_state_name='ETL-101_Next_Step_Functions',
             actual_state=etl101['States']['Load_type_choice']
         )
         self.assertHasSuccessState(etl101)
-        self.assertEqual('Parallel', etl101['States']['ETL-101 Next Step Functions']['Type'])
-        self.assertTrue(etl101['States']['ETL-101 Next Step Functions']['End'])
-        self.assertEqual('SP-21_message', etl101['States']['ETL-101 Next Step Functions']['Branches'][0]['StartAt'])
-        self.assertEqual('SP-22_message', etl101['States']['ETL-101 Next Step Functions']['Branches'][1]['StartAt'])
+        self.assertEqual('Parallel', etl101['States']['ETL-101_Next_Step_Functions']['Type'])
+        self.assertTrue(etl101['States']['ETL-101_Next_Step_Functions']['End'])
+        self.assertEqual('SP-21_message', etl101['States']['ETL-101_Next_Step_Functions']['Branches'][0]['StartAt'])
+        self.assertEqual('SP-22_message', etl101['States']['ETL-101_Next_Step_Functions']['Branches'][1]['StartAt'])
         self.assertMessageStateEquals(
             expected_target_table='table2',
             expected_step_function_name='SP-21',
-            actual_state=etl101['States']['ETL-101 Next Step Functions']['Branches'][0]['States']['SP-21_message']
+            actual_state=etl101['States']['ETL-101_Next_Step_Functions']['Branches'][0]['States']['SP-21_message']
         )
         self.assertMessageStateEquals(
             expected_target_table='table2',
             expected_step_function_name='SP-22',
-            actual_state=etl101['States']['ETL-101 Next Step Functions']['Branches'][1]['States']['SP-22_message']
+            actual_state=etl101['States']['ETL-101_Next_Step_Functions']['Branches'][1]['States']['SP-22_message']
         )
 
     def test_duplicate_message_state_name_is_suffixed_to_ensure_uniqueness(self):
-        etl102 = self.state_machines['SP-11']['States']['StartAt Parallel']['Branches'][1]
+        etl102 = self.state_machines['SP-11']['States']['StartAt_Parallel']['Branches'][1]
         self.assertMessageStateEquals(
             expected_target_table='table2',
             expected_step_function_name='SP-22',
-            actual_state=etl102['States']['ETL-102 Next Step Functions']['Branches'][0]['States']['SP-22_message_1']
+            actual_state=etl102['States']['ETL-102_Next_Step_Functions']['Branches'][0]['States']['SP-22_message_1']
         )
 
     def test_sfn_with_more_etls_than_its_parallel_limit_splits_etls_into_parallel_groups_that_each_run_in_series(self):
@@ -366,12 +366,12 @@ class TestNonGroupStateMachines(StateMachineTestCase):
         #  1                 2
         #  3                 4
         #  5
-        self.assertEqual('StartAt Parallel', self.state_machines['SP-21']['StartAt'])
-        self.assertEqual('Parallel', self.state_machines['SP-21']['States']['StartAt Parallel']['Type'])
-        self.assertTrue(self.state_machines['SP-21']['States']['StartAt Parallel']['End'])
-        self.assertEqual(2, len(self.state_machines['SP-21']['States']['StartAt Parallel']['Branches']))
-        self.assertEqual('ETL-201-1', self.state_machines['SP-21']['States']['StartAt Parallel']['Branches'][0]['StartAt'])
-        self.assertEqual('ETL-201-2', self.state_machines['SP-21']['States']['StartAt Parallel']['Branches'][1]['StartAt'])
+        self.assertEqual('StartAt_Parallel', self.state_machines['SP-21']['StartAt'])
+        self.assertEqual('Parallel', self.state_machines['SP-21']['States']['StartAt_Parallel']['Type'])
+        self.assertTrue(self.state_machines['SP-21']['States']['StartAt_Parallel']['End'])
+        self.assertEqual(2, len(self.state_machines['SP-21']['States']['StartAt_Parallel']['Branches']))
+        self.assertEqual('ETL-201-1', self.state_machines['SP-21']['States']['StartAt_Parallel']['Branches'][0]['StartAt'])
+        self.assertEqual('ETL-201-2', self.state_machines['SP-21']['States']['StartAt_Parallel']['Branches'][1]['StartAt'])
         self.assertTaskStateEquals(
             expected_etl_name='ETL-201-1',
             expected_ecs_memory=2048,
@@ -379,7 +379,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             expected_resource_suffix='.waitForTaskToken',
             expect_to_have_end=False,
             null_result_path=True,
-            actual_state=self.state_machines['SP-21']['States']['StartAt Parallel']['Branches'][0]['States']['ETL-201-1']
+            actual_state=self.state_machines['SP-21']['States']['StartAt_Parallel']['Branches'][0]['States']['ETL-201-1']
         )
         self.assertTaskStateEquals(
             expected_etl_name='ETL-201-2',
@@ -388,7 +388,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             expected_resource_suffix='.waitForTaskToken',
             expect_to_have_end=False,
             null_result_path=True,
-            actual_state=self.state_machines['SP-21']['States']['StartAt Parallel']['Branches'][1]['States']['ETL-201-2']
+            actual_state=self.state_machines['SP-21']['States']['StartAt_Parallel']['Branches'][1]['States']['ETL-201-2']
         )
         self.assertTaskStateEquals(
             expected_etl_name='ETL-201-3',
@@ -397,7 +397,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             expected_resource_suffix='.waitForTaskToken',
             expect_to_have_end=False,
             null_result_path=True,
-            actual_state=self.state_machines['SP-21']['States']['StartAt Parallel']['Branches'][0]['States']['ETL-201-3']
+            actual_state=self.state_machines['SP-21']['States']['StartAt_Parallel']['Branches'][0]['States']['ETL-201-3']
         )
         self.assertTaskStateEquals(  # group 2 terminal state
             expected_etl_name='ETL-201-4',
@@ -406,7 +406,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             expected_resource_suffix='.sync',
             expect_to_have_end=True,
             null_result_path=True,
-            actual_state=self.state_machines['SP-21']['States']['StartAt Parallel']['Branches'][1]['States']['ETL-201-4']
+            actual_state=self.state_machines['SP-21']['States']['StartAt_Parallel']['Branches'][1]['States']['ETL-201-4']
         )
         self.assertTaskStateEquals(  # group 1 terminal state
             expected_etl_name='ETL-201-5',
@@ -415,7 +415,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             expected_resource_suffix='.sync',
             expect_to_have_end=True,
             null_result_path=True,
-            actual_state=self.state_machines['SP-21']['States']['StartAt Parallel']['Branches'][0]['States']['ETL-201-5']
+            actual_state=self.state_machines['SP-21']['States']['StartAt_Parallel']['Branches'][0]['States']['ETL-201-5']
         )
 
     def test_throws_error_if_ETL_points_to_nonexistent_next_step_function(self):

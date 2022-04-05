@@ -24,7 +24,7 @@ For example:
             - table.account_contact.yaml
             - ...
 
-Each table.*.yaml file conforms to the structure defined in the [LINK TO ENGINEERING GUIDE TBA]
+Each table.*.yaml file conforms to the structure defined in the EDW YAML engineering guide
 """
 import pathlib
 import glob

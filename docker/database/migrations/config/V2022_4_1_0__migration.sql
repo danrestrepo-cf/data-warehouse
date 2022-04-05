@@ -8,7 +8,7 @@
  config migration file that would have resulted otherwise. The python-utilities
  metadata maintenance process treats process name as the process table's natural
  key, and would have been able to update process names in place in this way. This
- would result it *new* process records being inserted for *all* EDW ETLs, and because
+ would result in *new* process records being inserted for *all* EDW ETLs, and because
  process name is part of the natural key of pretty much all ETL-related tables, this
  would cascade into an unnecessary near-total data replacement for the entire config.mdi
  schema.
