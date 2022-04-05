@@ -231,9 +231,9 @@ def remove_deleted_table_metadata_from_table(table_metadata: TableMetadata) -> T
     table_metadata.next_etls = []
 
     # remove ETLs
-    for table_metadatastep_functions in table_metadata.step_functions:
-        print(f"      Removing ETL '{table_metadatastep_functions.name}'")
-        table_metadata.remove_step_function(table_metadatastep_functions.name)
+    for table_metadata_step_functions in table_metadata.step_functions:
+        print(f"      Removing Step Function '{table_metadata_step_functions.name}'")
+        table_metadata.remove_step_function(table_metadata_step_functions.name)
 
     # remove FKs
     for table_metadata_fk in table_metadata.foreign_keys:
