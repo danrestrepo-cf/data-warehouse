@@ -9,9 +9,6 @@ ALTER TABLE star_loan.borrower_dim
 
 --create new lookup table for borrower-related unique dim dwids
 CREATE TABLE star_loan.borrower_lkup (
-    dwid BIGSERIAL NOT NULL
-        CONSTRAINT pk_borrower_lkup
-            PRIMARY KEY,
     data_source_dwid BIGINT NOT NULL,
     edw_created_datetime TIMESTAMPTZ,
     edw_modified_datetime TIMESTAMPTZ,
@@ -19,14 +16,15 @@ CREATE TABLE star_loan.borrower_lkup (
     data_source_integration_columns TEXT,
     data_source_integration_id TEXT NOT NULL,
     data_source_modified_datetime TIMESTAMPTZ,
-    borrower_dwid BIGINT,
+    borrower_dwid BIGINT
+        CONSTRAINT pk_borrower_lkup
+            PRIMARY KEY,
     borrower_pid BIGINT,
     borrower_hmda_collection_dwid BIGINT
 );
 
 CREATE INDEX idx_borrower_lkup__etl_batch_id ON star_loan.borrower_lkup (etl_batch_id);
 CREATE INDEX idx_borrower_lkup__data_source_integration_id ON star_loan.borrower_lkup (data_source_integration_id);
-CREATE INDEX idx_borrower_lkup__borrower_diwd ON star_loan.borrower_lkup (borrower_dwid);
 CREATE INDEX idx_borrower_lkup__borrower_pid ON star_loan.borrower_lkup (borrower_pid);
 CREATE INDEX idx_borrower_lkup__borrower_hmda_collection_dwid ON star_loan.borrower_lkup (borrower_hmda_collection_dwid);
 

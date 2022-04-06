@@ -165,8 +165,7 @@ LEFT JOIN mdi.edw_table_definition source_table_definition
 
 --edw_field_definition
 WITH insert_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
-    VALUES ('staging', 'star_loan', 'borrower_lkup', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_loan', 'borrower_lkup', 'data_source_dwid', 'BIGINT', NULL, NULL, NULL, NULL)
+    VALUES ('staging', 'star_loan', 'borrower_lkup', 'data_source_dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'borrower_lkup', 'edw_created_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'borrower_lkup', 'edw_modified_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'borrower_lkup', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
