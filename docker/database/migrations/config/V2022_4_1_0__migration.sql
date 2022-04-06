@@ -140,6 +140,13 @@ WHERE update_rows.process_name = process.name;
 --
 
 /*
+ Manual changes
+*/
+
+TRUNCATE mdi.state_machine_definition;
+TRUNCATE mdi.state_machine_step;
+
+/*
 INSERTIONS
 */
 
