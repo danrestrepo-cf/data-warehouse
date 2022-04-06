@@ -1,0 +1,187 @@
+name: cash_out_reason_dim
+primary_source_table: staging.history_octane.proposal
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: false
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  cash_out_reason_business_debt_or_debt_consolidation_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_cash_out_reason_business_debt_or_debt_consolidation
+    update_flag: false
+  cash_out_reason_debt_or_debt_consolidation_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_cash_out_reason_debt_or_debt_consolidation
+    update_flag: false
+  cash_out_reason_future_investment_not_under_contract_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_cash_out_reason_future_investment_not_under_contract
+    update_flag: false
+  cash_out_reason_future_investment_under_contract_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_cash_out_reason_future_investment_under_contract
+    update_flag: false
+  cash_out_reason_home_improvement_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_cash_out_reason_home_improvement
+    update_flag: false
+  cash_out_reason_investment_or_business_property_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_cash_out_reason_investment_or_business_property
+    update_flag: false
+  cash_out_reason_other_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_cash_out_reason_other
+    update_flag: false
+  cash_out_reason_personal_use_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_cash_out_reason_personal_use
+    update_flag: false
+  cash_out_reason_student_loans_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_cash_out_reason_student_loans
+    update_flag: false
+  non_business_cash_out_reason_acknowledged:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_non_business_cash_out_reason_acknowledged.columns.value
+    update_flag: true
+  non_business_cash_out_reason_acknowledged_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_non_business_cash_out_reason_acknowledged
+    update_flag: false
+step_functions:
+  SP-200023:
+    etls:
+      ETL-200023:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.cash_out_reason_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-300001-insert-update
+        input_sql: |-
+          WITH cash_out_reason_dim_new_records AS (
+              SELECT 'cash_out_reason_business_debt_or_debt_consolidation_flag~' ||
+          		   'cash_out_reason_debt_or_other_consolidation_flag~' ||
+          		   'cash_out_reason_future_investment_not_under_contract_flag~' ||
+          		   'cash_out_reason_future_investment_under_contract_flag~' ||
+          		   'cash_out_reason_home_improvement_flag~' ||
+          		   'cash_out_reason_investment_or_business_property_flag~' ||
+          		   'cash_out_reason_other_flag~' ||
+          		   'cash_out_reason_personal_use_flag~' ||
+          		   'cash_out_reason_student_loans_flag~' ||
+          		   'non_business_cash_out_reason_acknowledged_code~data_source_dwid' AS data_source_integration_columns
+                  , COALESCE(CAST(proposal.prp_cash_out_reason_business_debt_or_debt_consolidation AS TEXT), '<NULL>') || '~' ||
+                   COALESCE(CAST(proposal.prp_cash_out_reason_debt_or_debt_consolidation AS TEXT), '<NULL>') || '~' ||
+                   COALESCE(CAST(proposal.prp_cash_out_reason_future_investment_not_under_contract AS TEXT), '<NULL>') || '~' ||
+                   COALESCE(CAST(proposal.prp_cash_out_reason_future_investment_under_contracT AS TEXT), '<NULL>') || '~' ||
+                   COALESCE(CAST(proposal.prp_cash_out_reason_home_improvement AS TEXT), '<NULL>') || '~' ||
+                   COALESCE(CAST(proposal.prp_cash_out_reason_investment_or_business_property AS TEXT), '<NULL>') || '~' ||
+                   COALESCE(CAST(proposal.prp_cash_out_reason_other AS TEXT), '<NULL>') || '~' ||
+                   COALESCE(CAST(proposal.prp_cash_out_reason_personal_use AS TEXT), '<NULL>') || '~' ||
+                   COALESCE(CAST(proposal.prp_cash_out_reason_student_loans AS TEXT), '<NULL>') || '~' ||
+                   COALESCE(CAST(proposal.prp_non_business_cash_out_reason_acknowledged AS TEXT), '<NULL>') || '~' ||
+                   COALESCE(CAST(1 AS TEXT), '<NULL>') AS data_source_integration_id
+                  , NOW() AS edw_created_datetime
+                  , NOW() AS edw_modified_datetime
+                  , MAX(proposal.data_source_updated_datetime) AS data_source_modified_datetime
+          		, proposal.prp_cash_out_reason_business_debt_or_debt_consolidation AS cash_out_reason_business_debt_or_debt_consolidation_flag
+          		, proposal.prp_cash_out_reason_debt_or_debt_consolidation AS cash_out_reason_debt_or_other_consolidation_flag
+          		, proposal.prp_cash_out_reason_future_investment_not_under_contract AS cash_out_reason_future_investment_not_under_contract_flag
+          		, proposal.prp_cash_out_reason_future_investment_under_contract AS cash_out_reason_future_investment_under_contract_flag
+          		, proposal.prp_cash_out_reason_home_improvement AS cash_out_reason_home_improvement_flag
+          		, proposal.prp_cash_out_reason_investment_or_business_property AS cash_out_reason_investment_or_business_property_flag
+          		, proposal.prp_cash_out_reason_other AS cash_out_reason_other_flag
+          		, proposal.prp_cash_out_reason_personal_use AS cash_out_reason_personal_use_flag
+          		, proposal.prp_cash_out_reason_student_loans AS cash_out_reason_student_loans_flag
+          		, yes_no_na_type.value AS non_business_cash_out_reason_acknowledged
+          		, proposal.prp_non_business_cash_out_reason_acknowledged AS non_business_cash_out_reason_acknowledged_code
+              	, MAX(GREATEST(yes_no_na_type.etl_end_date_time)) AS max_source_etl_end_date_time
+              FROM (
+          		SELECT <<deal_partial_load_condition>> AS include_record
+          			, deal.*
+          		FROM history_octane.deal
+          		LEFT JOIN history_octane.deal AS history_records
+          			ON deal.d_pid = history_records.d_pid
+          				AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		WHERE history_records.d_pid IS NULL
+          		) AS deal
+              JOIN (
+                  SELECT *
+                  FROM (
+          			SELECT <<proposal_partial_load_condition>> AS include_record
+          				, proposal.*
+          			FROM history_octane.proposal
+          			LEFT JOIN history_octane.proposal AS history_records
+          				ON proposal.prp_pid = history_records.prp_pid
+          					AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+          			WHERE history_records.prp_pid IS NULL
+                  	) AS primary_table
+          		) AS proposal
+              		ON deal.d_pid = proposal.prp_deal_pid
+              JOIN (
+          		SELECT *
+          		FROM (
+          			SELECT <<yes_no_na_type_partial_load_condition>> AS include_record
+          				, yes_no_na_type.*
+          				, etl_log.etl_end_date_time
+          			FROM history_octane.yes_no_na_type
+          			LEFT JOIN history_octane.yes_no_na_type AS history_records
+          				ON yes_no_na_type.code = history_records.code
+          					AND yes_no_na_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          			JOIN star_common.etl_log
+          				ON yes_no_na_type.etl_batch_id = etl_log.etl_batch_id
+          			WHERE history_records.code IS NULL
+          			) AS primary_table
+                  ) AS yes_no_na_type
+              		ON proposal.prp_non_business_cash_out_reason_acknowledged = yes_no_na_type.code
+              WHERE GREATEST(deal.include_record, proposal.include_record, yes_no_na_type.include_record) IS TRUE
+              GROUP BY proposal.prp_cash_out_reason_business_debt_or_debt_consolidation
+          		, proposal.prp_cash_out_reason_debt_or_debt_consolidation
+          		, proposal.prp_cash_out_reason_future_investment_not_under_contract
+          		, proposal.prp_cash_out_reason_future_investment_under_contract
+          		, proposal.prp_cash_out_reason_home_improvement
+          		, proposal.prp_cash_out_reason_investment_or_business_property
+          		, proposal.prp_cash_out_reason_other
+          		, proposal.prp_cash_out_reason_personal_use
+          		, proposal.prp_cash_out_reason_student_loans
+          		, yes_no_na_type.value
+          		, proposal.prp_non_business_cash_out_reason_acknowledged
+          )
