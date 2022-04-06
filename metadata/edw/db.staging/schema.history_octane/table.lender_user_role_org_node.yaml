@@ -43,40 +43,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.luron_version
-etls:
+step_functions:
   SP-100907:
-    input_type: table
-    output_type: insert
-    json_output_field: luron_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.lender_user_role_org_node
-      SELECT staging_table.luron_pid
-           , staging_table.luron_version
-           , staging_table.luron_lender_user_role_pid
-           , staging_table.luron_org_node_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.lender_user_role_org_node staging_table
-      LEFT JOIN history_octane.lender_user_role_org_node history_table
-                ON staging_table.luron_pid = history_table.luron_pid
-                    AND staging_table.luron_version = history_table.luron_version
-      WHERE history_table.luron_pid IS NULL
-      UNION ALL
-      SELECT history_table.luron_pid
-           , history_table.luron_version + 1
-           , history_table.luron_lender_user_role_pid
-           , history_table.luron_org_node_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.lender_user_role_org_node history_table
-      LEFT JOIN staging_octane.lender_user_role_org_node staging_table
-                ON staging_table.luron_pid = history_table.luron_pid
-      WHERE staging_table.luron_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.lender_user_role_org_node deleted_records
-          WHERE deleted_records.luron_pid = history_table.luron_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100907:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.lender_user_role_org_node
+        json_output_field: luron_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.lender_user_role_org_node
+          SELECT staging_table.luron_pid
+               , staging_table.luron_version
+               , staging_table.luron_lender_user_role_pid
+               , staging_table.luron_org_node_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.lender_user_role_org_node staging_table
+          LEFT JOIN history_octane.lender_user_role_org_node history_table
+                    ON staging_table.luron_pid = history_table.luron_pid
+                        AND staging_table.luron_version = history_table.luron_version
+          WHERE history_table.luron_pid IS NULL
+          UNION ALL
+          SELECT history_table.luron_pid
+               , history_table.luron_version + 1
+               , history_table.luron_lender_user_role_pid
+               , history_table.luron_org_node_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.lender_user_role_org_node history_table
+          LEFT JOIN staging_octane.lender_user_role_org_node staging_table
+                    ON staging_table.luron_pid = history_table.luron_pid
+          WHERE staging_table.luron_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.lender_user_role_org_node deleted_records
+              WHERE deleted_records.luron_pid = history_table.luron_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

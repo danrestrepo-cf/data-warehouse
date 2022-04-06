@@ -1,8 +1,8 @@
 {
     "Comment": "SP-400001-delete - ETL to delete records from staging.data_mart_business_applications.edw_employee_user_details using staging.history_octane.lender_user as the primary source",
-    "StartAt": "SP-400001-delete",
+    "StartAt": "ETL-400001-delete",
     "States": {
-        "SP-400001-delete": {
+        "ETL-400001-delete": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-400001-delete"
+                                    "Value": "ETL-400001-delete"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

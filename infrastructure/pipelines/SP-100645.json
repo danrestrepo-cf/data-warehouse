@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100645 - ETL to insert records into staging.history_octane.section_of_act_coarse_type using staging.staging_octane.section_of_act_coarse_type as the primary source",
-    "StartAt": "SP-100645",
+    "StartAt": "ETL-100645",
     "States": {
-        "SP-100645": {
+        "ETL-100645": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100645"
+                                    "Value": "ETL-100645"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

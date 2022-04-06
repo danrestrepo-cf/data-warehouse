@@ -143,90 +143,93 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100023:
-    input_type: table
-    output_type: insert
-    json_output_field: ac_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.account_contact
-      SELECT staging_table.ac_pid
-           , staging_table.ac_version
-           , staging_table.ac_account_pid
-           , staging_table.ac_unparsed_name
-           , staging_table.ac_note
-           , staging_table.ac_search_text
-           , staging_table.ac_tags
-           , staging_table.ac_first_name
-           , staging_table.ac_middle_name
-           , staging_table.ac_last_name
-           , staging_table.ac_name_suffix
-           , staging_table.ac_company_name
-           , staging_table.ac_title
-           , staging_table.ac_office_phone
-           , staging_table.ac_office_phone_extension
-           , staging_table.ac_mobile_phone
-           , staging_table.ac_email
-           , staging_table.ac_fax
-           , staging_table.ac_address_street1
-           , staging_table.ac_address_street2
-           , staging_table.ac_address_city
-           , staging_table.ac_address_state
-           , staging_table.ac_address_postal_code
-           , staging_table.ac_address_country
-           , staging_table.ac_home_phone
-           , staging_table.ac_closing_document_email
-           , staging_table.ac_license_number
-           , staging_table.ac_supervisory_license_number
-           , staging_table.ac_license_state
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.account_contact staging_table
-      LEFT JOIN history_octane.account_contact history_table
-                ON staging_table.ac_pid = history_table.ac_pid
-                    AND staging_table.ac_version = history_table.ac_version
-      WHERE history_table.ac_pid IS NULL
-      UNION ALL
-      SELECT history_table.ac_pid
-           , history_table.ac_version + 1
-           , history_table.ac_account_pid
-           , history_table.ac_unparsed_name
-           , history_table.ac_note
-           , history_table.ac_search_text
-           , history_table.ac_tags
-           , history_table.ac_first_name
-           , history_table.ac_middle_name
-           , history_table.ac_last_name
-           , history_table.ac_name_suffix
-           , history_table.ac_company_name
-           , history_table.ac_title
-           , history_table.ac_office_phone
-           , history_table.ac_office_phone_extension
-           , history_table.ac_mobile_phone
-           , history_table.ac_email
-           , history_table.ac_fax
-           , history_table.ac_address_street1
-           , history_table.ac_address_street2
-           , history_table.ac_address_city
-           , history_table.ac_address_state
-           , history_table.ac_address_postal_code
-           , history_table.ac_address_country
-           , history_table.ac_home_phone
-           , history_table.ac_closing_document_email
-           , history_table.ac_license_number
-           , history_table.ac_supervisory_license_number
-           , history_table.ac_license_state
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.account_contact history_table
-      LEFT JOIN staging_octane.account_contact staging_table
-                ON staging_table.ac_pid = history_table.ac_pid
-      WHERE staging_table.ac_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.account_contact deleted_records
-          WHERE deleted_records.ac_pid = history_table.ac_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100023:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.account_contact
+        json_output_field: ac_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.account_contact
+          SELECT staging_table.ac_pid
+               , staging_table.ac_version
+               , staging_table.ac_account_pid
+               , staging_table.ac_unparsed_name
+               , staging_table.ac_note
+               , staging_table.ac_search_text
+               , staging_table.ac_tags
+               , staging_table.ac_first_name
+               , staging_table.ac_middle_name
+               , staging_table.ac_last_name
+               , staging_table.ac_name_suffix
+               , staging_table.ac_company_name
+               , staging_table.ac_title
+               , staging_table.ac_office_phone
+               , staging_table.ac_office_phone_extension
+               , staging_table.ac_mobile_phone
+               , staging_table.ac_email
+               , staging_table.ac_fax
+               , staging_table.ac_address_street1
+               , staging_table.ac_address_street2
+               , staging_table.ac_address_city
+               , staging_table.ac_address_state
+               , staging_table.ac_address_postal_code
+               , staging_table.ac_address_country
+               , staging_table.ac_home_phone
+               , staging_table.ac_closing_document_email
+               , staging_table.ac_license_number
+               , staging_table.ac_supervisory_license_number
+               , staging_table.ac_license_state
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.account_contact staging_table
+          LEFT JOIN history_octane.account_contact history_table
+                    ON staging_table.ac_pid = history_table.ac_pid
+                        AND staging_table.ac_version = history_table.ac_version
+          WHERE history_table.ac_pid IS NULL
+          UNION ALL
+          SELECT history_table.ac_pid
+               , history_table.ac_version + 1
+               , history_table.ac_account_pid
+               , history_table.ac_unparsed_name
+               , history_table.ac_note
+               , history_table.ac_search_text
+               , history_table.ac_tags
+               , history_table.ac_first_name
+               , history_table.ac_middle_name
+               , history_table.ac_last_name
+               , history_table.ac_name_suffix
+               , history_table.ac_company_name
+               , history_table.ac_title
+               , history_table.ac_office_phone
+               , history_table.ac_office_phone_extension
+               , history_table.ac_mobile_phone
+               , history_table.ac_email
+               , history_table.ac_fax
+               , history_table.ac_address_street1
+               , history_table.ac_address_street2
+               , history_table.ac_address_city
+               , history_table.ac_address_state
+               , history_table.ac_address_postal_code
+               , history_table.ac_address_country
+               , history_table.ac_home_phone
+               , history_table.ac_closing_document_email
+               , history_table.ac_license_number
+               , history_table.ac_supervisory_license_number
+               , history_table.ac_license_state
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.account_contact history_table
+          LEFT JOIN staging_octane.account_contact staging_table
+                    ON staging_table.ac_pid = history_table.ac_pid
+          WHERE staging_table.ac_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.account_contact deleted_records
+              WHERE deleted_records.ac_pid = history_table.ac_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

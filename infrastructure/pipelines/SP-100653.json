@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100653 - ETL to insert records into staging.history_octane.smart_charge_apr_type using staging.staging_octane.smart_charge_apr_type as the primary source",
-    "StartAt": "SP-100653",
+    "StartAt": "ETL-100653",
     "States": {
-        "SP-100653": {
+        "ETL-100653": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100653"
+                                    "Value": "ETL-100653"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

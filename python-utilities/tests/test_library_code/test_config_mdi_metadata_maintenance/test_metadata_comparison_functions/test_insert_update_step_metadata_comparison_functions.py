@@ -1,6 +1,6 @@
 import unittest
 
-from tests.test_utils import MockDBConnection
+from tests.testing_utils import MockDBConnection
 
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
@@ -17,11 +17,11 @@ class TestInsertUpdateStepMetadataComparisonFunctions(unittest.TestCase):
         via other integration/system tests.
         """
         test_data = [
-            {'process_name': 'SP-1', 'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan',
+            {'process_name': 'ETL-1', 'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan',
              'table_name': 'table1'},
-            {'process_name': 'SP-2', 'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan',
+            {'process_name': 'ETL-2', 'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan',
              'table_name': 'table2'},
-            {'process_name': 'SP-3', 'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan',
+            {'process_name': 'ETL-3', 'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan',
              'table_name': 'table3'},
         ]
         db_conn = MockDBConnection(query_results=test_data)
@@ -43,22 +43,33 @@ class TestInsertUpdateStepMetadataComparisonFunctions(unittest.TestCase):
                                     {
                                         'name': 'table1',
                                         'primary_source_table': 'staging.history_octane.table1',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-1': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
+                                                'etls': {
+                                                    'ETL-1': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'output_table': 'staging.star_loan.table1'
+                                                    }
+                                                }
                                             }
                                         }
                                     },
                                     {
                                         'name': 'table2',
                                         'primary_source_table': 'staging.history_octane.table2',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-2': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
+                                                'etls': {
+                                                    'ETL-2': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        # testing that output_table doesn't always match the ETL's parent metadata object
+                                                        'output_table': 'staging.star_loan.table22'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -75,11 +86,16 @@ class TestInsertUpdateStepMetadataComparisonFunctions(unittest.TestCase):
                                     {
                                         'name': 'table3',
                                         'primary_source_table': 'ingress.ingress_schema_1.table3',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-3': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
+                                                'etls': {
+                                                    'ETL-3': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'output_table': 'ingress.ingress_schema_2.table3'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -93,26 +109,26 @@ class TestInsertUpdateStepMetadataComparisonFunctions(unittest.TestCase):
 
         expected = MetadataTable(key_fields=['process_name'])
         expected.add_rows([
-            {'process_name': 'SP-1', 'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan',
+            {'process_name': 'ETL-1', 'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan',
              'table_name': 'table1'},
-            {'process_name': 'SP-2', 'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan',
-             'table_name': 'table2'},
-            {'process_name': 'SP-3', 'connectionname': 'Ingress DB Connection', 'schema_name': 'ingress_schema_2',
+            {'process_name': 'ETL-2', 'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan',
+             'table_name': 'table22'},
+            {'process_name': 'ETL-3', 'connectionname': 'Ingress DB Connection', 'schema_name': 'ingress_schema_2',
              'table_name': 'table3'},
         ])
         self.assertEqual(expected, InsertUpdateStepMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 
     def test_construct_insert_row_grouper(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'},
+            Row(key={'process_name': 'ETL-1'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
-                            'table1'}),
-            Row(key={'process_name': 'SP-2'},
+                    'table1'}),
+            Row(key={'process_name': 'ETL-2'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
-                            'table2'}),
-            Row(key={'process_name': 'SP-3'},
+                    'table22'}),
+            Row(key={'process_name': 'ETL-3'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
-                            'table3'})
+                    'table3'})
         ]
         row_grouper = InsertUpdateStepMetadataComparisonFunctions().construct_insert_row_grouper(
             DataWarehouseMetadata('dw'))
@@ -120,13 +136,13 @@ class TestInsertUpdateStepMetadataComparisonFunctions(unittest.TestCase):
 
     def test_construct_delete_row_grouper(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'},
+            Row(key={'process_name': 'ETL-1'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
                     'table1'}),
-            Row(key={'process_name': 'SP-2'},
+            Row(key={'process_name': 'ETL-2'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
-                    'table2'}),
-            Row(key={'process_name': 'SP-3'},
+                    'table22'}),
+            Row(key={'process_name': 'ETL-3'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
                     'table3'})
         ]
@@ -135,20 +151,20 @@ class TestInsertUpdateStepMetadataComparisonFunctions(unittest.TestCase):
 
     def test_generate_insert_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'},
+            Row(key={'process_name': 'ETL-1'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
                     'table1'}),
-            Row(key={'process_name': 'SP-2'},
+            Row(key={'process_name': 'ETL-2'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
-                    'table2'}),
-            Row(key={'process_name': 'SP-3'},
+                    'table22'}),
+            Row(key={'process_name': 'ETL-3'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
                     'table3'})
         ]
         expected = "WITH insert_rows (process_name, connectionname, schema_name, table_name) AS (\n" + \
-                   "    VALUES ('SP-1', 'Staging DB Connection', 'star_loan', 'table1')\n" + \
-                   "         , ('SP-2', 'Staging DB Connection', 'star_loan', 'table2')\n" + \
-                   "         , ('SP-3', 'Staging DB Connection', 'star_loan', 'table3')\n" + \
+                   "    VALUES ('ETL-1', 'Staging DB Connection', 'star_loan', 'table1')\n" + \
+                   "         , ('ETL-2', 'Staging DB Connection', 'star_loan', 'table22')\n" + \
+                   "         , ('ETL-3', 'Staging DB Connection', 'star_loan', 'table3')\n" + \
                    ")\n" + \
                    "INSERT INTO mdi.insert_update_step (process_dwid, connectionname, schema_name, table_name, commit_size, do_not)\n" + \
                    "SELECT process.dwid, insert_rows.connectionname, insert_rows.schema_name, insert_rows.table_name, 1000, 'N'::mdi.pentaho_y_or_n\n" + \
@@ -159,20 +175,20 @@ class TestInsertUpdateStepMetadataComparisonFunctions(unittest.TestCase):
 
     def test_generate_update_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'},
+            Row(key={'process_name': 'ETL-1'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
                     'table1'}),
-            Row(key={'process_name': 'SP-2'},
+            Row(key={'process_name': 'ETL-2'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
-                    'table2'}),
-            Row(key={'process_name': 'SP-3'},
+                    'table22'}),
+            Row(key={'process_name': 'ETL-3'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
                     'table3'})
         ]
         expected = "WITH update_rows (process_name, connectionname, schema_name, table_name) AS (\n" + \
-                   "    VALUES ('SP-1', 'Staging DB Connection', 'star_loan', 'table1')\n" + \
-                   "         , ('SP-2', 'Staging DB Connection', 'star_loan', 'table2')\n" + \
-                   "         , ('SP-3', 'Staging DB Connection', 'star_loan', 'table3')\n" + \
+                   "    VALUES ('ETL-1', 'Staging DB Connection', 'star_loan', 'table1')\n" + \
+                   "         , ('ETL-2', 'Staging DB Connection', 'star_loan', 'table22')\n" + \
+                   "         , ('ETL-3', 'Staging DB Connection', 'star_loan', 'table3')\n" + \
                    ")\n" + \
                    "UPDATE mdi.insert_update_step\n" + \
                    "SET connectionname = update_rows.connectionname\n" + \
@@ -186,20 +202,20 @@ class TestInsertUpdateStepMetadataComparisonFunctions(unittest.TestCase):
 
     def test_generate_delete_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'},
+            Row(key={'process_name': 'ETL-1'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
                     'table1'}),
-            Row(key={'process_name': 'SP-2'},
+            Row(key={'process_name': 'ETL-2'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
-                    'table2'}),
-            Row(key={'process_name': 'SP-3'},
+                    'table22'}),
+            Row(key={'process_name': 'ETL-3'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
                     'table3'})
         ]
         expected = "WITH delete_keys (process_name) AS (\n" + \
-                   "    VALUES ('SP-1')\n" + \
-                   "         , ('SP-2')\n" + \
-                   "         , ('SP-3')\n" + \
+                   "    VALUES ('ETL-1')\n" + \
+                   "         , ('ETL-2')\n" + \
+                   "         , ('ETL-3')\n" + \
                    ")\n" + \
                    "DELETE\n" + \
                    "FROM mdi.insert_update_step\n" + \

@@ -35,40 +35,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.sms_version
-etls:
+step_functions:
   SP-100248:
-    input_type: table
-    output_type: insert
-    json_output_field: sms_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.smart_mi_surcharge
-      SELECT staging_table.sms_pid
-           , staging_table.sms_version
-           , staging_table.sms_account_pid
-           , staging_table.sms_from_date
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.smart_mi_surcharge staging_table
-      LEFT JOIN history_octane.smart_mi_surcharge history_table
-                ON staging_table.sms_pid = history_table.sms_pid
-                    AND staging_table.sms_version = history_table.sms_version
-      WHERE history_table.sms_pid IS NULL
-      UNION ALL
-      SELECT history_table.sms_pid
-           , history_table.sms_version + 1
-           , history_table.sms_account_pid
-           , history_table.sms_from_date
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.smart_mi_surcharge history_table
-      LEFT JOIN staging_octane.smart_mi_surcharge staging_table
-                ON staging_table.sms_pid = history_table.sms_pid
-      WHERE staging_table.sms_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.smart_mi_surcharge deleted_records
-          WHERE deleted_records.sms_pid = history_table.sms_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100248:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.smart_mi_surcharge
+        json_output_field: sms_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.smart_mi_surcharge
+          SELECT staging_table.sms_pid
+               , staging_table.sms_version
+               , staging_table.sms_account_pid
+               , staging_table.sms_from_date
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.smart_mi_surcharge staging_table
+          LEFT JOIN history_octane.smart_mi_surcharge history_table
+                    ON staging_table.sms_pid = history_table.sms_pid
+                        AND staging_table.sms_version = history_table.sms_version
+          WHERE history_table.sms_pid IS NULL
+          UNION ALL
+          SELECT history_table.sms_pid
+               , history_table.sms_version + 1
+               , history_table.sms_account_pid
+               , history_table.sms_from_date
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.smart_mi_surcharge history_table
+          LEFT JOIN staging_octane.smart_mi_surcharge staging_table
+                    ON staging_table.sms_pid = history_table.sms_pid
+          WHERE staging_table.sms_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.smart_mi_surcharge deleted_records
+              WHERE deleted_records.sms_pid = history_table.sms_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -25,8 +25,8 @@ manipulating its child nodes:
     - a @property method that simply returns a list of child objects of the specified type
 """
 from enum import Enum
-from dataclasses import dataclass
-from typing import List, Optional
+from dataclasses import dataclass, field
+from typing import List, Optional, Callable, Iterable
 
 from lib.metadata_core.metadata_object_path import DatabasePath, SchemaPath, TablePath, ColumnPath
 
@@ -62,6 +62,7 @@ class SourceForeignKeyPath:
             source_path_string += f'.{foreign_key_steps_string}'
         source_path_string += f'.columns.{self.column_name}'
         return source_path_string
+
 
 @dataclass
 class ColumnSourceComponents:
@@ -171,6 +172,9 @@ class ETLMetadata:
         a hardcoded dwid value in some EDW ETL processes
         input_type: the format of data to be read in as input to this ETL
         output_type: the type of action to be taken as the output of this ETL
+        output_table: the target table of the ETL
+        primary_source_table: the primary source table used in the ETL query. Only
+        used for ETLs with input_type TABLE
         json_output_field: the key column to be used in the ETL's MDI-2 output json
         truncate_table: boolean indicating whether or not the ETL's target
         table should be truncated before insertion. Only used for ETLs with
@@ -180,6 +184,8 @@ class ETLMetadata:
         delete_keys: a list of table columns to be used as a delete key. Only used
         for ETLs with output_type DELETE
         container_memory: the amount of RAM (in MB) allocated to an ECS container to execute this ETL
+        next_step_functions: a list of server processes to be triggered following
+        the successful completion of this ETL
         input_sql: the SQL statement used as input to the ETL. Only used for ETLs
         with input_type TABLE
     """
@@ -187,14 +193,18 @@ class ETLMetadata:
     hardcoded_data_source: Optional[ETLDataSource] = None
     input_type: ETLInputType = ETLInputType.TABLE
     output_type: ETLOutputType = ETLOutputType.INSERT
+    output_table: Optional[TablePath] = None
+    primary_source_table: Optional[TablePath] = None
     json_output_field: Optional[str] = None
     truncate_table: Optional[bool] = None
     insert_update_keys: Optional[List[str]] = None
     delete_keys: Optional[List[str]] = None
     container_memory: int = None
+    next_step_functions: List[str] = field(default_factory=lambda: [])  # default to empty list
     input_sql: Optional[str] = None
 
-    def construct_process_description(self, target_table: 'TableMetadata') -> str:
+    @property
+    def description(self) -> str:
         """Construct a description string for a given ETL process, e.g.:
 
             ETL to insert into history_octane.loan using staging_octane.loan as the primary source
@@ -207,10 +217,75 @@ class ETLMetadata:
         else:
             preposition = ''
 
-        return f'ETL to {self.output_type.value} records {preposition} {target_table.path.database}' \
-               f'.{target_table.path.schema}.{target_table.path.table} using {target_table.primary_source_table.database}.' \
-               f'{target_table.primary_source_table.schema}.{target_table.primary_source_table.table} as the primary ' \
+        return f'ETL to {self.output_type.value} records {preposition} {self.output_table.database}' \
+               f'.{self.output_table.schema}.{self.output_table.table} using {self.primary_source_table.database}.' \
+               f'{self.primary_source_table.schema}.{self.primary_source_table.table} as the primary ' \
                f'source'
+
+
+class StepFunctionMetadata:
+    """Metadata describing an AWS step function that executes ETLs.
+
+    Attributes:
+        name: the step function name. Should start with "SP-", e.g. "SP-100001"
+        primary_target_table: the main, overall table targeted by this step function.
+        Individual ETLs within the step function may have different target tables.
+        In YAML, the primary_target_table is not specified directly, but is implied
+        to be the table described by the YAML in which the step function is defined.
+        parallel_limit: the maximum number of ETLs within this step function that
+        are allowed to run at any one time. Leaving this unspecified implies the
+        step function has no such limit/any number of ETLs can run in parallel
+    """
+
+    def __init__(self, name: str, primary_target_table: TablePath, parallel_limit: Optional[int] = None):
+        self.name = name
+        self.primary_target_table = primary_target_table
+        self.parallel_limit = parallel_limit
+        self._etls = {}
+
+    def add_etl(self, etl: ETLMetadata):
+        self._etls[etl.process_name] = etl
+
+    def get_etl(self, etl_name: str) -> ETLMetadata:
+        if etl_name not in self._etls:
+            raise InvalidMetadataKeyException('step function', self.name, 'etl', etl_name)
+        else:
+            return self._etls[etl_name]
+
+    def remove_etl(self, etl_name: str):
+        if etl_name in self._etls:
+            del self._etls[etl_name]
+
+    def has_etl(self, etl_name: str) -> bool:
+        return etl_name in self._etls
+
+    @property
+    def etls(self) -> List[ETLMetadata]:
+        return list(self._etls.values())
+
+    @property
+    def has_parallel_limit(self) -> bool:
+        return self.parallel_limit is not None
+
+    @property
+    def etls_have_next_step_functions(self) -> bool:
+        for etl in self._etls.values():
+            if etl.next_step_functions:
+                return True
+        return False
+
+    def __repr__(self) -> str:
+        return f'StepFunctionMetadata(\n' \
+               f'    name={self.name},\n' \
+               f'    parallel_limit={self.parallel_limit}\n' \
+               f'    etls={generate_collection_repr(self.etls)}\n' \
+               f')'
+
+    def __eq__(self, other: 'StepFunctionMetadata') -> bool:
+        return isinstance(other, StepFunctionMetadata) and \
+               self.name == other.name and \
+               self.parallel_limit == other.parallel_limit and \
+               self.etls == other.etls
 
 
 @dataclass(init=False)
@@ -249,8 +324,7 @@ class TableMetadata:
         primary_key: a list of fields that constitue this table's primary key
         columns: a list of metadata objects describing the table's columns
         foreign_keys: a list of metadata objects describing the table's foreign_keys
-        etls: a list of metadata objects describing ETLs that populate/maintain the table
-        next_etls: a list of server processes to be triggered following any ETLs that maintain this table
+        step_functions: a list of metadata objects describing AWS step functions used to populate/maintain the table
     """
 
     def __init__(self, name: str, primary_source_table: Optional[TablePath] = None):
@@ -258,9 +332,8 @@ class TableMetadata:
         self.path = TablePath(database=None, schema=None, table=name)
         self.primary_source_table = primary_source_table
         self.primary_key = []
-        self.next_etls = []
         self._columns = {}
-        self._etls = {}
+        self._step_functions = {}
         self._foreign_keys = {}
 
     def add_column(self, column: ColumnMetadata):
@@ -269,8 +342,8 @@ class TableMetadata:
         column.path.schema = self.path.schema
         column.path.table = self.name
 
-    def add_etl(self, etl: ETLMetadata):
-        self._etls[etl.process_name] = etl
+    def add_step_function(self, step_function: StepFunctionMetadata):
+        self._step_functions[step_function.name] = step_function
 
     def add_foreign_key(self, foreign_key: ForeignKeyMetadata):
         self._foreign_keys[foreign_key.name] = foreign_key
@@ -281,11 +354,11 @@ class TableMetadata:
         else:
             return self._columns[column_name]
 
-    def get_etl(self, etl_process_name: str) -> ETLMetadata:
-        if etl_process_name not in self._etls:
-            raise InvalidMetadataKeyException('table', self.name, 'etl', etl_process_name)
+    def get_step_function(self, step_function_name: str) -> StepFunctionMetadata:
+        if step_function_name not in self._step_functions:
+            raise InvalidMetadataKeyException('table', self.name, 'step function', step_function_name)
         else:
-            return self._etls[etl_process_name]
+            return self._step_functions[step_function_name]
 
     def get_foreign_key(self, foreign_key_name: str) -> ForeignKeyMetadata:
         if foreign_key_name not in self._foreign_keys:
@@ -297,9 +370,9 @@ class TableMetadata:
         if column_name in self._columns:
             del self._columns[column_name]
 
-    def remove_etl(self, etl_name: str):
-        if etl_name in self._etls:
-            del self._etls[etl_name]
+    def remove_step_function(self, step_function_name: str):
+        if step_function_name in self._step_functions:
+            del self._step_functions[step_function_name]
 
     def remove_foreign_key(self, foreign_key_name: str):
         if foreign_key_name in self._foreign_keys:
@@ -308,8 +381,8 @@ class TableMetadata:
     def contains_column(self, column_name: str) -> bool:
         return column_name in self._columns
 
-    def contains_etl(self, process_name: str) -> bool:
-        return process_name in self._etls
+    def contains_step_function(self, step_function_name: str) -> bool:
+        return step_function_name in self._step_functions
 
     def contains_foreign_key(self, foreign_key_name: str) -> bool:
         return foreign_key_name in self._foreign_keys
@@ -333,8 +406,8 @@ class TableMetadata:
         return list(self._columns.values())
 
     @property
-    def etls(self) -> List[ETLMetadata]:
-        return list(self._etls.values())
+    def step_functions(self) -> List[StepFunctionMetadata]:
+        return list(self._step_functions.values())
 
     @property
     def foreign_keys(self) -> List[ForeignKeyMetadata]:
@@ -349,8 +422,7 @@ class TableMetadata:
                f'    primary_key={repr(self.primary_key)}\n' \
                f'    foreign_keys={repr(self.foreign_keys)}\n' \
                f'    columns={repr(self.columns)}\n' \
-               f'    etls={repr(self.etls)}\n' \
-               f'    next_etls={repr(self.next_etls)}\n' \
+               f'    step_functions={generate_collection_repr(self.step_functions)}\n' \
                f')'
 
     def __eq__(self, other: 'TableMetadata') -> bool:
@@ -361,8 +433,7 @@ class TableMetadata:
                self.primary_key == other.primary_key and \
                self.foreign_keys == other.foreign_keys and \
                self.columns == other.columns and \
-               self.etls == other.etls and \
-               self.next_etls == other.next_etls
+               self.step_functions == other.step_functions
 
 
 class SchemaMetadata:
@@ -485,6 +556,15 @@ class DataWarehouseMetadata:
     def get_column_by_path(self, path: ColumnPath) -> ColumnMetadata:
         return self.get_database(path.database).get_schema(path.schema).get_table(path.table).get_column(path.column)
 
+    def get_etls(self, filter_func: Callable[[ETLMetadata], bool] = lambda x: True) -> Iterable[ETLMetadata]:
+        for database in self.databases:
+            for schema in database.schemas:
+                for table in schema.tables:
+                    for step_function in table.step_functions:
+                        for etl in step_function.etls:
+                            if filter_func(etl):
+                                yield etl
+
     def __repr__(self) -> str:
         return f'DataWarehouseMetadata(\n' \
                f'    name={self.name},\n' \
@@ -511,4 +591,4 @@ def indent_multiline_str(s: str, indent: int = 4) -> str:
 def generate_collection_repr(collection: list) -> str:
     """Generate an easy-to-read repr for a list of repr-able objects."""
     reprs = "\n".join([indent_multiline_str(repr(item), indent=8) for item in collection])
-    return f'[\n{reprs}\n]'
+    return f'[\n{reprs}\n    ]'

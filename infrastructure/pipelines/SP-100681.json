@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100681 - ETL to insert records into staging.history_octane.vendor_credential_source_type using staging.staging_octane.vendor_credential_source_type as the primary source",
-    "StartAt": "SP-100681",
+    "StartAt": "ETL-100681",
     "States": {
-        "SP-100681": {
+        "ETL-100681": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100681"
+                                    "Value": "ETL-100681"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

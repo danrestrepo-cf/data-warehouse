@@ -55,42 +55,45 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100309:
-    input_type: table
-    output_type: insert
-    json_output_field: cpab_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.consumer_privacy_affected_borrower
-      SELECT staging_table.cpab_pid
-           , staging_table.cpab_version
-           , staging_table.cpab_consumer_privacy_request_pid
-           , staging_table.cpab_deal_pid
-           , staging_table.cpab_borrower_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.consumer_privacy_affected_borrower staging_table
-      LEFT JOIN history_octane.consumer_privacy_affected_borrower history_table
-                ON staging_table.cpab_pid = history_table.cpab_pid
-                    AND staging_table.cpab_version = history_table.cpab_version
-      WHERE history_table.cpab_pid IS NULL
-      UNION ALL
-      SELECT history_table.cpab_pid
-           , history_table.cpab_version + 1
-           , history_table.cpab_consumer_privacy_request_pid
-           , history_table.cpab_deal_pid
-           , history_table.cpab_borrower_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.consumer_privacy_affected_borrower history_table
-      LEFT JOIN staging_octane.consumer_privacy_affected_borrower staging_table
-                ON staging_table.cpab_pid = history_table.cpab_pid
-      WHERE staging_table.cpab_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.consumer_privacy_affected_borrower deleted_records
-          WHERE deleted_records.cpab_pid = history_table.cpab_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100309:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.consumer_privacy_affected_borrower
+        json_output_field: cpab_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.consumer_privacy_affected_borrower
+          SELECT staging_table.cpab_pid
+               , staging_table.cpab_version
+               , staging_table.cpab_consumer_privacy_request_pid
+               , staging_table.cpab_deal_pid
+               , staging_table.cpab_borrower_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.consumer_privacy_affected_borrower staging_table
+          LEFT JOIN history_octane.consumer_privacy_affected_borrower history_table
+                    ON staging_table.cpab_pid = history_table.cpab_pid
+                        AND staging_table.cpab_version = history_table.cpab_version
+          WHERE history_table.cpab_pid IS NULL
+          UNION ALL
+          SELECT history_table.cpab_pid
+               , history_table.cpab_version + 1
+               , history_table.cpab_consumer_privacy_request_pid
+               , history_table.cpab_deal_pid
+               , history_table.cpab_borrower_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.consumer_privacy_affected_borrower history_table
+          LEFT JOIN staging_octane.consumer_privacy_affected_borrower staging_table
+                    ON staging_table.cpab_pid = history_table.cpab_pid
+          WHERE staging_table.cpab_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.consumer_privacy_affected_borrower deleted_records
+              WHERE deleted_records.cpab_pid = history_table.cpab_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

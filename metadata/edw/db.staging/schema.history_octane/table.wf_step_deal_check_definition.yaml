@@ -55,42 +55,45 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.wsdd_wf_step_pid
-etls:
+step_functions:
   SP-100202:
-    input_type: table
-    output_type: insert
-    json_output_field: wsdd_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.wf_step_deal_check_definition
-      SELECT staging_table.wsdd_pid
-           , staging_table.wsdd_version
-           , staging_table.wsdd_wf_step_pid
-           , staging_table.wsdd_deal_check_type
-           , staging_table.wsdd_deal_check_severity_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.wf_step_deal_check_definition staging_table
-      LEFT JOIN history_octane.wf_step_deal_check_definition history_table
-                ON staging_table.wsdd_pid = history_table.wsdd_pid
-                    AND staging_table.wsdd_version = history_table.wsdd_version
-      WHERE history_table.wsdd_pid IS NULL
-      UNION ALL
-      SELECT history_table.wsdd_pid
-           , history_table.wsdd_version + 1
-           , history_table.wsdd_wf_step_pid
-           , history_table.wsdd_deal_check_type
-           , history_table.wsdd_deal_check_severity_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.wf_step_deal_check_definition history_table
-      LEFT JOIN staging_octane.wf_step_deal_check_definition staging_table
-                ON staging_table.wsdd_pid = history_table.wsdd_pid
-      WHERE staging_table.wsdd_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.wf_step_deal_check_definition deleted_records
-          WHERE deleted_records.wsdd_pid = history_table.wsdd_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100202:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.wf_step_deal_check_definition
+        json_output_field: wsdd_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.wf_step_deal_check_definition
+          SELECT staging_table.wsdd_pid
+               , staging_table.wsdd_version
+               , staging_table.wsdd_wf_step_pid
+               , staging_table.wsdd_deal_check_type
+               , staging_table.wsdd_deal_check_severity_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.wf_step_deal_check_definition staging_table
+          LEFT JOIN history_octane.wf_step_deal_check_definition history_table
+                    ON staging_table.wsdd_pid = history_table.wsdd_pid
+                        AND staging_table.wsdd_version = history_table.wsdd_version
+          WHERE history_table.wsdd_pid IS NULL
+          UNION ALL
+          SELECT history_table.wsdd_pid
+               , history_table.wsdd_version + 1
+               , history_table.wsdd_wf_step_pid
+               , history_table.wsdd_deal_check_type
+               , history_table.wsdd_deal_check_severity_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.wf_step_deal_check_definition history_table
+          LEFT JOIN staging_octane.wf_step_deal_check_definition staging_table
+                    ON staging_table.wsdd_pid = history_table.wsdd_pid
+          WHERE staging_table.wsdd_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.wf_step_deal_check_definition deleted_records
+              WHERE deleted_records.wsdd_pid = history_table.wsdd_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

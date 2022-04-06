@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100015 - ETL to insert records into staging.history_octane.minimum_required_residual_income_table using staging.staging_octane.minimum_required_residual_income_table as the primary source",
-    "StartAt": "SP-100015",
+    "StartAt": "ETL-100015",
     "States": {
-        "SP-100015": {
+        "ETL-100015": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100015"
+                                    "Value": "ETL-100015"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

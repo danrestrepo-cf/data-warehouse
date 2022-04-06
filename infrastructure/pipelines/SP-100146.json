@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100146 - ETL to insert records into staging.history_octane.loan_mi_rate_adjustment using staging.staging_octane.loan_mi_rate_adjustment as the primary source",
-    "StartAt": "SP-100146",
+    "StartAt": "ETL-100146",
     "States": {
-        "SP-100146": {
+        "ETL-100146": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100146"
+                                    "Value": "ETL-100146"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

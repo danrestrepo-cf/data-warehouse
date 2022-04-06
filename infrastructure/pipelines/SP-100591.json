@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100591 - ETL to insert records into staging.history_octane.mers_transfer_status_type using staging.staging_octane.mers_transfer_status_type as the primary source",
-    "StartAt": "SP-100591",
+    "StartAt": "ETL-100591",
     "States": {
-        "SP-100591": {
+        "ETL-100591": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100591"
+                                    "Value": "ETL-100591"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

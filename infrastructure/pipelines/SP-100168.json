@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100168 - ETL to insert records into staging.history_octane.proposal_grant_program using staging.staging_octane.proposal_grant_program as the primary source",
-    "StartAt": "SP-100168",
+    "StartAt": "ETL-100168",
     "States": {
-        "SP-100168": {
+        "ETL-100168": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100168"
+                                    "Value": "ETL-100168"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

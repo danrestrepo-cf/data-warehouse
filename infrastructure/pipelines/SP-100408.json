@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100408 - ETL to insert records into staging.history_octane.appraisal_order_status_type using staging.staging_octane.appraisal_order_status_type as the primary source",
-    "StartAt": "SP-100408",
+    "StartAt": "ETL-100408",
     "States": {
-        "SP-100408": {
+        "ETL-100408": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100408"
+                                    "Value": "ETL-100408"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

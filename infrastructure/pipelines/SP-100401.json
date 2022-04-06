@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100401 - ETL to insert records into staging.history_octane.agency_type using staging.staging_octane.agency_type as the primary source",
-    "StartAt": "SP-100401",
+    "StartAt": "ETL-100401",
     "States": {
-        "SP-100401": {
+        "ETL-100401": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100401"
+                                    "Value": "ETL-100401"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

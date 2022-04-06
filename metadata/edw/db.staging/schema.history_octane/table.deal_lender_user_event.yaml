@@ -47,46 +47,49 @@ columns:
       field: primary_source_table.columns.dlue_version
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100083:
-    input_type: table
-    output_type: insert
-    json_output_field: dlue_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_lender_user_event
-      SELECT staging_table.dlue_pid
-           , staging_table.dlue_version
-           , staging_table.dlue_deal_pid
-           , staging_table.dlue_subject_lender_user_pid
-           , staging_table.dlue_role_pid
-           , staging_table.dlue_create_datetime
-           , staging_table.dlue_unparsed_text
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_lender_user_event staging_table
-      LEFT JOIN history_octane.deal_lender_user_event history_table
-                ON staging_table.dlue_pid = history_table.dlue_pid
-                    AND staging_table.dlue_version = history_table.dlue_version
-      WHERE history_table.dlue_pid IS NULL
-      UNION ALL
-      SELECT history_table.dlue_pid
-           , history_table.dlue_version + 1
-           , history_table.dlue_deal_pid
-           , history_table.dlue_subject_lender_user_pid
-           , history_table.dlue_role_pid
-           , history_table.dlue_create_datetime
-           , history_table.dlue_unparsed_text
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_lender_user_event history_table
-      LEFT JOIN staging_octane.deal_lender_user_event staging_table
-                ON staging_table.dlue_pid = history_table.dlue_pid
-      WHERE staging_table.dlue_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_lender_user_event deleted_records
-          WHERE deleted_records.dlue_pid = history_table.dlue_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100083:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_lender_user_event
+        json_output_field: dlue_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_lender_user_event
+          SELECT staging_table.dlue_pid
+               , staging_table.dlue_version
+               , staging_table.dlue_deal_pid
+               , staging_table.dlue_subject_lender_user_pid
+               , staging_table.dlue_role_pid
+               , staging_table.dlue_create_datetime
+               , staging_table.dlue_unparsed_text
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_lender_user_event staging_table
+          LEFT JOIN history_octane.deal_lender_user_event history_table
+                    ON staging_table.dlue_pid = history_table.dlue_pid
+                        AND staging_table.dlue_version = history_table.dlue_version
+          WHERE history_table.dlue_pid IS NULL
+          UNION ALL
+          SELECT history_table.dlue_pid
+               , history_table.dlue_version + 1
+               , history_table.dlue_deal_pid
+               , history_table.dlue_subject_lender_user_pid
+               , history_table.dlue_role_pid
+               , history_table.dlue_create_datetime
+               , history_table.dlue_unparsed_text
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_lender_user_event history_table
+          LEFT JOIN staging_octane.deal_lender_user_event staging_table
+                    ON staging_table.dlue_pid = history_table.dlue_pid
+          WHERE staging_table.dlue_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_lender_user_event deleted_records
+              WHERE deleted_records.dlue_pid = history_table.dlue_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

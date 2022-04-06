@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100662 - ETL to insert records into staging.history_octane.stack_export_request_loan_export_type using staging.staging_octane.stack_export_request_loan_export_type as the primary source",
-    "StartAt": "SP-100662",
+    "StartAt": "ETL-100662",
     "States": {
-        "SP-100662": {
+        "ETL-100662": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100662"
+                                    "Value": "ETL-100662"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

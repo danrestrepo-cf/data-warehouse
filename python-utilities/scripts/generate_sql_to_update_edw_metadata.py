@@ -9,8 +9,6 @@ This script reads EDW metadata from the following tables in the config.mdi schem
 - table_output_step
 - table_output_field
 - json_output_field
-- state_machine_definition
-- state_machine_step
 
 It then compares that data with the corresponding metadata in the EDW YAML metadata
 records, and generates INSERT, UPDATE, and DELETE SQL statements based on the
@@ -44,8 +42,6 @@ from lib.metadata_core.metadata_filter import InclusiveMetadataFilterer
 from lib.config_mdi_metadata_maintenance.metadata_maintenance_sql_generator import MetadataMaintenanceSQLGenerator
 from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (ProcessMetadataComparisonFunctions,
                                                                                JSONOutputFieldMetadataComparisonFunctions,
-                                                                               StateMachineDefinitionMetadataComparisonFunctions,
-                                                                               StateMachineStepMetadataComparisonFunctions,
                                                                                TableInputStepMetadataComparisonFunctions,
                                                                                TableOutputStepMetadataComparisonFunctions,
                                                                                TableOutputFieldMetadataComparisonFunctions,
@@ -104,8 +100,6 @@ def main():
     sql_generator.add_metadata_comparison_functions('delete_step', DeleteStepMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('delete_key', DeleteKeyMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('json_output_field', JSONOutputFieldMetadataComparisonFunctions())
-    sql_generator.add_metadata_comparison_functions('state_machine_definition', StateMachineDefinitionMetadataComparisonFunctions())
-    sql_generator.add_metadata_comparison_functions('state_machine_step', StateMachineStepMetadataComparisonFunctions())
 
     # generate and output metadata maintenance SQL statements
     metadata_maintenance_sql = sql_generator.generate_all_metadata_maintenance_sql()

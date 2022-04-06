@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100139 - ETL to insert records into staging.history_octane.ernst_request using staging.staging_octane.ernst_request as the primary source",
-    "StartAt": "SP-100139",
+    "StartAt": "ETL-100139",
     "States": {
-        "SP-100139": {
+        "ETL-100139": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100139"
+                                    "Value": "ETL-100139"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

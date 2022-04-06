@@ -51,44 +51,47 @@ columns:
       field: primary_source_table.columns.df_version
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100117:
-    input_type: table
-    output_type: insert
-    json_output_field: df_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_file
-      SELECT staging_table.df_pid
-           , staging_table.df_version
-           , staging_table.df_deal_pid
-           , staging_table.df_repository_file_pid
-           , staging_table.df_archive
-           , staging_table.df_borrower_uploaded
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_file staging_table
-      LEFT JOIN history_octane.deal_file history_table
-                ON staging_table.df_pid = history_table.df_pid
-                    AND staging_table.df_version = history_table.df_version
-      WHERE history_table.df_pid IS NULL
-      UNION ALL
-      SELECT history_table.df_pid
-           , history_table.df_version + 1
-           , history_table.df_deal_pid
-           , history_table.df_repository_file_pid
-           , history_table.df_archive
-           , history_table.df_borrower_uploaded
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_file history_table
-      LEFT JOIN staging_octane.deal_file staging_table
-                ON staging_table.df_pid = history_table.df_pid
-      WHERE staging_table.df_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_file deleted_records
-          WHERE deleted_records.df_pid = history_table.df_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100117:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_file
+        json_output_field: df_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_file
+          SELECT staging_table.df_pid
+               , staging_table.df_version
+               , staging_table.df_deal_pid
+               , staging_table.df_repository_file_pid
+               , staging_table.df_archive
+               , staging_table.df_borrower_uploaded
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_file staging_table
+          LEFT JOIN history_octane.deal_file history_table
+                    ON staging_table.df_pid = history_table.df_pid
+                        AND staging_table.df_version = history_table.df_version
+          WHERE history_table.df_pid IS NULL
+          UNION ALL
+          SELECT history_table.df_pid
+               , history_table.df_version + 1
+               , history_table.df_deal_pid
+               , history_table.df_repository_file_pid
+               , history_table.df_archive
+               , history_table.df_borrower_uploaded
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_file history_table
+          LEFT JOIN staging_octane.deal_file staging_table
+                    ON staging_table.df_pid = history_table.df_pid
+          WHERE staging_table.df_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_file deleted_records
+              WHERE deleted_records.df_pid = history_table.df_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

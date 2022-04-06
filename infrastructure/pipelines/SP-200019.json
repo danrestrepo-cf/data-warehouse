@@ -1,8 +1,8 @@
 {
     "Comment": "SP-200019 - ETL to insert_update records into staging.star_loan.transaction_dim using staging.history_octane.proposal as the primary source",
-    "StartAt": "SP-200019",
+    "StartAt": "ETL-200019",
     "States": {
-        "SP-200019": {
+        "ETL-200019": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-200019"
+                                    "Value": "ETL-200019"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -167,96 +167,99 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.if_version
-etls:
+step_functions:
   SP-100030:
-    input_type: table
-    output_type: insert
-    json_output_field: if_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.interim_funder
-      SELECT staging_table.if_pid
-           , staging_table.if_version
-           , staging_table.if_account_pid
-           , staging_table.if_company_name
-           , staging_table.if_company_contact_unparsed_name
-           , staging_table.if_company_address_street1
-           , staging_table.if_company_address_street2
-           , staging_table.if_company_address_city
-           , staging_table.if_company_address_state
-           , staging_table.if_company_address_postal_code
-           , staging_table.if_company_address_country
-           , staging_table.if_company_office_phone
-           , staging_table.if_company_office_phone_extension
-           , staging_table.if_company_email
-           , staging_table.if_company_fax
-           , staging_table.if_company_mers_org_id
-           , staging_table.if_remarks
-           , staging_table.if_from_date
-           , staging_table.if_through_date
-           , staging_table.if_custodian_pid
-           , staging_table.if_reimbursement_wire_credit_to_name
-           , staging_table.if_reimbursement_wire_attention_unparsed_name
-           , staging_table.if_reimbursement_wire_authorized_signer_unparsed_name
-           , staging_table.if_return_wire_credit_to_name
-           , staging_table.if_return_wire_attention_unparsed_name
-           , staging_table.if_return_wire_authorized_signer_unparsed_name
-           , staging_table.if_fnm_payee_id
-           , staging_table.if_interim_funder_mers_registration_type
-           , staging_table.if_fnm_warehouse_lender_id
-           , staging_table.if_fre_warehouse_lender_id
-           , staging_table.if_funder_id
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.interim_funder staging_table
-      LEFT JOIN history_octane.interim_funder history_table
-                ON staging_table.if_pid = history_table.if_pid
-                    AND staging_table.if_version = history_table.if_version
-      WHERE history_table.if_pid IS NULL
-      UNION ALL
-      SELECT history_table.if_pid
-           , history_table.if_version + 1
-           , history_table.if_account_pid
-           , history_table.if_company_name
-           , history_table.if_company_contact_unparsed_name
-           , history_table.if_company_address_street1
-           , history_table.if_company_address_street2
-           , history_table.if_company_address_city
-           , history_table.if_company_address_state
-           , history_table.if_company_address_postal_code
-           , history_table.if_company_address_country
-           , history_table.if_company_office_phone
-           , history_table.if_company_office_phone_extension
-           , history_table.if_company_email
-           , history_table.if_company_fax
-           , history_table.if_company_mers_org_id
-           , history_table.if_remarks
-           , history_table.if_from_date
-           , history_table.if_through_date
-           , history_table.if_custodian_pid
-           , history_table.if_reimbursement_wire_credit_to_name
-           , history_table.if_reimbursement_wire_attention_unparsed_name
-           , history_table.if_reimbursement_wire_authorized_signer_unparsed_name
-           , history_table.if_return_wire_credit_to_name
-           , history_table.if_return_wire_attention_unparsed_name
-           , history_table.if_return_wire_authorized_signer_unparsed_name
-           , history_table.if_fnm_payee_id
-           , history_table.if_interim_funder_mers_registration_type
-           , history_table.if_fnm_warehouse_lender_id
-           , history_table.if_fre_warehouse_lender_id
-           , history_table.if_funder_id
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.interim_funder history_table
-      LEFT JOIN staging_octane.interim_funder staging_table
-                ON staging_table.if_pid = history_table.if_pid
-      WHERE staging_table.if_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.interim_funder deleted_records
-          WHERE deleted_records.if_pid = history_table.if_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
-next_etls:
-- SP-200008
+    etls:
+      ETL-100030:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.interim_funder
+        json_output_field: if_pid
+        truncate_table: false
+        container_memory: 2048
+        next_step_functions:
+        - SP-200008
+        input_sql: |-
+          --finding records to insert into history_octane.interim_funder
+          SELECT staging_table.if_pid
+               , staging_table.if_version
+               , staging_table.if_account_pid
+               , staging_table.if_company_name
+               , staging_table.if_company_contact_unparsed_name
+               , staging_table.if_company_address_street1
+               , staging_table.if_company_address_street2
+               , staging_table.if_company_address_city
+               , staging_table.if_company_address_state
+               , staging_table.if_company_address_postal_code
+               , staging_table.if_company_address_country
+               , staging_table.if_company_office_phone
+               , staging_table.if_company_office_phone_extension
+               , staging_table.if_company_email
+               , staging_table.if_company_fax
+               , staging_table.if_company_mers_org_id
+               , staging_table.if_remarks
+               , staging_table.if_from_date
+               , staging_table.if_through_date
+               , staging_table.if_custodian_pid
+               , staging_table.if_reimbursement_wire_credit_to_name
+               , staging_table.if_reimbursement_wire_attention_unparsed_name
+               , staging_table.if_reimbursement_wire_authorized_signer_unparsed_name
+               , staging_table.if_return_wire_credit_to_name
+               , staging_table.if_return_wire_attention_unparsed_name
+               , staging_table.if_return_wire_authorized_signer_unparsed_name
+               , staging_table.if_fnm_payee_id
+               , staging_table.if_interim_funder_mers_registration_type
+               , staging_table.if_fnm_warehouse_lender_id
+               , staging_table.if_fre_warehouse_lender_id
+               , staging_table.if_funder_id
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.interim_funder staging_table
+          LEFT JOIN history_octane.interim_funder history_table
+                    ON staging_table.if_pid = history_table.if_pid
+                        AND staging_table.if_version = history_table.if_version
+          WHERE history_table.if_pid IS NULL
+          UNION ALL
+          SELECT history_table.if_pid
+               , history_table.if_version + 1
+               , history_table.if_account_pid
+               , history_table.if_company_name
+               , history_table.if_company_contact_unparsed_name
+               , history_table.if_company_address_street1
+               , history_table.if_company_address_street2
+               , history_table.if_company_address_city
+               , history_table.if_company_address_state
+               , history_table.if_company_address_postal_code
+               , history_table.if_company_address_country
+               , history_table.if_company_office_phone
+               , history_table.if_company_office_phone_extension
+               , history_table.if_company_email
+               , history_table.if_company_fax
+               , history_table.if_company_mers_org_id
+               , history_table.if_remarks
+               , history_table.if_from_date
+               , history_table.if_through_date
+               , history_table.if_custodian_pid
+               , history_table.if_reimbursement_wire_credit_to_name
+               , history_table.if_reimbursement_wire_attention_unparsed_name
+               , history_table.if_reimbursement_wire_authorized_signer_unparsed_name
+               , history_table.if_return_wire_credit_to_name
+               , history_table.if_return_wire_attention_unparsed_name
+               , history_table.if_return_wire_authorized_signer_unparsed_name
+               , history_table.if_fnm_payee_id
+               , history_table.if_interim_funder_mers_registration_type
+               , history_table.if_fnm_warehouse_lender_id
+               , history_table.if_fre_warehouse_lender_id
+               , history_table.if_funder_id
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.interim_funder history_table
+          LEFT JOIN staging_octane.interim_funder staging_table
+                    ON staging_table.if_pid = history_table.if_pid
+          WHERE staging_table.if_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.interim_funder deleted_records
+              WHERE deleted_records.if_pid = history_table.if_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

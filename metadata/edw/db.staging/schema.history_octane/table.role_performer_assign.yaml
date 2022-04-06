@@ -43,40 +43,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.rpa_version
-etls:
+step_functions:
   SP-100239:
-    input_type: table
-    output_type: insert
-    json_output_field: rpa_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.role_performer_assign
-      SELECT staging_table.rpa_pid
-           , staging_table.rpa_version
-           , staging_table.rpa_role_pid
-           , staging_table.rpa_assignee_role_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.role_performer_assign staging_table
-      LEFT JOIN history_octane.role_performer_assign history_table
-                ON staging_table.rpa_pid = history_table.rpa_pid
-                    AND staging_table.rpa_version = history_table.rpa_version
-      WHERE history_table.rpa_pid IS NULL
-      UNION ALL
-      SELECT history_table.rpa_pid
-           , history_table.rpa_version + 1
-           , history_table.rpa_role_pid
-           , history_table.rpa_assignee_role_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.role_performer_assign history_table
-      LEFT JOIN staging_octane.role_performer_assign staging_table
-                ON staging_table.rpa_pid = history_table.rpa_pid
-      WHERE staging_table.rpa_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.role_performer_assign deleted_records
-          WHERE deleted_records.rpa_pid = history_table.rpa_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100239:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.role_performer_assign
+        json_output_field: rpa_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.role_performer_assign
+          SELECT staging_table.rpa_pid
+               , staging_table.rpa_version
+               , staging_table.rpa_role_pid
+               , staging_table.rpa_assignee_role_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.role_performer_assign staging_table
+          LEFT JOIN history_octane.role_performer_assign history_table
+                    ON staging_table.rpa_pid = history_table.rpa_pid
+                        AND staging_table.rpa_version = history_table.rpa_version
+          WHERE history_table.rpa_pid IS NULL
+          UNION ALL
+          SELECT history_table.rpa_pid
+               , history_table.rpa_version + 1
+               , history_table.rpa_role_pid
+               , history_table.rpa_assignee_role_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.role_performer_assign history_table
+          LEFT JOIN staging_octane.role_performer_assign staging_table
+                    ON staging_table.rpa_pid = history_table.rpa_pid
+          WHERE staging_table.rpa_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.role_performer_assign deleted_records
+              WHERE deleted_records.rpa_pid = history_table.rpa_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

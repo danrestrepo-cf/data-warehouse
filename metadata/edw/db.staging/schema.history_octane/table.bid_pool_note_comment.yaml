@@ -55,46 +55,49 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100274:
-    input_type: table
-    output_type: insert
-    json_output_field: bpnc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.bid_pool_note_comment
-      SELECT staging_table.bpnc_pid
-           , staging_table.bpnc_version
-           , staging_table.bpnc_bid_pool_note_pid
-           , staging_table.bpnc_create_datetime
-           , staging_table.bpnc_content
-           , staging_table.bpnc_author_lender_user_pid
-           , staging_table.bpnc_author_unparsed_name
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.bid_pool_note_comment staging_table
-      LEFT JOIN history_octane.bid_pool_note_comment history_table
-                ON staging_table.bpnc_pid = history_table.bpnc_pid
-                    AND staging_table.bpnc_version = history_table.bpnc_version
-      WHERE history_table.bpnc_pid IS NULL
-      UNION ALL
-      SELECT history_table.bpnc_pid
-           , history_table.bpnc_version + 1
-           , history_table.bpnc_bid_pool_note_pid
-           , history_table.bpnc_create_datetime
-           , history_table.bpnc_content
-           , history_table.bpnc_author_lender_user_pid
-           , history_table.bpnc_author_unparsed_name
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.bid_pool_note_comment history_table
-      LEFT JOIN staging_octane.bid_pool_note_comment staging_table
-                ON staging_table.bpnc_pid = history_table.bpnc_pid
-      WHERE staging_table.bpnc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.bid_pool_note_comment deleted_records
-          WHERE deleted_records.bpnc_pid = history_table.bpnc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100274:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.bid_pool_note_comment
+        json_output_field: bpnc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.bid_pool_note_comment
+          SELECT staging_table.bpnc_pid
+               , staging_table.bpnc_version
+               , staging_table.bpnc_bid_pool_note_pid
+               , staging_table.bpnc_create_datetime
+               , staging_table.bpnc_content
+               , staging_table.bpnc_author_lender_user_pid
+               , staging_table.bpnc_author_unparsed_name
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.bid_pool_note_comment staging_table
+          LEFT JOIN history_octane.bid_pool_note_comment history_table
+                    ON staging_table.bpnc_pid = history_table.bpnc_pid
+                        AND staging_table.bpnc_version = history_table.bpnc_version
+          WHERE history_table.bpnc_pid IS NULL
+          UNION ALL
+          SELECT history_table.bpnc_pid
+               , history_table.bpnc_version + 1
+               , history_table.bpnc_bid_pool_note_pid
+               , history_table.bpnc_create_datetime
+               , history_table.bpnc_content
+               , history_table.bpnc_author_lender_user_pid
+               , history_table.bpnc_author_unparsed_name
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.bid_pool_note_comment history_table
+          LEFT JOIN staging_octane.bid_pool_note_comment staging_table
+                    ON staging_table.bpnc_pid = history_table.bpnc_pid
+          WHERE staging_table.bpnc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.bid_pool_note_comment deleted_records
+              WHERE deleted_records.bpnc_pid = history_table.bpnc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -91,60 +91,63 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.leils_version
-etls:
+step_functions:
   SP-100216:
-    input_type: table
-    output_type: insert
-    json_output_field: leils_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.ledger_entry_import_loan_status
-      SELECT staging_table.leils_pid
-           , staging_table.leils_version
-           , staging_table.leils_ledger_entry_import_status_pid
-           , staging_table.leils_ledger_entry_pid
-           , staging_table.leils_los_loan_id
-           , staging_table.leils_payee_unparsed_name
-           , staging_table.leils_entry_amount
-           , staging_table.leils_entry_description
-           , staging_table.leils_start_datetime
-           , staging_table.leils_complete_datetime
-           , staging_table.leils_ledger_entry_import_status_type
-           , staging_table.leils_failure_info
-           , staging_table.leils_raw_row
-           , staging_table.leils_row_number
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.ledger_entry_import_loan_status staging_table
-      LEFT JOIN history_octane.ledger_entry_import_loan_status history_table
-                ON staging_table.leils_pid = history_table.leils_pid
-                    AND staging_table.leils_version = history_table.leils_version
-      WHERE history_table.leils_pid IS NULL
-      UNION ALL
-      SELECT history_table.leils_pid
-           , history_table.leils_version + 1
-           , history_table.leils_ledger_entry_import_status_pid
-           , history_table.leils_ledger_entry_pid
-           , history_table.leils_los_loan_id
-           , history_table.leils_payee_unparsed_name
-           , history_table.leils_entry_amount
-           , history_table.leils_entry_description
-           , history_table.leils_start_datetime
-           , history_table.leils_complete_datetime
-           , history_table.leils_ledger_entry_import_status_type
-           , history_table.leils_failure_info
-           , history_table.leils_raw_row
-           , history_table.leils_row_number
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.ledger_entry_import_loan_status history_table
-      LEFT JOIN staging_octane.ledger_entry_import_loan_status staging_table
-                ON staging_table.leils_pid = history_table.leils_pid
-      WHERE staging_table.leils_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.ledger_entry_import_loan_status deleted_records
-          WHERE deleted_records.leils_pid = history_table.leils_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100216:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.ledger_entry_import_loan_status
+        json_output_field: leils_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.ledger_entry_import_loan_status
+          SELECT staging_table.leils_pid
+               , staging_table.leils_version
+               , staging_table.leils_ledger_entry_import_status_pid
+               , staging_table.leils_ledger_entry_pid
+               , staging_table.leils_los_loan_id
+               , staging_table.leils_payee_unparsed_name
+               , staging_table.leils_entry_amount
+               , staging_table.leils_entry_description
+               , staging_table.leils_start_datetime
+               , staging_table.leils_complete_datetime
+               , staging_table.leils_ledger_entry_import_status_type
+               , staging_table.leils_failure_info
+               , staging_table.leils_raw_row
+               , staging_table.leils_row_number
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.ledger_entry_import_loan_status staging_table
+          LEFT JOIN history_octane.ledger_entry_import_loan_status history_table
+                    ON staging_table.leils_pid = history_table.leils_pid
+                        AND staging_table.leils_version = history_table.leils_version
+          WHERE history_table.leils_pid IS NULL
+          UNION ALL
+          SELECT history_table.leils_pid
+               , history_table.leils_version + 1
+               , history_table.leils_ledger_entry_import_status_pid
+               , history_table.leils_ledger_entry_pid
+               , history_table.leils_los_loan_id
+               , history_table.leils_payee_unparsed_name
+               , history_table.leils_entry_amount
+               , history_table.leils_entry_description
+               , history_table.leils_start_datetime
+               , history_table.leils_complete_datetime
+               , history_table.leils_ledger_entry_import_status_type
+               , history_table.leils_failure_info
+               , history_table.leils_raw_row
+               , history_table.leils_row_number
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.ledger_entry_import_loan_status history_table
+          LEFT JOIN staging_octane.ledger_entry_import_loan_status staging_table
+                    ON staging_table.leils_pid = history_table.leils_pid
+          WHERE staging_table.leils_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.ledger_entry_import_loan_status deleted_records
+              WHERE deleted_records.leils_pid = history_table.leils_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

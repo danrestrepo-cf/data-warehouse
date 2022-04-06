@@ -1,8 +1,8 @@
 {
     "Comment": "SP-200008 - ETL to insert_update records into staging.star_loan.interim_funder_dim using staging.history_octane.interim_funder as the primary source",
-    "StartAt": "SP-200008",
+    "StartAt": "ETL-200008",
     "States": {
-        "SP-200008": {
+        "ETL-200008": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-200008"
+                                    "Value": "ETL-200008"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

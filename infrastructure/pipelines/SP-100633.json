@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100633 - ETL to insert records into staging.history_octane.pte_response_status_type using staging.staging_octane.pte_response_status_type as the primary source",
-    "StartAt": "SP-100633",
+    "StartAt": "ETL-100633",
     "States": {
-        "SP-100633": {
+        "ETL-100633": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100633"
+                                    "Value": "ETL-100633"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

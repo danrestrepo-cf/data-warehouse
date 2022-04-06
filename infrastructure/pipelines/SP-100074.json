@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100074 - ETL to insert records into staging.history_octane.company using staging.staging_octane.company as the primary source",
-    "StartAt": "SP-100074",
+    "StartAt": "ETL-100074",
     "States": {
-        "SP-100074": {
+        "ETL-100074": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100074"
+                                    "Value": "ETL-100074"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

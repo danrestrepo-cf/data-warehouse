@@ -1,8 +1,8 @@
 {
     "Comment": "SP-400001-insert-update - ETL to insert_update records into staging.data_mart_business_applications.edw_employee_user_details using staging.history_octane.lender_user as the primary source",
-    "StartAt": "SP-400001-insert-update",
+    "StartAt": "ETL-400001-insert-update",
     "States": {
-        "SP-400001-insert-update": {
+        "ETL-400001-insert-update": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-400001-insert-update"
+                                    "Value": "ETL-400001-insert-update"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100722 - ETL to insert records into staging.history_octane.credit_report_request_action_type using staging.staging_octane.credit_report_request_action_type as the primary source",
-    "StartAt": "SP-100722",
+    "StartAt": "ETL-100722",
     "States": {
-        "SP-100722": {
+        "ETL-100722": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100722"
+                                    "Value": "ETL-100722"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

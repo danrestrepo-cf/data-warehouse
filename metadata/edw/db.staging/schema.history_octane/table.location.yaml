@@ -83,60 +83,63 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.loc_version
-etls:
+step_functions:
   SP-100849:
-    input_type: table
-    output_type: insert
-    json_output_field: loc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.location
-      SELECT staging_table.loc_pid
-           , staging_table.loc_version
-           , staging_table.loc_account_pid
-           , staging_table.loc_address_street1
-           , staging_table.loc_address_street2
-           , staging_table.loc_address_city
-           , staging_table.loc_address_state
-           , staging_table.loc_address_postal_code
-           , staging_table.loc_location_name
-           , staging_table.loc_location_id
-           , staging_table.loc_location_remote
-           , staging_table.loc_location_status_type
-           , staging_table.loc_fha_field_office_code
-           , staging_table.loc_documents_url
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.location staging_table
-      LEFT JOIN history_octane.location history_table
-                ON staging_table.loc_pid = history_table.loc_pid
-                    AND staging_table.loc_version = history_table.loc_version
-      WHERE history_table.loc_pid IS NULL
-      UNION ALL
-      SELECT history_table.loc_pid
-           , history_table.loc_version + 1
-           , history_table.loc_account_pid
-           , history_table.loc_address_street1
-           , history_table.loc_address_street2
-           , history_table.loc_address_city
-           , history_table.loc_address_state
-           , history_table.loc_address_postal_code
-           , history_table.loc_location_name
-           , history_table.loc_location_id
-           , history_table.loc_location_remote
-           , history_table.loc_location_status_type
-           , history_table.loc_fha_field_office_code
-           , history_table.loc_documents_url
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.location history_table
-      LEFT JOIN staging_octane.location staging_table
-                ON staging_table.loc_pid = history_table.loc_pid
-      WHERE staging_table.loc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.location deleted_records
-          WHERE deleted_records.loc_pid = history_table.loc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100849:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.location
+        json_output_field: loc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.location
+          SELECT staging_table.loc_pid
+               , staging_table.loc_version
+               , staging_table.loc_account_pid
+               , staging_table.loc_address_street1
+               , staging_table.loc_address_street2
+               , staging_table.loc_address_city
+               , staging_table.loc_address_state
+               , staging_table.loc_address_postal_code
+               , staging_table.loc_location_name
+               , staging_table.loc_location_id
+               , staging_table.loc_location_remote
+               , staging_table.loc_location_status_type
+               , staging_table.loc_fha_field_office_code
+               , staging_table.loc_documents_url
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.location staging_table
+          LEFT JOIN history_octane.location history_table
+                    ON staging_table.loc_pid = history_table.loc_pid
+                        AND staging_table.loc_version = history_table.loc_version
+          WHERE history_table.loc_pid IS NULL
+          UNION ALL
+          SELECT history_table.loc_pid
+               , history_table.loc_version + 1
+               , history_table.loc_account_pid
+               , history_table.loc_address_street1
+               , history_table.loc_address_street2
+               , history_table.loc_address_city
+               , history_table.loc_address_state
+               , history_table.loc_address_postal_code
+               , history_table.loc_location_name
+               , history_table.loc_location_id
+               , history_table.loc_location_remote
+               , history_table.loc_location_status_type
+               , history_table.loc_fha_field_office_code
+               , history_table.loc_documents_url
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.location history_table
+          LEFT JOIN staging_octane.location staging_table
+                    ON staging_table.loc_pid = history_table.loc_pid
+          WHERE staging_table.loc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.location deleted_records
+              WHERE deleted_records.loc_pid = history_table.loc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

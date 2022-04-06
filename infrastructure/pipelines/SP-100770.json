@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100770 - ETL to insert records into staging.history_octane.mcr_loan_status_type using staging.staging_octane.mcr_loan_status_type as the primary source",
-    "StartAt": "SP-100770",
+    "StartAt": "ETL-100770",
     "States": {
-        "SP-100770": {
+        "ETL-100770": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100770"
+                                    "Value": "ETL-100770"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

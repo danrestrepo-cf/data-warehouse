@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100797 - ETL to insert records into staging.history_octane.smart_message_email_recipient_type using staging.staging_octane.smart_message_email_recipient_type as the primary source",
-    "StartAt": "SP-100797",
+    "StartAt": "ETL-100797",
     "States": {
-        "SP-100797": {
+        "ETL-100797": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100797"
+                                    "Value": "ETL-100797"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

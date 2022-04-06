@@ -55,42 +55,45 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.kr_version
-etls:
+step_functions:
   SP-100048:
-    input_type: table
-    output_type: insert
-    json_output_field: kr_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.key_role
-      SELECT staging_table.kr_pid
-           , staging_table.kr_version
-           , staging_table.kr_role_pid
-           , staging_table.kr_account_pid
-           , staging_table.kr_key_role_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.key_role staging_table
-      LEFT JOIN history_octane.key_role history_table
-                ON staging_table.kr_pid = history_table.kr_pid
-                    AND staging_table.kr_version = history_table.kr_version
-      WHERE history_table.kr_pid IS NULL
-      UNION ALL
-      SELECT history_table.kr_pid
-           , history_table.kr_version + 1
-           , history_table.kr_role_pid
-           , history_table.kr_account_pid
-           , history_table.kr_key_role_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.key_role history_table
-      LEFT JOIN staging_octane.key_role staging_table
-                ON staging_table.kr_pid = history_table.kr_pid
-      WHERE staging_table.kr_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.key_role deleted_records
-          WHERE deleted_records.kr_pid = history_table.kr_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100048:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.key_role
+        json_output_field: kr_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.key_role
+          SELECT staging_table.kr_pid
+               , staging_table.kr_version
+               , staging_table.kr_role_pid
+               , staging_table.kr_account_pid
+               , staging_table.kr_key_role_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.key_role staging_table
+          LEFT JOIN history_octane.key_role history_table
+                    ON staging_table.kr_pid = history_table.kr_pid
+                        AND staging_table.kr_version = history_table.kr_version
+          WHERE history_table.kr_pid IS NULL
+          UNION ALL
+          SELECT history_table.kr_pid
+               , history_table.kr_version + 1
+               , history_table.kr_role_pid
+               , history_table.kr_account_pid
+               , history_table.kr_key_role_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.key_role history_table
+          LEFT JOIN staging_octane.key_role staging_table
+                    ON staging_table.kr_pid = history_table.kr_pid
+          WHERE staging_table.kr_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.key_role deleted_records
+              WHERE deleted_records.kr_pid = history_table.kr_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

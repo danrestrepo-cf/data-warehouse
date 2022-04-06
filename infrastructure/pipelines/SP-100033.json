@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100033 - ETL to insert records into staging.history_octane.lender_user_interest using staging.staging_octane.lender_user_interest as the primary source",
-    "StartAt": "SP-100033",
+    "StartAt": "ETL-100033",
     "States": {
-        "SP-100033": {
+        "ETL-100033": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100033"
+                                    "Value": "ETL-100033"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100286 - ETL to insert records into staging.history_octane.product_buydown using staging.staging_octane.product_buydown as the primary source",
-    "StartAt": "SP-100286",
+    "StartAt": "ETL-100286",
     "States": {
-        "SP-100286": {
+        "ETL-100286": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100286"
+                                    "Value": "ETL-100286"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100049 - ETL to insert records into staging.history_octane.role_charge_permissions using staging.staging_octane.role_charge_permissions as the primary source",
-    "StartAt": "SP-100049",
+    "StartAt": "ETL-100049",
     "States": {
-        "SP-100049": {
+        "ETL-100049": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100049"
+                                    "Value": "ETL-100049"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

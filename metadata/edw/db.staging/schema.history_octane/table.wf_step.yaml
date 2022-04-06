@@ -271,98 +271,101 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ws_wf_step_type
-etls:
+step_functions:
   SP-100191:
-    input_type: table
-    output_type: insert
-    json_output_field: ws_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.wf_step
-      SELECT staging_table.ws_pid
-           , staging_table.ws_version
-           , staging_table.ws_wf_process_pid
-           , staging_table.ws_step_name
-           , staging_table.ws_step_number
-           , staging_table.ws_step_number_formatted
-           , staging_table.ws_step_number_name_formatted
-           , staging_table.ws_step_start_borrower_text
-           , staging_table.ws_expected_complete_minutes
-           , staging_table.ws_wf_step_timeout_type
-           , staging_table.ws_second_of_day_timeout
-           , staging_table.ws_timeout_time_zone_type
-           , staging_table.ws_description
-           , staging_table.ws_wf_step_type
-           , staging_table.ws_wf_phase_pid
-           , staging_table.ws_wf_step_performer_assign_type
-           , staging_table.ws_role_pid
-           , staging_table.ws_from_role_pid
-           , staging_table.ws_wf_step_reassign_type
-           , staging_table.ws_wf_step_function_type
-           , staging_table.ws_sap_expire_minutes
-           , staging_table.ws_sap_expire_warning_minutes
-           , staging_table.ws_prompt_user_defined_time
-           , staging_table.ws_smart_message_pid
-           , staging_table.ws_smart_doc_set_pid
-           , staging_table.ws_lien_priority_type
-           , staging_table.ws_active_only
-           , staging_table.ws_internal
-           , staging_table.ws_deal_stage_type
-           , staging_table.ws_polling_interval_type
-           , staging_table.ws_swappable
-           , staging_table.ws_wf_prereq_set_pid
-           , staging_table.ws_user_step_name
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.wf_step staging_table
-      LEFT JOIN history_octane.wf_step history_table
-                ON staging_table.ws_pid = history_table.ws_pid
-                    AND staging_table.ws_version = history_table.ws_version
-      WHERE history_table.ws_pid IS NULL
-      UNION ALL
-      SELECT history_table.ws_pid
-           , history_table.ws_version + 1
-           , history_table.ws_wf_process_pid
-           , history_table.ws_step_name
-           , history_table.ws_step_number
-           , history_table.ws_step_number_formatted
-           , history_table.ws_step_number_name_formatted
-           , history_table.ws_step_start_borrower_text
-           , history_table.ws_expected_complete_minutes
-           , history_table.ws_wf_step_timeout_type
-           , history_table.ws_second_of_day_timeout
-           , history_table.ws_timeout_time_zone_type
-           , history_table.ws_description
-           , history_table.ws_wf_step_type
-           , history_table.ws_wf_phase_pid
-           , history_table.ws_wf_step_performer_assign_type
-           , history_table.ws_role_pid
-           , history_table.ws_from_role_pid
-           , history_table.ws_wf_step_reassign_type
-           , history_table.ws_wf_step_function_type
-           , history_table.ws_sap_expire_minutes
-           , history_table.ws_sap_expire_warning_minutes
-           , history_table.ws_prompt_user_defined_time
-           , history_table.ws_smart_message_pid
-           , history_table.ws_smart_doc_set_pid
-           , history_table.ws_lien_priority_type
-           , history_table.ws_active_only
-           , history_table.ws_internal
-           , history_table.ws_deal_stage_type
-           , history_table.ws_polling_interval_type
-           , history_table.ws_swappable
-           , history_table.ws_wf_prereq_set_pid
-           , history_table.ws_user_step_name
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.wf_step history_table
-      LEFT JOIN staging_octane.wf_step staging_table
-                ON staging_table.ws_pid = history_table.ws_pid
-      WHERE staging_table.ws_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.wf_step deleted_records
-          WHERE deleted_records.ws_pid = history_table.ws_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100191:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.wf_step
+        json_output_field: ws_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.wf_step
+          SELECT staging_table.ws_pid
+               , staging_table.ws_version
+               , staging_table.ws_wf_process_pid
+               , staging_table.ws_step_name
+               , staging_table.ws_step_number
+               , staging_table.ws_step_number_formatted
+               , staging_table.ws_step_number_name_formatted
+               , staging_table.ws_step_start_borrower_text
+               , staging_table.ws_expected_complete_minutes
+               , staging_table.ws_wf_step_timeout_type
+               , staging_table.ws_second_of_day_timeout
+               , staging_table.ws_timeout_time_zone_type
+               , staging_table.ws_description
+               , staging_table.ws_wf_step_type
+               , staging_table.ws_wf_phase_pid
+               , staging_table.ws_wf_step_performer_assign_type
+               , staging_table.ws_role_pid
+               , staging_table.ws_from_role_pid
+               , staging_table.ws_wf_step_reassign_type
+               , staging_table.ws_wf_step_function_type
+               , staging_table.ws_sap_expire_minutes
+               , staging_table.ws_sap_expire_warning_minutes
+               , staging_table.ws_prompt_user_defined_time
+               , staging_table.ws_smart_message_pid
+               , staging_table.ws_smart_doc_set_pid
+               , staging_table.ws_lien_priority_type
+               , staging_table.ws_active_only
+               , staging_table.ws_internal
+               , staging_table.ws_deal_stage_type
+               , staging_table.ws_polling_interval_type
+               , staging_table.ws_swappable
+               , staging_table.ws_wf_prereq_set_pid
+               , staging_table.ws_user_step_name
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.wf_step staging_table
+          LEFT JOIN history_octane.wf_step history_table
+                    ON staging_table.ws_pid = history_table.ws_pid
+                        AND staging_table.ws_version = history_table.ws_version
+          WHERE history_table.ws_pid IS NULL
+          UNION ALL
+          SELECT history_table.ws_pid
+               , history_table.ws_version + 1
+               , history_table.ws_wf_process_pid
+               , history_table.ws_step_name
+               , history_table.ws_step_number
+               , history_table.ws_step_number_formatted
+               , history_table.ws_step_number_name_formatted
+               , history_table.ws_step_start_borrower_text
+               , history_table.ws_expected_complete_minutes
+               , history_table.ws_wf_step_timeout_type
+               , history_table.ws_second_of_day_timeout
+               , history_table.ws_timeout_time_zone_type
+               , history_table.ws_description
+               , history_table.ws_wf_step_type
+               , history_table.ws_wf_phase_pid
+               , history_table.ws_wf_step_performer_assign_type
+               , history_table.ws_role_pid
+               , history_table.ws_from_role_pid
+               , history_table.ws_wf_step_reassign_type
+               , history_table.ws_wf_step_function_type
+               , history_table.ws_sap_expire_minutes
+               , history_table.ws_sap_expire_warning_minutes
+               , history_table.ws_prompt_user_defined_time
+               , history_table.ws_smart_message_pid
+               , history_table.ws_smart_doc_set_pid
+               , history_table.ws_lien_priority_type
+               , history_table.ws_active_only
+               , history_table.ws_internal
+               , history_table.ws_deal_stage_type
+               , history_table.ws_polling_interval_type
+               , history_table.ws_swappable
+               , history_table.ws_wf_prereq_set_pid
+               , history_table.ws_user_step_name
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.wf_step history_table
+          LEFT JOIN staging_octane.wf_step staging_table
+                    ON staging_table.ws_pid = history_table.ws_pid
+          WHERE staging_table.ws_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.wf_step deleted_records
+              WHERE deleted_records.ws_pid = history_table.ws_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

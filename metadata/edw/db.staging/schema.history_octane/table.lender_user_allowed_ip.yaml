@@ -63,50 +63,53 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.luip_version
-etls:
+step_functions:
   SP-100096:
-    input_type: table
-    output_type: insert
-    json_output_field: luip_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.lender_user_allowed_ip
-      SELECT staging_table.luip_pid
-           , staging_table.luip_version
-           , staging_table.luip_lender_user_pid
-           , staging_table.luip_status
-           , staging_table.luip_ip_address
-           , staging_table.luip_request_id
-           , staging_table.luip_request_expiration_datetime
-           , staging_table.luip_last_used_datetime
-           , staging_table.luip_first_used_datetime
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.lender_user_allowed_ip staging_table
-      LEFT JOIN history_octane.lender_user_allowed_ip history_table
-                ON staging_table.luip_pid = history_table.luip_pid
-                    AND staging_table.luip_version = history_table.luip_version
-      WHERE history_table.luip_pid IS NULL
-      UNION ALL
-      SELECT history_table.luip_pid
-           , history_table.luip_version + 1
-           , history_table.luip_lender_user_pid
-           , history_table.luip_status
-           , history_table.luip_ip_address
-           , history_table.luip_request_id
-           , history_table.luip_request_expiration_datetime
-           , history_table.luip_last_used_datetime
-           , history_table.luip_first_used_datetime
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.lender_user_allowed_ip history_table
-      LEFT JOIN staging_octane.lender_user_allowed_ip staging_table
-                ON staging_table.luip_pid = history_table.luip_pid
-      WHERE staging_table.luip_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.lender_user_allowed_ip deleted_records
-          WHERE deleted_records.luip_pid = history_table.luip_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100096:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.lender_user_allowed_ip
+        json_output_field: luip_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.lender_user_allowed_ip
+          SELECT staging_table.luip_pid
+               , staging_table.luip_version
+               , staging_table.luip_lender_user_pid
+               , staging_table.luip_status
+               , staging_table.luip_ip_address
+               , staging_table.luip_request_id
+               , staging_table.luip_request_expiration_datetime
+               , staging_table.luip_last_used_datetime
+               , staging_table.luip_first_used_datetime
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.lender_user_allowed_ip staging_table
+          LEFT JOIN history_octane.lender_user_allowed_ip history_table
+                    ON staging_table.luip_pid = history_table.luip_pid
+                        AND staging_table.luip_version = history_table.luip_version
+          WHERE history_table.luip_pid IS NULL
+          UNION ALL
+          SELECT history_table.luip_pid
+               , history_table.luip_version + 1
+               , history_table.luip_lender_user_pid
+               , history_table.luip_status
+               , history_table.luip_ip_address
+               , history_table.luip_request_id
+               , history_table.luip_request_expiration_datetime
+               , history_table.luip_last_used_datetime
+               , history_table.luip_first_used_datetime
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.lender_user_allowed_ip history_table
+          LEFT JOIN staging_octane.lender_user_allowed_ip staging_table
+                    ON staging_table.luip_pid = history_table.luip_pid
+          WHERE staging_table.luip_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.lender_user_allowed_ip deleted_records
+              WHERE deleted_records.luip_pid = history_table.luip_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

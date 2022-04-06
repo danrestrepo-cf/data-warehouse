@@ -55,46 +55,49 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pbr_version
-etls:
+step_functions:
   SP-100109:
-    input_type: table
-    output_type: insert
-    json_output_field: pbr_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.product_branch
-      SELECT staging_table.pbr_pid
-           , staging_table.pbr_version
-           , staging_table.pbr_product_pid
-           , staging_table.pbr_branch_pid
-           , staging_table.pbr_from_date
-           , staging_table.pbr_through_date
-           , staging_table.pbr_price_adjustment_percent
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.product_branch staging_table
-      LEFT JOIN history_octane.product_branch history_table
-                ON staging_table.pbr_pid = history_table.pbr_pid
-                    AND staging_table.pbr_version = history_table.pbr_version
-      WHERE history_table.pbr_pid IS NULL
-      UNION ALL
-      SELECT history_table.pbr_pid
-           , history_table.pbr_version + 1
-           , history_table.pbr_product_pid
-           , history_table.pbr_branch_pid
-           , history_table.pbr_from_date
-           , history_table.pbr_through_date
-           , history_table.pbr_price_adjustment_percent
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.product_branch history_table
-      LEFT JOIN staging_octane.product_branch staging_table
-                ON staging_table.pbr_pid = history_table.pbr_pid
-      WHERE staging_table.pbr_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.product_branch deleted_records
-          WHERE deleted_records.pbr_pid = history_table.pbr_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100109:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.product_branch
+        json_output_field: pbr_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.product_branch
+          SELECT staging_table.pbr_pid
+               , staging_table.pbr_version
+               , staging_table.pbr_product_pid
+               , staging_table.pbr_branch_pid
+               , staging_table.pbr_from_date
+               , staging_table.pbr_through_date
+               , staging_table.pbr_price_adjustment_percent
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.product_branch staging_table
+          LEFT JOIN history_octane.product_branch history_table
+                    ON staging_table.pbr_pid = history_table.pbr_pid
+                        AND staging_table.pbr_version = history_table.pbr_version
+          WHERE history_table.pbr_pid IS NULL
+          UNION ALL
+          SELECT history_table.pbr_pid
+               , history_table.pbr_version + 1
+               , history_table.pbr_product_pid
+               , history_table.pbr_branch_pid
+               , history_table.pbr_from_date
+               , history_table.pbr_through_date
+               , history_table.pbr_price_adjustment_percent
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.product_branch history_table
+          LEFT JOIN staging_octane.product_branch staging_table
+                    ON staging_table.pbr_pid = history_table.pbr_pid
+          WHERE staging_table.pbr_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.product_branch deleted_records
+              WHERE deleted_records.pbr_pid = history_table.pbr_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

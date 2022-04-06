@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100329 - ETL to insert records into staging.history_octane.proposal_summary using staging.staging_octane.proposal_summary as the primary source",
-    "StartAt": "SP-100329",
+    "StartAt": "ETL-100329",
     "States": {
-        "SP-100329": {
+        "ETL-100329": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100329"
+                                    "Value": "ETL-100329"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

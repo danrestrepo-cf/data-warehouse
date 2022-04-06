@@ -6,8 +6,12 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        TableMetadata,
                                                        ColumnMetadata,
                                                        ETLMetadata,
+                                                       StepFunctionMetadata,
                                                        ForeignKeyMetadata,
-                                                       InvalidMetadataKeyException)
+                                                       InvalidMetadataKeyException,
+                                                       ETLInputType,
+                                                       ETLOutputType,
+                                                       ETLDataSource)
 from lib.metadata_core.metadata_object_path import DatabasePath, SchemaPath, TablePath, ColumnPath
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 
@@ -78,6 +82,129 @@ class TestDataWarehouseMetadataGetByPath(unittest.TestCase):
     def test_can_get_column_metadata_object_by_path(self):
         column_path = ColumnPath('db1', 'schema1', 'table1', 'col1')
         self.assertEqual(self.column_metadata, self.dw_metadata.get_column_by_path(column_path))
+
+
+class TestDataWarehouseMetadataGetETLs(unittest.TestCase):
+
+    def setUp(self):
+        self.dw_metadata = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'edw',
+                'databases': [
+                    {
+                        'name': 'staging',
+                        'schemas': [
+                            {
+                                'name': 'history_octane',
+                                'tables': [
+                                    {
+                                        'name': 'table1',
+                                        'primary_source_table': 'staging.staging_octane.table1',
+                                        'step_functions': {
+                                            'SP-1': {
+                                                'etls': {
+                                                    'ETL-1': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'output_table': 'staging.history_octane.table1'
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        'name': 'table2',
+                                        'primary_source_table': 'staging.staging_octane.table2',
+                                        'step_functions': {
+                                            'SP-2': {
+                                                'etls': {
+                                                    'ETL-2': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'output_table': 'staging.history_octane.table2'
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        'name': 'ingress',
+                        'schemas': [
+                            {
+                                'name': 'ingress_schema_2',
+                                'tables': [
+                                    {
+                                        'name': 'table3',
+                                        'primary_source_table': 'ingress.ingress_schema_1.table3',
+                                        'step_functions': {
+                                            'SP-3': {
+                                                'etls': {
+                                                    'ETL-3': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'output_table': 'ingress.ingress_schema_2.table3'
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+
+        self.expected_etl_1 = ETLMetadata(
+            process_name='ETL-1',
+            hardcoded_data_source=ETLDataSource.OCTANE,
+            input_type=ETLInputType.TABLE,
+            output_type=ETLOutputType.INSERT,
+            output_table=TablePath(database='staging', schema='history_octane', table='table1'),
+            primary_source_table=TablePath(database='staging', schema='staging_octane', table='table1')
+        )
+
+        self.expected_etl_2 = ETLMetadata(
+            process_name='ETL-2',
+            hardcoded_data_source=ETLDataSource.OCTANE,
+            input_type=ETLInputType.TABLE,
+            output_type=ETLOutputType.INSERT_UPDATE,
+            output_table=TablePath(database='staging', schema='history_octane', table='table2'),
+            primary_source_table=TablePath(database='staging', schema='staging_octane', table='table2')
+        )
+
+        self.expected_etl_3 = ETLMetadata(
+            process_name='ETL-3',
+            hardcoded_data_source=ETLDataSource.OCTANE,
+            input_type=ETLInputType.TABLE,
+            output_type=ETLOutputType.INSERT,
+            output_table=TablePath(database='ingress', schema='ingress_schema_2', table='table3'),
+            primary_source_table=TablePath(database='ingress', schema='ingress_schema_1', table='table3')
+        )
+
+    def test_gets_all_etls_when_no_filter_is_supplied(self):
+        self.assertEqual([self.expected_etl_1, self.expected_etl_2, self.expected_etl_3], list(self.dw_metadata.get_etls()))
+
+    def test_returns_empty_iterable_if_no_etls_match_condition(self):
+        self.assertEqual([], list(self.dw_metadata.get_etls(filter_func=lambda x: False)))
+
+    def test_returns_only_those_etls_matching_the_given_filter(self):
+        self.assertEqual(
+            [self.expected_etl_2],
+            list(self.dw_metadata.get_etls(filter_func=lambda x: x.output_type == ETLOutputType.INSERT_UPDATE))
+        )
+        self.assertEqual(
+            [self.expected_etl_1, self.expected_etl_2],
+            list(self.dw_metadata.get_etls(filter_func=lambda x: x.output_table.schema == 'history_octane'))
+        )
 
 
 class TestDatabaseMetadata(unittest.TestCase):
@@ -230,40 +357,49 @@ class TestTableMetadata(unittest.TestCase):
         self.assertTrue(table_metadata.contains_column('a_pid'))
         self.assertFalse(table_metadata.contains_column('a_version'))
 
-    def test_throws_error_if_user_tries_to_get_etl_that_doesnt_exist(self):
+    def test_throws_error_if_user_tries_to_get_step_function_that_doesnt_exist(self):
         table_metadata = TableMetadata('deal')
         with self.assertRaises(InvalidMetadataKeyException):
-            table_metadata.get_etl('SP-100000')
+            table_metadata.get_step_function('SP-100000')
 
-    def test_can_get_etl_metadata_by_etl_name_if_the_etl_has_been_added_to_the_metadata(self):
+    def test_can_get_step_function_metadata_by_step_function_name_if_the_step_function_has_been_added_to_the_metadata(self):
         table_metadata = TableMetadata('deal')
-        table_metadata.add_etl(ETLMetadata('SP-100000'))
-        self.assertEqual(ETLMetadata('SP-100000'), table_metadata.get_etl('SP-100000'))
+        table_metadata.add_step_function(
+            StepFunctionMetadata('SP-100000', TablePath(database='staging', schema='staging_octane', table='deal')))
+        self.assertEqual(StepFunctionMetadata('SP-100000', TablePath(database='staging', schema='staging_octane', table='deal')),
+                         table_metadata.get_step_function('SP-100000'))
 
-    def test_can_iterate_through_all_added_etls(self):
+    def test_can_iterate_through_all_added_step_functions(self):
         table_metadata = TableMetadata('deal')
-        table_metadata.add_etl(ETLMetadata('SP-100000'))
-        table_metadata.add_etl(ETLMetadata('SP-100001'))
-        table_metadata.add_etl(ETLMetadata('SP-100002'))
-        expected = [ETLMetadata('SP-100000'), ETLMetadata('SP-100001'), ETLMetadata('SP-100002')]
-        self.assertEqual(expected, [etl for etl in table_metadata.etls])
+        table_metadata.add_step_function(StepFunctionMetadata('SP-100000',
+                                                              TablePath(database='staging', schema='staging_octane', table='deal')))
+        table_metadata.add_step_function(StepFunctionMetadata('SP-100001',
+                                                              TablePath(database='staging', schema='staging_octane', table='deal')))
+        table_metadata.add_step_function(StepFunctionMetadata('SP-100002',
+                                                              TablePath(database='staging', schema='staging_octane', table='deal')))
+        expected = [StepFunctionMetadata('SP-100000', TablePath(database='staging', schema='staging_octane', table='deal')),
+                    StepFunctionMetadata('SP-100001', TablePath(database='staging', schema='staging_octane', table='deal')),
+                    StepFunctionMetadata('SP-100002', TablePath(database='staging', schema='staging_octane', table='deal'))]
+        self.assertEqual(expected, [step_function for step_function in table_metadata.step_functions])
 
-    def test_can_remove_etl_metadata(self):
+    def test_can_remove_step_function_metadata(self):
         table_metadata = TableMetadata('account')
-        table_metadata.add_etl(ETLMetadata('SP-100123'))
-        table_metadata.remove_etl('SP-100123')
-        self.assertEqual([], table_metadata.etls)
+        table_metadata.add_step_function(
+            StepFunctionMetadata('SP-100123', TablePath(database='staging', schema='staging_octane', table='account')))
+        table_metadata.remove_step_function('SP-100123')
+        self.assertEqual([], table_metadata.step_functions)
 
-    def test_removing_etl_that_doesnt_exist_does_nothing(self):
+    def test_removing_step_function_that_doesnt_exist_does_nothing(self):
         table_metadata = TableMetadata('account')
-        table_metadata.remove_etl('SP-100123')
-        self.assertEqual([], table_metadata.etls)
+        table_metadata.remove_step_function('SP-100123')
+        self.assertEqual([], table_metadata.step_functions)
 
     def test_can_indicate_whether_it_contains_a_given_etl_by_name(self):
         table_metadata = TableMetadata('account')
-        table_metadata.add_etl(ETLMetadata('SP-1'))
-        self.assertTrue(table_metadata.contains_etl('SP-1'))
-        self.assertFalse(table_metadata.contains_etl('SP-2'))
+        table_metadata.add_step_function(
+            StepFunctionMetadata('SP-1', TablePath(database='staging', schema='staging_octane', table='account')))
+        self.assertTrue(table_metadata.contains_step_function('SP-1'))
+        self.assertFalse(table_metadata.contains_step_function('SP-2'))
 
     def test_throws_error_if_user_tries_to_get_foreign_key_that_doesnt_exist(self):
         table_metadata = TableMetadata('deal')
@@ -310,6 +446,76 @@ class TestTableMetadata(unittest.TestCase):
         table_metadata.add_foreign_key(ForeignKeyMetadata('fk1', TablePath('db', 'sch', 't'), [], []))
         self.assertTrue(table_metadata.contains_foreign_key('fk1'))
         self.assertFalse(table_metadata.contains_foreign_key('fk2'))
+
+
+class TestStepFunctionMetadata(unittest.TestCase):
+
+    def test_trying_to_get_a_nonexistent_etl_throws_an_error(self):
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
+        with self.assertRaises(InvalidMetadataKeyException):
+            step_function.get_etl('ETL-1')
+
+    def test_can_get_etl_that_was_previously_added(self):
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
+        etl = ETLMetadata(process_name='ETL-1')
+        step_function.add_etl(etl)
+        self.assertEqual(etl, step_function.get_etl('ETL-1'))
+
+    def test_can_get_list_of_all_previously_added_etls(self):
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
+        etl1 = ETLMetadata(process_name='ETL-1')
+        step_function.add_etl(etl1)
+        etl2 = ETLMetadata(process_name='ETL-2')
+        step_function.add_etl(etl2)
+        self.assertEqual([etl1, etl2], step_function.etls)
+
+    def test_trying_to_get_a_removed_etl_throws_an_error(self):
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
+        etl = ETLMetadata(process_name='ETL-1')
+        step_function.add_etl(etl)
+        step_function.remove_etl('ETL-1')
+        with self.assertRaises(InvalidMetadataKeyException):
+            step_function.get_etl('ETL-1')
+
+    def test_list_of_all_etls_does_not_include_removed_etls(self):
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
+        etl1 = ETLMetadata(process_name='ETL-1')
+        step_function.add_etl(etl1)
+        etl2 = ETLMetadata(process_name='ETL-2')
+        step_function.add_etl(etl2)
+        step_function.remove_etl('ETL-1')
+        self.assertEqual([etl2], step_function.etls)
+
+    def test_trying_to_remove_a_nonexistent_etl_does_nothing(self):
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
+        step_function.remove_etl('ETL-1')
+        # expect no error to be thrown
+
+    def test_has_parallel_limit_returns_false_if_limit_is_none_and_true_otherwise(self):
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
+        self.assertFalse(step_function.has_parallel_limit)
+        step_function.parallel_limit = 20
+        self.assertTrue(step_function.has_parallel_limit)
+
+    def test_has_etl_returns_true_if_step_function_contains_etl_and_false_otherwise(self):
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
+        self.assertFalse(step_function.has_etl('ETL-1'))
+
+        etl1 = ETLMetadata(process_name='ETL-1')
+        step_function.add_etl(etl1)
+        self.assertTrue(step_function.has_etl('ETL-1'))
+
+        step_function.remove_etl('ETL-1')
+        self.assertFalse(step_function.has_etl('ETL-1'))
+
+    def test_etls_have_next_step_functions_returns_true_if_any_etls_has_next_sfns_and_false_otherwise(self):
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
+        etl1 = ETLMetadata(process_name='ETL-1')
+        step_function.add_etl(etl1)
+        self.assertFalse(step_function.etls_have_next_step_functions)
+        etl2 = ETLMetadata(process_name='ETL-2', next_step_functions=['SP-10'])
+        step_function.add_etl(etl2)
+        self.assertTrue(step_function.etls_have_next_step_functions)
 
 
 class TestTableMetadataCanGetColumnSourcePaths(unittest.TestCase):

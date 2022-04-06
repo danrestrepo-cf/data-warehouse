@@ -43,40 +43,43 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.wfp_wf_step_pid
-etls:
+step_functions:
   SP-100199:
-    input_type: table
-    output_type: insert
-    json_output_field: wfp_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.wf_fork_process
-      SELECT staging_table.wfp_pid
-           , staging_table.wfp_version
-           , staging_table.wfp_wf_step_pid
-           , staging_table.wfp_wf_process_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.wf_fork_process staging_table
-      LEFT JOIN history_octane.wf_fork_process history_table
-                ON staging_table.wfp_pid = history_table.wfp_pid
-                    AND staging_table.wfp_version = history_table.wfp_version
-      WHERE history_table.wfp_pid IS NULL
-      UNION ALL
-      SELECT history_table.wfp_pid
-           , history_table.wfp_version + 1
-           , history_table.wfp_wf_step_pid
-           , history_table.wfp_wf_process_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.wf_fork_process history_table
-      LEFT JOIN staging_octane.wf_fork_process staging_table
-                ON staging_table.wfp_pid = history_table.wfp_pid
-      WHERE staging_table.wfp_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.wf_fork_process deleted_records
-          WHERE deleted_records.wfp_pid = history_table.wfp_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100199:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.wf_fork_process
+        json_output_field: wfp_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.wf_fork_process
+          SELECT staging_table.wfp_pid
+               , staging_table.wfp_version
+               , staging_table.wfp_wf_step_pid
+               , staging_table.wfp_wf_process_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.wf_fork_process staging_table
+          LEFT JOIN history_octane.wf_fork_process history_table
+                    ON staging_table.wfp_pid = history_table.wfp_pid
+                        AND staging_table.wfp_version = history_table.wfp_version
+          WHERE history_table.wfp_pid IS NULL
+          UNION ALL
+          SELECT history_table.wfp_pid
+               , history_table.wfp_version + 1
+               , history_table.wfp_wf_step_pid
+               , history_table.wfp_wf_process_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.wf_fork_process history_table
+          LEFT JOIN staging_octane.wf_fork_process staging_table
+                    ON staging_table.wfp_pid = history_table.wfp_pid
+          WHERE staging_table.wfp_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.wf_fork_process deleted_records
+              WHERE deleted_records.wfp_pid = history_table.wfp_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100745 - ETL to insert records into staging.history_octane.hmda_denial_reason_type using staging.staging_octane.hmda_denial_reason_type as the primary source",
-    "StartAt": "SP-100745",
+    "StartAt": "ETL-100745",
     "States": {
-        "SP-100745": {
+        "ETL-100745": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100745"
+                                    "Value": "ETL-100745"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

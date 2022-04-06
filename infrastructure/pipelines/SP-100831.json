@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100831 - ETL to insert records into staging.history_octane.wf_prereq_set using staging.staging_octane.wf_prereq_set as the primary source",
-    "StartAt": "SP-100831",
+    "StartAt": "ETL-100831",
     "States": {
-        "SP-100831": {
+        "ETL-100831": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100831"
+                                    "Value": "ETL-100831"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

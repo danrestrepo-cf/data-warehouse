@@ -35,40 +35,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.prpret_version
-etls:
+step_functions:
   SP-100328:
-    input_type: table
-    output_type: insert
-    json_output_field: prpret_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.proposal_review_ticker
-      SELECT staging_table.prpret_pid
-           , staging_table.prpret_version
-           , staging_table.prpret_proposal_pid
-           , staging_table.prpret_next_id
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.proposal_review_ticker staging_table
-      LEFT JOIN history_octane.proposal_review_ticker history_table
-                ON staging_table.prpret_pid = history_table.prpret_pid
-                    AND staging_table.prpret_version = history_table.prpret_version
-      WHERE history_table.prpret_pid IS NULL
-      UNION ALL
-      SELECT history_table.prpret_pid
-           , history_table.prpret_version + 1
-           , history_table.prpret_proposal_pid
-           , history_table.prpret_next_id
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.proposal_review_ticker history_table
-      LEFT JOIN staging_octane.proposal_review_ticker staging_table
-                ON staging_table.prpret_pid = history_table.prpret_pid
-      WHERE staging_table.prpret_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.proposal_review_ticker deleted_records
-          WHERE deleted_records.prpret_pid = history_table.prpret_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100328:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.proposal_review_ticker
+        json_output_field: prpret_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.proposal_review_ticker
+          SELECT staging_table.prpret_pid
+               , staging_table.prpret_version
+               , staging_table.prpret_proposal_pid
+               , staging_table.prpret_next_id
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.proposal_review_ticker staging_table
+          LEFT JOIN history_octane.proposal_review_ticker history_table
+                    ON staging_table.prpret_pid = history_table.prpret_pid
+                        AND staging_table.prpret_version = history_table.prpret_version
+          WHERE history_table.prpret_pid IS NULL
+          UNION ALL
+          SELECT history_table.prpret_pid
+               , history_table.prpret_version + 1
+               , history_table.prpret_proposal_pid
+               , history_table.prpret_next_id
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.proposal_review_ticker history_table
+          LEFT JOIN staging_octane.proposal_review_ticker staging_table
+                    ON staging_table.prpret_pid = history_table.prpret_pid
+          WHERE staging_table.prpret_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.proposal_review_ticker deleted_records
+              WHERE deleted_records.prpret_pid = history_table.prpret_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

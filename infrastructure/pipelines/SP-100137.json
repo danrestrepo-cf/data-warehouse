@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100137 - ETL to insert records into staging.history_octane.construction_draw_number_ticker using staging.staging_octane.construction_draw_number_ticker as the primary source",
-    "StartAt": "SP-100137",
+    "StartAt": "ETL-100137",
     "States": {
-        "SP-100137": {
+        "ETL-100137": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100137"
+                                    "Value": "ETL-100137"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

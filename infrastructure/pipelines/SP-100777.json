@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100777 - ETL to insert records into staging.history_octane.native_american_lands_type using staging.staging_octane.native_american_lands_type as the primary source",
-    "StartAt": "SP-100777",
+    "StartAt": "ETL-100777",
     "States": {
-        "SP-100777": {
+        "ETL-100777": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100777"
+                                    "Value": "ETL-100777"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

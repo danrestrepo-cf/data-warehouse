@@ -99,52 +99,55 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.prs_version
-etls:
+step_functions:
   SP-100068:
-    input_type: table
-    output_type: insert
-    json_output_field: prs_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.preferred_settlement
-      SELECT staging_table.prs_pid
-           , staging_table.prs_version
-           , staging_table.prs_account_pid
-           , staging_table.prs_state
-           , staging_table.prs_from_date
-           , staging_table.prs_title_company_pid
-           , staging_table.prs_title_company_office_pid
-           , staging_table.prs_settlement_agent_pid
-           , staging_table.prs_settlement_agent_office_pid
-           , staging_table.prs_settlement_agent_wire_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.preferred_settlement staging_table
-      LEFT JOIN history_octane.preferred_settlement history_table
-                ON staging_table.prs_pid = history_table.prs_pid
-                    AND staging_table.prs_version = history_table.prs_version
-      WHERE history_table.prs_pid IS NULL
-      UNION ALL
-      SELECT history_table.prs_pid
-           , history_table.prs_version + 1
-           , history_table.prs_account_pid
-           , history_table.prs_state
-           , history_table.prs_from_date
-           , history_table.prs_title_company_pid
-           , history_table.prs_title_company_office_pid
-           , history_table.prs_settlement_agent_pid
-           , history_table.prs_settlement_agent_office_pid
-           , history_table.prs_settlement_agent_wire_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.preferred_settlement history_table
-      LEFT JOIN staging_octane.preferred_settlement staging_table
-                ON staging_table.prs_pid = history_table.prs_pid
-      WHERE staging_table.prs_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.preferred_settlement deleted_records
-          WHERE deleted_records.prs_pid = history_table.prs_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100068:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.preferred_settlement
+        json_output_field: prs_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.preferred_settlement
+          SELECT staging_table.prs_pid
+               , staging_table.prs_version
+               , staging_table.prs_account_pid
+               , staging_table.prs_state
+               , staging_table.prs_from_date
+               , staging_table.prs_title_company_pid
+               , staging_table.prs_title_company_office_pid
+               , staging_table.prs_settlement_agent_pid
+               , staging_table.prs_settlement_agent_office_pid
+               , staging_table.prs_settlement_agent_wire_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.preferred_settlement staging_table
+          LEFT JOIN history_octane.preferred_settlement history_table
+                    ON staging_table.prs_pid = history_table.prs_pid
+                        AND staging_table.prs_version = history_table.prs_version
+          WHERE history_table.prs_pid IS NULL
+          UNION ALL
+          SELECT history_table.prs_pid
+               , history_table.prs_version + 1
+               , history_table.prs_account_pid
+               , history_table.prs_state
+               , history_table.prs_from_date
+               , history_table.prs_title_company_pid
+               , history_table.prs_title_company_office_pid
+               , history_table.prs_settlement_agent_pid
+               , history_table.prs_settlement_agent_office_pid
+               , history_table.prs_settlement_agent_wire_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.preferred_settlement history_table
+          LEFT JOIN staging_octane.preferred_settlement staging_table
+                    ON staging_table.prs_pid = history_table.prs_pid
+          WHERE staging_table.prs_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.preferred_settlement deleted_records
+              WHERE deleted_records.prs_pid = history_table.prs_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

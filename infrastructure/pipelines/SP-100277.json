@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100277 - ETL to insert records into staging.history_octane.deal_invoice_payment_method using staging.staging_octane.deal_invoice_payment_method as the primary source",
-    "StartAt": "SP-100277",
+    "StartAt": "ETL-100277",
     "States": {
-        "SP-100277": {
+        "ETL-100277": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100277"
+                                    "Value": "ETL-100277"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

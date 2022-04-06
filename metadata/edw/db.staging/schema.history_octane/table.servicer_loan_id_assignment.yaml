@@ -75,48 +75,51 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.slia_version
-etls:
+step_functions:
   SP-100330:
-    input_type: table
-    output_type: insert
-    json_output_field: slia_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.servicer_loan_id_assignment
-      SELECT staging_table.slia_pid
-           , staging_table.slia_version
-           , staging_table.slia_account_pid
-           , staging_table.slia_servicer_loan_id_import_request_pid
-           , staging_table.slia_loan_servicer_pid
-           , staging_table.slia_servicer_loan_id
-           , staging_table.slia_servicer_loan_id_assign_type
-           , staging_table.slia_assigned_datetime
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.servicer_loan_id_assignment staging_table
-      LEFT JOIN history_octane.servicer_loan_id_assignment history_table
-                ON staging_table.slia_pid = history_table.slia_pid
-                    AND staging_table.slia_version = history_table.slia_version
-      WHERE history_table.slia_pid IS NULL
-      UNION ALL
-      SELECT history_table.slia_pid
-           , history_table.slia_version + 1
-           , history_table.slia_account_pid
-           , history_table.slia_servicer_loan_id_import_request_pid
-           , history_table.slia_loan_servicer_pid
-           , history_table.slia_servicer_loan_id
-           , history_table.slia_servicer_loan_id_assign_type
-           , history_table.slia_assigned_datetime
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.servicer_loan_id_assignment history_table
-      LEFT JOIN staging_octane.servicer_loan_id_assignment staging_table
-                ON staging_table.slia_pid = history_table.slia_pid
-      WHERE staging_table.slia_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.servicer_loan_id_assignment deleted_records
-          WHERE deleted_records.slia_pid = history_table.slia_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100330:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.servicer_loan_id_assignment
+        json_output_field: slia_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.servicer_loan_id_assignment
+          SELECT staging_table.slia_pid
+               , staging_table.slia_version
+               , staging_table.slia_account_pid
+               , staging_table.slia_servicer_loan_id_import_request_pid
+               , staging_table.slia_loan_servicer_pid
+               , staging_table.slia_servicer_loan_id
+               , staging_table.slia_servicer_loan_id_assign_type
+               , staging_table.slia_assigned_datetime
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.servicer_loan_id_assignment staging_table
+          LEFT JOIN history_octane.servicer_loan_id_assignment history_table
+                    ON staging_table.slia_pid = history_table.slia_pid
+                        AND staging_table.slia_version = history_table.slia_version
+          WHERE history_table.slia_pid IS NULL
+          UNION ALL
+          SELECT history_table.slia_pid
+               , history_table.slia_version + 1
+               , history_table.slia_account_pid
+               , history_table.slia_servicer_loan_id_import_request_pid
+               , history_table.slia_loan_servicer_pid
+               , history_table.slia_servicer_loan_id
+               , history_table.slia_servicer_loan_id_assign_type
+               , history_table.slia_assigned_datetime
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.servicer_loan_id_assignment history_table
+          LEFT JOIN staging_octane.servicer_loan_id_assignment staging_table
+                    ON staging_table.slia_pid = history_table.slia_pid
+          WHERE staging_table.slia_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.servicer_loan_id_assignment deleted_records
+              WHERE deleted_records.slia_pid = history_table.slia_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

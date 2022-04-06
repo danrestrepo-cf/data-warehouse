@@ -359,138 +359,141 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lpr_xml_response_deal_system_file_pid
-etls:
+step_functions:
   SP-100125:
-    input_type: table
-    output_type: insert
-    json_output_field: lpr_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.lp_request
-      SELECT staging_table.lpr_pid
-           , staging_table.lpr_version
-           , staging_table.lpr_proposal_pid
-           , staging_table.lpr_proposal_snapshot_pid
-           , staging_table.lpr_full_feedback_pdf_deal_file_pid
-           , staging_table.lpr_hve_pdf_deal_file_pid
-           , staging_table.lpr_requester_agent_type
-           , staging_table.lpr_requester_lender_user_pid
-           , staging_table.lpr_requester_unparsed_name
-           , staging_table.lpr_create_datetime
-           , staging_table.lpr_lp_interface_version_type
-           , staging_table.lpr_lp_dtd_version_type
-           , staging_table.lpr_mismo_version_type
-           , staging_table.lpr_fre_lp_transaction_id
-           , staging_table.lpr_lp_transaction_id
-           , staging_table.lpr_globally_unique_id
-           , staging_table.lpr_lp_request_status_type
-           , staging_table.lpr_lp_evaluation_status_type
-           , staging_table.lpr_status_messages
-           , staging_table.lpr_xml_response_deal_system_file_pid
-           , staging_table.lpr_loan_amount
-           , staging_table.lpr_initial_pi_amount
-           , staging_table.lpr_note_rate_percent
-           , staging_table.lpr_initial_note_rate_percent
-           , staging_table.lpr_ltv_ratio_percent
-           , staging_table.lpr_cltv_ratio_percent
-           , staging_table.lpr_hcltv_ratio_percent
-           , staging_table.lpr_hcltv_applicable
-           , staging_table.lpr_housing_ratio_percent
-           , staging_table.lpr_debt_ratio_percent
-           , staging_table.lpr_lp_ltv_ratio_percent
-           , staging_table.lpr_lp_total_ltv_ratio_percent
-           , staging_table.lpr_lp_high_total_ltv_ratio_percent
-           , staging_table.lpr_lp_housing_ratio_percent
-           , staging_table.lpr_lp_debt_ratio_percent
-           , staging_table.lpr_lp_submission_number
-           , staging_table.lpr_lp_credit_risk_classification_type
-           , staging_table.lpr_fre_doc_level_description_type
-           , staging_table.lpr_fre_purchase_eligibility_type
-           , staging_table.lpr_lp_case_state_type
-           , staging_table.lpr_lp_async_id
-           , staging_table.lpr_lp_async_polling_interval
-           , staging_table.lpr_lp_total_funds_to_be_verified_amount
-           , staging_table.lpr_lp_required_borrower_funds_amount
-           , staging_table.lpr_lp_paid_off_debt_amount
-           , staging_table.lpr_lp_required_reserves_amount
-           , staging_table.lpr_lp_total_eligible_assets_amount
-           , staging_table.lpr_lp_proceeds_from_subordinate_financing_amount
-           , staging_table.lpr_lp_calculated_reserves_amount
-           , staging_table.lpr_aus_request_number
-           , staging_table.lpr_cash_from_borrower_amount
-           , staging_table.lpr_aus_cash_from_borrower_amount
-           , staging_table.lpr_gse_version_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.lp_request staging_table
-      LEFT JOIN history_octane.lp_request history_table
-                ON staging_table.lpr_pid = history_table.lpr_pid
-                    AND staging_table.lpr_version = history_table.lpr_version
-      WHERE history_table.lpr_pid IS NULL
-      UNION ALL
-      SELECT history_table.lpr_pid
-           , history_table.lpr_version + 1
-           , history_table.lpr_proposal_pid
-           , history_table.lpr_proposal_snapshot_pid
-           , history_table.lpr_full_feedback_pdf_deal_file_pid
-           , history_table.lpr_hve_pdf_deal_file_pid
-           , history_table.lpr_requester_agent_type
-           , history_table.lpr_requester_lender_user_pid
-           , history_table.lpr_requester_unparsed_name
-           , history_table.lpr_create_datetime
-           , history_table.lpr_lp_interface_version_type
-           , history_table.lpr_lp_dtd_version_type
-           , history_table.lpr_mismo_version_type
-           , history_table.lpr_fre_lp_transaction_id
-           , history_table.lpr_lp_transaction_id
-           , history_table.lpr_globally_unique_id
-           , history_table.lpr_lp_request_status_type
-           , history_table.lpr_lp_evaluation_status_type
-           , history_table.lpr_status_messages
-           , history_table.lpr_xml_response_deal_system_file_pid
-           , history_table.lpr_loan_amount
-           , history_table.lpr_initial_pi_amount
-           , history_table.lpr_note_rate_percent
-           , history_table.lpr_initial_note_rate_percent
-           , history_table.lpr_ltv_ratio_percent
-           , history_table.lpr_cltv_ratio_percent
-           , history_table.lpr_hcltv_ratio_percent
-           , history_table.lpr_hcltv_applicable
-           , history_table.lpr_housing_ratio_percent
-           , history_table.lpr_debt_ratio_percent
-           , history_table.lpr_lp_ltv_ratio_percent
-           , history_table.lpr_lp_total_ltv_ratio_percent
-           , history_table.lpr_lp_high_total_ltv_ratio_percent
-           , history_table.lpr_lp_housing_ratio_percent
-           , history_table.lpr_lp_debt_ratio_percent
-           , history_table.lpr_lp_submission_number
-           , history_table.lpr_lp_credit_risk_classification_type
-           , history_table.lpr_fre_doc_level_description_type
-           , history_table.lpr_fre_purchase_eligibility_type
-           , history_table.lpr_lp_case_state_type
-           , history_table.lpr_lp_async_id
-           , history_table.lpr_lp_async_polling_interval
-           , history_table.lpr_lp_total_funds_to_be_verified_amount
-           , history_table.lpr_lp_required_borrower_funds_amount
-           , history_table.lpr_lp_paid_off_debt_amount
-           , history_table.lpr_lp_required_reserves_amount
-           , history_table.lpr_lp_total_eligible_assets_amount
-           , history_table.lpr_lp_proceeds_from_subordinate_financing_amount
-           , history_table.lpr_lp_calculated_reserves_amount
-           , history_table.lpr_aus_request_number
-           , history_table.lpr_cash_from_borrower_amount
-           , history_table.lpr_aus_cash_from_borrower_amount
-           , history_table.lpr_gse_version_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.lp_request history_table
-      LEFT JOIN staging_octane.lp_request staging_table
-                ON staging_table.lpr_pid = history_table.lpr_pid
-      WHERE staging_table.lpr_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.lp_request deleted_records
-          WHERE deleted_records.lpr_pid = history_table.lpr_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100125:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.lp_request
+        json_output_field: lpr_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.lp_request
+          SELECT staging_table.lpr_pid
+               , staging_table.lpr_version
+               , staging_table.lpr_proposal_pid
+               , staging_table.lpr_proposal_snapshot_pid
+               , staging_table.lpr_full_feedback_pdf_deal_file_pid
+               , staging_table.lpr_hve_pdf_deal_file_pid
+               , staging_table.lpr_requester_agent_type
+               , staging_table.lpr_requester_lender_user_pid
+               , staging_table.lpr_requester_unparsed_name
+               , staging_table.lpr_create_datetime
+               , staging_table.lpr_lp_interface_version_type
+               , staging_table.lpr_lp_dtd_version_type
+               , staging_table.lpr_mismo_version_type
+               , staging_table.lpr_fre_lp_transaction_id
+               , staging_table.lpr_lp_transaction_id
+               , staging_table.lpr_globally_unique_id
+               , staging_table.lpr_lp_request_status_type
+               , staging_table.lpr_lp_evaluation_status_type
+               , staging_table.lpr_status_messages
+               , staging_table.lpr_xml_response_deal_system_file_pid
+               , staging_table.lpr_loan_amount
+               , staging_table.lpr_initial_pi_amount
+               , staging_table.lpr_note_rate_percent
+               , staging_table.lpr_initial_note_rate_percent
+               , staging_table.lpr_ltv_ratio_percent
+               , staging_table.lpr_cltv_ratio_percent
+               , staging_table.lpr_hcltv_ratio_percent
+               , staging_table.lpr_hcltv_applicable
+               , staging_table.lpr_housing_ratio_percent
+               , staging_table.lpr_debt_ratio_percent
+               , staging_table.lpr_lp_ltv_ratio_percent
+               , staging_table.lpr_lp_total_ltv_ratio_percent
+               , staging_table.lpr_lp_high_total_ltv_ratio_percent
+               , staging_table.lpr_lp_housing_ratio_percent
+               , staging_table.lpr_lp_debt_ratio_percent
+               , staging_table.lpr_lp_submission_number
+               , staging_table.lpr_lp_credit_risk_classification_type
+               , staging_table.lpr_fre_doc_level_description_type
+               , staging_table.lpr_fre_purchase_eligibility_type
+               , staging_table.lpr_lp_case_state_type
+               , staging_table.lpr_lp_async_id
+               , staging_table.lpr_lp_async_polling_interval
+               , staging_table.lpr_lp_total_funds_to_be_verified_amount
+               , staging_table.lpr_lp_required_borrower_funds_amount
+               , staging_table.lpr_lp_paid_off_debt_amount
+               , staging_table.lpr_lp_required_reserves_amount
+               , staging_table.lpr_lp_total_eligible_assets_amount
+               , staging_table.lpr_lp_proceeds_from_subordinate_financing_amount
+               , staging_table.lpr_lp_calculated_reserves_amount
+               , staging_table.lpr_aus_request_number
+               , staging_table.lpr_cash_from_borrower_amount
+               , staging_table.lpr_aus_cash_from_borrower_amount
+               , staging_table.lpr_gse_version_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.lp_request staging_table
+          LEFT JOIN history_octane.lp_request history_table
+                    ON staging_table.lpr_pid = history_table.lpr_pid
+                        AND staging_table.lpr_version = history_table.lpr_version
+          WHERE history_table.lpr_pid IS NULL
+          UNION ALL
+          SELECT history_table.lpr_pid
+               , history_table.lpr_version + 1
+               , history_table.lpr_proposal_pid
+               , history_table.lpr_proposal_snapshot_pid
+               , history_table.lpr_full_feedback_pdf_deal_file_pid
+               , history_table.lpr_hve_pdf_deal_file_pid
+               , history_table.lpr_requester_agent_type
+               , history_table.lpr_requester_lender_user_pid
+               , history_table.lpr_requester_unparsed_name
+               , history_table.lpr_create_datetime
+               , history_table.lpr_lp_interface_version_type
+               , history_table.lpr_lp_dtd_version_type
+               , history_table.lpr_mismo_version_type
+               , history_table.lpr_fre_lp_transaction_id
+               , history_table.lpr_lp_transaction_id
+               , history_table.lpr_globally_unique_id
+               , history_table.lpr_lp_request_status_type
+               , history_table.lpr_lp_evaluation_status_type
+               , history_table.lpr_status_messages
+               , history_table.lpr_xml_response_deal_system_file_pid
+               , history_table.lpr_loan_amount
+               , history_table.lpr_initial_pi_amount
+               , history_table.lpr_note_rate_percent
+               , history_table.lpr_initial_note_rate_percent
+               , history_table.lpr_ltv_ratio_percent
+               , history_table.lpr_cltv_ratio_percent
+               , history_table.lpr_hcltv_ratio_percent
+               , history_table.lpr_hcltv_applicable
+               , history_table.lpr_housing_ratio_percent
+               , history_table.lpr_debt_ratio_percent
+               , history_table.lpr_lp_ltv_ratio_percent
+               , history_table.lpr_lp_total_ltv_ratio_percent
+               , history_table.lpr_lp_high_total_ltv_ratio_percent
+               , history_table.lpr_lp_housing_ratio_percent
+               , history_table.lpr_lp_debt_ratio_percent
+               , history_table.lpr_lp_submission_number
+               , history_table.lpr_lp_credit_risk_classification_type
+               , history_table.lpr_fre_doc_level_description_type
+               , history_table.lpr_fre_purchase_eligibility_type
+               , history_table.lpr_lp_case_state_type
+               , history_table.lpr_lp_async_id
+               , history_table.lpr_lp_async_polling_interval
+               , history_table.lpr_lp_total_funds_to_be_verified_amount
+               , history_table.lpr_lp_required_borrower_funds_amount
+               , history_table.lpr_lp_paid_off_debt_amount
+               , history_table.lpr_lp_required_reserves_amount
+               , history_table.lpr_lp_total_eligible_assets_amount
+               , history_table.lpr_lp_proceeds_from_subordinate_financing_amount
+               , history_table.lpr_lp_calculated_reserves_amount
+               , history_table.lpr_aus_request_number
+               , history_table.lpr_cash_from_borrower_amount
+               , history_table.lpr_aus_cash_from_borrower_amount
+               , history_table.lpr_gse_version_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.lp_request history_table
+          LEFT JOIN staging_octane.lp_request staging_table
+                    ON staging_table.lpr_pid = history_table.lpr_pid
+          WHERE staging_table.lpr_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.lp_request deleted_records
+              WHERE deleted_records.lpr_pid = history_table.lpr_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

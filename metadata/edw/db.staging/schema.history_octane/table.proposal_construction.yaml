@@ -115,72 +115,75 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.prpc_version
-etls:
+step_functions:
   SP-100826:
-    input_type: table
-    output_type: insert
-    json_output_field: prpc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.proposal_construction
-      SELECT staging_table.prpc_pid
-           , staging_table.prpc_version
-           , staging_table.prpc_proposal_pid
-           , staging_table.prpc_architectural_exhibits
-           , staging_table.prpc_feasibility_study
-           , staging_table.prpc_expected_months_to_complete
-           , staging_table.prpc_extension_needed
-           , staging_table.prpc_extension_period_months
-           , staging_table.prpc_any_utilities_inoperable
-           , staging_table.prpc_non_habitable_months
-           , staging_table.prpc_non_habitable_units
-           , staging_table.prpc_number_of_draws
-           , staging_table.prpc_construction_confirmed_start_date
-           , staging_table.prpc_loan_in_process_account_closed_date
-           , staging_table.prpc_mortgage_payment_reserves_required
-           , staging_table.prpc_estimated_permit_amount_applicable
-           , staging_table.prpc_contingency_reserve_required
-           , staging_table.prpc_extension_period_days
-           , staging_table.prpc_effective_construction_completion_date
-           , staging_table.prpc_certificate_of_occupancy_date
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.proposal_construction staging_table
-      LEFT JOIN history_octane.proposal_construction history_table
-                ON staging_table.prpc_pid = history_table.prpc_pid
-                    AND staging_table.prpc_version = history_table.prpc_version
-      WHERE history_table.prpc_pid IS NULL
-      UNION ALL
-      SELECT history_table.prpc_pid
-           , history_table.prpc_version + 1
-           , history_table.prpc_proposal_pid
-           , history_table.prpc_architectural_exhibits
-           , history_table.prpc_feasibility_study
-           , history_table.prpc_expected_months_to_complete
-           , history_table.prpc_extension_needed
-           , history_table.prpc_extension_period_months
-           , history_table.prpc_any_utilities_inoperable
-           , history_table.prpc_non_habitable_months
-           , history_table.prpc_non_habitable_units
-           , history_table.prpc_number_of_draws
-           , history_table.prpc_construction_confirmed_start_date
-           , history_table.prpc_loan_in_process_account_closed_date
-           , history_table.prpc_mortgage_payment_reserves_required
-           , history_table.prpc_estimated_permit_amount_applicable
-           , history_table.prpc_contingency_reserve_required
-           , history_table.prpc_extension_period_days
-           , history_table.prpc_effective_construction_completion_date
-           , history_table.prpc_certificate_of_occupancy_date
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.proposal_construction history_table
-      LEFT JOIN staging_octane.proposal_construction staging_table
-                ON staging_table.prpc_pid = history_table.prpc_pid
-      WHERE staging_table.prpc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.proposal_construction deleted_records
-          WHERE deleted_records.prpc_pid = history_table.prpc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100826:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.proposal_construction
+        json_output_field: prpc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.proposal_construction
+          SELECT staging_table.prpc_pid
+               , staging_table.prpc_version
+               , staging_table.prpc_proposal_pid
+               , staging_table.prpc_architectural_exhibits
+               , staging_table.prpc_feasibility_study
+               , staging_table.prpc_expected_months_to_complete
+               , staging_table.prpc_extension_needed
+               , staging_table.prpc_extension_period_months
+               , staging_table.prpc_any_utilities_inoperable
+               , staging_table.prpc_non_habitable_months
+               , staging_table.prpc_non_habitable_units
+               , staging_table.prpc_number_of_draws
+               , staging_table.prpc_construction_confirmed_start_date
+               , staging_table.prpc_loan_in_process_account_closed_date
+               , staging_table.prpc_mortgage_payment_reserves_required
+               , staging_table.prpc_estimated_permit_amount_applicable
+               , staging_table.prpc_contingency_reserve_required
+               , staging_table.prpc_extension_period_days
+               , staging_table.prpc_effective_construction_completion_date
+               , staging_table.prpc_certificate_of_occupancy_date
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.proposal_construction staging_table
+          LEFT JOIN history_octane.proposal_construction history_table
+                    ON staging_table.prpc_pid = history_table.prpc_pid
+                        AND staging_table.prpc_version = history_table.prpc_version
+          WHERE history_table.prpc_pid IS NULL
+          UNION ALL
+          SELECT history_table.prpc_pid
+               , history_table.prpc_version + 1
+               , history_table.prpc_proposal_pid
+               , history_table.prpc_architectural_exhibits
+               , history_table.prpc_feasibility_study
+               , history_table.prpc_expected_months_to_complete
+               , history_table.prpc_extension_needed
+               , history_table.prpc_extension_period_months
+               , history_table.prpc_any_utilities_inoperable
+               , history_table.prpc_non_habitable_months
+               , history_table.prpc_non_habitable_units
+               , history_table.prpc_number_of_draws
+               , history_table.prpc_construction_confirmed_start_date
+               , history_table.prpc_loan_in_process_account_closed_date
+               , history_table.prpc_mortgage_payment_reserves_required
+               , history_table.prpc_estimated_permit_amount_applicable
+               , history_table.prpc_contingency_reserve_required
+               , history_table.prpc_extension_period_days
+               , history_table.prpc_effective_construction_completion_date
+               , history_table.prpc_certificate_of_occupancy_date
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.proposal_construction history_table
+          LEFT JOIN staging_octane.proposal_construction staging_table
+                    ON staging_table.prpc_pid = history_table.prpc_pid
+          WHERE staging_table.prpc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.proposal_construction deleted_records
+              WHERE deleted_records.prpc_pid = history_table.prpc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -39,12 +39,8 @@ class ProcessMetadataComparisonFunctions(MetadataComparisonFunctions):
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
         metadata_table = self.construct_empty_metadata_table()
-        for database in data_warehouse_metadata.databases:
-            for schema in database.schemas:
-                for table in schema.tables:
-                    for etl in table.etls:
-                        description = etl.construct_process_description(table)
-                        metadata_table.add_row({'process_name': etl.process_name, 'process_description': description})
+        for etl in data_warehouse_metadata.get_etls():
+            metadata_table.add_row({'process_name': etl.process_name, 'process_description': etl.description})
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:

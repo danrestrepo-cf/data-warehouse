@@ -43,40 +43,43 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100172:
-    input_type: table
-    output_type: insert
-    json_output_field: bpr_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.borrower_public_record
-      SELECT staging_table.bpr_pid
-           , staging_table.bpr_version
-           , staging_table.bpr_borrower_pid
-           , staging_table.bpr_public_record_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.borrower_public_record staging_table
-      LEFT JOIN history_octane.borrower_public_record history_table
-                ON staging_table.bpr_pid = history_table.bpr_pid
-                    AND staging_table.bpr_version = history_table.bpr_version
-      WHERE history_table.bpr_pid IS NULL
-      UNION ALL
-      SELECT history_table.bpr_pid
-           , history_table.bpr_version + 1
-           , history_table.bpr_borrower_pid
-           , history_table.bpr_public_record_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.borrower_public_record history_table
-      LEFT JOIN staging_octane.borrower_public_record staging_table
-                ON staging_table.bpr_pid = history_table.bpr_pid
-      WHERE staging_table.bpr_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.borrower_public_record deleted_records
-          WHERE deleted_records.bpr_pid = history_table.bpr_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100172:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.borrower_public_record
+        json_output_field: bpr_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.borrower_public_record
+          SELECT staging_table.bpr_pid
+               , staging_table.bpr_version
+               , staging_table.bpr_borrower_pid
+               , staging_table.bpr_public_record_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.borrower_public_record staging_table
+          LEFT JOIN history_octane.borrower_public_record history_table
+                    ON staging_table.bpr_pid = history_table.bpr_pid
+                        AND staging_table.bpr_version = history_table.bpr_version
+          WHERE history_table.bpr_pid IS NULL
+          UNION ALL
+          SELECT history_table.bpr_pid
+               , history_table.bpr_version + 1
+               , history_table.bpr_borrower_pid
+               , history_table.bpr_public_record_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.borrower_public_record history_table
+          LEFT JOIN staging_octane.borrower_public_record staging_table
+                    ON staging_table.bpr_pid = history_table.bpr_pid
+          WHERE staging_table.bpr_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.borrower_public_record deleted_records
+              WHERE deleted_records.bpr_pid = history_table.bpr_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

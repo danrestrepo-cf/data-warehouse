@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100440 - ETL to insert records into staging.history_octane.coarse_event_type using staging.staging_octane.coarse_event_type as the primary source",
-    "StartAt": "SP-100440",
+    "StartAt": "ETL-100440",
     "States": {
-        "SP-100440": {
+        "ETL-100440": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100440"
+                                    "Value": "ETL-100440"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

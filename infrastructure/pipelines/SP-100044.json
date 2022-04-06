@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100044 - ETL to insert records into staging.history_octane.report_row using staging.staging_octane.report_row as the primary source",
-    "StartAt": "SP-100044",
+    "StartAt": "ETL-100044",
     "States": {
-        "SP-100044": {
+        "ETL-100044": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100044"
+                                    "Value": "ETL-100044"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

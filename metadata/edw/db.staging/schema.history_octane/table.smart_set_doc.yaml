@@ -47,42 +47,45 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.sstd_version
-etls:
+step_functions:
   SP-100336:
-    input_type: table
-    output_type: insert
-    json_output_field: sstd_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.smart_set_doc
-      SELECT staging_table.sstd_pid
-           , staging_table.sstd_version
-           , staging_table.sstd_smart_doc_set_pid
-           , staging_table.sstd_smart_doc_pid
-           , staging_table.sstd_sequence
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.smart_set_doc staging_table
-      LEFT JOIN history_octane.smart_set_doc history_table
-                ON staging_table.sstd_pid = history_table.sstd_pid
-                    AND staging_table.sstd_version = history_table.sstd_version
-      WHERE history_table.sstd_pid IS NULL
-      UNION ALL
-      SELECT history_table.sstd_pid
-           , history_table.sstd_version + 1
-           , history_table.sstd_smart_doc_set_pid
-           , history_table.sstd_smart_doc_pid
-           , history_table.sstd_sequence
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.smart_set_doc history_table
-      LEFT JOIN staging_octane.smart_set_doc staging_table
-                ON staging_table.sstd_pid = history_table.sstd_pid
-      WHERE staging_table.sstd_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.smart_set_doc deleted_records
-          WHERE deleted_records.sstd_pid = history_table.sstd_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100336:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.smart_set_doc
+        json_output_field: sstd_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.smart_set_doc
+          SELECT staging_table.sstd_pid
+               , staging_table.sstd_version
+               , staging_table.sstd_smart_doc_set_pid
+               , staging_table.sstd_smart_doc_pid
+               , staging_table.sstd_sequence
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.smart_set_doc staging_table
+          LEFT JOIN history_octane.smart_set_doc history_table
+                    ON staging_table.sstd_pid = history_table.sstd_pid
+                        AND staging_table.sstd_version = history_table.sstd_version
+          WHERE history_table.sstd_pid IS NULL
+          UNION ALL
+          SELECT history_table.sstd_pid
+               , history_table.sstd_version + 1
+               , history_table.sstd_smart_doc_set_pid
+               , history_table.sstd_smart_doc_pid
+               , history_table.sstd_sequence
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.smart_set_doc history_table
+          LEFT JOIN staging_octane.smart_set_doc staging_table
+                    ON staging_table.sstd_pid = history_table.sstd_pid
+          WHERE staging_table.sstd_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.smart_set_doc deleted_records
+              WHERE deleted_records.sstd_pid = history_table.sstd_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

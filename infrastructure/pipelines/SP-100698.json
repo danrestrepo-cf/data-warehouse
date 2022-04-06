@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100698 - ETL to insert records into staging.history_octane.ledger_book_type using staging.staging_octane.ledger_book_type as the primary source",
-    "StartAt": "SP-100698",
+    "StartAt": "ETL-100698",
     "States": {
-        "SP-100698": {
+        "ETL-100698": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100698"
+                                    "Value": "ETL-100698"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

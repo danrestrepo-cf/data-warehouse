@@ -51,48 +51,51 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pminip_version
-etls:
+step_functions:
   SP-100283:
-    input_type: table
-    output_type: insert
-    json_output_field: pminip_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.product_minimum_investor_price
-      SELECT staging_table.pminip_pid
-           , staging_table.pminip_version
-           , staging_table.pminip_product_pid
-           , staging_table.pminip_from_date
-           , staging_table.pminip_minimum_investor_price_percent
-           , staging_table.pminip_minimum_includes_srp
-           , staging_table.pminip_loan_amount_min
-           , staging_table.pminip_loan_amount_max
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.product_minimum_investor_price staging_table
-      LEFT JOIN history_octane.product_minimum_investor_price history_table
-                ON staging_table.pminip_pid = history_table.pminip_pid
-                    AND staging_table.pminip_version = history_table.pminip_version
-      WHERE history_table.pminip_pid IS NULL
-      UNION ALL
-      SELECT history_table.pminip_pid
-           , history_table.pminip_version + 1
-           , history_table.pminip_product_pid
-           , history_table.pminip_from_date
-           , history_table.pminip_minimum_investor_price_percent
-           , history_table.pminip_minimum_includes_srp
-           , history_table.pminip_loan_amount_min
-           , history_table.pminip_loan_amount_max
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.product_minimum_investor_price history_table
-      LEFT JOIN staging_octane.product_minimum_investor_price staging_table
-                ON staging_table.pminip_pid = history_table.pminip_pid
-      WHERE staging_table.pminip_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.product_minimum_investor_price deleted_records
-          WHERE deleted_records.pminip_pid = history_table.pminip_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100283:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.product_minimum_investor_price
+        json_output_field: pminip_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.product_minimum_investor_price
+          SELECT staging_table.pminip_pid
+               , staging_table.pminip_version
+               , staging_table.pminip_product_pid
+               , staging_table.pminip_from_date
+               , staging_table.pminip_minimum_investor_price_percent
+               , staging_table.pminip_minimum_includes_srp
+               , staging_table.pminip_loan_amount_min
+               , staging_table.pminip_loan_amount_max
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.product_minimum_investor_price staging_table
+          LEFT JOIN history_octane.product_minimum_investor_price history_table
+                    ON staging_table.pminip_pid = history_table.pminip_pid
+                        AND staging_table.pminip_version = history_table.pminip_version
+          WHERE history_table.pminip_pid IS NULL
+          UNION ALL
+          SELECT history_table.pminip_pid
+               , history_table.pminip_version + 1
+               , history_table.pminip_product_pid
+               , history_table.pminip_from_date
+               , history_table.pminip_minimum_investor_price_percent
+               , history_table.pminip_minimum_includes_srp
+               , history_table.pminip_loan_amount_min
+               , history_table.pminip_loan_amount_max
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.product_minimum_investor_price history_table
+          LEFT JOIN staging_octane.product_minimum_investor_price staging_table
+                    ON staging_table.pminip_pid = history_table.pminip_pid
+          WHERE staging_table.pminip_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.product_minimum_investor_price deleted_records
+              WHERE deleted_records.pminip_pid = history_table.pminip_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

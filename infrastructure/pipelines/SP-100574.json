@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100574 - ETL to insert records into staging.history_octane.lp_case_state_type using staging.staging_octane.lp_case_state_type as the primary source",
-    "StartAt": "SP-100574",
+    "StartAt": "ETL-100574",
     "States": {
-        "SP-100574": {
+        "ETL-100574": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100574"
+                                    "Value": "ETL-100574"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

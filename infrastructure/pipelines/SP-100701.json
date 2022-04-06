@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100701 - ETL to insert records into staging.history_octane.ledger_entry_decision_status_type using staging.staging_octane.ledger_entry_decision_status_type as the primary source",
-    "StartAt": "SP-100701",
+    "StartAt": "ETL-100701",
     "States": {
-        "SP-100701": {
+        "ETL-100701": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100701"
+                                    "Value": "ETL-100701"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

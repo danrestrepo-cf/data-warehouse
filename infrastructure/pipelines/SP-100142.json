@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100142 - ETL to insert records into staging.history_octane.circumstance_change using staging.staging_octane.circumstance_change as the primary source",
-    "StartAt": "SP-100142",
+    "StartAt": "ETL-100142",
     "States": {
-        "SP-100142": {
+        "ETL-100142": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100142"
+                                    "Value": "ETL-100142"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

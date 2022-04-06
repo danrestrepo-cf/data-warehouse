@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100682 - ETL to insert records into staging.history_octane.vendor_document_event_type using staging.staging_octane.vendor_document_event_type as the primary source",
-    "StartAt": "SP-100682",
+    "StartAt": "ETL-100682",
     "States": {
-        "SP-100682": {
+        "ETL-100682": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100682"
+                                    "Value": "ETL-100682"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

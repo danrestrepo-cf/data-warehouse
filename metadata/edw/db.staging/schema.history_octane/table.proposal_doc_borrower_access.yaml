@@ -43,40 +43,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pdba_version
-etls:
+step_functions:
   SP-100342:
-    input_type: table
-    output_type: insert
-    json_output_field: pdba_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.proposal_doc_borrower_access
-      SELECT staging_table.pdba_pid
-           , staging_table.pdba_version
-           , staging_table.pdba_borrower_pid
-           , staging_table.pdba_proposal_doc_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.proposal_doc_borrower_access staging_table
-      LEFT JOIN history_octane.proposal_doc_borrower_access history_table
-                ON staging_table.pdba_pid = history_table.pdba_pid
-                    AND staging_table.pdba_version = history_table.pdba_version
-      WHERE history_table.pdba_pid IS NULL
-      UNION ALL
-      SELECT history_table.pdba_pid
-           , history_table.pdba_version + 1
-           , history_table.pdba_borrower_pid
-           , history_table.pdba_proposal_doc_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.proposal_doc_borrower_access history_table
-      LEFT JOIN staging_octane.proposal_doc_borrower_access staging_table
-                ON staging_table.pdba_pid = history_table.pdba_pid
-      WHERE staging_table.pdba_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.proposal_doc_borrower_access deleted_records
-          WHERE deleted_records.pdba_pid = history_table.pdba_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100342:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.proposal_doc_borrower_access
+        json_output_field: pdba_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.proposal_doc_borrower_access
+          SELECT staging_table.pdba_pid
+               , staging_table.pdba_version
+               , staging_table.pdba_borrower_pid
+               , staging_table.pdba_proposal_doc_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.proposal_doc_borrower_access staging_table
+          LEFT JOIN history_octane.proposal_doc_borrower_access history_table
+                    ON staging_table.pdba_pid = history_table.pdba_pid
+                        AND staging_table.pdba_version = history_table.pdba_version
+          WHERE history_table.pdba_pid IS NULL
+          UNION ALL
+          SELECT history_table.pdba_pid
+               , history_table.pdba_version + 1
+               , history_table.pdba_borrower_pid
+               , history_table.pdba_proposal_doc_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.proposal_doc_borrower_access history_table
+          LEFT JOIN staging_octane.proposal_doc_borrower_access staging_table
+                    ON staging_table.pdba_pid = history_table.pdba_pid
+          WHERE staging_table.pdba_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.proposal_doc_borrower_access deleted_records
+              WHERE deleted_records.pdba_pid = history_table.pdba_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

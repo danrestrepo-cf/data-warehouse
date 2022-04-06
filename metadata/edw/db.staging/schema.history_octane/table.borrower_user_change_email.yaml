@@ -55,46 +55,49 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100129:
-    input_type: table
-    output_type: insert
-    json_output_field: buce_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.borrower_user_change_email
-      SELECT staging_table.buce_pid
-           , staging_table.buce_version
-           , staging_table.buce_borrower_user_pid
-           , staging_table.buce_create_datetime
-           , staging_table.buce_change_email_id
-           , staging_table.buce_email
-           , staging_table.buce_borrower_user_deal_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.borrower_user_change_email staging_table
-      LEFT JOIN history_octane.borrower_user_change_email history_table
-                ON staging_table.buce_pid = history_table.buce_pid
-                    AND staging_table.buce_version = history_table.buce_version
-      WHERE history_table.buce_pid IS NULL
-      UNION ALL
-      SELECT history_table.buce_pid
-           , history_table.buce_version + 1
-           , history_table.buce_borrower_user_pid
-           , history_table.buce_create_datetime
-           , history_table.buce_change_email_id
-           , history_table.buce_email
-           , history_table.buce_borrower_user_deal_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.borrower_user_change_email history_table
-      LEFT JOIN staging_octane.borrower_user_change_email staging_table
-                ON staging_table.buce_pid = history_table.buce_pid
-      WHERE staging_table.buce_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.borrower_user_change_email deleted_records
-          WHERE deleted_records.buce_pid = history_table.buce_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100129:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.borrower_user_change_email
+        json_output_field: buce_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.borrower_user_change_email
+          SELECT staging_table.buce_pid
+               , staging_table.buce_version
+               , staging_table.buce_borrower_user_pid
+               , staging_table.buce_create_datetime
+               , staging_table.buce_change_email_id
+               , staging_table.buce_email
+               , staging_table.buce_borrower_user_deal_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.borrower_user_change_email staging_table
+          LEFT JOIN history_octane.borrower_user_change_email history_table
+                    ON staging_table.buce_pid = history_table.buce_pid
+                        AND staging_table.buce_version = history_table.buce_version
+          WHERE history_table.buce_pid IS NULL
+          UNION ALL
+          SELECT history_table.buce_pid
+               , history_table.buce_version + 1
+               , history_table.buce_borrower_user_pid
+               , history_table.buce_create_datetime
+               , history_table.buce_change_email_id
+               , history_table.buce_email
+               , history_table.buce_borrower_user_deal_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.borrower_user_change_email history_table
+          LEFT JOIN staging_octane.borrower_user_change_email staging_table
+                    ON staging_table.buce_pid = history_table.buce_pid
+          WHERE staging_table.buce_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.borrower_user_change_email deleted_records
+              WHERE deleted_records.buce_pid = history_table.buce_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

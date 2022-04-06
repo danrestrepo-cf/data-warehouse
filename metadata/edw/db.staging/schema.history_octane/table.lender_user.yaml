@@ -361,170 +361,173 @@ columns:
       field: primary_source_table.columns.lu_version
   lu_work_step_start_notices_enabled:
     data_type: BOOLEAN
-etls:
+step_functions:
   SP-100090:
-    input_type: table
-    output_type: insert
-    json_output_field: lu_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.lender_user
-      SELECT staging_table.lu_pid
-           , staging_table.lu_version
-           , staging_table.lu_branch_pid
-           , staging_table.lu_account_owner
-           , staging_table.lu_account_pid
-           , staging_table.lu_create_date
-           , staging_table.lu_first_name
-           , staging_table.lu_last_name
-           , staging_table.lu_middle_name
-           , staging_table.lu_name_suffix
-           , staging_table.lu_company_name
-           , staging_table.lu_title
-           , staging_table.lu_office_phone
-           , staging_table.lu_office_phone_extension
-           , staging_table.lu_email
-           , staging_table.lu_fax
-           , staging_table.lu_city
-           , staging_table.lu_country
-           , staging_table.lu_postal_code
-           , staging_table.lu_state
-           , staging_table.lu_street1
-           , staging_table.lu_street2
-           , staging_table.lu_office_phone_use_branch
-           , staging_table.lu_fax_use_branch
-           , staging_table.lu_address_use_branch
-           , staging_table.lu_start_date
-           , staging_table.lu_through_date
-           , staging_table.lu_time_zone
-           , staging_table.lu_unparsed_name
-           , staging_table.lu_lender_user_status_type
-           , staging_table.lu_username
-           , staging_table.lu_nmls_loan_originator_id
-           , staging_table.lu_fha_chums_id
-           , staging_table.lu_va_agent_id
-           , staging_table.lu_search_text
-           , staging_table.lu_company_user_id
-           , staging_table.lu_force_password_change
-           , staging_table.lu_last_password_change_date
-           , staging_table.lu_challenge_question_type
-           , staging_table.lu_allow_external_ip
-           , staging_table.lu_total_workload_cap
-           , staging_table.lu_schedule_once_booking_page_id
-           , staging_table.lu_performer_team_pid
-           , staging_table.lu_esign_by_email
-           , staging_table.lu_smart_app_enabled
-           , staging_table.lu_default_lead_source_pid
-           , staging_table.lu_default_credit_bureau_type
-           , staging_table.lu_originator_id
-           , staging_table.lu_name_qualifier
-           , staging_table.lu_training_mode
-           , staging_table.lu_about_me
-           , staging_table.lu_lender_user_type
-           , staging_table.lu_hire_date
-           , staging_table.lu_mercury_client_group_pid
-           , staging_table.lu_nickname
-           , staging_table.lu_preferred_first_name
-           , staging_table.lu_hub_directory
-           , staging_table.lu_email_signature_title
-           , staging_table.lu_termination_date
-           , staging_table.lu_marketing_details_enabled
-           , staging_table.lu_marketing_details_featured_review
-           , staging_table.lu_suspended
-           , staging_table.lu_lender_user_suspend_reason_type
-           , staging_table.lu_suspend_reason_other_description
-           , staging_table.lu_suspend_date_time
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.lender_user staging_table
-      LEFT JOIN history_octane.lender_user history_table
-                ON staging_table.lu_pid = history_table.lu_pid
-                    AND staging_table.lu_version = history_table.lu_version
-      WHERE history_table.lu_pid IS NULL
-      UNION ALL
-      SELECT history_table.lu_pid
-           , history_table.lu_version + 1
-           , history_table.lu_branch_pid
-           , history_table.lu_account_owner
-           , history_table.lu_account_pid
-           , history_table.lu_create_date
-           , history_table.lu_first_name
-           , history_table.lu_last_name
-           , history_table.lu_middle_name
-           , history_table.lu_name_suffix
-           , history_table.lu_company_name
-           , history_table.lu_title
-           , history_table.lu_office_phone
-           , history_table.lu_office_phone_extension
-           , history_table.lu_email
-           , history_table.lu_fax
-           , history_table.lu_city
-           , history_table.lu_country
-           , history_table.lu_postal_code
-           , history_table.lu_state
-           , history_table.lu_street1
-           , history_table.lu_street2
-           , history_table.lu_office_phone_use_branch
-           , history_table.lu_fax_use_branch
-           , history_table.lu_address_use_branch
-           , history_table.lu_start_date
-           , history_table.lu_through_date
-           , history_table.lu_time_zone
-           , history_table.lu_unparsed_name
-           , history_table.lu_lender_user_status_type
-           , history_table.lu_username
-           , history_table.lu_nmls_loan_originator_id
-           , history_table.lu_fha_chums_id
-           , history_table.lu_va_agent_id
-           , history_table.lu_search_text
-           , history_table.lu_company_user_id
-           , history_table.lu_force_password_change
-           , history_table.lu_last_password_change_date
-           , history_table.lu_challenge_question_type
-           , history_table.lu_allow_external_ip
-           , history_table.lu_total_workload_cap
-           , history_table.lu_schedule_once_booking_page_id
-           , history_table.lu_performer_team_pid
-           , history_table.lu_esign_by_email
-           , history_table.lu_smart_app_enabled
-           , history_table.lu_default_lead_source_pid
-           , history_table.lu_default_credit_bureau_type
-           , history_table.lu_originator_id
-           , history_table.lu_name_qualifier
-           , history_table.lu_training_mode
-           , history_table.lu_about_me
-           , history_table.lu_lender_user_type
-           , history_table.lu_hire_date
-           , history_table.lu_mercury_client_group_pid
-           , history_table.lu_nickname
-           , history_table.lu_preferred_first_name
-           , history_table.lu_hub_directory
-           , history_table.lu_email_signature_title
-           , history_table.lu_termination_date
-           , history_table.lu_marketing_details_enabled
-           , history_table.lu_marketing_details_featured_review
-           , history_table.lu_suspended
-           , history_table.lu_lender_user_suspend_reason_type
-           , history_table.lu_suspend_reason_other_description
-           , history_table.lu_suspend_date_time
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.lender_user history_table
-      LEFT JOIN staging_octane.lender_user staging_table
-                ON staging_table.lu_pid = history_table.lu_pid
-      WHERE staging_table.lu_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.lender_user deleted_records
-          WHERE deleted_records.lu_pid = history_table.lu_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
-next_etls:
-- SP-200001-delete
-- SP-200001-insert
-- SP-200010
-- SP-400001-delete
-- SP-400001-insert-update
-- SP-400003-delete
-- SP-400003-insert-update
+    etls:
+      ETL-100090:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.lender_user
+        json_output_field: lu_pid
+        truncate_table: false
+        container_memory: 2048
+        next_step_functions:
+        - SP-200001-delete
+        - SP-200001-insert
+        - SP-200010
+        - SP-400001-delete
+        - SP-400001-insert-update
+        - SP-400003-delete
+        - SP-400003-insert-update
+        input_sql: |-
+          --finding records to insert into history_octane.lender_user
+          SELECT staging_table.lu_pid
+               , staging_table.lu_version
+               , staging_table.lu_branch_pid
+               , staging_table.lu_account_owner
+               , staging_table.lu_account_pid
+               , staging_table.lu_create_date
+               , staging_table.lu_first_name
+               , staging_table.lu_last_name
+               , staging_table.lu_middle_name
+               , staging_table.lu_name_suffix
+               , staging_table.lu_company_name
+               , staging_table.lu_title
+               , staging_table.lu_office_phone
+               , staging_table.lu_office_phone_extension
+               , staging_table.lu_email
+               , staging_table.lu_fax
+               , staging_table.lu_city
+               , staging_table.lu_country
+               , staging_table.lu_postal_code
+               , staging_table.lu_state
+               , staging_table.lu_street1
+               , staging_table.lu_street2
+               , staging_table.lu_office_phone_use_branch
+               , staging_table.lu_fax_use_branch
+               , staging_table.lu_address_use_branch
+               , staging_table.lu_start_date
+               , staging_table.lu_through_date
+               , staging_table.lu_time_zone
+               , staging_table.lu_unparsed_name
+               , staging_table.lu_lender_user_status_type
+               , staging_table.lu_username
+               , staging_table.lu_nmls_loan_originator_id
+               , staging_table.lu_fha_chums_id
+               , staging_table.lu_va_agent_id
+               , staging_table.lu_search_text
+               , staging_table.lu_company_user_id
+               , staging_table.lu_force_password_change
+               , staging_table.lu_last_password_change_date
+               , staging_table.lu_challenge_question_type
+               , staging_table.lu_allow_external_ip
+               , staging_table.lu_total_workload_cap
+               , staging_table.lu_schedule_once_booking_page_id
+               , staging_table.lu_performer_team_pid
+               , staging_table.lu_esign_by_email
+               , staging_table.lu_smart_app_enabled
+               , staging_table.lu_default_lead_source_pid
+               , staging_table.lu_default_credit_bureau_type
+               , staging_table.lu_originator_id
+               , staging_table.lu_name_qualifier
+               , staging_table.lu_training_mode
+               , staging_table.lu_about_me
+               , staging_table.lu_lender_user_type
+               , staging_table.lu_hire_date
+               , staging_table.lu_mercury_client_group_pid
+               , staging_table.lu_nickname
+               , staging_table.lu_preferred_first_name
+               , staging_table.lu_hub_directory
+               , staging_table.lu_email_signature_title
+               , staging_table.lu_termination_date
+               , staging_table.lu_marketing_details_enabled
+               , staging_table.lu_marketing_details_featured_review
+               , staging_table.lu_suspended
+               , staging_table.lu_lender_user_suspend_reason_type
+               , staging_table.lu_suspend_reason_other_description
+               , staging_table.lu_suspend_date_time
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.lender_user staging_table
+          LEFT JOIN history_octane.lender_user history_table
+                    ON staging_table.lu_pid = history_table.lu_pid
+                        AND staging_table.lu_version = history_table.lu_version
+          WHERE history_table.lu_pid IS NULL
+          UNION ALL
+          SELECT history_table.lu_pid
+               , history_table.lu_version + 1
+               , history_table.lu_branch_pid
+               , history_table.lu_account_owner
+               , history_table.lu_account_pid
+               , history_table.lu_create_date
+               , history_table.lu_first_name
+               , history_table.lu_last_name
+               , history_table.lu_middle_name
+               , history_table.lu_name_suffix
+               , history_table.lu_company_name
+               , history_table.lu_title
+               , history_table.lu_office_phone
+               , history_table.lu_office_phone_extension
+               , history_table.lu_email
+               , history_table.lu_fax
+               , history_table.lu_city
+               , history_table.lu_country
+               , history_table.lu_postal_code
+               , history_table.lu_state
+               , history_table.lu_street1
+               , history_table.lu_street2
+               , history_table.lu_office_phone_use_branch
+               , history_table.lu_fax_use_branch
+               , history_table.lu_address_use_branch
+               , history_table.lu_start_date
+               , history_table.lu_through_date
+               , history_table.lu_time_zone
+               , history_table.lu_unparsed_name
+               , history_table.lu_lender_user_status_type
+               , history_table.lu_username
+               , history_table.lu_nmls_loan_originator_id
+               , history_table.lu_fha_chums_id
+               , history_table.lu_va_agent_id
+               , history_table.lu_search_text
+               , history_table.lu_company_user_id
+               , history_table.lu_force_password_change
+               , history_table.lu_last_password_change_date
+               , history_table.lu_challenge_question_type
+               , history_table.lu_allow_external_ip
+               , history_table.lu_total_workload_cap
+               , history_table.lu_schedule_once_booking_page_id
+               , history_table.lu_performer_team_pid
+               , history_table.lu_esign_by_email
+               , history_table.lu_smart_app_enabled
+               , history_table.lu_default_lead_source_pid
+               , history_table.lu_default_credit_bureau_type
+               , history_table.lu_originator_id
+               , history_table.lu_name_qualifier
+               , history_table.lu_training_mode
+               , history_table.lu_about_me
+               , history_table.lu_lender_user_type
+               , history_table.lu_hire_date
+               , history_table.lu_mercury_client_group_pid
+               , history_table.lu_nickname
+               , history_table.lu_preferred_first_name
+               , history_table.lu_hub_directory
+               , history_table.lu_email_signature_title
+               , history_table.lu_termination_date
+               , history_table.lu_marketing_details_enabled
+               , history_table.lu_marketing_details_featured_review
+               , history_table.lu_suspended
+               , history_table.lu_lender_user_suspend_reason_type
+               , history_table.lu_suspend_reason_other_description
+               , history_table.lu_suspend_date_time
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.lender_user history_table
+          LEFT JOIN staging_octane.lender_user staging_table
+                    ON staging_table.lu_pid = history_table.lu_pid
+          WHERE staging_table.lu_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.lender_user deleted_records
+              WHERE deleted_records.lu_pid = history_table.lu_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

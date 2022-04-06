@@ -39,42 +39,45 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ma_version
-etls:
+step_functions:
   SP-100037:
-    input_type: table
-    output_type: insert
-    json_output_field: ma_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.mortech_account
-      SELECT staging_table.ma_pid
-           , staging_table.ma_version
-           , staging_table.ma_account_pid
-           , staging_table.ma_name
-           , staging_table.ma_mortech_customer_id
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.mortech_account staging_table
-      LEFT JOIN history_octane.mortech_account history_table
-                ON staging_table.ma_pid = history_table.ma_pid
-                    AND staging_table.ma_version = history_table.ma_version
-      WHERE history_table.ma_pid IS NULL
-      UNION ALL
-      SELECT history_table.ma_pid
-           , history_table.ma_version + 1
-           , history_table.ma_account_pid
-           , history_table.ma_name
-           , history_table.ma_mortech_customer_id
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.mortech_account history_table
-      LEFT JOIN staging_octane.mortech_account staging_table
-                ON staging_table.ma_pid = history_table.ma_pid
-      WHERE staging_table.ma_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.mortech_account deleted_records
-          WHERE deleted_records.ma_pid = history_table.ma_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100037:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.mortech_account
+        json_output_field: ma_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.mortech_account
+          SELECT staging_table.ma_pid
+               , staging_table.ma_version
+               , staging_table.ma_account_pid
+               , staging_table.ma_name
+               , staging_table.ma_mortech_customer_id
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.mortech_account staging_table
+          LEFT JOIN history_octane.mortech_account history_table
+                    ON staging_table.ma_pid = history_table.ma_pid
+                        AND staging_table.ma_version = history_table.ma_version
+          WHERE history_table.ma_pid IS NULL
+          UNION ALL
+          SELECT history_table.ma_pid
+               , history_table.ma_version + 1
+               , history_table.ma_account_pid
+               , history_table.ma_name
+               , history_table.ma_mortech_customer_id
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.mortech_account history_table
+          LEFT JOIN staging_octane.mortech_account staging_table
+                    ON staging_table.ma_pid = history_table.ma_pid
+          WHERE staging_table.ma_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.mortech_account deleted_records
+              WHERE deleted_records.ma_pid = history_table.ma_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

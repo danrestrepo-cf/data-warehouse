@@ -20,6 +20,7 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        ColumnMetadata,
                                                        ForeignKeyMetadata,
                                                        ETLMetadata,
+                                                       StepFunctionMetadata,
                                                        ColumnSourceComponents,
                                                        SourceForeignKeyPath,
                                                        InvalidMetadataKeyException,
@@ -115,34 +116,32 @@ def map_msql_data_type(data_type: str) -> str:
         raise ValueError(f'Unable to map data type {upper_data_type}')
 
 
-def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_process_map: dict,
-                                     current_max_process_number: int) -> DataWarehouseMetadata:
+def generate_history_octane_metadata(octane_metadata: DataWarehouseMetadata,
+                                     current_yaml_metadata: DataWarehouseMetadata) -> DataWarehouseMetadata:
     """Generate a new DataWarehouseMetadata object with added history_octane metadata given existing staging_octane metadata.
 
-    :param metadata: a DataWarehouseMetadata object that already contains staging_octane metadata within it.
-    :param table_to_process_map: a dictionary with the below structure that is used to map a history_octane table with
-    related ETL process metadata:
-        {
-            <table_name1>: {
-                'process': <process_name>,
-                'next_processes': [
-                    <process1>,
-                    <process2>,
-                    ...
-                ]
-            },
-            <table_name2>: {...},
-            ...
-        }
-    :param current_max_process_number: the largest SP number for a staging_octane ->
-    history_octane ETL process that currently exists in EDW. This is used to
-    generate new SP numbers for any tables that do not appear in the table_to_process map.
+    :param octane_metadata: a DataWarehouseMetadata object generated from Octane's information schema that already
+    contains staging_octane metadata within it.
+    :param current_yaml_metadata: a DataWarehouseMetadata object generated from EDW's existing YAML inventory
     """
+    metadata_with_history_octane = copy.deepcopy(octane_metadata)
     try:
-        staging_octane_schema = metadata.get_database('staging').get_schema('staging_octane')
+        staging_octane_schema = metadata_with_history_octane.get_database('staging').get_schema('staging_octane')
     except InvalidMetadataKeyException:
-        raise ValueError('Schema "staging_octane" in database "staging" must be present in order to derive history_octane metadata')
-    metadata_with_history_octane = copy.deepcopy(metadata)
+        raise ValueError(
+            'Schema "staging_octane" in database "staging" must be present in octane-derived metadata order to derive '
+            'history_octane metadata'
+        )
+    try:
+        yaml_history_octane_metadata = current_yaml_metadata.get_database('staging').get_schema('history_octane')
+    except InvalidMetadataKeyException:
+        raise ValueError(
+            'Schema "history_octane" in database "staging" must be present in current yaml metadata in order to derive '
+            'history_octane metadata'
+        )
+
+    current_max_process_number = determine_max_process_number(yaml_history_octane_metadata)
+
     history_octane_schema = SchemaMetadata('history_octane')
     metadata_with_history_octane.get_database('staging').add_schema(history_octane_schema)
     for staging_table in staging_octane_schema.tables:
@@ -161,7 +160,7 @@ def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_p
         history_table.add_column(ColumnMetadata(name='data_source_deleted_flag', data_type='BOOLEAN'))
         history_table.add_column(ColumnMetadata(name='etl_batch_id', data_type='TEXT'))
         for staging_fk in staging_table.foreign_keys:
-            foreign_table_path = staging_fk.table
+            foreign_table_path = copy.copy(staging_fk.table)
             foreign_table_path.schema = 'history_octane'
             history_fk = ForeignKeyMetadata(
                 name=staging_fk.name,
@@ -170,34 +169,55 @@ def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_p
                 foreign_columns=copy.copy(staging_fk.foreign_columns)
             )
             history_table.add_foreign_key(history_fk)
-        if staging_table.name in table_to_process_map:
-            process_name = table_to_process_map[staging_table.name]['process']
-            next_processes = table_to_process_map[staging_table.name]['next_processes']
+        if yaml_history_octane_metadata.contains_table(staging_table.name):
+            # this code assumes every history table has exactly 1 SFN/ETL, and will need to change if that ever ceases to be true
+            existing_step_function = yaml_history_octane_metadata.get_table(staging_table.name).step_functions[0]
+            process_number = get_step_function_process_number(existing_step_function)
+            next_step_functions = existing_step_function.etls[0].next_step_functions.copy()
         else:
             # generate an SP number for the table if one doesn't already exist
             # this process is TEMPORARY and will be replaced once the SP naming
             # system has been overhauled and all ETLs are autogenerated.
-            process_name = f'SP-{current_max_process_number + 1}'
-            next_processes = []
             current_max_process_number += 1
+            process_number = current_max_process_number
+            next_step_functions = []
         if len(history_table.columns) < 100:
             container_memory = 2048
         else:
             container_memory = 4096
         history_etl = ETLMetadata(
-            process_name=process_name,
+            process_name=f'ETL-{process_number}',
             hardcoded_data_source=None,
             input_type=ETLInputType.TABLE,
             output_type=ETLOutputType.INSERT,
+            output_table=history_table.path,
+            primary_source_table=history_table.primary_source_table,
             json_output_field=staging_table.primary_key[0],
             truncate_table=False,
             container_memory=container_memory,
+            next_step_functions=next_step_functions,
             input_sql=generate_history_octane_table_input_sql(staging_table)
         )
-        history_table.add_etl(history_etl)
-        for process in next_processes:
-            history_table.next_etls.append(process)
+        history_step_function = StepFunctionMetadata(
+            name=f'SP-{process_number}',
+            primary_target_table=history_table.path,
+            parallel_limit=None
+        )
+        history_step_function.add_etl(history_etl)
+        history_table.add_step_function(history_step_function)
     return metadata_with_history_octane
+
+
+def determine_max_process_number(yaml_history_octane_metadata: SchemaMetadata) -> int:
+    max_process_number = 0
+    for table in yaml_history_octane_metadata.tables:
+        for step_function in table.step_functions:
+            max_process_number = max(max_process_number, get_step_function_process_number(step_function))
+    return max_process_number
+
+
+def get_step_function_process_number(step_function: StepFunctionMetadata) -> int:
+    return int(step_function.name[3:])
 
 
 def remove_deleted_column_metadata_from_column(column_metadata: ColumnMetadata) -> ColumnMetadata:
@@ -211,18 +231,18 @@ def remove_deleted_table_metadata_from_table(table_metadata: TableMetadata) -> T
     table_metadata.next_etls = []
 
     # remove ETLs
-    for table_metadata_etl in table_metadata.etls:
-        print(f"      Removing ETL '{table_metadata_etl.process_name}'")
-        table_metadata.remove_etl(table_metadata_etl.process_name)
+    for table_metadata_step_functions in table_metadata.step_functions:
+        print(f"      Removing Step Function '{table_metadata_step_functions.name}'")
+        table_metadata.remove_step_function(table_metadata_step_functions.name)
 
     # remove FKs
     for table_metadata_fk in table_metadata.foreign_keys:
         print(f"      Removing FK '{table_metadata_fk.name}")
         table_metadata.remove_foreign_key(table_metadata_fk.name)
 
-    # remove data from columns
+    # remove metadata from columns
     for column in table_metadata.columns:
-        print(f"      Removing data from column '{table_metadata.name}.{column.name}'")
+        print(f"      Removing metadata from column '{table_metadata.name}.{column.name}'")
         remove_deleted_column_metadata_from_column(column)
 
     return table_metadata
@@ -250,7 +270,8 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
     try:
         current_yaml_history_octane_metadata = current_yaml_metadata.get_database('staging').get_schema('history_octane')
     except InvalidMetadataKeyException:
-        raise ValueError('Schema "history_octane" in database "staging" must be present in parameter "current_yaml_history_octane_metadata" in order to incorporate deleted tables and columns')
+        raise ValueError(
+            'Schema "history_octane" in database "staging" must be present in parameter "current_yaml_history_octane_metadata" in order to incorporate deleted tables and columns')
 
     output_metadata = copy.deepcopy(octane_metadata)
 
@@ -258,7 +279,8 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
     try:
         combined_history_octane_metadata = copy.deepcopy(output_metadata.get_database('staging').get_schema('history_octane'))
     except InvalidMetadataKeyException:
-        raise ValueError('Schema "history_octane" in database "staging" must be present in parameter "octane_metadata" in  order to incorporate deleted tables and columns')
+        raise ValueError(
+            'Schema "history_octane" in database "staging" must be present in parameter "octane_metadata" in  order to incorporate deleted tables and columns')
 
     print("Now finding tables that are not in octane metadata from yaml metadata...")
     for current_yaml_history_octane_metadata_table in current_yaml_history_octane_metadata.tables:
@@ -266,7 +288,8 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
         if not combined_history_octane_metadata.contains_table(current_yaml_history_octane_metadata_table.name):
             # the table from the yaml metadata was not found in the generated octane metadata so we need to clean it and
             # add it to the output DataWarehouseMetadata object
-            print(f"    The table 'history_octane.{current_yaml_history_octane_metadata_table.name}' is not in octane metadata. Need to add to output!")
+            print(
+                f"    The table 'history_octane.{current_yaml_history_octane_metadata_table.name}' is not in octane metadata. Need to add to output!")
             combined_history_octane_metadata.add_table(remove_deleted_table_metadata_from_table(current_yaml_history_octane_metadata_table))
         else:
             # the table from the yaml metadata was found in the generated octane metadata. we need to compare the
@@ -274,11 +297,14 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
             # octane metadata.
             print(f"    Checking the list of columns because the table was found in generated Octane metadata... ")
             for current_yaml_history_octane_metadata_table_column in current_yaml_history_octane_metadata_table.columns:
-                print(f"      Checking column {current_yaml_history_octane_metadata_table.name}.{current_yaml_history_octane_metadata_table_column.name}")
-                if not combined_history_octane_metadata.get_table(current_yaml_history_octane_metadata_table.name).contains_column(current_yaml_history_octane_metadata_table_column.name):
+                print(
+                    f"      Checking column {current_yaml_history_octane_metadata_table.name}.{current_yaml_history_octane_metadata_table_column.name}")
+                if not combined_history_octane_metadata.get_table(current_yaml_history_octane_metadata_table.name).contains_column(
+                        current_yaml_history_octane_metadata_table_column.name):
                     # the column is not found so we need to add it
                     print(f"        Column not found... adding to output metadata after removing deleted column data.")
-                    combined_history_octane_metadata.get_table(current_yaml_history_octane_metadata_table.name).add_column(remove_deleted_column_metadata_from_column(current_yaml_history_octane_metadata_table_column))
+                    combined_history_octane_metadata.get_table(current_yaml_history_octane_metadata_table.name).add_column(
+                        remove_deleted_column_metadata_from_column(current_yaml_history_octane_metadata_table_column))
 
     # remove the history_octane schema from the generated octane metadata and replace it with the enriched deepcopy
     output_metadata.get_database('staging').remove_schema('history_octane')

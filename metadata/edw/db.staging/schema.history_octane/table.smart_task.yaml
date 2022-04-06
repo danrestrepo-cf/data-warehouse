@@ -59,48 +59,51 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.st_wf_step_pid
-etls:
+step_functions:
   SP-100192:
-    input_type: table
-    output_type: insert
-    json_output_field: st_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.smart_task
-      SELECT staging_table.st_pid
-           , staging_table.st_version
-           , staging_table.st_wf_step_pid
-           , staging_table.st_description
-           , staging_table.st_from_date
-           , staging_table.st_through_date
-           , staging_table.st_wf_step_order
-           , staging_table.st_criteria_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.smart_task staging_table
-      LEFT JOIN history_octane.smart_task history_table
-                ON staging_table.st_pid = history_table.st_pid
-                    AND staging_table.st_version = history_table.st_version
-      WHERE history_table.st_pid IS NULL
-      UNION ALL
-      SELECT history_table.st_pid
-           , history_table.st_version + 1
-           , history_table.st_wf_step_pid
-           , history_table.st_description
-           , history_table.st_from_date
-           , history_table.st_through_date
-           , history_table.st_wf_step_order
-           , history_table.st_criteria_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.smart_task history_table
-      LEFT JOIN staging_octane.smart_task staging_table
-                ON staging_table.st_pid = history_table.st_pid
-      WHERE staging_table.st_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.smart_task deleted_records
-          WHERE deleted_records.st_pid = history_table.st_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100192:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.smart_task
+        json_output_field: st_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.smart_task
+          SELECT staging_table.st_pid
+               , staging_table.st_version
+               , staging_table.st_wf_step_pid
+               , staging_table.st_description
+               , staging_table.st_from_date
+               , staging_table.st_through_date
+               , staging_table.st_wf_step_order
+               , staging_table.st_criteria_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.smart_task staging_table
+          LEFT JOIN history_octane.smart_task history_table
+                    ON staging_table.st_pid = history_table.st_pid
+                        AND staging_table.st_version = history_table.st_version
+          WHERE history_table.st_pid IS NULL
+          UNION ALL
+          SELECT history_table.st_pid
+               , history_table.st_version + 1
+               , history_table.st_wf_step_pid
+               , history_table.st_description
+               , history_table.st_from_date
+               , history_table.st_through_date
+               , history_table.st_wf_step_order
+               , history_table.st_criteria_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.smart_task history_table
+          LEFT JOIN staging_octane.smart_task staging_table
+                    ON staging_table.st_pid = history_table.st_pid
+          WHERE staging_table.st_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.smart_task deleted_records
+              WHERE deleted_records.st_pid = history_table.st_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-200005-insert-update - ETL to insert_update records into staging.star_loan.borrower_dim using staging.history_octane.borrower as the primary source",
-    "StartAt": "SP-200005-insert-update",
+    "StartAt": "ETL-200005-insert-update",
     "States": {
-        "SP-200005-insert-update": {
+        "ETL-200005-insert-update": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-200005-insert-update"
+                                    "Value": "ETL-200005-insert-update"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

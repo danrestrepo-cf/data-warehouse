@@ -43,44 +43,47 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.mcg_version
-etls:
+step_functions:
   SP-100227:
-    input_type: table
-    output_type: insert
-    json_output_field: mcg_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.mercury_client_group
-      SELECT staging_table.mcg_pid
-           , staging_table.mcg_version
-           , staging_table.mcg_account_pid
-           , staging_table.mcg_mercury_client_group_name
-           , staging_table.mcg_mercury_client_group_id
-           , staging_table.mcg_active
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.mercury_client_group staging_table
-      LEFT JOIN history_octane.mercury_client_group history_table
-                ON staging_table.mcg_pid = history_table.mcg_pid
-                    AND staging_table.mcg_version = history_table.mcg_version
-      WHERE history_table.mcg_pid IS NULL
-      UNION ALL
-      SELECT history_table.mcg_pid
-           , history_table.mcg_version + 1
-           , history_table.mcg_account_pid
-           , history_table.mcg_mercury_client_group_name
-           , history_table.mcg_mercury_client_group_id
-           , history_table.mcg_active
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.mercury_client_group history_table
-      LEFT JOIN staging_octane.mercury_client_group staging_table
-                ON staging_table.mcg_pid = history_table.mcg_pid
-      WHERE staging_table.mcg_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.mercury_client_group deleted_records
-          WHERE deleted_records.mcg_pid = history_table.mcg_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100227:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.mercury_client_group
+        json_output_field: mcg_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.mercury_client_group
+          SELECT staging_table.mcg_pid
+               , staging_table.mcg_version
+               , staging_table.mcg_account_pid
+               , staging_table.mcg_mercury_client_group_name
+               , staging_table.mcg_mercury_client_group_id
+               , staging_table.mcg_active
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.mercury_client_group staging_table
+          LEFT JOIN history_octane.mercury_client_group history_table
+                    ON staging_table.mcg_pid = history_table.mcg_pid
+                        AND staging_table.mcg_version = history_table.mcg_version
+          WHERE history_table.mcg_pid IS NULL
+          UNION ALL
+          SELECT history_table.mcg_pid
+               , history_table.mcg_version + 1
+               , history_table.mcg_account_pid
+               , history_table.mcg_mercury_client_group_name
+               , history_table.mcg_mercury_client_group_id
+               , history_table.mcg_active
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.mercury_client_group history_table
+          LEFT JOIN staging_octane.mercury_client_group staging_table
+                    ON staging_table.mcg_pid = history_table.mcg_pid
+          WHERE staging_table.mcg_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.mercury_client_group deleted_records
+              WHERE deleted_records.mcg_pid = history_table.mcg_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100869 - ETL to insert records into staging.history_octane.password_settings using staging.staging_octane.password_settings as the primary source",
-    "StartAt": "SP-100869",
+    "StartAt": "ETL-100869",
     "States": {
-        "SP-100869": {
+        "ETL-100869": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100869"
+                                    "Value": "ETL-100869"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100503 - ETL to insert records into staging.history_octane.esign_vendor_type using staging.staging_octane.esign_vendor_type as the primary source",
-    "StartAt": "SP-100503",
+    "StartAt": "ETL-100503",
     "States": {
-        "SP-100503": {
+        "ETL-100503": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100503"
+                                    "Value": "ETL-100503"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

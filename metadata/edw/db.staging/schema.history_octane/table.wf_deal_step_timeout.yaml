@@ -35,40 +35,43 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.wdst_wf_deal_step_pid
-etls:
+step_functions:
   SP-100198:
-    input_type: table
-    output_type: insert
-    json_output_field: wdst_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.wf_deal_step_timeout
-      SELECT staging_table.wdst_pid
-           , staging_table.wdst_version
-           , staging_table.wdst_wf_deal_step_pid
-           , staging_table.wdst_timeout_datetime
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.wf_deal_step_timeout staging_table
-      LEFT JOIN history_octane.wf_deal_step_timeout history_table
-                ON staging_table.wdst_pid = history_table.wdst_pid
-                    AND staging_table.wdst_version = history_table.wdst_version
-      WHERE history_table.wdst_pid IS NULL
-      UNION ALL
-      SELECT history_table.wdst_pid
-           , history_table.wdst_version + 1
-           , history_table.wdst_wf_deal_step_pid
-           , history_table.wdst_timeout_datetime
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.wf_deal_step_timeout history_table
-      LEFT JOIN staging_octane.wf_deal_step_timeout staging_table
-                ON staging_table.wdst_pid = history_table.wdst_pid
-      WHERE staging_table.wdst_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.wf_deal_step_timeout deleted_records
-          WHERE deleted_records.wdst_pid = history_table.wdst_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100198:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.wf_deal_step_timeout
+        json_output_field: wdst_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.wf_deal_step_timeout
+          SELECT staging_table.wdst_pid
+               , staging_table.wdst_version
+               , staging_table.wdst_wf_deal_step_pid
+               , staging_table.wdst_timeout_datetime
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.wf_deal_step_timeout staging_table
+          LEFT JOIN history_octane.wf_deal_step_timeout history_table
+                    ON staging_table.wdst_pid = history_table.wdst_pid
+                        AND staging_table.wdst_version = history_table.wdst_version
+          WHERE history_table.wdst_pid IS NULL
+          UNION ALL
+          SELECT history_table.wdst_pid
+               , history_table.wdst_version + 1
+               , history_table.wdst_wf_deal_step_pid
+               , history_table.wdst_timeout_datetime
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.wf_deal_step_timeout history_table
+          LEFT JOIN staging_octane.wf_deal_step_timeout staging_table
+                    ON staging_table.wdst_pid = history_table.wdst_pid
+          WHERE staging_table.wdst_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.wf_deal_step_timeout deleted_records
+              WHERE deleted_records.wdst_pid = history_table.wdst_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

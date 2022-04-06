@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100515 - ETL to insert records into staging.history_octane.fnm_community_seconds_repayment_structure_type using staging.staging_octane.fnm_community_seconds_repayment_structure_type as the primary source",
-    "StartAt": "SP-100515",
+    "StartAt": "ETL-100515",
     "States": {
-        "SP-100515": {
+        "ETL-100515": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100515"
+                                    "Value": "ETL-100515"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

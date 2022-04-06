@@ -51,44 +51,47 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.rsgm_version
-etls:
+step_functions:
   SP-100882:
-    input_type: table
-    output_type: insert
-    json_output_field: rsgm_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.rate_sheet_group_member
-      SELECT staging_table.rsgm_pid
-           , staging_table.rsgm_version
-           , staging_table.rsgm_rate_sheet_group_pid
-           , staging_table.rsgm_product_pid
-           , staging_table.rsgm_from_date
-           , staging_table.rsgm_through_date
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.rate_sheet_group_member staging_table
-      LEFT JOIN history_octane.rate_sheet_group_member history_table
-                ON staging_table.rsgm_pid = history_table.rsgm_pid
-                    AND staging_table.rsgm_version = history_table.rsgm_version
-      WHERE history_table.rsgm_pid IS NULL
-      UNION ALL
-      SELECT history_table.rsgm_pid
-           , history_table.rsgm_version + 1
-           , history_table.rsgm_rate_sheet_group_pid
-           , history_table.rsgm_product_pid
-           , history_table.rsgm_from_date
-           , history_table.rsgm_through_date
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.rate_sheet_group_member history_table
-      LEFT JOIN staging_octane.rate_sheet_group_member staging_table
-                ON staging_table.rsgm_pid = history_table.rsgm_pid
-      WHERE staging_table.rsgm_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.rate_sheet_group_member deleted_records
-          WHERE deleted_records.rsgm_pid = history_table.rsgm_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100882:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.rate_sheet_group_member
+        json_output_field: rsgm_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.rate_sheet_group_member
+          SELECT staging_table.rsgm_pid
+               , staging_table.rsgm_version
+               , staging_table.rsgm_rate_sheet_group_pid
+               , staging_table.rsgm_product_pid
+               , staging_table.rsgm_from_date
+               , staging_table.rsgm_through_date
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.rate_sheet_group_member staging_table
+          LEFT JOIN history_octane.rate_sheet_group_member history_table
+                    ON staging_table.rsgm_pid = history_table.rsgm_pid
+                        AND staging_table.rsgm_version = history_table.rsgm_version
+          WHERE history_table.rsgm_pid IS NULL
+          UNION ALL
+          SELECT history_table.rsgm_pid
+               , history_table.rsgm_version + 1
+               , history_table.rsgm_rate_sheet_group_pid
+               , history_table.rsgm_product_pid
+               , history_table.rsgm_from_date
+               , history_table.rsgm_through_date
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.rate_sheet_group_member history_table
+          LEFT JOIN staging_octane.rate_sheet_group_member staging_table
+                    ON staging_table.rsgm_pid = history_table.rsgm_pid
+          WHERE staging_table.rsgm_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.rate_sheet_group_member deleted_records
+              WHERE deleted_records.rsgm_pid = history_table.rsgm_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

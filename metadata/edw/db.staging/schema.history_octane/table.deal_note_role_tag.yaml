@@ -43,40 +43,43 @@ columns:
       field: primary_source_table.columns.dnrt_version
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100363:
-    input_type: table
-    output_type: insert
-    json_output_field: dnrt_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_note_role_tag
-      SELECT staging_table.dnrt_pid
-           , staging_table.dnrt_version
-           , staging_table.dnrt_deal_note_pid
-           , staging_table.dnrt_role_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_note_role_tag staging_table
-      LEFT JOIN history_octane.deal_note_role_tag history_table
-                ON staging_table.dnrt_pid = history_table.dnrt_pid
-                    AND staging_table.dnrt_version = history_table.dnrt_version
-      WHERE history_table.dnrt_pid IS NULL
-      UNION ALL
-      SELECT history_table.dnrt_pid
-           , history_table.dnrt_version + 1
-           , history_table.dnrt_deal_note_pid
-           , history_table.dnrt_role_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_note_role_tag history_table
-      LEFT JOIN staging_octane.deal_note_role_tag staging_table
-                ON staging_table.dnrt_pid = history_table.dnrt_pid
-      WHERE staging_table.dnrt_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_note_role_tag deleted_records
-          WHERE deleted_records.dnrt_pid = history_table.dnrt_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100363:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_note_role_tag
+        json_output_field: dnrt_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_note_role_tag
+          SELECT staging_table.dnrt_pid
+               , staging_table.dnrt_version
+               , staging_table.dnrt_deal_note_pid
+               , staging_table.dnrt_role_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_note_role_tag staging_table
+          LEFT JOIN history_octane.deal_note_role_tag history_table
+                    ON staging_table.dnrt_pid = history_table.dnrt_pid
+                        AND staging_table.dnrt_version = history_table.dnrt_version
+          WHERE history_table.dnrt_pid IS NULL
+          UNION ALL
+          SELECT history_table.dnrt_pid
+               , history_table.dnrt_version + 1
+               , history_table.dnrt_deal_note_pid
+               , history_table.dnrt_role_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_note_role_tag history_table
+          LEFT JOIN staging_octane.deal_note_role_tag staging_table
+                    ON staging_table.dnrt_pid = history_table.dnrt_pid
+          WHERE staging_table.dnrt_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_note_role_tag deleted_records
+              WHERE deleted_records.dnrt_pid = history_table.dnrt_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

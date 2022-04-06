@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100606 - ETL to insert records into staging.history_octane.payment_fulfill_type using staging.staging_octane.payment_fulfill_type as the primary source",
-    "StartAt": "SP-100606",
+    "StartAt": "ETL-100606",
     "States": {
-        "SP-100606": {
+        "ETL-100606": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100606"
+                                    "Value": "ETL-100606"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

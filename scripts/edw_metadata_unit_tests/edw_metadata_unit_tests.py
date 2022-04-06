@@ -675,42 +675,6 @@ def test_35():
     """, "Test 35: [json_output_field] invalid field name.")
 
 
-def test_36():
-    """state_machine_definition: name must be a non-empty string consisting of only letters, numbers, dashes,
-    and underscores"""
-    query_tester("""
-        SELECT state_machine_definition.dwid
-            , state_machine_definition.name
-        FROM mdi.state_machine_definition
-        WHERE name !~ '^[a-zA-Z0-9_-]+$'
-    """, "Test 36: [state_machine_definition] Invalid value(s) detected in name field.")
-
-
-def test_37():
-    """state_machine_step: process_dwid and next_process_dwid relationship must never result in a recursive loop"""
-    query_tester("""
-        WITH RECURSIVE search_graph (process_dwid, next_process_dwid, process_sequence, loop_detected) AS (
-            SELECT state_machine_step.process_dwid
-                 , state_machine_step.next_process_dwid
-                 , ARRAY[state_machine_step.process_dwid]
-                 , state_machine_step.next_process_dwid = state_machine_step.process_dwid
-            FROM mdi.state_machine_step
-            UNION ALL
-            SELECT state_machine_step.process_dwid
-                 , state_machine_step.next_process_dwid
-                 , search_graph.process_sequence || state_machine_step.process_dwid
-                 , state_machine_step.process_dwid = ANY(search_graph.process_sequence)
-            FROM search_graph
-                 JOIN mdi.state_machine_step ON search_graph.next_process_dwid = state_machine_step.process_dwid
-            WHERE search_graph.loop_detected IS FALSE
-        )
-        SELECT process_sequence AS looping_state_machine_process_dwid_sequence
-        FROM search_graph
-        WHERE loop_detected IS TRUE
-        ORDER BY process_sequence;
-    """, "Test 37: [state_machine_definition] Loop detected in state machine process sequence(s).")
-
-
 class EDW:
     """
     A connection to EDW. When used as a context manager, returns an EDWCursor

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100759 - ETL to insert records into staging.history_octane.lender_user_reset_type using staging.staging_octane.lender_user_reset_type as the primary source",
-    "StartAt": "SP-100759",
+    "StartAt": "ETL-100759",
     "States": {
-        "SP-100759": {
+        "ETL-100759": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100759"
+                                    "Value": "ETL-100759"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

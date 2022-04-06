@@ -30,42 +30,45 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.wts_when_fired
-etls:
+step_functions:
   SP-100069:
-    input_type: table
-    output_type: insert
-    json_output_field: wts_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.wf_polling_time_slice
-      SELECT staging_table.wts_pid
-           , staging_table.wts_version
-           , staging_table.wts_time_slice
-           , staging_table.wts_when_fired
-           , staging_table.wts_when_complete
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.wf_polling_time_slice staging_table
-      LEFT JOIN history_octane.wf_polling_time_slice history_table
-                ON staging_table.wts_pid = history_table.wts_pid
-                    AND staging_table.wts_version = history_table.wts_version
-      WHERE history_table.wts_pid IS NULL
-      UNION ALL
-      SELECT history_table.wts_pid
-           , history_table.wts_version + 1
-           , history_table.wts_time_slice
-           , history_table.wts_when_fired
-           , history_table.wts_when_complete
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.wf_polling_time_slice history_table
-      LEFT JOIN staging_octane.wf_polling_time_slice staging_table
-                ON staging_table.wts_pid = history_table.wts_pid
-      WHERE staging_table.wts_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.wf_polling_time_slice deleted_records
-          WHERE deleted_records.wts_pid = history_table.wts_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100069:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.wf_polling_time_slice
+        json_output_field: wts_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.wf_polling_time_slice
+          SELECT staging_table.wts_pid
+               , staging_table.wts_version
+               , staging_table.wts_time_slice
+               , staging_table.wts_when_fired
+               , staging_table.wts_when_complete
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.wf_polling_time_slice staging_table
+          LEFT JOIN history_octane.wf_polling_time_slice history_table
+                    ON staging_table.wts_pid = history_table.wts_pid
+                        AND staging_table.wts_version = history_table.wts_version
+          WHERE history_table.wts_pid IS NULL
+          UNION ALL
+          SELECT history_table.wts_pid
+               , history_table.wts_version + 1
+               , history_table.wts_time_slice
+               , history_table.wts_when_fired
+               , history_table.wts_when_complete
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.wf_polling_time_slice history_table
+          LEFT JOIN staging_octane.wf_polling_time_slice staging_table
+                    ON staging_table.wts_pid = history_table.wts_pid
+          WHERE staging_table.wts_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.wf_polling_time_slice deleted_records
+              WHERE deleted_records.wts_pid = history_table.wts_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

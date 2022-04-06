@@ -1,8 +1,8 @@
 {
     "Comment": "SP-200001-insert - ETL to insert records into staging.star_loan.loan_lender_user_access using staging.history_octane.deal_lender_user as the primary source",
-    "StartAt": "SP-200001-insert",
+    "StartAt": "ETL-200001-insert",
     "States": {
-        "SP-200001-insert": {
+        "ETL-200001-insert": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-200001-insert"
+                                    "Value": "ETL-200001-insert"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100388 - ETL to insert records into staging.history_octane.doc_provider_group_type using staging.staging_octane.doc_provider_group_type as the primary source",
-    "StartAt": "SP-100388",
+    "StartAt": "ETL-100388",
     "States": {
-        "SP-100388": {
+        "ETL-100388": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100388"
+                                    "Value": "ETL-100388"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -55,46 +55,49 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.llt_version
-etls:
+step_functions:
   SP-100224:
-    input_type: table
-    output_type: insert
-    json_output_field: llt_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.loan_limit_table
-      SELECT staging_table.llt_pid
-           , staging_table.llt_version
-           , staging_table.llt_account_pid
-           , staging_table.llt_from_date
-           , staging_table.llt_loan_limit_table_type
-           , staging_table.llt_uploader_unparsed_name
-           , staging_table.llt_upload_datetime
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.loan_limit_table staging_table
-      LEFT JOIN history_octane.loan_limit_table history_table
-                ON staging_table.llt_pid = history_table.llt_pid
-                    AND staging_table.llt_version = history_table.llt_version
-      WHERE history_table.llt_pid IS NULL
-      UNION ALL
-      SELECT history_table.llt_pid
-           , history_table.llt_version + 1
-           , history_table.llt_account_pid
-           , history_table.llt_from_date
-           , history_table.llt_loan_limit_table_type
-           , history_table.llt_uploader_unparsed_name
-           , history_table.llt_upload_datetime
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.loan_limit_table history_table
-      LEFT JOIN staging_octane.loan_limit_table staging_table
-                ON staging_table.llt_pid = history_table.llt_pid
-      WHERE staging_table.llt_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.loan_limit_table deleted_records
-          WHERE deleted_records.llt_pid = history_table.llt_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100224:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.loan_limit_table
+        json_output_field: llt_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.loan_limit_table
+          SELECT staging_table.llt_pid
+               , staging_table.llt_version
+               , staging_table.llt_account_pid
+               , staging_table.llt_from_date
+               , staging_table.llt_loan_limit_table_type
+               , staging_table.llt_uploader_unparsed_name
+               , staging_table.llt_upload_datetime
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.loan_limit_table staging_table
+          LEFT JOIN history_octane.loan_limit_table history_table
+                    ON staging_table.llt_pid = history_table.llt_pid
+                        AND staging_table.llt_version = history_table.llt_version
+          WHERE history_table.llt_pid IS NULL
+          UNION ALL
+          SELECT history_table.llt_pid
+               , history_table.llt_version + 1
+               , history_table.llt_account_pid
+               , history_table.llt_from_date
+               , history_table.llt_loan_limit_table_type
+               , history_table.llt_uploader_unparsed_name
+               , history_table.llt_upload_datetime
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.loan_limit_table history_table
+          LEFT JOIN staging_octane.loan_limit_table staging_table
+                    ON staging_table.llt_pid = history_table.llt_pid
+          WHERE staging_table.llt_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.loan_limit_table deleted_records
+              WHERE deleted_records.llt_pid = history_table.llt_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

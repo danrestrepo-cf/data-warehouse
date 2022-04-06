@@ -35,40 +35,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.luso_version
-etls:
+step_functions:
   SP-100101:
-    input_type: table
-    output_type: insert
-    json_output_field: luso_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.lender_user_sign_on
-      SELECT staging_table.luso_pid
-           , staging_table.luso_version
-           , staging_table.luso_lender_user_pid
-           , staging_table.luso_last_sign_on_datetime
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.lender_user_sign_on staging_table
-      LEFT JOIN history_octane.lender_user_sign_on history_table
-                ON staging_table.luso_pid = history_table.luso_pid
-                    AND staging_table.luso_version = history_table.luso_version
-      WHERE history_table.luso_pid IS NULL
-      UNION ALL
-      SELECT history_table.luso_pid
-           , history_table.luso_version + 1
-           , history_table.luso_lender_user_pid
-           , history_table.luso_last_sign_on_datetime
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.lender_user_sign_on history_table
-      LEFT JOIN staging_octane.lender_user_sign_on staging_table
-                ON staging_table.luso_pid = history_table.luso_pid
-      WHERE staging_table.luso_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.lender_user_sign_on deleted_records
-          WHERE deleted_records.luso_pid = history_table.luso_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100101:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.lender_user_sign_on
+        json_output_field: luso_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.lender_user_sign_on
+          SELECT staging_table.luso_pid
+               , staging_table.luso_version
+               , staging_table.luso_lender_user_pid
+               , staging_table.luso_last_sign_on_datetime
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.lender_user_sign_on staging_table
+          LEFT JOIN history_octane.lender_user_sign_on history_table
+                    ON staging_table.luso_pid = history_table.luso_pid
+                        AND staging_table.luso_version = history_table.luso_version
+          WHERE history_table.luso_pid IS NULL
+          UNION ALL
+          SELECT history_table.luso_pid
+               , history_table.luso_version + 1
+               , history_table.luso_lender_user_pid
+               , history_table.luso_last_sign_on_datetime
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.lender_user_sign_on history_table
+          LEFT JOIN staging_octane.lender_user_sign_on staging_table
+                    ON staging_table.luso_pid = history_table.luso_pid
+          WHERE staging_table.luso_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.lender_user_sign_on deleted_records
+              WHERE deleted_records.luso_pid = history_table.luso_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

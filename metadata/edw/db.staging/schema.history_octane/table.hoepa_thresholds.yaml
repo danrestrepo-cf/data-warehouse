@@ -46,50 +46,53 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ht_version
-etls:
+step_functions:
   SP-100029:
-    input_type: table
-    output_type: insert
-    json_output_field: ht_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.hoepa_thresholds
-      SELECT staging_table.ht_pid
-           , staging_table.ht_version
-           , staging_table.ht_effective_date
-           , staging_table.ht_total_loan_amount_threshold
-           , staging_table.ht_points_and_fees_threshold_amount
-           , staging_table.ht_first_lien_rate_spread_threshold
-           , staging_table.ht_subordinate_lien_rate_spread_threshold
-           , staging_table.ht_max_points_and_fees_percent_over_threshold
-           , staging_table.ht_max_points_and_fees_percent_under_threshold
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.hoepa_thresholds staging_table
-      LEFT JOIN history_octane.hoepa_thresholds history_table
-                ON staging_table.ht_pid = history_table.ht_pid
-                    AND staging_table.ht_version = history_table.ht_version
-      WHERE history_table.ht_pid IS NULL
-      UNION ALL
-      SELECT history_table.ht_pid
-           , history_table.ht_version + 1
-           , history_table.ht_effective_date
-           , history_table.ht_total_loan_amount_threshold
-           , history_table.ht_points_and_fees_threshold_amount
-           , history_table.ht_first_lien_rate_spread_threshold
-           , history_table.ht_subordinate_lien_rate_spread_threshold
-           , history_table.ht_max_points_and_fees_percent_over_threshold
-           , history_table.ht_max_points_and_fees_percent_under_threshold
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.hoepa_thresholds history_table
-      LEFT JOIN staging_octane.hoepa_thresholds staging_table
-                ON staging_table.ht_pid = history_table.ht_pid
-      WHERE staging_table.ht_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.hoepa_thresholds deleted_records
-          WHERE deleted_records.ht_pid = history_table.ht_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100029:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.hoepa_thresholds
+        json_output_field: ht_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.hoepa_thresholds
+          SELECT staging_table.ht_pid
+               , staging_table.ht_version
+               , staging_table.ht_effective_date
+               , staging_table.ht_total_loan_amount_threshold
+               , staging_table.ht_points_and_fees_threshold_amount
+               , staging_table.ht_first_lien_rate_spread_threshold
+               , staging_table.ht_subordinate_lien_rate_spread_threshold
+               , staging_table.ht_max_points_and_fees_percent_over_threshold
+               , staging_table.ht_max_points_and_fees_percent_under_threshold
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.hoepa_thresholds staging_table
+          LEFT JOIN history_octane.hoepa_thresholds history_table
+                    ON staging_table.ht_pid = history_table.ht_pid
+                        AND staging_table.ht_version = history_table.ht_version
+          WHERE history_table.ht_pid IS NULL
+          UNION ALL
+          SELECT history_table.ht_pid
+               , history_table.ht_version + 1
+               , history_table.ht_effective_date
+               , history_table.ht_total_loan_amount_threshold
+               , history_table.ht_points_and_fees_threshold_amount
+               , history_table.ht_first_lien_rate_spread_threshold
+               , history_table.ht_subordinate_lien_rate_spread_threshold
+               , history_table.ht_max_points_and_fees_percent_over_threshold
+               , history_table.ht_max_points_and_fees_percent_under_threshold
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.hoepa_thresholds history_table
+          LEFT JOIN staging_octane.hoepa_thresholds staging_table
+                    ON staging_table.ht_pid = history_table.ht_pid
+          WHERE staging_table.ht_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.hoepa_thresholds deleted_records
+              WHERE deleted_records.ht_pid = history_table.ht_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

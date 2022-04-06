@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100205 - ETL to insert records into staging.history_octane.zip_code_info using staging.staging_octane.zip_code_info as the primary source",
-    "StartAt": "SP-100205",
+    "StartAt": "ETL-100205",
     "States": {
-        "SP-100205": {
+        "ETL-100205": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100205"
+                                    "Value": "ETL-100205"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

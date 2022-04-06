@@ -43,44 +43,47 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lolu_version
-etls:
+step_functions:
   SP-100371:
-    input_type: table
-    output_type: insert
-    json_output_field: lolu_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.loan_org_lineage_update
-      SELECT staging_table.lolu_pid
-           , staging_table.lolu_version
-           , staging_table.lolu_loan_pid
-           , staging_table.lolu_scheduled_date
-           , staging_table.lolu_try_count
-           , staging_table.lolu_latest_exception_message
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.loan_org_lineage_update staging_table
-      LEFT JOIN history_octane.loan_org_lineage_update history_table
-                ON staging_table.lolu_pid = history_table.lolu_pid
-                    AND staging_table.lolu_version = history_table.lolu_version
-      WHERE history_table.lolu_pid IS NULL
-      UNION ALL
-      SELECT history_table.lolu_pid
-           , history_table.lolu_version + 1
-           , history_table.lolu_loan_pid
-           , history_table.lolu_scheduled_date
-           , history_table.lolu_try_count
-           , history_table.lolu_latest_exception_message
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.loan_org_lineage_update history_table
-      LEFT JOIN staging_octane.loan_org_lineage_update staging_table
-                ON staging_table.lolu_pid = history_table.lolu_pid
-      WHERE staging_table.lolu_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.loan_org_lineage_update deleted_records
-          WHERE deleted_records.lolu_pid = history_table.lolu_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100371:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.loan_org_lineage_update
+        json_output_field: lolu_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.loan_org_lineage_update
+          SELECT staging_table.lolu_pid
+               , staging_table.lolu_version
+               , staging_table.lolu_loan_pid
+               , staging_table.lolu_scheduled_date
+               , staging_table.lolu_try_count
+               , staging_table.lolu_latest_exception_message
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.loan_org_lineage_update staging_table
+          LEFT JOIN history_octane.loan_org_lineage_update history_table
+                    ON staging_table.lolu_pid = history_table.lolu_pid
+                        AND staging_table.lolu_version = history_table.lolu_version
+          WHERE history_table.lolu_pid IS NULL
+          UNION ALL
+          SELECT history_table.lolu_pid
+               , history_table.lolu_version + 1
+               , history_table.lolu_loan_pid
+               , history_table.lolu_scheduled_date
+               , history_table.lolu_try_count
+               , history_table.lolu_latest_exception_message
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.loan_org_lineage_update history_table
+          LEFT JOIN staging_octane.loan_org_lineage_update staging_table
+                    ON staging_table.lolu_pid = history_table.lolu_pid
+          WHERE staging_table.lolu_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.loan_org_lineage_update deleted_records
+              WHERE deleted_records.lolu_pid = history_table.lolu_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -43,40 +43,43 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100183:
-    input_type: table
-    output_type: insert
-    json_output_field: bl_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.borrower_liability
-      SELECT staging_table.bl_pid
-           , staging_table.bl_version
-           , staging_table.bl_borrower_pid
-           , staging_table.bl_liability_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.borrower_liability staging_table
-      LEFT JOIN history_octane.borrower_liability history_table
-                ON staging_table.bl_pid = history_table.bl_pid
-                    AND staging_table.bl_version = history_table.bl_version
-      WHERE history_table.bl_pid IS NULL
-      UNION ALL
-      SELECT history_table.bl_pid
-           , history_table.bl_version + 1
-           , history_table.bl_borrower_pid
-           , history_table.bl_liability_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.borrower_liability history_table
-      LEFT JOIN staging_octane.borrower_liability staging_table
-                ON staging_table.bl_pid = history_table.bl_pid
-      WHERE staging_table.bl_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.borrower_liability deleted_records
-          WHERE deleted_records.bl_pid = history_table.bl_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100183:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.borrower_liability
+        json_output_field: bl_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.borrower_liability
+          SELECT staging_table.bl_pid
+               , staging_table.bl_version
+               , staging_table.bl_borrower_pid
+               , staging_table.bl_liability_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.borrower_liability staging_table
+          LEFT JOIN history_octane.borrower_liability history_table
+                    ON staging_table.bl_pid = history_table.bl_pid
+                        AND staging_table.bl_version = history_table.bl_version
+          WHERE history_table.bl_pid IS NULL
+          UNION ALL
+          SELECT history_table.bl_pid
+               , history_table.bl_version + 1
+               , history_table.bl_borrower_pid
+               , history_table.bl_liability_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.borrower_liability history_table
+          LEFT JOIN staging_octane.borrower_liability staging_table
+                    ON staging_table.bl_pid = history_table.bl_pid
+          WHERE staging_table.bl_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.borrower_liability deleted_records
+              WHERE deleted_records.bl_pid = history_table.bl_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

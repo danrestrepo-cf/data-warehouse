@@ -39,42 +39,45 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.nlo_version
-etls:
+step_functions:
   SP-100016:
-    input_type: table
-    output_type: insert
-    json_output_field: nlo_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.new_lock_only_add_on
-      SELECT staging_table.nlo_pid
-           , staging_table.nlo_version
-           , staging_table.nlo_account_pid
-           , staging_table.nlo_add_on_prefix
-           , staging_table.nlo_add_on_description
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.new_lock_only_add_on staging_table
-      LEFT JOIN history_octane.new_lock_only_add_on history_table
-                ON staging_table.nlo_pid = history_table.nlo_pid
-                    AND staging_table.nlo_version = history_table.nlo_version
-      WHERE history_table.nlo_pid IS NULL
-      UNION ALL
-      SELECT history_table.nlo_pid
-           , history_table.nlo_version + 1
-           , history_table.nlo_account_pid
-           , history_table.nlo_add_on_prefix
-           , history_table.nlo_add_on_description
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.new_lock_only_add_on history_table
-      LEFT JOIN staging_octane.new_lock_only_add_on staging_table
-                ON staging_table.nlo_pid = history_table.nlo_pid
-      WHERE staging_table.nlo_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.new_lock_only_add_on deleted_records
-          WHERE deleted_records.nlo_pid = history_table.nlo_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100016:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.new_lock_only_add_on
+        json_output_field: nlo_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.new_lock_only_add_on
+          SELECT staging_table.nlo_pid
+               , staging_table.nlo_version
+               , staging_table.nlo_account_pid
+               , staging_table.nlo_add_on_prefix
+               , staging_table.nlo_add_on_description
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.new_lock_only_add_on staging_table
+          LEFT JOIN history_octane.new_lock_only_add_on history_table
+                    ON staging_table.nlo_pid = history_table.nlo_pid
+                        AND staging_table.nlo_version = history_table.nlo_version
+          WHERE history_table.nlo_pid IS NULL
+          UNION ALL
+          SELECT history_table.nlo_pid
+               , history_table.nlo_version + 1
+               , history_table.nlo_account_pid
+               , history_table.nlo_add_on_prefix
+               , history_table.nlo_add_on_description
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.new_lock_only_add_on history_table
+          LEFT JOIN staging_octane.new_lock_only_add_on staging_table
+                    ON staging_table.nlo_pid = history_table.nlo_pid
+          WHERE staging_table.nlo_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.new_lock_only_add_on deleted_records
+              WHERE deleted_records.nlo_pid = history_table.nlo_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

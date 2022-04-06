@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100293 - ETL to insert records into staging.history_octane.compass_analytics_report_request using staging.staging_octane.compass_analytics_report_request as the primary source",
-    "StartAt": "SP-100293",
+    "StartAt": "ETL-100293",
     "States": {
-        "SP-100293": {
+        "ETL-100293": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100293"
+                                    "Value": "ETL-100293"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -39,42 +39,45 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.rc_version
-etls:
+step_functions:
   SP-100256:
-    input_type: table
-    output_type: insert
-    json_output_field: rc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.recording_city
-      SELECT staging_table.rc_pid
-           , staging_table.rc_version
-           , staging_table.rc_city_name
-           , staging_table.rc_state_type
-           , staging_table.rc_recording_city_name
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.recording_city staging_table
-      LEFT JOIN history_octane.recording_city history_table
-                ON staging_table.rc_pid = history_table.rc_pid
-                    AND staging_table.rc_version = history_table.rc_version
-      WHERE history_table.rc_pid IS NULL
-      UNION ALL
-      SELECT history_table.rc_pid
-           , history_table.rc_version + 1
-           , history_table.rc_city_name
-           , history_table.rc_state_type
-           , history_table.rc_recording_city_name
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.recording_city history_table
-      LEFT JOIN staging_octane.recording_city staging_table
-                ON staging_table.rc_pid = history_table.rc_pid
-      WHERE staging_table.rc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.recording_city deleted_records
-          WHERE deleted_records.rc_pid = history_table.rc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100256:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.recording_city
+        json_output_field: rc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.recording_city
+          SELECT staging_table.rc_pid
+               , staging_table.rc_version
+               , staging_table.rc_city_name
+               , staging_table.rc_state_type
+               , staging_table.rc_recording_city_name
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.recording_city staging_table
+          LEFT JOIN history_octane.recording_city history_table
+                    ON staging_table.rc_pid = history_table.rc_pid
+                        AND staging_table.rc_version = history_table.rc_version
+          WHERE history_table.rc_pid IS NULL
+          UNION ALL
+          SELECT history_table.rc_pid
+               , history_table.rc_version + 1
+               , history_table.rc_city_name
+               , history_table.rc_state_type
+               , history_table.rc_recording_city_name
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.recording_city history_table
+          LEFT JOIN staging_octane.recording_city staging_table
+                    ON staging_table.rc_pid = history_table.rc_pid
+          WHERE staging_table.rc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.recording_city deleted_records
+              WHERE deleted_records.rc_pid = history_table.rc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

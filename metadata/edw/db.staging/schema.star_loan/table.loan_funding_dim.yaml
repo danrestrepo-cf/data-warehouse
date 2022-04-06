@@ -137,109 +137,112 @@ columns:
     source:
       field: primary_source_table.columns.lf_collateral_tracking_number
     update_flag: true
-etls:
+step_functions:
   SP-200013:
-    input_type: table
-    output_type: insert_update
-    hardcoded_data_source: Octane
-    json_output_field: data_source_integration_id
-    insert_update_keys:
-      - data_source_integration_id
-    container_memory: 2048
-    input_sql: |-
-      WITH loan_funding_dim_incl_new_records AS (
-          SELECT 'loan_funding_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
-               , COALESCE( CAST( primary_table.lf_pid AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
-               , NOW( ) AS edw_created_datetime
-               , NOW( ) AS edw_modified_datetime
-               , primary_table.data_source_updated_datetime AS data_source_modified_datetime
-               , t380.value AS collateral_courier
-               , t381.value AS funding_status
-               , primary_table.lf_release_wire_federal_reference_number AS release_wire_federal_reference_number
-               , primary_table.lf_interim_funder_fee_amount AS interim_funder_fee_amount
-               , primary_table.lf_wire_amount AS wire_amount
-               , primary_table.lf_confirmed_release_datetime AS funding_confirmed_release_datetime
-               , primary_table.lf_funding_status_type AS funding_status_code
-               , primary_table.lf_interim_funder_loan_id AS interim_funder_loan_id
-               , primary_table.lf_pid AS loan_funding_pid
-               , primary_table.lf_loan_pid AS loan_pid
-               , primary_table.lf_interim_funder_pid AS interim_funder_pid
-               , primary_table.lf_early_wire_request AS early_wire_request_flag
-               , primary_table.lf_scheduled_release_date_auto_compute AS scheduled_release_date_auto_compute_flag
-               , primary_table.lf_early_wire_total_charge_amount AS early_wire_total_charge_amount
-               , primary_table.lf_early_wire_daily_charge_amount AS early_wire_daily_charge_amount
-               , primary_table.lf_early_wire_charge_day_count AS early_wire_charge_day_count
-               , primary_table.lf_net_wire_amount AS net_wire_amount
-               , primary_table.lf_post_wire_adjustment_amount AS post_wire_adjustment_amount
-               , primary_table.lf_collateral_courier_type AS collateral_courier_code
-               , primary_table.lf_funds_authorized_datetime AS funds_authorized_datetime
-               , primary_table.lf_funds_authorization_code AS funds_authorization_code
-               , primary_table.lf_collateral_tracking_number AS collateral_tracking_number
-               , GREATEST( primary_table.etl_end_date_time, t380.etl_end_date_time, t381.etl_end_date_time ) AS max_source_etl_end_date_time
-          FROM (
-              SELECT <<loan_funding_partial_load_condition>> AS include_record
-                   , loan_funding.*
-                   , etl_log.etl_end_date_time
-              FROM history_octane.loan_funding
-              LEFT JOIN history_octane.loan_funding AS history_records
-                        ON loan_funding.lf_pid = history_records.lf_pid
-                            AND loan_funding.data_source_updated_datetime < history_records.data_source_updated_datetime
+    etls:
+      ETL-200013:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.loan_funding_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-300001-insert-update
+        input_sql: |-
+          WITH loan_funding_dim_incl_new_records AS (
+              SELECT 'loan_funding_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
+                   , COALESCE( CAST( primary_table.lf_pid AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
+                   , NOW( ) AS edw_created_datetime
+                   , NOW( ) AS edw_modified_datetime
+                   , primary_table.data_source_updated_datetime AS data_source_modified_datetime
+                   , t380.value AS collateral_courier
+                   , t381.value AS funding_status
+                   , primary_table.lf_release_wire_federal_reference_number AS release_wire_federal_reference_number
+                   , primary_table.lf_interim_funder_fee_amount AS interim_funder_fee_amount
+                   , primary_table.lf_wire_amount AS wire_amount
+                   , primary_table.lf_confirmed_release_datetime AS funding_confirmed_release_datetime
+                   , primary_table.lf_funding_status_type AS funding_status_code
+                   , primary_table.lf_interim_funder_loan_id AS interim_funder_loan_id
+                   , primary_table.lf_pid AS loan_funding_pid
+                   , primary_table.lf_loan_pid AS loan_pid
+                   , primary_table.lf_interim_funder_pid AS interim_funder_pid
+                   , primary_table.lf_early_wire_request AS early_wire_request_flag
+                   , primary_table.lf_scheduled_release_date_auto_compute AS scheduled_release_date_auto_compute_flag
+                   , primary_table.lf_early_wire_total_charge_amount AS early_wire_total_charge_amount
+                   , primary_table.lf_early_wire_daily_charge_amount AS early_wire_daily_charge_amount
+                   , primary_table.lf_early_wire_charge_day_count AS early_wire_charge_day_count
+                   , primary_table.lf_net_wire_amount AS net_wire_amount
+                   , primary_table.lf_post_wire_adjustment_amount AS post_wire_adjustment_amount
+                   , primary_table.lf_collateral_courier_type AS collateral_courier_code
+                   , primary_table.lf_funds_authorized_datetime AS funds_authorized_datetime
+                   , primary_table.lf_funds_authorization_code AS funds_authorization_code
+                   , primary_table.lf_collateral_tracking_number AS collateral_tracking_number
+                   , GREATEST( primary_table.etl_end_date_time, t380.etl_end_date_time, t381.etl_end_date_time ) AS max_source_etl_end_date_time
+              FROM (
+                  SELECT <<loan_funding_partial_load_condition>> AS include_record
+                       , loan_funding.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.loan_funding
+                  LEFT JOIN history_octane.loan_funding AS history_records
+                            ON loan_funding.lf_pid = history_records.lf_pid
+                                AND loan_funding.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON loan_funding.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.lf_pid IS NULL
+              ) AS primary_table
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<courier_type_partial_load_condition>> AS include_record
+                           , courier_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.courier_type
+                      LEFT JOIN history_octane.courier_type AS history_records
+                                ON courier_type.code = history_records.code
+                                    AND courier_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON courier_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t380
+                         ON primary_table.lf_collateral_courier_type = t380.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<funding_status_type_partial_load_condition>> AS include_record
+                           , funding_status_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.funding_status_type
+                      LEFT JOIN history_octane.funding_status_type AS history_records
+                                ON funding_status_type.code = history_records.code
+                                    AND funding_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON funding_status_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t381
+                         ON primary_table.lf_funding_status_type = t381.code
+              WHERE GREATEST( primary_table.include_record, t380.include_record, t381.include_record ) IS TRUE
+          )
+          --new records that should be inserted
+          SELECT loan_funding_dim_incl_new_records.*
+          FROM loan_funding_dim_incl_new_records
+          LEFT JOIN star_loan.loan_funding_dim
+                    ON loan_funding_dim_incl_new_records.data_source_integration_id = loan_funding_dim.data_source_integration_id
+          WHERE loan_funding_dim.dwid IS NULL
+          UNION ALL
+          --existing records that need to be updated
+          SELECT loan_funding_dim_incl_new_records.*
+          FROM loan_funding_dim_incl_new_records
+          JOIN (
+              SELECT loan_funding_dim.data_source_integration_id, etl_log.etl_start_date_time
+              FROM star_loan.loan_funding_dim
               JOIN star_common.etl_log
-                   ON loan_funding.etl_batch_id = etl_log.etl_batch_id
-              WHERE history_records.lf_pid IS NULL
-          ) AS primary_table
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<courier_type_partial_load_condition>> AS include_record
-                       , courier_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.courier_type
-                  LEFT JOIN history_octane.courier_type AS history_records
-                            ON courier_type.code = history_records.code
-                                AND courier_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON courier_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t380
-                     ON primary_table.lf_collateral_courier_type = t380.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<funding_status_type_partial_load_condition>> AS include_record
-                       , funding_status_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.funding_status_type
-                  LEFT JOIN history_octane.funding_status_type AS history_records
-                            ON funding_status_type.code = history_records.code
-                                AND funding_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON funding_status_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t381
-                     ON primary_table.lf_funding_status_type = t381.code
-          WHERE GREATEST( primary_table.include_record, t380.include_record, t381.include_record ) IS TRUE
-      )
-      --new records that should be inserted
-      SELECT loan_funding_dim_incl_new_records.*
-      FROM loan_funding_dim_incl_new_records
-      LEFT JOIN star_loan.loan_funding_dim
-                ON loan_funding_dim_incl_new_records.data_source_integration_id = loan_funding_dim.data_source_integration_id
-      WHERE loan_funding_dim.dwid IS NULL
-      UNION ALL
-      --existing records that need to be updated
-      SELECT loan_funding_dim_incl_new_records.*
-      FROM loan_funding_dim_incl_new_records
-      JOIN (
-          SELECT loan_funding_dim.data_source_integration_id, etl_log.etl_start_date_time
-          FROM star_loan.loan_funding_dim
-          JOIN star_common.etl_log
-               ON loan_funding_dim.etl_batch_id = etl_log.etl_batch_id
-      ) AS loan_funding_dim_etl_start_times
-           ON loan_funding_dim_incl_new_records.data_source_integration_id = loan_funding_dim_etl_start_times.data_source_integration_id
-               AND loan_funding_dim_incl_new_records.max_source_etl_end_date_time >= loan_funding_dim_etl_start_times.etl_start_date_time;
-next_etls:
-  - SP-300001-insert-update
+                   ON loan_funding_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS loan_funding_dim_etl_start_times
+               ON loan_funding_dim_incl_new_records.data_source_integration_id = loan_funding_dim_etl_start_times.data_source_integration_id
+                   AND loan_funding_dim_incl_new_records.max_source_etl_end_date_time >= loan_funding_dim_etl_start_times.etl_start_date_time;

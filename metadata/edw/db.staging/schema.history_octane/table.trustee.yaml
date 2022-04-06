@@ -83,60 +83,63 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.tru_version
-etls:
+step_functions:
   SP-100262:
-    input_type: table
-    output_type: insert
-    json_output_field: tru_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.trustee
-      SELECT staging_table.tru_pid
-           , staging_table.tru_version
-           , staging_table.tru_account_pid
-           , staging_table.tru_name
-           , staging_table.tru_address_street1
-           , staging_table.tru_address_street2
-           , staging_table.tru_address_city
-           , staging_table.tru_address_state
-           , staging_table.tru_address_postal_code
-           , staging_table.tru_address_country
-           , staging_table.tru_mers_org_id
-           , staging_table.tru_from_date
-           , staging_table.tru_through_date
-           , staging_table.tru_phone_number
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.trustee staging_table
-      LEFT JOIN history_octane.trustee history_table
-                ON staging_table.tru_pid = history_table.tru_pid
-                    AND staging_table.tru_version = history_table.tru_version
-      WHERE history_table.tru_pid IS NULL
-      UNION ALL
-      SELECT history_table.tru_pid
-           , history_table.tru_version + 1
-           , history_table.tru_account_pid
-           , history_table.tru_name
-           , history_table.tru_address_street1
-           , history_table.tru_address_street2
-           , history_table.tru_address_city
-           , history_table.tru_address_state
-           , history_table.tru_address_postal_code
-           , history_table.tru_address_country
-           , history_table.tru_mers_org_id
-           , history_table.tru_from_date
-           , history_table.tru_through_date
-           , history_table.tru_phone_number
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.trustee history_table
-      LEFT JOIN staging_octane.trustee staging_table
-                ON staging_table.tru_pid = history_table.tru_pid
-      WHERE staging_table.tru_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.trustee deleted_records
-          WHERE deleted_records.tru_pid = history_table.tru_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100262:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.trustee
+        json_output_field: tru_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.trustee
+          SELECT staging_table.tru_pid
+               , staging_table.tru_version
+               , staging_table.tru_account_pid
+               , staging_table.tru_name
+               , staging_table.tru_address_street1
+               , staging_table.tru_address_street2
+               , staging_table.tru_address_city
+               , staging_table.tru_address_state
+               , staging_table.tru_address_postal_code
+               , staging_table.tru_address_country
+               , staging_table.tru_mers_org_id
+               , staging_table.tru_from_date
+               , staging_table.tru_through_date
+               , staging_table.tru_phone_number
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.trustee staging_table
+          LEFT JOIN history_octane.trustee history_table
+                    ON staging_table.tru_pid = history_table.tru_pid
+                        AND staging_table.tru_version = history_table.tru_version
+          WHERE history_table.tru_pid IS NULL
+          UNION ALL
+          SELECT history_table.tru_pid
+               , history_table.tru_version + 1
+               , history_table.tru_account_pid
+               , history_table.tru_name
+               , history_table.tru_address_street1
+               , history_table.tru_address_street2
+               , history_table.tru_address_city
+               , history_table.tru_address_state
+               , history_table.tru_address_postal_code
+               , history_table.tru_address_country
+               , history_table.tru_mers_org_id
+               , history_table.tru_from_date
+               , history_table.tru_through_date
+               , history_table.tru_phone_number
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.trustee history_table
+          LEFT JOIN staging_octane.trustee staging_table
+                    ON staging_table.tru_pid = history_table.tru_pid
+          WHERE staging_table.tru_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.trustee deleted_records
+              WHERE deleted_records.tru_pid = history_table.tru_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

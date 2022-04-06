@@ -43,40 +43,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.rlot_version
-etls:
+step_functions:
   SP-100238:
-    input_type: table
-    output_type: insert
-    json_output_field: rlot_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.role_loans_toolbox
-      SELECT staging_table.rlot_pid
-           , staging_table.rlot_version
-           , staging_table.rlot_role_pid
-           , staging_table.rlot_loans_toolbox_permission_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.role_loans_toolbox staging_table
-      LEFT JOIN history_octane.role_loans_toolbox history_table
-                ON staging_table.rlot_pid = history_table.rlot_pid
-                    AND staging_table.rlot_version = history_table.rlot_version
-      WHERE history_table.rlot_pid IS NULL
-      UNION ALL
-      SELECT history_table.rlot_pid
-           , history_table.rlot_version + 1
-           , history_table.rlot_role_pid
-           , history_table.rlot_loans_toolbox_permission_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.role_loans_toolbox history_table
-      LEFT JOIN staging_octane.role_loans_toolbox staging_table
-                ON staging_table.rlot_pid = history_table.rlot_pid
-      WHERE staging_table.rlot_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.role_loans_toolbox deleted_records
-          WHERE deleted_records.rlot_pid = history_table.rlot_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100238:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.role_loans_toolbox
+        json_output_field: rlot_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.role_loans_toolbox
+          SELECT staging_table.rlot_pid
+               , staging_table.rlot_version
+               , staging_table.rlot_role_pid
+               , staging_table.rlot_loans_toolbox_permission_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.role_loans_toolbox staging_table
+          LEFT JOIN history_octane.role_loans_toolbox history_table
+                    ON staging_table.rlot_pid = history_table.rlot_pid
+                        AND staging_table.rlot_version = history_table.rlot_version
+          WHERE history_table.rlot_pid IS NULL
+          UNION ALL
+          SELECT history_table.rlot_pid
+               , history_table.rlot_version + 1
+               , history_table.rlot_role_pid
+               , history_table.rlot_loans_toolbox_permission_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.role_loans_toolbox history_table
+          LEFT JOIN staging_octane.role_loans_toolbox staging_table
+                    ON staging_table.rlot_pid = history_table.rlot_pid
+          WHERE staging_table.rlot_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.role_loans_toolbox deleted_records
+              WHERE deleted_records.rlot_pid = history_table.rlot_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

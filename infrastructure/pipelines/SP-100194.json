@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100194 - ETL to insert records into staging.history_octane.view_wf_deal_step_started using staging.staging_octane.view_wf_deal_step_started as the primary source",
-    "StartAt": "SP-100194",
+    "StartAt": "ETL-100194",
     "States": {
-        "SP-100194": {
+        "ETL-100194": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100194"
+                                    "Value": "ETL-100194"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

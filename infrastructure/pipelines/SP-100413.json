@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100413 - ETL to insert records into staging.history_octane.asset_type using staging.staging_octane.asset_type as the primary source",
-    "StartAt": "SP-100413",
+    "StartAt": "ETL-100413",
     "States": {
-        "SP-100413": {
+        "ETL-100413": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100413"
+                                    "Value": "ETL-100413"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100509 - ETL to insert records into staging.history_octane.fha_va_bor_cert_sales_price_exceeds_type using staging.staging_octane.fha_va_bor_cert_sales_price_exceeds_type as the primary source",
-    "StartAt": "SP-100509",
+    "StartAt": "ETL-100509",
     "States": {
-        "SP-100509": {
+        "ETL-100509": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100509"
+                                    "Value": "ETL-100509"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -243,92 +243,95 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.prpds_version
-etls:
+step_functions:
   SP-100163:
-    input_type: table
-    output_type: insert
-    json_output_field: prpds_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.proposal_doc_set
-      SELECT staging_table.prpds_pid
-           , staging_table.prpds_version
-           , staging_table.prpds_proposal_pid
-           , staging_table.prpds_smart_doc_set_pid
-           , staging_table.prpds_create_datetime
-           , staging_table.prpds_delivered_or_mailed_datetime
-           , staging_table.prpds_creator_agent_type
-           , staging_table.prpds_creator_lender_user_pid
-           , staging_table.prpds_creator_unparsed_name
-           , staging_table.prpds_requested_datetime
-           , staging_table.prpds_requester_agent_type
-           , staging_table.prpds_requester_lender_user_pid
-           , staging_table.prpds_requester_unparsed_name
-           , staging_table.prpds_signed_date
-           , staging_table.prpds_delivery_method_type
-           , staging_table.prpds_tracking_number
-           , staging_table.prpds_affects_earliest_allowed_consummation_date
-           , staging_table.prpds_name
-           , staging_table.prpds_docusign_package_pid
-           , staging_table.prpds_esign_vendor_type
-           , staging_table.prpds_esign_evidence_deal_file_pid
-           , staging_table.prpds_doc_package_status_type
-           , staging_table.prpds_canceled_reason_type
-           , staging_table.prpds_canceled_datetime
-           , staging_table.prpds_canceler_agent_type
-           , staging_table.prpds_canceler_lender_user_pid
-           , staging_table.prpds_canceler_unparsed_name
-           , staging_table.prpds_canceled_reason
-           , staging_table.prpds_proposal_doc_set_id
-           , staging_table.prpds_docs_last_updated_datetime
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.proposal_doc_set staging_table
-      LEFT JOIN history_octane.proposal_doc_set history_table
-                ON staging_table.prpds_pid = history_table.prpds_pid
-                    AND staging_table.prpds_version = history_table.prpds_version
-      WHERE history_table.prpds_pid IS NULL
-      UNION ALL
-      SELECT history_table.prpds_pid
-           , history_table.prpds_version + 1
-           , history_table.prpds_proposal_pid
-           , history_table.prpds_smart_doc_set_pid
-           , history_table.prpds_create_datetime
-           , history_table.prpds_delivered_or_mailed_datetime
-           , history_table.prpds_creator_agent_type
-           , history_table.prpds_creator_lender_user_pid
-           , history_table.prpds_creator_unparsed_name
-           , history_table.prpds_requested_datetime
-           , history_table.prpds_requester_agent_type
-           , history_table.prpds_requester_lender_user_pid
-           , history_table.prpds_requester_unparsed_name
-           , history_table.prpds_signed_date
-           , history_table.prpds_delivery_method_type
-           , history_table.prpds_tracking_number
-           , history_table.prpds_affects_earliest_allowed_consummation_date
-           , history_table.prpds_name
-           , history_table.prpds_docusign_package_pid
-           , history_table.prpds_esign_vendor_type
-           , history_table.prpds_esign_evidence_deal_file_pid
-           , history_table.prpds_doc_package_status_type
-           , history_table.prpds_canceled_reason_type
-           , history_table.prpds_canceled_datetime
-           , history_table.prpds_canceler_agent_type
-           , history_table.prpds_canceler_lender_user_pid
-           , history_table.prpds_canceler_unparsed_name
-           , history_table.prpds_canceled_reason
-           , history_table.prpds_proposal_doc_set_id
-           , history_table.prpds_docs_last_updated_datetime
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.proposal_doc_set history_table
-      LEFT JOIN staging_octane.proposal_doc_set staging_table
-                ON staging_table.prpds_pid = history_table.prpds_pid
-      WHERE staging_table.prpds_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.proposal_doc_set deleted_records
-          WHERE deleted_records.prpds_pid = history_table.prpds_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100163:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.proposal_doc_set
+        json_output_field: prpds_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.proposal_doc_set
+          SELECT staging_table.prpds_pid
+               , staging_table.prpds_version
+               , staging_table.prpds_proposal_pid
+               , staging_table.prpds_smart_doc_set_pid
+               , staging_table.prpds_create_datetime
+               , staging_table.prpds_delivered_or_mailed_datetime
+               , staging_table.prpds_creator_agent_type
+               , staging_table.prpds_creator_lender_user_pid
+               , staging_table.prpds_creator_unparsed_name
+               , staging_table.prpds_requested_datetime
+               , staging_table.prpds_requester_agent_type
+               , staging_table.prpds_requester_lender_user_pid
+               , staging_table.prpds_requester_unparsed_name
+               , staging_table.prpds_signed_date
+               , staging_table.prpds_delivery_method_type
+               , staging_table.prpds_tracking_number
+               , staging_table.prpds_affects_earliest_allowed_consummation_date
+               , staging_table.prpds_name
+               , staging_table.prpds_docusign_package_pid
+               , staging_table.prpds_esign_vendor_type
+               , staging_table.prpds_esign_evidence_deal_file_pid
+               , staging_table.prpds_doc_package_status_type
+               , staging_table.prpds_canceled_reason_type
+               , staging_table.prpds_canceled_datetime
+               , staging_table.prpds_canceler_agent_type
+               , staging_table.prpds_canceler_lender_user_pid
+               , staging_table.prpds_canceler_unparsed_name
+               , staging_table.prpds_canceled_reason
+               , staging_table.prpds_proposal_doc_set_id
+               , staging_table.prpds_docs_last_updated_datetime
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.proposal_doc_set staging_table
+          LEFT JOIN history_octane.proposal_doc_set history_table
+                    ON staging_table.prpds_pid = history_table.prpds_pid
+                        AND staging_table.prpds_version = history_table.prpds_version
+          WHERE history_table.prpds_pid IS NULL
+          UNION ALL
+          SELECT history_table.prpds_pid
+               , history_table.prpds_version + 1
+               , history_table.prpds_proposal_pid
+               , history_table.prpds_smart_doc_set_pid
+               , history_table.prpds_create_datetime
+               , history_table.prpds_delivered_or_mailed_datetime
+               , history_table.prpds_creator_agent_type
+               , history_table.prpds_creator_lender_user_pid
+               , history_table.prpds_creator_unparsed_name
+               , history_table.prpds_requested_datetime
+               , history_table.prpds_requester_agent_type
+               , history_table.prpds_requester_lender_user_pid
+               , history_table.prpds_requester_unparsed_name
+               , history_table.prpds_signed_date
+               , history_table.prpds_delivery_method_type
+               , history_table.prpds_tracking_number
+               , history_table.prpds_affects_earliest_allowed_consummation_date
+               , history_table.prpds_name
+               , history_table.prpds_docusign_package_pid
+               , history_table.prpds_esign_vendor_type
+               , history_table.prpds_esign_evidence_deal_file_pid
+               , history_table.prpds_doc_package_status_type
+               , history_table.prpds_canceled_reason_type
+               , history_table.prpds_canceled_datetime
+               , history_table.prpds_canceler_agent_type
+               , history_table.prpds_canceler_lender_user_pid
+               , history_table.prpds_canceler_unparsed_name
+               , history_table.prpds_canceled_reason
+               , history_table.prpds_proposal_doc_set_id
+               , history_table.prpds_docs_last_updated_datetime
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.proposal_doc_set history_table
+          LEFT JOIN staging_octane.proposal_doc_set staging_table
+                    ON staging_table.prpds_pid = history_table.prpds_pid
+          WHERE staging_table.prpds_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.proposal_doc_set deleted_records
+              WHERE deleted_records.prpds_pid = history_table.prpds_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100411 - ETL to insert records into staging.history_octane.appraisal_underwriter_type using staging.staging_octane.appraisal_underwriter_type as the primary source",
-    "StartAt": "SP-100411",
+    "StartAt": "ETL-100411",
     "States": {
-        "SP-100411": {
+        "ETL-100411": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100411"
+                                    "Value": "ETL-100411"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,7 +1,7 @@
 import unittest
 from typing import List
 
-from tests.test_utils import MockDBConnection
+from tests.testing_utils import MockDBConnection
 
 from lib.config_mdi_metadata_maintenance.metadata_table import Row, MetadataTable
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper, SingleGroupRowGrouper

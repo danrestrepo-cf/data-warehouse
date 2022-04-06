@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100628 - ETL to insert records into staging.history_octane.property_rights_type using staging.staging_octane.property_rights_type as the primary source",
-    "StartAt": "SP-100628",
+    "StartAt": "ETL-100628",
     "States": {
-        "SP-100628": {
+        "ETL-100628": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100628"
+                                    "Value": "ETL-100628"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

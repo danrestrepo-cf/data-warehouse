@@ -43,44 +43,47 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lms_version
-etls:
+step_functions:
   SP-100147:
-    input_type: table
-    output_type: insert
-    json_output_field: lms_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.loan_mi_surcharge
-      SELECT staging_table.lms_pid
-           , staging_table.lms_version
-           , staging_table.lms_loan_pid
-           , staging_table.lms_criteria_html
-           , staging_table.lms_government_surcharge_percent
-           , staging_table.lms_government_surcharge_minimum_amount
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.loan_mi_surcharge staging_table
-      LEFT JOIN history_octane.loan_mi_surcharge history_table
-                ON staging_table.lms_pid = history_table.lms_pid
-                    AND staging_table.lms_version = history_table.lms_version
-      WHERE history_table.lms_pid IS NULL
-      UNION ALL
-      SELECT history_table.lms_pid
-           , history_table.lms_version + 1
-           , history_table.lms_loan_pid
-           , history_table.lms_criteria_html
-           , history_table.lms_government_surcharge_percent
-           , history_table.lms_government_surcharge_minimum_amount
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.loan_mi_surcharge history_table
-      LEFT JOIN staging_octane.loan_mi_surcharge staging_table
-                ON staging_table.lms_pid = history_table.lms_pid
-      WHERE staging_table.lms_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.loan_mi_surcharge deleted_records
-          WHERE deleted_records.lms_pid = history_table.lms_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100147:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.loan_mi_surcharge
+        json_output_field: lms_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.loan_mi_surcharge
+          SELECT staging_table.lms_pid
+               , staging_table.lms_version
+               , staging_table.lms_loan_pid
+               , staging_table.lms_criteria_html
+               , staging_table.lms_government_surcharge_percent
+               , staging_table.lms_government_surcharge_minimum_amount
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.loan_mi_surcharge staging_table
+          LEFT JOIN history_octane.loan_mi_surcharge history_table
+                    ON staging_table.lms_pid = history_table.lms_pid
+                        AND staging_table.lms_version = history_table.lms_version
+          WHERE history_table.lms_pid IS NULL
+          UNION ALL
+          SELECT history_table.lms_pid
+               , history_table.lms_version + 1
+               , history_table.lms_loan_pid
+               , history_table.lms_criteria_html
+               , history_table.lms_government_surcharge_percent
+               , history_table.lms_government_surcharge_minimum_amount
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.loan_mi_surcharge history_table
+          LEFT JOIN staging_octane.loan_mi_surcharge staging_table
+                    ON staging_table.lms_pid = history_table.lms_pid
+          WHERE staging_table.lms_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.loan_mi_surcharge deleted_records
+              WHERE deleted_records.lms_pid = history_table.lms_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -55,46 +55,49 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100902:
-    input_type: table
-    output_type: insert
-    json_output_field: cnc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.config_note_comment
-      SELECT staging_table.cnc_pid
-           , staging_table.cnc_version
-           , staging_table.cnc_config_note_pid
-           , staging_table.cnc_create_datetime
-           , staging_table.cnc_content
-           , staging_table.cnc_author_unparsed_name
-           , staging_table.cnc_author_lender_user_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.config_note_comment staging_table
-      LEFT JOIN history_octane.config_note_comment history_table
-                ON staging_table.cnc_pid = history_table.cnc_pid
-                    AND staging_table.cnc_version = history_table.cnc_version
-      WHERE history_table.cnc_pid IS NULL
-      UNION ALL
-      SELECT history_table.cnc_pid
-           , history_table.cnc_version + 1
-           , history_table.cnc_config_note_pid
-           , history_table.cnc_create_datetime
-           , history_table.cnc_content
-           , history_table.cnc_author_unparsed_name
-           , history_table.cnc_author_lender_user_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.config_note_comment history_table
-      LEFT JOIN staging_octane.config_note_comment staging_table
-                ON staging_table.cnc_pid = history_table.cnc_pid
-      WHERE staging_table.cnc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.config_note_comment deleted_records
-          WHERE deleted_records.cnc_pid = history_table.cnc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100902:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.config_note_comment
+        json_output_field: cnc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.config_note_comment
+          SELECT staging_table.cnc_pid
+               , staging_table.cnc_version
+               , staging_table.cnc_config_note_pid
+               , staging_table.cnc_create_datetime
+               , staging_table.cnc_content
+               , staging_table.cnc_author_unparsed_name
+               , staging_table.cnc_author_lender_user_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.config_note_comment staging_table
+          LEFT JOIN history_octane.config_note_comment history_table
+                    ON staging_table.cnc_pid = history_table.cnc_pid
+                        AND staging_table.cnc_version = history_table.cnc_version
+          WHERE history_table.cnc_pid IS NULL
+          UNION ALL
+          SELECT history_table.cnc_pid
+               , history_table.cnc_version + 1
+               , history_table.cnc_config_note_pid
+               , history_table.cnc_create_datetime
+               , history_table.cnc_content
+               , history_table.cnc_author_unparsed_name
+               , history_table.cnc_author_lender_user_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.config_note_comment history_table
+          LEFT JOIN staging_octane.config_note_comment staging_table
+                    ON staging_table.cnc_pid = history_table.cnc_pid
+          WHERE staging_table.cnc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.config_note_comment deleted_records
+              WHERE deleted_records.cnc_pid = history_table.cnc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

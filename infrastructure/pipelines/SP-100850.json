@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100850 - ETL to insert records into staging.history_octane.location_lease using staging.staging_octane.location_lease as the primary source",
-    "StartAt": "SP-100850",
+    "StartAt": "ETL-100850",
     "States": {
-        "SP-100850": {
+        "ETL-100850": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100850"
+                                    "Value": "ETL-100850"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

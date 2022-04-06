@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100416 - ETL to insert records into staging.history_octane.backfill_status_type using staging.staging_octane.backfill_status_type as the primary source",
-    "StartAt": "SP-100416",
+    "StartAt": "ETL-100416",
     "States": {
-        "SP-100416": {
+        "ETL-100416": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100416"
+                                    "Value": "ETL-100416"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

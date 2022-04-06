@@ -43,44 +43,47 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lsmr_version
-etls:
+step_functions:
   SP-100228:
-    input_type: table
-    output_type: insert
-    json_output_field: lsmr_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.lead_supplemental_margin_row
-      SELECT staging_table.lsmr_pid
-           , staging_table.lsmr_version
-           , staging_table.lsmr_lead_supplemental_margin_table_pid
-           , staging_table.lsmr_over_anchor_rate_percent
-           , staging_table.lsmr_company_supplemental_margin_percent
-           , staging_table.lsmr_branch_supplemental_margin_percent
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.lead_supplemental_margin_row staging_table
-      LEFT JOIN history_octane.lead_supplemental_margin_row history_table
-                ON staging_table.lsmr_pid = history_table.lsmr_pid
-                    AND staging_table.lsmr_version = history_table.lsmr_version
-      WHERE history_table.lsmr_pid IS NULL
-      UNION ALL
-      SELECT history_table.lsmr_pid
-           , history_table.lsmr_version + 1
-           , history_table.lsmr_lead_supplemental_margin_table_pid
-           , history_table.lsmr_over_anchor_rate_percent
-           , history_table.lsmr_company_supplemental_margin_percent
-           , history_table.lsmr_branch_supplemental_margin_percent
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.lead_supplemental_margin_row history_table
-      LEFT JOIN staging_octane.lead_supplemental_margin_row staging_table
-                ON staging_table.lsmr_pid = history_table.lsmr_pid
-      WHERE staging_table.lsmr_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.lead_supplemental_margin_row deleted_records
-          WHERE deleted_records.lsmr_pid = history_table.lsmr_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100228:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.lead_supplemental_margin_row
+        json_output_field: lsmr_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.lead_supplemental_margin_row
+          SELECT staging_table.lsmr_pid
+               , staging_table.lsmr_version
+               , staging_table.lsmr_lead_supplemental_margin_table_pid
+               , staging_table.lsmr_over_anchor_rate_percent
+               , staging_table.lsmr_company_supplemental_margin_percent
+               , staging_table.lsmr_branch_supplemental_margin_percent
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.lead_supplemental_margin_row staging_table
+          LEFT JOIN history_octane.lead_supplemental_margin_row history_table
+                    ON staging_table.lsmr_pid = history_table.lsmr_pid
+                        AND staging_table.lsmr_version = history_table.lsmr_version
+          WHERE history_table.lsmr_pid IS NULL
+          UNION ALL
+          SELECT history_table.lsmr_pid
+               , history_table.lsmr_version + 1
+               , history_table.lsmr_lead_supplemental_margin_table_pid
+               , history_table.lsmr_over_anchor_rate_percent
+               , history_table.lsmr_company_supplemental_margin_percent
+               , history_table.lsmr_branch_supplemental_margin_percent
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.lead_supplemental_margin_row history_table
+          LEFT JOIN staging_octane.lead_supplemental_margin_row staging_table
+                    ON staging_table.lsmr_pid = history_table.lsmr_pid
+          WHERE staging_table.lsmr_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.lead_supplemental_margin_row deleted_records
+              WHERE deleted_records.lsmr_pid = history_table.lsmr_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100035 - ETL to insert records into staging.history_octane.apor using staging.staging_octane.apor as the primary source",
-    "StartAt": "SP-100035",
+    "StartAt": "ETL-100035",
     "States": {
-        "SP-100035": {
+        "ETL-100035": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100035"
+                                    "Value": "ETL-100035"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

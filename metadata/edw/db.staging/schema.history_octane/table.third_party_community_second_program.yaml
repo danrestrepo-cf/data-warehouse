@@ -119,62 +119,65 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.tpcsp_wire_action_type
-etls:
+step_functions:
   SP-100181:
-    input_type: table
-    output_type: insert
-    json_output_field: tpcsp_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.third_party_community_second_program
-      SELECT staging_table.tpcsp_pid
-           , staging_table.tpcsp_version
-           , staging_table.tpcsp_account_pid
-           , staging_table.tpcsp_program_id
-           , staging_table.tpcsp_program_name
-           , staging_table.tpcsp_fre_community_program_type
-           , staging_table.tpcsp_fnm_community_lending_product_type
-           , staging_table.tpcsp_fnm_community_seconds_repayment_structure_type
-           , staging_table.tpcsp_wire_action_type
-           , staging_table.tpcsp_security_instrument_page_count
-           , staging_table.tpcsp_deed_page_count
-           , staging_table.tpcsp_notes
-           , staging_table.tpcsp_from_date
-           , staging_table.tpcsp_through_date
-           , staging_table.tpcsp_investor_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.third_party_community_second_program staging_table
-      LEFT JOIN history_octane.third_party_community_second_program history_table
-                ON staging_table.tpcsp_pid = history_table.tpcsp_pid
-                    AND staging_table.tpcsp_version = history_table.tpcsp_version
-      WHERE history_table.tpcsp_pid IS NULL
-      UNION ALL
-      SELECT history_table.tpcsp_pid
-           , history_table.tpcsp_version + 1
-           , history_table.tpcsp_account_pid
-           , history_table.tpcsp_program_id
-           , history_table.tpcsp_program_name
-           , history_table.tpcsp_fre_community_program_type
-           , history_table.tpcsp_fnm_community_lending_product_type
-           , history_table.tpcsp_fnm_community_seconds_repayment_structure_type
-           , history_table.tpcsp_wire_action_type
-           , history_table.tpcsp_security_instrument_page_count
-           , history_table.tpcsp_deed_page_count
-           , history_table.tpcsp_notes
-           , history_table.tpcsp_from_date
-           , history_table.tpcsp_through_date
-           , history_table.tpcsp_investor_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.third_party_community_second_program history_table
-      LEFT JOIN staging_octane.third_party_community_second_program staging_table
-                ON staging_table.tpcsp_pid = history_table.tpcsp_pid
-      WHERE staging_table.tpcsp_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.third_party_community_second_program deleted_records
-          WHERE deleted_records.tpcsp_pid = history_table.tpcsp_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100181:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.third_party_community_second_program
+        json_output_field: tpcsp_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.third_party_community_second_program
+          SELECT staging_table.tpcsp_pid
+               , staging_table.tpcsp_version
+               , staging_table.tpcsp_account_pid
+               , staging_table.tpcsp_program_id
+               , staging_table.tpcsp_program_name
+               , staging_table.tpcsp_fre_community_program_type
+               , staging_table.tpcsp_fnm_community_lending_product_type
+               , staging_table.tpcsp_fnm_community_seconds_repayment_structure_type
+               , staging_table.tpcsp_wire_action_type
+               , staging_table.tpcsp_security_instrument_page_count
+               , staging_table.tpcsp_deed_page_count
+               , staging_table.tpcsp_notes
+               , staging_table.tpcsp_from_date
+               , staging_table.tpcsp_through_date
+               , staging_table.tpcsp_investor_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.third_party_community_second_program staging_table
+          LEFT JOIN history_octane.third_party_community_second_program history_table
+                    ON staging_table.tpcsp_pid = history_table.tpcsp_pid
+                        AND staging_table.tpcsp_version = history_table.tpcsp_version
+          WHERE history_table.tpcsp_pid IS NULL
+          UNION ALL
+          SELECT history_table.tpcsp_pid
+               , history_table.tpcsp_version + 1
+               , history_table.tpcsp_account_pid
+               , history_table.tpcsp_program_id
+               , history_table.tpcsp_program_name
+               , history_table.tpcsp_fre_community_program_type
+               , history_table.tpcsp_fnm_community_lending_product_type
+               , history_table.tpcsp_fnm_community_seconds_repayment_structure_type
+               , history_table.tpcsp_wire_action_type
+               , history_table.tpcsp_security_instrument_page_count
+               , history_table.tpcsp_deed_page_count
+               , history_table.tpcsp_notes
+               , history_table.tpcsp_from_date
+               , history_table.tpcsp_through_date
+               , history_table.tpcsp_investor_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.third_party_community_second_program history_table
+          LEFT JOIN staging_octane.third_party_community_second_program staging_table
+                    ON staging_table.tpcsp_pid = history_table.tpcsp_pid
+          WHERE staging_table.tpcsp_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.third_party_community_second_program deleted_records
+              WHERE deleted_records.tpcsp_pid = history_table.tpcsp_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

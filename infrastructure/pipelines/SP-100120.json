@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100120 - ETL to insert records into staging.history_octane.du_request_credit using staging.staging_octane.du_request_credit as the primary source",
-    "StartAt": "SP-100120",
+    "StartAt": "ETL-100120",
     "States": {
-        "SP-100120": {
+        "ETL-100120": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100120"
+                                    "Value": "ETL-100120"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

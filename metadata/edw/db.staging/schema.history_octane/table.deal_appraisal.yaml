@@ -119,66 +119,69 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100008:
-    input_type: table
-    output_type: insert
-    json_output_field: dappr_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_appraisal
-      SELECT staging_table.dappr_pid
-           , staging_table.dappr_version
-           , staging_table.dappr_deal_pid
-           , staging_table.dappr_door_lock_combination
-           , staging_table.dappr_appraisal_entry_contact_type
-           , staging_table.dappr_appraisal_hold_type
-           , staging_table.dappr_appraisal_hold_reason_type
-           , staging_table.dappr_hold_release_date
-           , staging_table.dappr_rush_request
-           , staging_table.dappr_transfer_specified
-           , staging_table.dappr_calculated_appraisal_required
-           , staging_table.dappr_override_calculated_appraisal_required
-           , staging_table.dappr_override_calculated_appraisal_required_reason
-           , staging_table.dappr_borrower_requires_appraisal
-           , staging_table.dappr_lender_requires_appraisal
-           , staging_table.dappr_product_requires_appraisal
-           , staging_table.dappr_appraisal_required
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_appraisal staging_table
-      LEFT JOIN history_octane.deal_appraisal history_table
-                ON staging_table.dappr_pid = history_table.dappr_pid
-                    AND staging_table.dappr_version = history_table.dappr_version
-      WHERE history_table.dappr_pid IS NULL
-      UNION ALL
-      SELECT history_table.dappr_pid
-           , history_table.dappr_version + 1
-           , history_table.dappr_deal_pid
-           , history_table.dappr_door_lock_combination
-           , history_table.dappr_appraisal_entry_contact_type
-           , history_table.dappr_appraisal_hold_type
-           , history_table.dappr_appraisal_hold_reason_type
-           , history_table.dappr_hold_release_date
-           , history_table.dappr_rush_request
-           , history_table.dappr_transfer_specified
-           , history_table.dappr_calculated_appraisal_required
-           , history_table.dappr_override_calculated_appraisal_required
-           , history_table.dappr_override_calculated_appraisal_required_reason
-           , history_table.dappr_borrower_requires_appraisal
-           , history_table.dappr_lender_requires_appraisal
-           , history_table.dappr_product_requires_appraisal
-           , history_table.dappr_appraisal_required
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_appraisal history_table
-      LEFT JOIN staging_octane.deal_appraisal staging_table
-                ON staging_table.dappr_pid = history_table.dappr_pid
-      WHERE staging_table.dappr_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_appraisal deleted_records
-          WHERE deleted_records.dappr_pid = history_table.dappr_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100008:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_appraisal
+        json_output_field: dappr_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_appraisal
+          SELECT staging_table.dappr_pid
+               , staging_table.dappr_version
+               , staging_table.dappr_deal_pid
+               , staging_table.dappr_door_lock_combination
+               , staging_table.dappr_appraisal_entry_contact_type
+               , staging_table.dappr_appraisal_hold_type
+               , staging_table.dappr_appraisal_hold_reason_type
+               , staging_table.dappr_hold_release_date
+               , staging_table.dappr_rush_request
+               , staging_table.dappr_transfer_specified
+               , staging_table.dappr_calculated_appraisal_required
+               , staging_table.dappr_override_calculated_appraisal_required
+               , staging_table.dappr_override_calculated_appraisal_required_reason
+               , staging_table.dappr_borrower_requires_appraisal
+               , staging_table.dappr_lender_requires_appraisal
+               , staging_table.dappr_product_requires_appraisal
+               , staging_table.dappr_appraisal_required
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_appraisal staging_table
+          LEFT JOIN history_octane.deal_appraisal history_table
+                    ON staging_table.dappr_pid = history_table.dappr_pid
+                        AND staging_table.dappr_version = history_table.dappr_version
+          WHERE history_table.dappr_pid IS NULL
+          UNION ALL
+          SELECT history_table.dappr_pid
+               , history_table.dappr_version + 1
+               , history_table.dappr_deal_pid
+               , history_table.dappr_door_lock_combination
+               , history_table.dappr_appraisal_entry_contact_type
+               , history_table.dappr_appraisal_hold_type
+               , history_table.dappr_appraisal_hold_reason_type
+               , history_table.dappr_hold_release_date
+               , history_table.dappr_rush_request
+               , history_table.dappr_transfer_specified
+               , history_table.dappr_calculated_appraisal_required
+               , history_table.dappr_override_calculated_appraisal_required
+               , history_table.dappr_override_calculated_appraisal_required_reason
+               , history_table.dappr_borrower_requires_appraisal
+               , history_table.dappr_lender_requires_appraisal
+               , history_table.dappr_product_requires_appraisal
+               , history_table.dappr_appraisal_required
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_appraisal history_table
+          LEFT JOIN staging_octane.deal_appraisal staging_table
+                    ON staging_table.dappr_pid = history_table.dappr_pid
+          WHERE staging_table.dappr_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_appraisal deleted_records
+              WHERE deleted_records.dappr_pid = history_table.dappr_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

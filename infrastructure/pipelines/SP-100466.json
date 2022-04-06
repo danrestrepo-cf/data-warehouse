@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100466 - ETL to insert records into staging.history_octane.deal_check_severity_type using staging.staging_octane.deal_check_severity_type as the primary source",
-    "StartAt": "SP-100466",
+    "StartAt": "ETL-100466",
     "States": {
-        "SP-100466": {
+        "ETL-100466": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100466"
+                                    "Value": "ETL-100466"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

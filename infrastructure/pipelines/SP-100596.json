@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100596 - ETL to insert records into staging.history_octane.mi_payment_type using staging.staging_octane.mi_payment_type as the primary source",
-    "StartAt": "SP-100596",
+    "StartAt": "ETL-100596",
     "States": {
-        "SP-100596": {
+        "ETL-100596": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100596"
+                                    "Value": "ETL-100596"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

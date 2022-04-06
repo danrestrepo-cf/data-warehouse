@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100761 - ETL to insert records into staging.history_octane.lender_user_status_type using staging.staging_octane.lender_user_status_type as the primary source",
-    "StartAt": "SP-100761",
+    "StartAt": "ETL-100761",
     "States": {
-        "SP-100761": {
+        "ETL-100761": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100761"
+                                    "Value": "ETL-100761"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

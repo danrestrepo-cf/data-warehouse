@@ -55,46 +55,49 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.po_version
-etls:
+step_functions:
   SP-100284:
-    input_type: table
-    output_type: insert
-    json_output_field: po_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.product_originator
-      SELECT staging_table.po_pid
-           , staging_table.po_version
-           , staging_table.po_product_pid
-           , staging_table.po_lender_user_pid
-           , staging_table.po_from_date
-           , staging_table.po_through_date
-           , staging_table.po_price_adjustment_percent
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.product_originator staging_table
-      LEFT JOIN history_octane.product_originator history_table
-                ON staging_table.po_pid = history_table.po_pid
-                    AND staging_table.po_version = history_table.po_version
-      WHERE history_table.po_pid IS NULL
-      UNION ALL
-      SELECT history_table.po_pid
-           , history_table.po_version + 1
-           , history_table.po_product_pid
-           , history_table.po_lender_user_pid
-           , history_table.po_from_date
-           , history_table.po_through_date
-           , history_table.po_price_adjustment_percent
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.product_originator history_table
-      LEFT JOIN staging_octane.product_originator staging_table
-                ON staging_table.po_pid = history_table.po_pid
-      WHERE staging_table.po_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.product_originator deleted_records
-          WHERE deleted_records.po_pid = history_table.po_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100284:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.product_originator
+        json_output_field: po_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.product_originator
+          SELECT staging_table.po_pid
+               , staging_table.po_version
+               , staging_table.po_product_pid
+               , staging_table.po_lender_user_pid
+               , staging_table.po_from_date
+               , staging_table.po_through_date
+               , staging_table.po_price_adjustment_percent
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.product_originator staging_table
+          LEFT JOIN history_octane.product_originator history_table
+                    ON staging_table.po_pid = history_table.po_pid
+                        AND staging_table.po_version = history_table.po_version
+          WHERE history_table.po_pid IS NULL
+          UNION ALL
+          SELECT history_table.po_pid
+               , history_table.po_version + 1
+               , history_table.po_product_pid
+               , history_table.po_lender_user_pid
+               , history_table.po_from_date
+               , history_table.po_through_date
+               , history_table.po_price_adjustment_percent
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.product_originator history_table
+          LEFT JOIN staging_octane.product_originator staging_table
+                    ON staging_table.po_pid = history_table.po_pid
+          WHERE staging_table.po_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.product_originator deleted_records
+              WHERE deleted_records.po_pid = history_table.po_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -555,210 +555,213 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.i_when_recorded_mail_to_street2
-etls:
+step_functions:
   SP-100268:
-    input_type: table
-    output_type: insert
-    json_output_field: i_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.investor
-      SELECT staging_table.i_pid
-           , staging_table.i_version
-           , staging_table.i_account_pid
-           , staging_table.i_investor_id
-           , staging_table.i_criteria_pid
-           , staging_table.i_website_url
-           , staging_table.i_investor_name
-           , staging_table.i_investor_city
-           , staging_table.i_investor_country
-           , staging_table.i_investor_postal_code
-           , staging_table.i_investor_state
-           , staging_table.i_investor_street1
-           , staging_table.i_investor_street2
-           , staging_table.i_investor_county_pid
-           , staging_table.i_beneficiary_name
-           , staging_table.i_beneficiary_city
-           , staging_table.i_beneficiary_country
-           , staging_table.i_beneficiary_postal_code
-           , staging_table.i_beneficiary_state
-           , staging_table.i_beneficiary_street1
-           , staging_table.i_beneficiary_street2
-           , staging_table.i_beneficiary_county_pid
-           , staging_table.i_loss_payee_name
-           , staging_table.i_loss_payee_city
-           , staging_table.i_loss_payee_country
-           , staging_table.i_loss_payee_postal_code
-           , staging_table.i_loss_payee_state
-           , staging_table.i_loss_payee_street1
-           , staging_table.i_loss_payee_street2
-           , staging_table.i_loss_payee_county_pid
-           , staging_table.i_loss_payee_assignee_name
-           , staging_table.i_when_recorded_mail_to_name
-           , staging_table.i_when_recorded_mail_to_city
-           , staging_table.i_when_recorded_mail_to_country
-           , staging_table.i_when_recorded_mail_to_postal_code
-           , staging_table.i_when_recorded_mail_to_state
-           , staging_table.i_when_recorded_mail_to_street1
-           , staging_table.i_when_recorded_mail_to_street2
-           , staging_table.i_when_recorded_mail_to_county_pid
-           , staging_table.i_servicer_name
-           , staging_table.i_servicer_address_street1
-           , staging_table.i_servicer_address_street2
-           , staging_table.i_servicer_address_city
-           , staging_table.i_servicer_address_state
-           , staging_table.i_servicer_address_postal_code
-           , staging_table.i_servicer_address_country
-           , staging_table.i_servicer_county_pid
-           , staging_table.i_sub_servicer_name
-           , staging_table.i_sub_servicer_address_street1
-           , staging_table.i_sub_servicer_address_street2
-           , staging_table.i_sub_servicer_address_city
-           , staging_table.i_sub_servicer_address_state
-           , staging_table.i_sub_servicer_address_postal_code
-           , staging_table.i_sub_servicer_address_country
-           , staging_table.i_sub_servicer_mers_org_id
-           , staging_table.i_custodian_pid
-           , staging_table.i_file_delivery_name
-           , staging_table.i_file_delivery_address_street1
-           , staging_table.i_file_delivery_address_street2
-           , staging_table.i_file_delivery_address_city
-           , staging_table.i_file_delivery_address_state
-           , staging_table.i_file_delivery_address_postal_code
-           , staging_table.i_file_delivery_address_country
-           , staging_table.i_initial_beneficiary_candidate
-           , staging_table.i_initial_servicer_candidate
-           , staging_table.i_mers_org_member
-           , staging_table.i_mers_org_id
-           , staging_table.i_allonge_transfer_to_name
-           , staging_table.i_lock_expiration_delivery_subtrahend_days
-           , staging_table.i_maximum_lock_extensions_allowed
-           , staging_table.i_maximum_lock_extension_days_allowed
-           , staging_table.i_mortech_investor_id
-           , staging_table.i_fnma_servicer_id
-           , staging_table.i_loan_file_delivery_method_type
-           , staging_table.i_investor_group_pid
-           , staging_table.i_mbs_investor
-           , staging_table.i_investor_hmda_purchaser_of_loan_type
-           , staging_table.i_lock_disable_time
-           , staging_table.i_allow_weekend_holiday_locks
-           , staging_table.i_nmls_id
-           , staging_table.i_nmls_id_applicable
-           , staging_table.i_fnm_investor_remittance_type
-           , staging_table.i_fnm_mbs_investor_remittance_day_of_month
-           , staging_table.i_fnm_mbs_loan_default_loss_party_type
-           , staging_table.i_fnm_mbs_reo_marketing_party_type
-           , staging_table.i_offers_secondary_financing
-           , staging_table.i_secondary_financing_source_type
-           , staging_table.i_ein
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.investor staging_table
-      LEFT JOIN history_octane.investor history_table
-                ON staging_table.i_pid = history_table.i_pid
-                    AND staging_table.i_version = history_table.i_version
-      WHERE history_table.i_pid IS NULL
-      UNION ALL
-      SELECT history_table.i_pid
-           , history_table.i_version + 1
-           , history_table.i_account_pid
-           , history_table.i_investor_id
-           , history_table.i_criteria_pid
-           , history_table.i_website_url
-           , history_table.i_investor_name
-           , history_table.i_investor_city
-           , history_table.i_investor_country
-           , history_table.i_investor_postal_code
-           , history_table.i_investor_state
-           , history_table.i_investor_street1
-           , history_table.i_investor_street2
-           , history_table.i_investor_county_pid
-           , history_table.i_beneficiary_name
-           , history_table.i_beneficiary_city
-           , history_table.i_beneficiary_country
-           , history_table.i_beneficiary_postal_code
-           , history_table.i_beneficiary_state
-           , history_table.i_beneficiary_street1
-           , history_table.i_beneficiary_street2
-           , history_table.i_beneficiary_county_pid
-           , history_table.i_loss_payee_name
-           , history_table.i_loss_payee_city
-           , history_table.i_loss_payee_country
-           , history_table.i_loss_payee_postal_code
-           , history_table.i_loss_payee_state
-           , history_table.i_loss_payee_street1
-           , history_table.i_loss_payee_street2
-           , history_table.i_loss_payee_county_pid
-           , history_table.i_loss_payee_assignee_name
-           , history_table.i_when_recorded_mail_to_name
-           , history_table.i_when_recorded_mail_to_city
-           , history_table.i_when_recorded_mail_to_country
-           , history_table.i_when_recorded_mail_to_postal_code
-           , history_table.i_when_recorded_mail_to_state
-           , history_table.i_when_recorded_mail_to_street1
-           , history_table.i_when_recorded_mail_to_street2
-           , history_table.i_when_recorded_mail_to_county_pid
-           , history_table.i_servicer_name
-           , history_table.i_servicer_address_street1
-           , history_table.i_servicer_address_street2
-           , history_table.i_servicer_address_city
-           , history_table.i_servicer_address_state
-           , history_table.i_servicer_address_postal_code
-           , history_table.i_servicer_address_country
-           , history_table.i_servicer_county_pid
-           , history_table.i_sub_servicer_name
-           , history_table.i_sub_servicer_address_street1
-           , history_table.i_sub_servicer_address_street2
-           , history_table.i_sub_servicer_address_city
-           , history_table.i_sub_servicer_address_state
-           , history_table.i_sub_servicer_address_postal_code
-           , history_table.i_sub_servicer_address_country
-           , history_table.i_sub_servicer_mers_org_id
-           , history_table.i_custodian_pid
-           , history_table.i_file_delivery_name
-           , history_table.i_file_delivery_address_street1
-           , history_table.i_file_delivery_address_street2
-           , history_table.i_file_delivery_address_city
-           , history_table.i_file_delivery_address_state
-           , history_table.i_file_delivery_address_postal_code
-           , history_table.i_file_delivery_address_country
-           , history_table.i_initial_beneficiary_candidate
-           , history_table.i_initial_servicer_candidate
-           , history_table.i_mers_org_member
-           , history_table.i_mers_org_id
-           , history_table.i_allonge_transfer_to_name
-           , history_table.i_lock_expiration_delivery_subtrahend_days
-           , history_table.i_maximum_lock_extensions_allowed
-           , history_table.i_maximum_lock_extension_days_allowed
-           , history_table.i_mortech_investor_id
-           , history_table.i_fnma_servicer_id
-           , history_table.i_loan_file_delivery_method_type
-           , history_table.i_investor_group_pid
-           , history_table.i_mbs_investor
-           , history_table.i_investor_hmda_purchaser_of_loan_type
-           , history_table.i_lock_disable_time
-           , history_table.i_allow_weekend_holiday_locks
-           , history_table.i_nmls_id
-           , history_table.i_nmls_id_applicable
-           , history_table.i_fnm_investor_remittance_type
-           , history_table.i_fnm_mbs_investor_remittance_day_of_month
-           , history_table.i_fnm_mbs_loan_default_loss_party_type
-           , history_table.i_fnm_mbs_reo_marketing_party_type
-           , history_table.i_offers_secondary_financing
-           , history_table.i_secondary_financing_source_type
-           , history_table.i_ein
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.investor history_table
-      LEFT JOIN staging_octane.investor staging_table
-                ON staging_table.i_pid = history_table.i_pid
-      WHERE staging_table.i_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.investor deleted_records
-          WHERE deleted_records.i_pid = history_table.i_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
-next_etls:
-- SP-200009
+    etls:
+      ETL-100268:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.investor
+        json_output_field: i_pid
+        truncate_table: false
+        container_memory: 2048
+        next_step_functions:
+        - SP-200009
+        input_sql: |-
+          --finding records to insert into history_octane.investor
+          SELECT staging_table.i_pid
+               , staging_table.i_version
+               , staging_table.i_account_pid
+               , staging_table.i_investor_id
+               , staging_table.i_criteria_pid
+               , staging_table.i_website_url
+               , staging_table.i_investor_name
+               , staging_table.i_investor_city
+               , staging_table.i_investor_country
+               , staging_table.i_investor_postal_code
+               , staging_table.i_investor_state
+               , staging_table.i_investor_street1
+               , staging_table.i_investor_street2
+               , staging_table.i_investor_county_pid
+               , staging_table.i_beneficiary_name
+               , staging_table.i_beneficiary_city
+               , staging_table.i_beneficiary_country
+               , staging_table.i_beneficiary_postal_code
+               , staging_table.i_beneficiary_state
+               , staging_table.i_beneficiary_street1
+               , staging_table.i_beneficiary_street2
+               , staging_table.i_beneficiary_county_pid
+               , staging_table.i_loss_payee_name
+               , staging_table.i_loss_payee_city
+               , staging_table.i_loss_payee_country
+               , staging_table.i_loss_payee_postal_code
+               , staging_table.i_loss_payee_state
+               , staging_table.i_loss_payee_street1
+               , staging_table.i_loss_payee_street2
+               , staging_table.i_loss_payee_county_pid
+               , staging_table.i_loss_payee_assignee_name
+               , staging_table.i_when_recorded_mail_to_name
+               , staging_table.i_when_recorded_mail_to_city
+               , staging_table.i_when_recorded_mail_to_country
+               , staging_table.i_when_recorded_mail_to_postal_code
+               , staging_table.i_when_recorded_mail_to_state
+               , staging_table.i_when_recorded_mail_to_street1
+               , staging_table.i_when_recorded_mail_to_street2
+               , staging_table.i_when_recorded_mail_to_county_pid
+               , staging_table.i_servicer_name
+               , staging_table.i_servicer_address_street1
+               , staging_table.i_servicer_address_street2
+               , staging_table.i_servicer_address_city
+               , staging_table.i_servicer_address_state
+               , staging_table.i_servicer_address_postal_code
+               , staging_table.i_servicer_address_country
+               , staging_table.i_servicer_county_pid
+               , staging_table.i_sub_servicer_name
+               , staging_table.i_sub_servicer_address_street1
+               , staging_table.i_sub_servicer_address_street2
+               , staging_table.i_sub_servicer_address_city
+               , staging_table.i_sub_servicer_address_state
+               , staging_table.i_sub_servicer_address_postal_code
+               , staging_table.i_sub_servicer_address_country
+               , staging_table.i_sub_servicer_mers_org_id
+               , staging_table.i_custodian_pid
+               , staging_table.i_file_delivery_name
+               , staging_table.i_file_delivery_address_street1
+               , staging_table.i_file_delivery_address_street2
+               , staging_table.i_file_delivery_address_city
+               , staging_table.i_file_delivery_address_state
+               , staging_table.i_file_delivery_address_postal_code
+               , staging_table.i_file_delivery_address_country
+               , staging_table.i_initial_beneficiary_candidate
+               , staging_table.i_initial_servicer_candidate
+               , staging_table.i_mers_org_member
+               , staging_table.i_mers_org_id
+               , staging_table.i_allonge_transfer_to_name
+               , staging_table.i_lock_expiration_delivery_subtrahend_days
+               , staging_table.i_maximum_lock_extensions_allowed
+               , staging_table.i_maximum_lock_extension_days_allowed
+               , staging_table.i_mortech_investor_id
+               , staging_table.i_fnma_servicer_id
+               , staging_table.i_loan_file_delivery_method_type
+               , staging_table.i_investor_group_pid
+               , staging_table.i_mbs_investor
+               , staging_table.i_investor_hmda_purchaser_of_loan_type
+               , staging_table.i_lock_disable_time
+               , staging_table.i_allow_weekend_holiday_locks
+               , staging_table.i_nmls_id
+               , staging_table.i_nmls_id_applicable
+               , staging_table.i_fnm_investor_remittance_type
+               , staging_table.i_fnm_mbs_investor_remittance_day_of_month
+               , staging_table.i_fnm_mbs_loan_default_loss_party_type
+               , staging_table.i_fnm_mbs_reo_marketing_party_type
+               , staging_table.i_offers_secondary_financing
+               , staging_table.i_secondary_financing_source_type
+               , staging_table.i_ein
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.investor staging_table
+          LEFT JOIN history_octane.investor history_table
+                    ON staging_table.i_pid = history_table.i_pid
+                        AND staging_table.i_version = history_table.i_version
+          WHERE history_table.i_pid IS NULL
+          UNION ALL
+          SELECT history_table.i_pid
+               , history_table.i_version + 1
+               , history_table.i_account_pid
+               , history_table.i_investor_id
+               , history_table.i_criteria_pid
+               , history_table.i_website_url
+               , history_table.i_investor_name
+               , history_table.i_investor_city
+               , history_table.i_investor_country
+               , history_table.i_investor_postal_code
+               , history_table.i_investor_state
+               , history_table.i_investor_street1
+               , history_table.i_investor_street2
+               , history_table.i_investor_county_pid
+               , history_table.i_beneficiary_name
+               , history_table.i_beneficiary_city
+               , history_table.i_beneficiary_country
+               , history_table.i_beneficiary_postal_code
+               , history_table.i_beneficiary_state
+               , history_table.i_beneficiary_street1
+               , history_table.i_beneficiary_street2
+               , history_table.i_beneficiary_county_pid
+               , history_table.i_loss_payee_name
+               , history_table.i_loss_payee_city
+               , history_table.i_loss_payee_country
+               , history_table.i_loss_payee_postal_code
+               , history_table.i_loss_payee_state
+               , history_table.i_loss_payee_street1
+               , history_table.i_loss_payee_street2
+               , history_table.i_loss_payee_county_pid
+               , history_table.i_loss_payee_assignee_name
+               , history_table.i_when_recorded_mail_to_name
+               , history_table.i_when_recorded_mail_to_city
+               , history_table.i_when_recorded_mail_to_country
+               , history_table.i_when_recorded_mail_to_postal_code
+               , history_table.i_when_recorded_mail_to_state
+               , history_table.i_when_recorded_mail_to_street1
+               , history_table.i_when_recorded_mail_to_street2
+               , history_table.i_when_recorded_mail_to_county_pid
+               , history_table.i_servicer_name
+               , history_table.i_servicer_address_street1
+               , history_table.i_servicer_address_street2
+               , history_table.i_servicer_address_city
+               , history_table.i_servicer_address_state
+               , history_table.i_servicer_address_postal_code
+               , history_table.i_servicer_address_country
+               , history_table.i_servicer_county_pid
+               , history_table.i_sub_servicer_name
+               , history_table.i_sub_servicer_address_street1
+               , history_table.i_sub_servicer_address_street2
+               , history_table.i_sub_servicer_address_city
+               , history_table.i_sub_servicer_address_state
+               , history_table.i_sub_servicer_address_postal_code
+               , history_table.i_sub_servicer_address_country
+               , history_table.i_sub_servicer_mers_org_id
+               , history_table.i_custodian_pid
+               , history_table.i_file_delivery_name
+               , history_table.i_file_delivery_address_street1
+               , history_table.i_file_delivery_address_street2
+               , history_table.i_file_delivery_address_city
+               , history_table.i_file_delivery_address_state
+               , history_table.i_file_delivery_address_postal_code
+               , history_table.i_file_delivery_address_country
+               , history_table.i_initial_beneficiary_candidate
+               , history_table.i_initial_servicer_candidate
+               , history_table.i_mers_org_member
+               , history_table.i_mers_org_id
+               , history_table.i_allonge_transfer_to_name
+               , history_table.i_lock_expiration_delivery_subtrahend_days
+               , history_table.i_maximum_lock_extensions_allowed
+               , history_table.i_maximum_lock_extension_days_allowed
+               , history_table.i_mortech_investor_id
+               , history_table.i_fnma_servicer_id
+               , history_table.i_loan_file_delivery_method_type
+               , history_table.i_investor_group_pid
+               , history_table.i_mbs_investor
+               , history_table.i_investor_hmda_purchaser_of_loan_type
+               , history_table.i_lock_disable_time
+               , history_table.i_allow_weekend_holiday_locks
+               , history_table.i_nmls_id
+               , history_table.i_nmls_id_applicable
+               , history_table.i_fnm_investor_remittance_type
+               , history_table.i_fnm_mbs_investor_remittance_day_of_month
+               , history_table.i_fnm_mbs_loan_default_loss_party_type
+               , history_table.i_fnm_mbs_reo_marketing_party_type
+               , history_table.i_offers_secondary_financing
+               , history_table.i_secondary_financing_source_type
+               , history_table.i_ein
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.investor history_table
+          LEFT JOIN staging_octane.investor staging_table
+                    ON staging_table.i_pid = history_table.i_pid
+          WHERE staging_table.i_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.investor deleted_records
+              WHERE deleted_records.i_pid = history_table.i_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

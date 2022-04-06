@@ -43,40 +43,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lei_version
-etls:
+step_functions:
   SP-100318:
-    input_type: table
-    output_type: insert
-    json_output_field: lei_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.loan_eligible_investor
-      SELECT staging_table.lei_pid
-           , staging_table.lei_version
-           , staging_table.lei_loan_pid
-           , staging_table.lei_investor_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.loan_eligible_investor staging_table
-      LEFT JOIN history_octane.loan_eligible_investor history_table
-                ON staging_table.lei_pid = history_table.lei_pid
-                    AND staging_table.lei_version = history_table.lei_version
-      WHERE history_table.lei_pid IS NULL
-      UNION ALL
-      SELECT history_table.lei_pid
-           , history_table.lei_version + 1
-           , history_table.lei_loan_pid
-           , history_table.lei_investor_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.loan_eligible_investor history_table
-      LEFT JOIN staging_octane.loan_eligible_investor staging_table
-                ON staging_table.lei_pid = history_table.lei_pid
-      WHERE staging_table.lei_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.loan_eligible_investor deleted_records
-          WHERE deleted_records.lei_pid = history_table.lei_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100318:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.loan_eligible_investor
+        json_output_field: lei_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.loan_eligible_investor
+          SELECT staging_table.lei_pid
+               , staging_table.lei_version
+               , staging_table.lei_loan_pid
+               , staging_table.lei_investor_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.loan_eligible_investor staging_table
+          LEFT JOIN history_octane.loan_eligible_investor history_table
+                    ON staging_table.lei_pid = history_table.lei_pid
+                        AND staging_table.lei_version = history_table.lei_version
+          WHERE history_table.lei_pid IS NULL
+          UNION ALL
+          SELECT history_table.lei_pid
+               , history_table.lei_version + 1
+               , history_table.lei_loan_pid
+               , history_table.lei_investor_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.loan_eligible_investor history_table
+          LEFT JOIN staging_octane.loan_eligible_investor staging_table
+                    ON staging_table.lei_pid = history_table.lei_pid
+          WHERE staging_table.lei_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.loan_eligible_investor deleted_records
+              WHERE deleted_records.lei_pid = history_table.lei_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

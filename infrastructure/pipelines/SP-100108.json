@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100108 - ETL to insert records into staging.history_octane.product_add_on_rule using staging.staging_octane.product_add_on_rule as the primary source",
-    "StartAt": "SP-100108",
+    "StartAt": "ETL-100108",
     "States": {
-        "SP-100108": {
+        "ETL-100108": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100108"
+                                    "Value": "ETL-100108"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

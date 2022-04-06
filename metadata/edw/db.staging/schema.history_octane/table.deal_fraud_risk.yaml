@@ -83,52 +83,55 @@ columns:
       field: primary_source_table.columns.dfr_version
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100298:
-    input_type: table
-    output_type: insert
-    json_output_field: dfr_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_fraud_risk
-      SELECT staging_table.dfr_pid
-           , staging_table.dfr_version
-           , staging_table.dfr_deal_pid
-           , staging_table.dfr_loan_safe_risk_manager_status_messages
-           , staging_table.dfr_loan_safe_risk_manager_order_number
-           , staging_table.dfr_loan_safe_risk_manager_html_deal_file_pid
-           , staging_table.dfr_loan_safe_risk_manager_pdf_deal_file_pid
-           , staging_table.dfr_loan_safe_fraud_risk_score
-           , staging_table.dfr_loan_safe_collateral_risk_score
-           , staging_table.dfr_loan_safe_product_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_fraud_risk staging_table
-      LEFT JOIN history_octane.deal_fraud_risk history_table
-                ON staging_table.dfr_pid = history_table.dfr_pid
-                    AND staging_table.dfr_version = history_table.dfr_version
-      WHERE history_table.dfr_pid IS NULL
-      UNION ALL
-      SELECT history_table.dfr_pid
-           , history_table.dfr_version + 1
-           , history_table.dfr_deal_pid
-           , history_table.dfr_loan_safe_risk_manager_status_messages
-           , history_table.dfr_loan_safe_risk_manager_order_number
-           , history_table.dfr_loan_safe_risk_manager_html_deal_file_pid
-           , history_table.dfr_loan_safe_risk_manager_pdf_deal_file_pid
-           , history_table.dfr_loan_safe_fraud_risk_score
-           , history_table.dfr_loan_safe_collateral_risk_score
-           , history_table.dfr_loan_safe_product_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_fraud_risk history_table
-      LEFT JOIN staging_octane.deal_fraud_risk staging_table
-                ON staging_table.dfr_pid = history_table.dfr_pid
-      WHERE staging_table.dfr_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_fraud_risk deleted_records
-          WHERE deleted_records.dfr_pid = history_table.dfr_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100298:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_fraud_risk
+        json_output_field: dfr_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_fraud_risk
+          SELECT staging_table.dfr_pid
+               , staging_table.dfr_version
+               , staging_table.dfr_deal_pid
+               , staging_table.dfr_loan_safe_risk_manager_status_messages
+               , staging_table.dfr_loan_safe_risk_manager_order_number
+               , staging_table.dfr_loan_safe_risk_manager_html_deal_file_pid
+               , staging_table.dfr_loan_safe_risk_manager_pdf_deal_file_pid
+               , staging_table.dfr_loan_safe_fraud_risk_score
+               , staging_table.dfr_loan_safe_collateral_risk_score
+               , staging_table.dfr_loan_safe_product_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_fraud_risk staging_table
+          LEFT JOIN history_octane.deal_fraud_risk history_table
+                    ON staging_table.dfr_pid = history_table.dfr_pid
+                        AND staging_table.dfr_version = history_table.dfr_version
+          WHERE history_table.dfr_pid IS NULL
+          UNION ALL
+          SELECT history_table.dfr_pid
+               , history_table.dfr_version + 1
+               , history_table.dfr_deal_pid
+               , history_table.dfr_loan_safe_risk_manager_status_messages
+               , history_table.dfr_loan_safe_risk_manager_order_number
+               , history_table.dfr_loan_safe_risk_manager_html_deal_file_pid
+               , history_table.dfr_loan_safe_risk_manager_pdf_deal_file_pid
+               , history_table.dfr_loan_safe_fraud_risk_score
+               , history_table.dfr_loan_safe_collateral_risk_score
+               , history_table.dfr_loan_safe_product_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_fraud_risk history_table
+          LEFT JOIN staging_octane.deal_fraud_risk staging_table
+                    ON staging_table.dfr_pid = history_table.dfr_pid
+          WHERE staging_table.dfr_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_fraud_risk deleted_records
+              WHERE deleted_records.dfr_pid = history_table.dfr_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );
