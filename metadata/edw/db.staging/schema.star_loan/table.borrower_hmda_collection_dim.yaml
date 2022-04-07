@@ -125,7 +125,7 @@ step_functions:
         - data_source_integration_id
         container_memory: 2048
         next_step_functions:
-        - SP-200005-update
+        - SP-200022-update
         input_sql: |-
           WITH borrower_hmda_collection_dim_new_records AS (
               SELECT 'ethnicity_collected_visual_or_surname_code~ethnicity_not_obtainable_flag~ethnicity_refused_code~race_collected_visual_or_surname_code~race_information_not_provided_flag~race_national_origin_refusal_flag~race_not_obtainable_flag~race_refused_code~sex_collected_visual_or_surname_code~sex_not_obtainable_flag~sex_refused_code~data_source_dwid' AS data_source_integration_columns

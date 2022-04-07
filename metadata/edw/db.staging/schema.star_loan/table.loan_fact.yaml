@@ -219,6 +219,14 @@ foreign_keys:
       - dwid
       schema: star_loan
       table: borrower_lending_profile_dim
+  fk_loan_fact__b1_borrower_hmda_collection_dwid:
+    columns:
+    - b1_borrower_hmda_collection_dwid
+    references:
+      columns:
+      - dwid
+      schema: star_loan
+      table: borrower_hmda_collection_dim
   fk_loan_fact__primary_application_dwid:
     columns:
     - primary_application_dwid
@@ -877,6 +885,9 @@ columns:
   b1_borrower_lending_profile_dwid:
     data_type: BIGINT
     update_flag: true
+  b1_borrower_hmda_collection_dwid:
+    data_type: BIGINT
+    update_flag: true
   primary_application_dwid:
     data_type: BIGINT
     update_flag: true
@@ -1200,6 +1211,7 @@ step_functions:
               , loan_fact_incl_new_records.n8_borrower_dwid
               , loan_fact_incl_new_records.b1_borrower_demographics_dwid
               , loan_fact_incl_new_records.b1_borrower_lending_profile_dwid
+              , loan_fact_incl_new_records.b1_borrower_hmda_collection_dwid
               , loan_fact_incl_new_records.primary_application_dwid
               , loan_fact_incl_new_records.collateral_to_custodian_lender_user_dwid
               , loan_fact_incl_new_records.interim_funder_dwid
@@ -1317,6 +1329,7 @@ step_functions:
               , COALESCE(borrower_n8_dim.dwid, 0) AS n8_borrower_dwid
               , COALESCE(borrower_demographics_dim.dwid, 0) AS b1_borrower_demographics_dwid
               , COALESCE(borrower_lending_profile_dim.dwid, 0) AS b1_borrower_lending_profile_dwid
+              , COALESCE(b1_borrower_lkup.borrower_hmda_collection_dwid, 0) AS b1_borrower_hmda_collection_dwid
               , COALESCE(application_dim.dwid, 0) AS primary_application_dwid
               , COALESCE(collateral_to_custodian.dwid, 0) AS collateral_to_custodian_lender_user_dwid
               , COALESCE(interim_funder_dim.dwid, 0) AS interim_funder_dwid
@@ -2355,7 +2368,14 @@ step_functions:
                   AND borrower_b1.b_spousal_homestead IS NOT DISTINCT FROM borrower_lending_profile_dim.spousal_homestead_code
                   AND borrower_b1.b_titleholder IS NOT DISTINCT FROM borrower_lending_profile_dim.titleholder_code
                   AND borrower_lending_profile_dim.data_source_dwid = 1
-              -- star_loan.lender_user_dim: collateral_to_custodian
+                  -- star_loan.borrower_lkup
+              LEFT JOIN (
+                  SELECT borrower_lkup.*
+                       , <<borrower_lkup_partial_load_condition>> AS include_record
+                  FROM star_loan.borrower_lkup
+              ) AS b1_borrower_lkup
+                        ON borrower_b1_dim.dwid = b1_borrower_lkup.borrower_dwid
+                  -- star_loan.lender_user_dim: collateral_to_custodian
               LEFT JOIN (
                   SELECT lender_user_dim.*
                        , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -2731,8 +2751,8 @@ step_functions:
                          borrower_n2_dim.include_record, borrower_n3_dim.include_record, borrower_n4_dim.include_record,
                          borrower_n5_dim.include_record, borrower_n6_dim.include_record, borrower_n7_dim.include_record,
                          borrower_n8_dim.include_record, borrower_demographics_dim.include_record,
-                         borrower_lending_profile_dim.include_record, hmda_purchaser_of_loan_dim.include_record,
-                         interim_funder_dim.include_record,
+                         borrower_lending_profile_dim.include_record, b1_borrower_lkup.include_record,
+                         hmda_purchaser_of_loan_dim.include_record, interim_funder_dim.include_record,
                          investor_dim.include_record, collateral_to_custodian.include_record, account_executive.include_record,
                          closing_doc_specialist.include_record, closing_scheduler.include_record,
                          collateral_to_investor.include_record,
@@ -2787,6 +2807,7 @@ step_functions:
                   AND loan_fact_incl_new_records.n8_borrower_dwid = loan_fact.n8_borrower_dwid
                   AND loan_fact_incl_new_records.b1_borrower_demographics_dwid = loan_fact.b1_borrower_demographics_dwid
                   AND loan_fact_incl_new_records.b1_borrower_lending_profile_dwid = loan_fact.b1_borrower_lending_profile_dwid
+                  AND loan_fact_incl_new_records.b1_borrower_hmda_collection_dwid = loan_fact.b1_borrower_hmda_collection_dwid
                   AND loan_fact_incl_new_records.primary_application_dwid = loan_fact.primary_application_dwid
                   AND loan_fact_incl_new_records.collateral_to_custodian_lender_user_dwid =
                       loan_fact.collateral_to_custodian_lender_user_dwid
