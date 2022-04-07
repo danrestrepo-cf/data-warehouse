@@ -27,6 +27,9 @@ CREATE TABLE star_loan.cash_out_reason_dim (
 	, non_business_cash_out_reason_acknowledged_code VARCHAR(128)
 );
 
+CREATE INDEX idx_cash_out_reason_dim__etl_batch_id ON star_loan.cash_out_reason_dim (etl_batch_id);
+CREATE INDEX idx_cash_out_reason_dim__data_source_integration_id ON star_loan.cash_out_reason_dim (data_source_integration_id);
+
 INSERT
 INTO star_loan.cash_out_reason_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id
 								   , data_source_integration_columns, data_source_integration_id
@@ -78,6 +81,9 @@ CREATE TABLE star_loan.hmda_action_dim (
 	, hmda_denial_reason_code_4 VARCHAR(128)
 );
 
+CREATE INDEX idx_hmda_action_dim__etl_batch_id ON star_loan.hmda_action_dim (etl_batch_id);
+CREATE INDEX idx_hmda_action_dim__data_source_integration_id ON star_loan.hmda_action_dim (data_source_integration_id);
+
 INSERT
 INTO star_loan.hmda_action_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id
 							   , data_source_integration_columns, data_source_integration_id
@@ -107,6 +113,9 @@ CREATE TABLE star_loan.underwrite_dim (
 	, underwrite_risk_assessment VARCHAR(1024)
 	, underwrite_risk_assessment_code VARCHAR(128)
 );
+
+CREATE INDEX idx_underwrite_dim__etl_batch_id ON star_loan.underwrite_dim (etl_batch_id);
+CREATE INDEX idx_underwrite_dim__data_source_integration_id ON star_loan.underwrite_dim (data_source_integration_id);
 
 INSERT
 INTO star_loan.underwrite_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id
@@ -144,6 +153,11 @@ CREATE TABLE star_loan.transaction_aux_construction_dim (
 	, financed_property_improvements_category VARCHAR(1024)
 	, financed_property_improvements_category_code VARCHAR(128)
 );
+
+CREATE INDEX idx_transaction_aux_construction_dim__etl_batch_id ON star_loan.transaction_aux_construction_dim (etl_batch_id);
+CREATE INDEX idx_27025b9014d47d482cd5e9ec905c2147 ON star_loan.transaction_aux_construction_dim (data_source_integration_id);
+CREATE INDEX idx_transaction_aux_construction_dim__deal_pid ON star_loan.transaction_aux_construction_dim (deal_pid);
+CREATE INDEX idx_transaction_aux_construction_dim__active_proposal_pid ON star_loan.transaction_aux_construction_dim (active_proposal_pid);
 
 INSERT
 INTO star_loan.transaction_aux_construction_dim (transaction_dwid, data_source_dwid, edw_created_datetime
@@ -183,6 +197,27 @@ CREATE TABLE star_loan.transaction_aux_disaster_declaration_dim (
 	, disaster_declaration_check_date_type VARCHAR(1024)
 	, disaster_declaration_check_date_type_code VARCHAR(128)
 );
+
+CREATE INDEX idx_transaction_aux_disaster_declaration_dim__etl_batch_id ON star_loan.transaction_aux_disaster_declaration_dim (etl_batch_id);
+CREATE INDEX idx_446b96e1239ccc6eec4b201cb1479f92 ON star_loan.transaction_aux_disaster_declaration_dim (data_source_integration_id);
+CREATE INDEX idx_transaction_aux_disaster_declaration_dim ON star_loan.transaction_aux_disaster_declaration_dim (deal_pid);
+CREATE INDEX idx_transactoin_aux_disaster_declaration_dim ON star_loan.transaction_aux_disaster_declaration_dim (active_proposal_pid);
+
+INSERT INTO star_loan.transaction_aux_disaster_declaration_dim (transaction_dwid, data_source_dwid
+															   , edw_created_datetime, edw_modified_datetime
+															   , etl_batch_id, data_source_integration_columns
+															   , data_source_integration_id
+															   , data_source_modified_datetime, deal_pid
+															   , active_proposal_pid
+															   , any_disaster_declaration_after_appraisal_flag
+															   , any_disaster_declaration_before_appraisal_flag
+															   , any_disaster_declaration_flag
+															   , disaster_declaration_check_date
+															   , disaster_declaration_check_date_type
+															   , disaster_declaration_check_date_type_code)
+	VALUES (0, 0, NOW(), NOW(), NULL, 'deal_pid~data_source_dwid', '0~0', NOW(), 0, 0, NULL, NULL, NULL, NULL, NULL,
+	        NULL);
+
 
 CREATE TABLE star_loan.transaction_aux_govt_programs_dim (
 	transaction_dwid BIGINT NOT NULL
@@ -249,6 +284,11 @@ CREATE TABLE star_loan.transaction_aux_govt_programs_dim (
 	, va_monthly_utilities_included VARCHAR(1024)
 	, va_monthly_utilities_included_code VARCHAR(128)
 );
+
+CREATE INDEX idx_transaction_aux_govt_programs_dim__etl_batch_id ON star_loan.transaction_aux_govt_programs_dim (etl_batch_id);
+CREATE INDEX idx_9e2819b5aa61f14cd203b6213dea81a0 ON star_loan.transaction_aux_govt_programs_dim (data_source_integration_id);
+CREATE INDEX idx_transaction_aux_govt_programs_dim__deal_pid ON star_loan.transaction_aux_govt_programs_dim (deal_pid);
+CREATE INDEX idx_transaction_aux_govt_programs_dim__active_proposal_pid ON star_loan.transaction_aux_govt_programs_dim (active_proposal_pid);
 
 INSERT
 INTO star_loan.transaction_aux_govt_programs_dim (transaction_dwid, data_source_dwid, edw_created_datetime
@@ -322,6 +362,10 @@ CREATE TABLE star_loan.transaction_aux_property_repairs_dim (
 	, property_repairs_required_code VARCHAR(128)
 );
 
+CREATE INDEX idx_transaction_aux_property_repairs_dim__etl_batch_id ON star_loan.transaction_aux_property_repairs_dim (etl_batch_id);
+CREATE INDEX idx_e52402860b802ade209a27c2e38cf98f ON star_loan.transaction_aux_property_repairs_dim (data_source_integration_id);
+CREATE INDEX idx_transaction_aux_property_repairs_dim__deal_pid ON star_loan.transaction_aux_property_repairs_dim (deal_pid);
+CREATE INDEX idx_transaction_aux_property_repairs_dim__active_proposal_pid ON star_loan.transaction_aux_property_repairs_dim (active_proposal_pid);
 
 INSERT INTO star_loan.transaction_aux_property_repairs_dim (transaction_dwid, data_source_dwid, edw_created_datetime
 														   , edw_modified_datetime, etl_batch_id
@@ -585,3 +629,27 @@ ALTER TABLE star_loan.loan_fact
 	, ADD COLUMN transaction_welcome_call_date_dwid BIGINT
 	, ADD COLUMN trid_application_date_dwid BIGINT
 	, ADD COLUMN underwrite_publish_date_dwid BIGINT;
+
+CREATE INDEX idx_loan_fact__cash_out_reason_dwid ON star_loan.loan_fact (cash_out_reason_dwid);
+CREATE INDEX idx_loan_fact__hmda_action_dwid ON star_loan.loan_fact (hmda_action_dwid);
+CREATE INDEX idx_loan_fact__underwrite_dwid ON star_loan.loan_fact (underwrite_dwid);
+CREATE INDEX idx_loan_fact__transaction_aux_construction_dwid ON star_loan.loan_fact (transaction_aux_construction_dwid);
+CREATE INDEX idx_loan_fact__transaction_aux_disaster_declaration_dwid ON star_loan.loan_fact (transaction_aux_disaster_declaration_dwid);
+CREATE INDEX idx_loan_fact__transaction_aux_govt_programs_dwid ON star_loan.loan_fact (transaction_aux_govt_programs_dwid);
+CREATE INDEX idx_loan_fact__transaction_aux_property_repairs_dwid ON star_loan.loan_fact (transaction_aux_property_repairs_dwid);
+CREATE INDEX idx_loan_fact__cd_clear_date_dwid ON star_loan.loan_fact (cd_clear_date_dwid);
+CREATE INDEX idx_loan_fact__charges_enabled_date_dwid ON star_loan.loan_fact (charges_enabled_date_dwid);
+CREATE INDEX idx_loan_fact__ecoa_appication_date_dwid ON star_loan.loan_fact (ecoa_application_date_dwid);
+CREATE INDEX idx_4f7b260241c5cf3e35a967b26b40a9c5 ON star_loan.loan_fact (effective_earliest_allowed_consummation_date_dwid);
+CREATE INDEX idx_loan_fact__effective_hmda_action_date_dwid ON star_loan.loan_fact (effective_hmda_action_date_dwid);
+CREATE INDEX idx_loan_fact__effective_note_date_dwid ON star_loan.loan_fact (effective_note_date_dwid);
+CREATE INDEX idx_loan_fact__hmda_action_date_dwid ON star_loan.loan_fact (hmda_action_date_dwid);
+CREATE INDEX idx_loan_fact__initial_cancel_status_date_dwid ON star_loan.loan_fact (initial_cancel_status_date_dwid);
+CREATE INDEX idx_loan_fact__initial_uw_disposition_date_dwid ON star_loan.loan_fact (initial_uw_disposition_date_dwid);
+CREATE INDEX idx_loan_fact__initial_uw_submit_date_dwid ON star_loan.loan_fact (initial_uw_submit_date_dwid);
+CREATE INDEX idx_loan_fact__note_date_dwid ON star_loan.loan_fact (note_date_dwid);
+CREATE INDEX idx_loan_fact__preapproval_uw_submit_date_dwid ON star_loan.loan_fact (preapproval_uw_submit_date_dwid);
+CREATE INDEX idx_loan_fact__transaction_create_date_dwid ON star_loan.loan_fact (transaction_create_date_dwid);
+CREATE INDEX idx_loan_fact__transaction_welcome_call_date_dwid ON star_loan.loan_fact (transaction_welcome_call_date_dwid);
+CREATE INDEX idx_loan_fact__trid_application_date_dwid ON star_loan.loan_fact (trid_application_date_dwid);
+CREATE INDEX idx_loan_fact__underwrite_publish_date_dwid ON star_loan.loan_fact (underwrite_publish_date_dwid);
