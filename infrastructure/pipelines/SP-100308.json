@@ -155,29 +155,6 @@
                     }
                 },
                 {
-                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200022-insert",
-                    "StartAt": "SP-200022-insert_message",
-                    "States": {
-                        "SP-200022-insert_message": {
-                            "Type": "Task",
-                            "Resource": "arn:aws:states:::sqs:sendMessage",
-                            "Parameters": {
-                                "QueueUrl": "${fullCheckQueueUrl}",
-                                "MessageGroupId": "borrower_lkup",
-                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
-                                "MessageAttributes": {
-                                    "ProcessId": {
-                                        "DataType": "String",
-                                        "StringValue": "SP-200022-insert"
-                                    }
-                                },
-                                "MessageBody.$": "States.JsonToString($)"
-                            },
-                            "End": true
-                        }
-                    }
-                },
-                {
                     "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200022-update",
                     "StartAt": "SP-200022-update_message",
                     "States": {
