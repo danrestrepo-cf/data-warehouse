@@ -219,8 +219,8 @@ step_functions:
               FROM star_loan.transaction_aux_construction_dim
               JOIN star_common.etl_log
               	ON transaction_aux_construction_dim.etl_batch_id = etl_log.etl_batch_id
-          ) AS transaction_aux_dim_etl_start_times
+          ) AS transaction_aux_construction_dim_etl_start_times
           	ON transaction_aux_construction_dim_incl_new_records.data_source_integration_id =
-          	   transaction_aux_dim_etl_start_times.data_source_integration_id
+          	   transaction_aux_construction_dim_etl_start_times.data_source_integration_id
           		AND transaction_aux_construction_dim_incl_new_records.max_source_etl_end_date_time >=
-          		    transaction_aux_dim_etl_start_times.etl_start_date_time;
+          		    transaction_aux_construction_dim_etl_start_times.etl_start_date_time;
