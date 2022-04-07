@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100372 - ETL to insert records into staging.history_octane.org_lineage_tracker using staging.staging_octane.org_lineage_tracker as the primary source",
-    "StartAt": "SP-100372",
+    "StartAt": "ETL-100372",
     "States": {
-        "SP-100372": {
+        "ETL-100372": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100372"
+                                    "Value": "ETL-100372"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

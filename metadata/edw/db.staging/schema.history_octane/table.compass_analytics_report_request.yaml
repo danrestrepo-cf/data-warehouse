@@ -107,68 +107,71 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100293:
-    input_type: table
-    output_type: insert
-    json_output_field: carr_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.compass_analytics_report_request
-      SELECT staging_table.carr_pid
-           , staging_table.carr_version
-           , staging_table.carr_account_pid
-           , staging_table.carr_create_datetime
-           , staging_table.carr_start_datetime
-           , staging_table.carr_end_datetime
-           , staging_table.carr_request_status_type
-           , staging_table.carr_request_status_messages
-           , staging_table.carr_requester_unparsed_name
-           , staging_table.carr_exported_deal_count
-           , staging_table.carr_total_deal_count
-           , staging_table.carr_sold_from_date
-           , staging_table.carr_sold_through_date
-           , staging_table.carr_cancelled_from_date
-           , staging_table.carr_cancelled_through_date
-           , staging_table.carr_export_csv_repository_file_pid
-           , staging_table.carr_error_file_pid
-           , staging_table.carr_use_loan_hedge_data
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.compass_analytics_report_request staging_table
-      LEFT JOIN history_octane.compass_analytics_report_request history_table
-                ON staging_table.carr_pid = history_table.carr_pid
-                    AND staging_table.carr_version = history_table.carr_version
-      WHERE history_table.carr_pid IS NULL
-      UNION ALL
-      SELECT history_table.carr_pid
-           , history_table.carr_version + 1
-           , history_table.carr_account_pid
-           , history_table.carr_create_datetime
-           , history_table.carr_start_datetime
-           , history_table.carr_end_datetime
-           , history_table.carr_request_status_type
-           , history_table.carr_request_status_messages
-           , history_table.carr_requester_unparsed_name
-           , history_table.carr_exported_deal_count
-           , history_table.carr_total_deal_count
-           , history_table.carr_sold_from_date
-           , history_table.carr_sold_through_date
-           , history_table.carr_cancelled_from_date
-           , history_table.carr_cancelled_through_date
-           , history_table.carr_export_csv_repository_file_pid
-           , history_table.carr_error_file_pid
-           , history_table.carr_use_loan_hedge_data
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.compass_analytics_report_request history_table
-      LEFT JOIN staging_octane.compass_analytics_report_request staging_table
-                ON staging_table.carr_pid = history_table.carr_pid
-      WHERE staging_table.carr_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.compass_analytics_report_request deleted_records
-          WHERE deleted_records.carr_pid = history_table.carr_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100293:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.compass_analytics_report_request
+        json_output_field: carr_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.compass_analytics_report_request
+          SELECT staging_table.carr_pid
+               , staging_table.carr_version
+               , staging_table.carr_account_pid
+               , staging_table.carr_create_datetime
+               , staging_table.carr_start_datetime
+               , staging_table.carr_end_datetime
+               , staging_table.carr_request_status_type
+               , staging_table.carr_request_status_messages
+               , staging_table.carr_requester_unparsed_name
+               , staging_table.carr_exported_deal_count
+               , staging_table.carr_total_deal_count
+               , staging_table.carr_sold_from_date
+               , staging_table.carr_sold_through_date
+               , staging_table.carr_cancelled_from_date
+               , staging_table.carr_cancelled_through_date
+               , staging_table.carr_export_csv_repository_file_pid
+               , staging_table.carr_error_file_pid
+               , staging_table.carr_use_loan_hedge_data
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.compass_analytics_report_request staging_table
+          LEFT JOIN history_octane.compass_analytics_report_request history_table
+                    ON staging_table.carr_pid = history_table.carr_pid
+                        AND staging_table.carr_version = history_table.carr_version
+          WHERE history_table.carr_pid IS NULL
+          UNION ALL
+          SELECT history_table.carr_pid
+               , history_table.carr_version + 1
+               , history_table.carr_account_pid
+               , history_table.carr_create_datetime
+               , history_table.carr_start_datetime
+               , history_table.carr_end_datetime
+               , history_table.carr_request_status_type
+               , history_table.carr_request_status_messages
+               , history_table.carr_requester_unparsed_name
+               , history_table.carr_exported_deal_count
+               , history_table.carr_total_deal_count
+               , history_table.carr_sold_from_date
+               , history_table.carr_sold_through_date
+               , history_table.carr_cancelled_from_date
+               , history_table.carr_cancelled_through_date
+               , history_table.carr_export_csv_repository_file_pid
+               , history_table.carr_error_file_pid
+               , history_table.carr_use_loan_hedge_data
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.compass_analytics_report_request history_table
+          LEFT JOIN staging_octane.compass_analytics_report_request staging_table
+                    ON staging_table.carr_pid = history_table.carr_pid
+          WHERE staging_table.carr_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.compass_analytics_report_request deleted_records
+              WHERE deleted_records.carr_pid = history_table.carr_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

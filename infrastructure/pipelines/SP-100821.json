@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100821 - ETL to insert records into staging.history_octane.credit_request_liability using staging.staging_octane.credit_request_liability as the primary source",
-    "StartAt": "SP-100821",
+    "StartAt": "ETL-100821",
     "States": {
-        "SP-100821": {
+        "ETL-100821": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100821"
+                                    "Value": "ETL-100821"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

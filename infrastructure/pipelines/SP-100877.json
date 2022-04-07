@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100877 - ETL to insert records into staging.history_octane.custom_field_value_type using staging.staging_octane.custom_field_value_type as the primary source",
-    "StartAt": "SP-100877",
+    "StartAt": "ETL-100877",
     "States": {
-        "SP-100877": {
+        "ETL-100877": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100877"
+                                    "Value": "ETL-100877"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

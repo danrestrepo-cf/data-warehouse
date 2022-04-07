@@ -95,58 +95,61 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.lds_zero_margin_allowed
-etls:
+step_functions:
   SP-100038:
-    input_type: table
-    output_type: insert
-    json_output_field: lds_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.lead_source
-      SELECT staging_table.lds_pid
-           , staging_table.lds_version
-           , staging_table.lds_account_pid
-           , staging_table.lds_channel_pid
-           , staging_table.lds_lead_source_name
-           , staging_table.lds_mortech_lead_source_id
-           , staging_table.lds_lead_source_id
-           , staging_table.lds_active
-           , staging_table.lds_lead_id_required
-           , staging_table.lds_zero_margin_allowed
-           , staging_table.lds_mortech_account_pid
-           , staging_table.lds_training_only
-           , staging_table.lds_compensation_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.lead_source staging_table
-      LEFT JOIN history_octane.lead_source history_table
-                ON staging_table.lds_pid = history_table.lds_pid
-                    AND staging_table.lds_version = history_table.lds_version
-      WHERE history_table.lds_pid IS NULL
-      UNION ALL
-      SELECT history_table.lds_pid
-           , history_table.lds_version + 1
-           , history_table.lds_account_pid
-           , history_table.lds_channel_pid
-           , history_table.lds_lead_source_name
-           , history_table.lds_mortech_lead_source_id
-           , history_table.lds_lead_source_id
-           , history_table.lds_active
-           , history_table.lds_lead_id_required
-           , history_table.lds_zero_margin_allowed
-           , history_table.lds_mortech_account_pid
-           , history_table.lds_training_only
-           , history_table.lds_compensation_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.lead_source history_table
-      LEFT JOIN staging_octane.lead_source staging_table
-                ON staging_table.lds_pid = history_table.lds_pid
-      WHERE staging_table.lds_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.lead_source deleted_records
-          WHERE deleted_records.lds_pid = history_table.lds_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100038:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.lead_source
+        json_output_field: lds_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.lead_source
+          SELECT staging_table.lds_pid
+               , staging_table.lds_version
+               , staging_table.lds_account_pid
+               , staging_table.lds_channel_pid
+               , staging_table.lds_lead_source_name
+               , staging_table.lds_mortech_lead_source_id
+               , staging_table.lds_lead_source_id
+               , staging_table.lds_active
+               , staging_table.lds_lead_id_required
+               , staging_table.lds_zero_margin_allowed
+               , staging_table.lds_mortech_account_pid
+               , staging_table.lds_training_only
+               , staging_table.lds_compensation_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.lead_source staging_table
+          LEFT JOIN history_octane.lead_source history_table
+                    ON staging_table.lds_pid = history_table.lds_pid
+                        AND staging_table.lds_version = history_table.lds_version
+          WHERE history_table.lds_pid IS NULL
+          UNION ALL
+          SELECT history_table.lds_pid
+               , history_table.lds_version + 1
+               , history_table.lds_account_pid
+               , history_table.lds_channel_pid
+               , history_table.lds_lead_source_name
+               , history_table.lds_mortech_lead_source_id
+               , history_table.lds_lead_source_id
+               , history_table.lds_active
+               , history_table.lds_lead_id_required
+               , history_table.lds_zero_margin_allowed
+               , history_table.lds_mortech_account_pid
+               , history_table.lds_training_only
+               , history_table.lds_compensation_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.lead_source history_table
+          LEFT JOIN staging_octane.lead_source staging_table
+                    ON staging_table.lds_pid = history_table.lds_pid
+          WHERE staging_table.lds_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.lead_source deleted_records
+              WHERE deleted_records.lds_pid = history_table.lds_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

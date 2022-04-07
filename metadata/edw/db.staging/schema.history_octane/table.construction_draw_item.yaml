@@ -67,48 +67,51 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100162:
-    input_type: table
-    output_type: insert
-    json_output_field: cdi_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.construction_draw_item
-      SELECT staging_table.cdi_pid
-           , staging_table.cdi_version
-           , staging_table.cdi_proposal_pid
-           , staging_table.cdi_construction_cost_pid
-           , staging_table.cdi_construction_draw_pid
-           , staging_table.cdi_construction_draw_item_amount
-           , staging_table.cdi_construction_draw_item_borrower_contribution_amount
-           , staging_table.cdi_construction_draw_item_lender_contribution_amount
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.construction_draw_item staging_table
-      LEFT JOIN history_octane.construction_draw_item history_table
-                ON staging_table.cdi_pid = history_table.cdi_pid
-                    AND staging_table.cdi_version = history_table.cdi_version
-      WHERE history_table.cdi_pid IS NULL
-      UNION ALL
-      SELECT history_table.cdi_pid
-           , history_table.cdi_version + 1
-           , history_table.cdi_proposal_pid
-           , history_table.cdi_construction_cost_pid
-           , history_table.cdi_construction_draw_pid
-           , history_table.cdi_construction_draw_item_amount
-           , history_table.cdi_construction_draw_item_borrower_contribution_amount
-           , history_table.cdi_construction_draw_item_lender_contribution_amount
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.construction_draw_item history_table
-      LEFT JOIN staging_octane.construction_draw_item staging_table
-                ON staging_table.cdi_pid = history_table.cdi_pid
-      WHERE staging_table.cdi_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.construction_draw_item deleted_records
-          WHERE deleted_records.cdi_pid = history_table.cdi_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100162:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.construction_draw_item
+        json_output_field: cdi_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.construction_draw_item
+          SELECT staging_table.cdi_pid
+               , staging_table.cdi_version
+               , staging_table.cdi_proposal_pid
+               , staging_table.cdi_construction_cost_pid
+               , staging_table.cdi_construction_draw_pid
+               , staging_table.cdi_construction_draw_item_amount
+               , staging_table.cdi_construction_draw_item_borrower_contribution_amount
+               , staging_table.cdi_construction_draw_item_lender_contribution_amount
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.construction_draw_item staging_table
+          LEFT JOIN history_octane.construction_draw_item history_table
+                    ON staging_table.cdi_pid = history_table.cdi_pid
+                        AND staging_table.cdi_version = history_table.cdi_version
+          WHERE history_table.cdi_pid IS NULL
+          UNION ALL
+          SELECT history_table.cdi_pid
+               , history_table.cdi_version + 1
+               , history_table.cdi_proposal_pid
+               , history_table.cdi_construction_cost_pid
+               , history_table.cdi_construction_draw_pid
+               , history_table.cdi_construction_draw_item_amount
+               , history_table.cdi_construction_draw_item_borrower_contribution_amount
+               , history_table.cdi_construction_draw_item_lender_contribution_amount
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.construction_draw_item history_table
+          LEFT JOIN staging_octane.construction_draw_item staging_table
+                    ON staging_table.cdi_pid = history_table.cdi_pid
+          WHERE staging_table.cdi_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.construction_draw_item deleted_records
+              WHERE deleted_records.cdi_pid = history_table.cdi_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

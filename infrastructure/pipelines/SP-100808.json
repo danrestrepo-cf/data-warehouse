@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100808 - ETL to insert records into staging.history_octane.va_entitlement_restoration_type using staging.staging_octane.va_entitlement_restoration_type as the primary source",
-    "StartAt": "SP-100808",
+    "StartAt": "ETL-100808",
     "States": {
-        "SP-100808": {
+        "ETL-100808": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100808"
+                                    "Value": "ETL-100808"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

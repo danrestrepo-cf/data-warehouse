@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100655 - ETL to insert records into staging.history_octane.smart_message_source_type using staging.staging_octane.smart_message_source_type as the primary source",
-    "StartAt": "SP-100655",
+    "StartAt": "ETL-100655",
     "States": {
-        "SP-100655": {
+        "ETL-100655": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100655"
+                                    "Value": "ETL-100655"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

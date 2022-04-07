@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100001 - ETL to insert records into staging.history_octane.borrower_job_gap using staging.staging_octane.borrower_job_gap as the primary source",
-    "StartAt": "SP-100001",
+    "StartAt": "ETL-100001",
     "States": {
-        "SP-100001": {
+        "ETL-100001": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100001"
+                                    "Value": "ETL-100001"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

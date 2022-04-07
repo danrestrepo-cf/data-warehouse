@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100056 - ETL to insert records into staging.history_octane.smart_mi_eligibility_case using staging.staging_octane.smart_mi_eligibility_case as the primary source",
-    "StartAt": "SP-100056",
+    "StartAt": "ETL-100056",
     "States": {
-        "SP-100056": {
+        "ETL-100056": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100056"
+                                    "Value": "ETL-100056"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

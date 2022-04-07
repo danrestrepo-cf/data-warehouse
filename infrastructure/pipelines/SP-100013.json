@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100013 - ETL to insert records into staging.history_octane.borrower_declarations using staging.staging_octane.borrower_declarations as the primary source",
-    "StartAt": "SP-100013",
+    "StartAt": "ETL-100013",
     "States": {
-        "SP-100013": {
+        "ETL-100013": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100013"
+                                    "Value": "ETL-100013"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

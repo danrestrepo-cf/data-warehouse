@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100498 - ETL to insert records into staging.history_octane.effective_property_value_type using staging.staging_octane.effective_property_value_type as the primary source",
-    "StartAt": "SP-100498",
+    "StartAt": "ETL-100498",
     "States": {
-        "SP-100498": {
+        "ETL-100498": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100498"
+                                    "Value": "ETL-100498"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

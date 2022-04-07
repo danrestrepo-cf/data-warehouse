@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100124 - ETL to insert records into staging.history_octane.lender_user_photo using staging.staging_octane.lender_user_photo as the primary source",
-    "StartAt": "SP-100124",
+    "StartAt": "ETL-100124",
     "States": {
-        "SP-100124": {
+        "ETL-100124": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100124"
+                                    "Value": "ETL-100124"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

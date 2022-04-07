@@ -1,8 +1,8 @@
 {
     "Comment": "SP-200020 - ETL to insert_update records into staging.star_loan.transaction_junk_dim using staging.history_octane.proposal as the primary source",
-    "StartAt": "SP-200020",
+    "StartAt": "ETL-200020",
     "States": {
-        "SP-200020": {
+        "ETL-200020": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-200020"
+                                    "Value": "ETL-200020"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

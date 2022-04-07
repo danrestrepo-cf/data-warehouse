@@ -491,212 +491,215 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ttr_year4
-etls:
+step_functions:
   SP-100340:
-    input_type: table
-    output_type: insert
-    json_output_field: ttr_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.tax_transcript_request
-      SELECT staging_table.ttr_pid
-           , staging_table.ttr_version
-           , staging_table.ttr_deal_pid
-           , staging_table.ttr_create_datetime
-           , staging_table.ttr_requester_agent_type
-           , staging_table.ttr_requester_lender_user_pid
-           , staging_table.ttr_requester_unparsed_name
-           , staging_table.ttr_mismo_version_type
-           , staging_table.ttr_credit_request_type
-           , staging_table.ttr_request_error_messages
-           , staging_table.ttr_request_success_messages
-           , staging_table.ttr_tracking_number
-           , staging_table.ttr_tax_transcript_request_status_type
-           , staging_table.ttr_update_reason
-           , staging_table.ttr_last_status_query_datetime
-           , staging_table.ttr_signed_4506t_deal_file_pid
-           , staging_table.ttr_company
-           , staging_table.ttr_company_name
-           , staging_table.ttr_company_city
-           , staging_table.ttr_company_country
-           , staging_table.ttr_company_postal_code
-           , staging_table.ttr_company_state
-           , staging_table.ttr_company_street1
-           , staging_table.ttr_company_street2
-           , staging_table.ttr_company_ein
-           , staging_table.ttr_borrower1_pid
-           , staging_table.ttr_borrower1_first_name
-           , staging_table.ttr_borrower1_middle_name
-           , staging_table.ttr_borrower1_last_name
-           , staging_table.ttr_borrower1_name_suffix
-           , staging_table.ttr_borrower1_birth_date
-           , staging_table.ttr_borrower1_current_city
-           , staging_table.ttr_borrower1_current_country
-           , staging_table.ttr_borrower1_current_postal_code
-           , staging_table.ttr_borrower1_current_state
-           , staging_table.ttr_borrower1_current_street1
-           , staging_table.ttr_borrower1_current_street2
-           , staging_table.ttr_borrower1_prior_city
-           , staging_table.ttr_borrower1_prior_country
-           , staging_table.ttr_borrower1_prior_postal_code
-           , staging_table.ttr_borrower1_prior_state
-           , staging_table.ttr_borrower1_prior_street1
-           , staging_table.ttr_borrower1_prior_street2
-           , staging_table.ttr_borrower1_monthly_income_amount
-           , staging_table.ttr_borrower2_pid
-           , staging_table.ttr_borrower2_first_name
-           , staging_table.ttr_borrower2_middle_name
-           , staging_table.ttr_borrower2_last_name
-           , staging_table.ttr_borrower2_name_suffix
-           , staging_table.ttr_borrower2_birth_date
-           , staging_table.ttr_borrower2_current_city
-           , staging_table.ttr_borrower2_current_country
-           , staging_table.ttr_borrower2_current_postal_code
-           , staging_table.ttr_borrower2_current_state
-           , staging_table.ttr_borrower2_current_street1
-           , staging_table.ttr_borrower2_current_street2
-           , staging_table.ttr_borrower2_prior_city
-           , staging_table.ttr_borrower2_prior_country
-           , staging_table.ttr_borrower2_prior_postal_code
-           , staging_table.ttr_borrower2_prior_state
-           , staging_table.ttr_borrower2_prior_street1
-           , staging_table.ttr_borrower2_prior_street2
-           , staging_table.ttr_borrower2_monthly_income_amount
-           , staging_table.ttr_year1
-           , staging_table.ttr_year2
-           , staging_table.ttr_year3
-           , staging_table.ttr_year4
-           , staging_table.ttr_include_w_2
-           , staging_table.ttr_include_1099
-           , staging_table.ttr_include_1040
-           , staging_table.ttr_include_1040_return_transcript
-           , staging_table.ttr_include_1040_account_transcript
-           , staging_table.ttr_include_1040_record_of_account
-           , staging_table.ttr_include_1065
-           , staging_table.ttr_include_1065_return_transcript
-           , staging_table.ttr_include_1065_account_transcript
-           , staging_table.ttr_include_1065_record_of_account
-           , staging_table.ttr_include_1120
-           , staging_table.ttr_include_1120_return_transcript
-           , staging_table.ttr_include_1120_account_transcript
-           , staging_table.ttr_include_1120_record_of_account
-           , staging_table.ttr_archived
-           , staging_table.ttr_company_phone
-           , staging_table.ttr_company_phone_extension
-           , staging_table.ttr_business_ownership_type
-           , staging_table.ttr_include_1120s
-           , staging_table.ttr_include_1120s_return_transcript
-           , staging_table.ttr_include_1120s_account_transcript
-           , staging_table.ttr_include_1120s_record_of_account
-           , staging_table.ttr_business_income_borrower_title
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.tax_transcript_request staging_table
-      LEFT JOIN history_octane.tax_transcript_request history_table
-                ON staging_table.ttr_pid = history_table.ttr_pid
-                    AND staging_table.ttr_version = history_table.ttr_version
-      WHERE history_table.ttr_pid IS NULL
-      UNION ALL
-      SELECT history_table.ttr_pid
-           , history_table.ttr_version + 1
-           , history_table.ttr_deal_pid
-           , history_table.ttr_create_datetime
-           , history_table.ttr_requester_agent_type
-           , history_table.ttr_requester_lender_user_pid
-           , history_table.ttr_requester_unparsed_name
-           , history_table.ttr_mismo_version_type
-           , history_table.ttr_credit_request_type
-           , history_table.ttr_request_error_messages
-           , history_table.ttr_request_success_messages
-           , history_table.ttr_tracking_number
-           , history_table.ttr_tax_transcript_request_status_type
-           , history_table.ttr_update_reason
-           , history_table.ttr_last_status_query_datetime
-           , history_table.ttr_signed_4506t_deal_file_pid
-           , history_table.ttr_company
-           , history_table.ttr_company_name
-           , history_table.ttr_company_city
-           , history_table.ttr_company_country
-           , history_table.ttr_company_postal_code
-           , history_table.ttr_company_state
-           , history_table.ttr_company_street1
-           , history_table.ttr_company_street2
-           , history_table.ttr_company_ein
-           , history_table.ttr_borrower1_pid
-           , history_table.ttr_borrower1_first_name
-           , history_table.ttr_borrower1_middle_name
-           , history_table.ttr_borrower1_last_name
-           , history_table.ttr_borrower1_name_suffix
-           , history_table.ttr_borrower1_birth_date
-           , history_table.ttr_borrower1_current_city
-           , history_table.ttr_borrower1_current_country
-           , history_table.ttr_borrower1_current_postal_code
-           , history_table.ttr_borrower1_current_state
-           , history_table.ttr_borrower1_current_street1
-           , history_table.ttr_borrower1_current_street2
-           , history_table.ttr_borrower1_prior_city
-           , history_table.ttr_borrower1_prior_country
-           , history_table.ttr_borrower1_prior_postal_code
-           , history_table.ttr_borrower1_prior_state
-           , history_table.ttr_borrower1_prior_street1
-           , history_table.ttr_borrower1_prior_street2
-           , history_table.ttr_borrower1_monthly_income_amount
-           , history_table.ttr_borrower2_pid
-           , history_table.ttr_borrower2_first_name
-           , history_table.ttr_borrower2_middle_name
-           , history_table.ttr_borrower2_last_name
-           , history_table.ttr_borrower2_name_suffix
-           , history_table.ttr_borrower2_birth_date
-           , history_table.ttr_borrower2_current_city
-           , history_table.ttr_borrower2_current_country
-           , history_table.ttr_borrower2_current_postal_code
-           , history_table.ttr_borrower2_current_state
-           , history_table.ttr_borrower2_current_street1
-           , history_table.ttr_borrower2_current_street2
-           , history_table.ttr_borrower2_prior_city
-           , history_table.ttr_borrower2_prior_country
-           , history_table.ttr_borrower2_prior_postal_code
-           , history_table.ttr_borrower2_prior_state
-           , history_table.ttr_borrower2_prior_street1
-           , history_table.ttr_borrower2_prior_street2
-           , history_table.ttr_borrower2_monthly_income_amount
-           , history_table.ttr_year1
-           , history_table.ttr_year2
-           , history_table.ttr_year3
-           , history_table.ttr_year4
-           , history_table.ttr_include_w_2
-           , history_table.ttr_include_1099
-           , history_table.ttr_include_1040
-           , history_table.ttr_include_1040_return_transcript
-           , history_table.ttr_include_1040_account_transcript
-           , history_table.ttr_include_1040_record_of_account
-           , history_table.ttr_include_1065
-           , history_table.ttr_include_1065_return_transcript
-           , history_table.ttr_include_1065_account_transcript
-           , history_table.ttr_include_1065_record_of_account
-           , history_table.ttr_include_1120
-           , history_table.ttr_include_1120_return_transcript
-           , history_table.ttr_include_1120_account_transcript
-           , history_table.ttr_include_1120_record_of_account
-           , history_table.ttr_archived
-           , history_table.ttr_company_phone
-           , history_table.ttr_company_phone_extension
-           , history_table.ttr_business_ownership_type
-           , history_table.ttr_include_1120s
-           , history_table.ttr_include_1120s_return_transcript
-           , history_table.ttr_include_1120s_account_transcript
-           , history_table.ttr_include_1120s_record_of_account
-           , history_table.ttr_business_income_borrower_title
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.tax_transcript_request history_table
-      LEFT JOIN staging_octane.tax_transcript_request staging_table
-                ON staging_table.ttr_pid = history_table.ttr_pid
-      WHERE staging_table.ttr_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.tax_transcript_request deleted_records
-          WHERE deleted_records.ttr_pid = history_table.ttr_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100340:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.tax_transcript_request
+        json_output_field: ttr_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.tax_transcript_request
+          SELECT staging_table.ttr_pid
+               , staging_table.ttr_version
+               , staging_table.ttr_deal_pid
+               , staging_table.ttr_create_datetime
+               , staging_table.ttr_requester_agent_type
+               , staging_table.ttr_requester_lender_user_pid
+               , staging_table.ttr_requester_unparsed_name
+               , staging_table.ttr_mismo_version_type
+               , staging_table.ttr_credit_request_type
+               , staging_table.ttr_request_error_messages
+               , staging_table.ttr_request_success_messages
+               , staging_table.ttr_tracking_number
+               , staging_table.ttr_tax_transcript_request_status_type
+               , staging_table.ttr_update_reason
+               , staging_table.ttr_last_status_query_datetime
+               , staging_table.ttr_signed_4506t_deal_file_pid
+               , staging_table.ttr_company
+               , staging_table.ttr_company_name
+               , staging_table.ttr_company_city
+               , staging_table.ttr_company_country
+               , staging_table.ttr_company_postal_code
+               , staging_table.ttr_company_state
+               , staging_table.ttr_company_street1
+               , staging_table.ttr_company_street2
+               , staging_table.ttr_company_ein
+               , staging_table.ttr_borrower1_pid
+               , staging_table.ttr_borrower1_first_name
+               , staging_table.ttr_borrower1_middle_name
+               , staging_table.ttr_borrower1_last_name
+               , staging_table.ttr_borrower1_name_suffix
+               , staging_table.ttr_borrower1_birth_date
+               , staging_table.ttr_borrower1_current_city
+               , staging_table.ttr_borrower1_current_country
+               , staging_table.ttr_borrower1_current_postal_code
+               , staging_table.ttr_borrower1_current_state
+               , staging_table.ttr_borrower1_current_street1
+               , staging_table.ttr_borrower1_current_street2
+               , staging_table.ttr_borrower1_prior_city
+               , staging_table.ttr_borrower1_prior_country
+               , staging_table.ttr_borrower1_prior_postal_code
+               , staging_table.ttr_borrower1_prior_state
+               , staging_table.ttr_borrower1_prior_street1
+               , staging_table.ttr_borrower1_prior_street2
+               , staging_table.ttr_borrower1_monthly_income_amount
+               , staging_table.ttr_borrower2_pid
+               , staging_table.ttr_borrower2_first_name
+               , staging_table.ttr_borrower2_middle_name
+               , staging_table.ttr_borrower2_last_name
+               , staging_table.ttr_borrower2_name_suffix
+               , staging_table.ttr_borrower2_birth_date
+               , staging_table.ttr_borrower2_current_city
+               , staging_table.ttr_borrower2_current_country
+               , staging_table.ttr_borrower2_current_postal_code
+               , staging_table.ttr_borrower2_current_state
+               , staging_table.ttr_borrower2_current_street1
+               , staging_table.ttr_borrower2_current_street2
+               , staging_table.ttr_borrower2_prior_city
+               , staging_table.ttr_borrower2_prior_country
+               , staging_table.ttr_borrower2_prior_postal_code
+               , staging_table.ttr_borrower2_prior_state
+               , staging_table.ttr_borrower2_prior_street1
+               , staging_table.ttr_borrower2_prior_street2
+               , staging_table.ttr_borrower2_monthly_income_amount
+               , staging_table.ttr_year1
+               , staging_table.ttr_year2
+               , staging_table.ttr_year3
+               , staging_table.ttr_year4
+               , staging_table.ttr_include_w_2
+               , staging_table.ttr_include_1099
+               , staging_table.ttr_include_1040
+               , staging_table.ttr_include_1040_return_transcript
+               , staging_table.ttr_include_1040_account_transcript
+               , staging_table.ttr_include_1040_record_of_account
+               , staging_table.ttr_include_1065
+               , staging_table.ttr_include_1065_return_transcript
+               , staging_table.ttr_include_1065_account_transcript
+               , staging_table.ttr_include_1065_record_of_account
+               , staging_table.ttr_include_1120
+               , staging_table.ttr_include_1120_return_transcript
+               , staging_table.ttr_include_1120_account_transcript
+               , staging_table.ttr_include_1120_record_of_account
+               , staging_table.ttr_archived
+               , staging_table.ttr_company_phone
+               , staging_table.ttr_company_phone_extension
+               , staging_table.ttr_business_ownership_type
+               , staging_table.ttr_include_1120s
+               , staging_table.ttr_include_1120s_return_transcript
+               , staging_table.ttr_include_1120s_account_transcript
+               , staging_table.ttr_include_1120s_record_of_account
+               , staging_table.ttr_business_income_borrower_title
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.tax_transcript_request staging_table
+          LEFT JOIN history_octane.tax_transcript_request history_table
+                    ON staging_table.ttr_pid = history_table.ttr_pid
+                        AND staging_table.ttr_version = history_table.ttr_version
+          WHERE history_table.ttr_pid IS NULL
+          UNION ALL
+          SELECT history_table.ttr_pid
+               , history_table.ttr_version + 1
+               , history_table.ttr_deal_pid
+               , history_table.ttr_create_datetime
+               , history_table.ttr_requester_agent_type
+               , history_table.ttr_requester_lender_user_pid
+               , history_table.ttr_requester_unparsed_name
+               , history_table.ttr_mismo_version_type
+               , history_table.ttr_credit_request_type
+               , history_table.ttr_request_error_messages
+               , history_table.ttr_request_success_messages
+               , history_table.ttr_tracking_number
+               , history_table.ttr_tax_transcript_request_status_type
+               , history_table.ttr_update_reason
+               , history_table.ttr_last_status_query_datetime
+               , history_table.ttr_signed_4506t_deal_file_pid
+               , history_table.ttr_company
+               , history_table.ttr_company_name
+               , history_table.ttr_company_city
+               , history_table.ttr_company_country
+               , history_table.ttr_company_postal_code
+               , history_table.ttr_company_state
+               , history_table.ttr_company_street1
+               , history_table.ttr_company_street2
+               , history_table.ttr_company_ein
+               , history_table.ttr_borrower1_pid
+               , history_table.ttr_borrower1_first_name
+               , history_table.ttr_borrower1_middle_name
+               , history_table.ttr_borrower1_last_name
+               , history_table.ttr_borrower1_name_suffix
+               , history_table.ttr_borrower1_birth_date
+               , history_table.ttr_borrower1_current_city
+               , history_table.ttr_borrower1_current_country
+               , history_table.ttr_borrower1_current_postal_code
+               , history_table.ttr_borrower1_current_state
+               , history_table.ttr_borrower1_current_street1
+               , history_table.ttr_borrower1_current_street2
+               , history_table.ttr_borrower1_prior_city
+               , history_table.ttr_borrower1_prior_country
+               , history_table.ttr_borrower1_prior_postal_code
+               , history_table.ttr_borrower1_prior_state
+               , history_table.ttr_borrower1_prior_street1
+               , history_table.ttr_borrower1_prior_street2
+               , history_table.ttr_borrower1_monthly_income_amount
+               , history_table.ttr_borrower2_pid
+               , history_table.ttr_borrower2_first_name
+               , history_table.ttr_borrower2_middle_name
+               , history_table.ttr_borrower2_last_name
+               , history_table.ttr_borrower2_name_suffix
+               , history_table.ttr_borrower2_birth_date
+               , history_table.ttr_borrower2_current_city
+               , history_table.ttr_borrower2_current_country
+               , history_table.ttr_borrower2_current_postal_code
+               , history_table.ttr_borrower2_current_state
+               , history_table.ttr_borrower2_current_street1
+               , history_table.ttr_borrower2_current_street2
+               , history_table.ttr_borrower2_prior_city
+               , history_table.ttr_borrower2_prior_country
+               , history_table.ttr_borrower2_prior_postal_code
+               , history_table.ttr_borrower2_prior_state
+               , history_table.ttr_borrower2_prior_street1
+               , history_table.ttr_borrower2_prior_street2
+               , history_table.ttr_borrower2_monthly_income_amount
+               , history_table.ttr_year1
+               , history_table.ttr_year2
+               , history_table.ttr_year3
+               , history_table.ttr_year4
+               , history_table.ttr_include_w_2
+               , history_table.ttr_include_1099
+               , history_table.ttr_include_1040
+               , history_table.ttr_include_1040_return_transcript
+               , history_table.ttr_include_1040_account_transcript
+               , history_table.ttr_include_1040_record_of_account
+               , history_table.ttr_include_1065
+               , history_table.ttr_include_1065_return_transcript
+               , history_table.ttr_include_1065_account_transcript
+               , history_table.ttr_include_1065_record_of_account
+               , history_table.ttr_include_1120
+               , history_table.ttr_include_1120_return_transcript
+               , history_table.ttr_include_1120_account_transcript
+               , history_table.ttr_include_1120_record_of_account
+               , history_table.ttr_archived
+               , history_table.ttr_company_phone
+               , history_table.ttr_company_phone_extension
+               , history_table.ttr_business_ownership_type
+               , history_table.ttr_include_1120s
+               , history_table.ttr_include_1120s_return_transcript
+               , history_table.ttr_include_1120s_account_transcript
+               , history_table.ttr_include_1120s_record_of_account
+               , history_table.ttr_business_income_borrower_title
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.tax_transcript_request history_table
+          LEFT JOIN staging_octane.tax_transcript_request staging_table
+                    ON staging_table.ttr_pid = history_table.ttr_pid
+          WHERE staging_table.ttr_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.tax_transcript_request deleted_records
+              WHERE deleted_records.ttr_pid = history_table.ttr_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

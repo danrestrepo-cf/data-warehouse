@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100871 - ETL to insert records into staging.history_octane.smart_message_available_attachment using staging.staging_octane.smart_message_available_attachment as the primary source",
-    "StartAt": "SP-100871",
+    "StartAt": "ETL-100871",
     "States": {
-        "SP-100871": {
+        "ETL-100871": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100871"
+                                    "Value": "ETL-100871"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

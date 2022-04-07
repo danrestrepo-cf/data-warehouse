@@ -35,40 +35,43 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100135:
-    input_type: table
-    output_type: insert
-    json_output_field: arnt_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.aus_request_number_ticker
-      SELECT staging_table.arnt_pid
-           , staging_table.arnt_version
-           , staging_table.arnt_proposal_pid
-           , staging_table.arnt_next_aus_request_number
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.aus_request_number_ticker staging_table
-      LEFT JOIN history_octane.aus_request_number_ticker history_table
-                ON staging_table.arnt_pid = history_table.arnt_pid
-                    AND staging_table.arnt_version = history_table.arnt_version
-      WHERE history_table.arnt_pid IS NULL
-      UNION ALL
-      SELECT history_table.arnt_pid
-           , history_table.arnt_version + 1
-           , history_table.arnt_proposal_pid
-           , history_table.arnt_next_aus_request_number
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.aus_request_number_ticker history_table
-      LEFT JOIN staging_octane.aus_request_number_ticker staging_table
-                ON staging_table.arnt_pid = history_table.arnt_pid
-      WHERE staging_table.arnt_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.aus_request_number_ticker deleted_records
-          WHERE deleted_records.arnt_pid = history_table.arnt_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100135:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.aus_request_number_ticker
+        json_output_field: arnt_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.aus_request_number_ticker
+          SELECT staging_table.arnt_pid
+               , staging_table.arnt_version
+               , staging_table.arnt_proposal_pid
+               , staging_table.arnt_next_aus_request_number
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.aus_request_number_ticker staging_table
+          LEFT JOIN history_octane.aus_request_number_ticker history_table
+                    ON staging_table.arnt_pid = history_table.arnt_pid
+                        AND staging_table.arnt_version = history_table.arnt_version
+          WHERE history_table.arnt_pid IS NULL
+          UNION ALL
+          SELECT history_table.arnt_pid
+               , history_table.arnt_version + 1
+               , history_table.arnt_proposal_pid
+               , history_table.arnt_next_aus_request_number
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.aus_request_number_ticker history_table
+          LEFT JOIN staging_octane.aus_request_number_ticker staging_table
+                    ON staging_table.arnt_pid = history_table.arnt_pid
+          WHERE staging_table.arnt_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.aus_request_number_ticker deleted_records
+              WHERE deleted_records.arnt_pid = history_table.arnt_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

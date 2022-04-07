@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100284 - ETL to insert records into staging.history_octane.product_originator using staging.staging_octane.product_originator as the primary source",
-    "StartAt": "SP-100284",
+    "StartAt": "ETL-100284",
     "States": {
-        "SP-100284": {
+        "ETL-100284": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100284"
+                                    "Value": "ETL-100284"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

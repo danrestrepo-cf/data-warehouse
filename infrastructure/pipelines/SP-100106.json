@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100106 - ETL to insert records into staging.history_octane.offering_product using staging.staging_octane.offering_product as the primary source",
-    "StartAt": "SP-100106",
+    "StartAt": "ETL-100106",
     "States": {
-        "SP-100106": {
+        "ETL-100106": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100106"
+                                    "Value": "ETL-100106"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

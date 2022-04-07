@@ -179,84 +179,87 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.wds_wf_step_type
-etls:
+step_functions:
   SP-100194:
-    input_type: table
-    output_type: insert
-    json_output_field: wds_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.view_wf_deal_step_started
-      SELECT staging_table.wds_pid
-           , staging_table.wds_version
-           , staging_table.wds_wf_step_pid
-           , staging_table.wds_wf_deal_process_pid
-           , staging_table.wds_performer_user_pid
-           , staging_table.wds_visit_number
-           , staging_table.wds_start_datetime
-           , staging_table.wds_complete_datetime
-           , staging_table.wds_timeout_datetime
-           , staging_table.wds_wf_deal_step_status_type
-           , staging_table.wds_wf_step_type
-           , staging_table.wds_function_error_list
-           , staging_table.wds_step_name
-           , staging_table.wds_step_number
-           , staging_table.wds_step_number_formatted
-           , staging_table.wds_step_number_name_formatted
-           , staging_table.wds_expected_complete_minutes
-           , staging_table.wds_description
-           , staging_table.wds_wf_step_function_type
-           , staging_table.wds_phase_name
-           , staging_table.wds_phase_number
-           , staging_table.wds_allow_check_override
-           , staging_table.wds_deal_stage_pid
-           , staging_table.wds_completing_user_pid
-           , staging_table.wds_polling_interval_offset
-           , staging_table.wds_materialized_view_trash
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.view_wf_deal_step_started staging_table
-      LEFT JOIN history_octane.view_wf_deal_step_started history_table
-                ON staging_table.wds_pid = history_table.wds_pid
-                    AND staging_table.wds_version = history_table.wds_version
-      WHERE history_table.wds_pid IS NULL
-      UNION ALL
-      SELECT history_table.wds_pid
-           , history_table.wds_version + 1
-           , history_table.wds_wf_step_pid
-           , history_table.wds_wf_deal_process_pid
-           , history_table.wds_performer_user_pid
-           , history_table.wds_visit_number
-           , history_table.wds_start_datetime
-           , history_table.wds_complete_datetime
-           , history_table.wds_timeout_datetime
-           , history_table.wds_wf_deal_step_status_type
-           , history_table.wds_wf_step_type
-           , history_table.wds_function_error_list
-           , history_table.wds_step_name
-           , history_table.wds_step_number
-           , history_table.wds_step_number_formatted
-           , history_table.wds_step_number_name_formatted
-           , history_table.wds_expected_complete_minutes
-           , history_table.wds_description
-           , history_table.wds_wf_step_function_type
-           , history_table.wds_phase_name
-           , history_table.wds_phase_number
-           , history_table.wds_allow_check_override
-           , history_table.wds_deal_stage_pid
-           , history_table.wds_completing_user_pid
-           , history_table.wds_polling_interval_offset
-           , history_table.wds_materialized_view_trash
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.view_wf_deal_step_started history_table
-      LEFT JOIN staging_octane.view_wf_deal_step_started staging_table
-                ON staging_table.wds_pid = history_table.wds_pid
-      WHERE staging_table.wds_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.view_wf_deal_step_started deleted_records
-          WHERE deleted_records.wds_pid = history_table.wds_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100194:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.view_wf_deal_step_started
+        json_output_field: wds_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.view_wf_deal_step_started
+          SELECT staging_table.wds_pid
+               , staging_table.wds_version
+               , staging_table.wds_wf_step_pid
+               , staging_table.wds_wf_deal_process_pid
+               , staging_table.wds_performer_user_pid
+               , staging_table.wds_visit_number
+               , staging_table.wds_start_datetime
+               , staging_table.wds_complete_datetime
+               , staging_table.wds_timeout_datetime
+               , staging_table.wds_wf_deal_step_status_type
+               , staging_table.wds_wf_step_type
+               , staging_table.wds_function_error_list
+               , staging_table.wds_step_name
+               , staging_table.wds_step_number
+               , staging_table.wds_step_number_formatted
+               , staging_table.wds_step_number_name_formatted
+               , staging_table.wds_expected_complete_minutes
+               , staging_table.wds_description
+               , staging_table.wds_wf_step_function_type
+               , staging_table.wds_phase_name
+               , staging_table.wds_phase_number
+               , staging_table.wds_allow_check_override
+               , staging_table.wds_deal_stage_pid
+               , staging_table.wds_completing_user_pid
+               , staging_table.wds_polling_interval_offset
+               , staging_table.wds_materialized_view_trash
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.view_wf_deal_step_started staging_table
+          LEFT JOIN history_octane.view_wf_deal_step_started history_table
+                    ON staging_table.wds_pid = history_table.wds_pid
+                        AND staging_table.wds_version = history_table.wds_version
+          WHERE history_table.wds_pid IS NULL
+          UNION ALL
+          SELECT history_table.wds_pid
+               , history_table.wds_version + 1
+               , history_table.wds_wf_step_pid
+               , history_table.wds_wf_deal_process_pid
+               , history_table.wds_performer_user_pid
+               , history_table.wds_visit_number
+               , history_table.wds_start_datetime
+               , history_table.wds_complete_datetime
+               , history_table.wds_timeout_datetime
+               , history_table.wds_wf_deal_step_status_type
+               , history_table.wds_wf_step_type
+               , history_table.wds_function_error_list
+               , history_table.wds_step_name
+               , history_table.wds_step_number
+               , history_table.wds_step_number_formatted
+               , history_table.wds_step_number_name_formatted
+               , history_table.wds_expected_complete_minutes
+               , history_table.wds_description
+               , history_table.wds_wf_step_function_type
+               , history_table.wds_phase_name
+               , history_table.wds_phase_number
+               , history_table.wds_allow_check_override
+               , history_table.wds_deal_stage_pid
+               , history_table.wds_completing_user_pid
+               , history_table.wds_polling_interval_offset
+               , history_table.wds_materialized_view_trash
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.view_wf_deal_step_started history_table
+          LEFT JOIN staging_octane.view_wf_deal_step_started staging_table
+                    ON staging_table.wds_pid = history_table.wds_pid
+          WHERE staging_table.wds_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.view_wf_deal_step_started deleted_records
+              WHERE deleted_records.wds_pid = history_table.wds_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

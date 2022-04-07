@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100461 - ETL to insert records into staging.history_octane.credit_request_via_type using staging.staging_octane.credit_request_via_type as the primary source",
-    "StartAt": "SP-100461",
+    "StartAt": "ETL-100461",
     "States": {
-        "SP-100461": {
+        "ETL-100461": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100461"
+                                    "Value": "ETL-100461"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -55,53 +55,56 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.onv_version
-etls:
+step_functions:
   SP-100369:
-    input_type: table
-    output_type: insert
-    json_output_field: onv_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.org_node_version
-      SELECT staging_table.onv_pid
-           , staging_table.onv_version
-           , staging_table.onv_org_node_pid
-           , staging_table.onv_parent_org_node_pid
-           , staging_table.onv_from_date
-           , staging_table.onv_through_date
-           , staging_table.onv_org_node_name
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.org_node_version staging_table
-      LEFT JOIN history_octane.org_node_version history_table
-                ON staging_table.onv_pid = history_table.onv_pid
-                    AND staging_table.onv_version = history_table.onv_version
-      WHERE history_table.onv_pid IS NULL
-      UNION ALL
-      SELECT history_table.onv_pid
-           , history_table.onv_version + 1
-           , history_table.onv_org_node_pid
-           , history_table.onv_parent_org_node_pid
-           , history_table.onv_from_date
-           , history_table.onv_through_date
-           , history_table.onv_org_node_name
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.org_node_version history_table
-      LEFT JOIN staging_octane.org_node_version staging_table
-                ON staging_table.onv_pid = history_table.onv_pid
-      WHERE staging_table.onv_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.org_node_version deleted_records
-          WHERE deleted_records.onv_pid = history_table.onv_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
-next_etls:
-- SP-400001-delete
-- SP-400001-insert-update
-- SP-400002-delete
-- SP-400002-insert-update
-- SP-400003-delete
-- SP-400003-insert-update
+    etls:
+      ETL-100369:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.org_node_version
+        json_output_field: onv_pid
+        truncate_table: false
+        container_memory: 2048
+        next_step_functions:
+        - SP-400001-delete
+        - SP-400001-insert-update
+        - SP-400002-delete
+        - SP-400002-insert-update
+        - SP-400003-delete
+        - SP-400003-insert-update
+        input_sql: |-
+          --finding records to insert into history_octane.org_node_version
+          SELECT staging_table.onv_pid
+               , staging_table.onv_version
+               , staging_table.onv_org_node_pid
+               , staging_table.onv_parent_org_node_pid
+               , staging_table.onv_from_date
+               , staging_table.onv_through_date
+               , staging_table.onv_org_node_name
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.org_node_version staging_table
+          LEFT JOIN history_octane.org_node_version history_table
+                    ON staging_table.onv_pid = history_table.onv_pid
+                        AND staging_table.onv_version = history_table.onv_version
+          WHERE history_table.onv_pid IS NULL
+          UNION ALL
+          SELECT history_table.onv_pid
+               , history_table.onv_version + 1
+               , history_table.onv_org_node_pid
+               , history_table.onv_parent_org_node_pid
+               , history_table.onv_from_date
+               , history_table.onv_through_date
+               , history_table.onv_org_node_name
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.org_node_version history_table
+          LEFT JOIN staging_octane.org_node_version staging_table
+                    ON staging_table.onv_pid = history_table.onv_pid
+          WHERE staging_table.onv_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.org_node_version deleted_records
+              WHERE deleted_records.onv_pid = history_table.onv_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

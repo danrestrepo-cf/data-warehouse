@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100324 - ETL to insert records into staging.history_octane.lock_series using staging.staging_octane.lock_series as the primary source",
-    "StartAt": "SP-100324",
+    "StartAt": "ETL-100324",
     "States": {
-        "SP-100324": {
+        "ETL-100324": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100324"
+                                    "Value": "ETL-100324"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

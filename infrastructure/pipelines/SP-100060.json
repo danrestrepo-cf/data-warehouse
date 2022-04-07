@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100060 - ETL to insert records into staging.history_octane.county_city using staging.staging_octane.county_city as the primary source",
-    "StartAt": "SP-100060",
+    "StartAt": "ETL-100060",
     "States": {
-        "SP-100060": {
+        "ETL-100060": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100060"
+                                    "Value": "ETL-100060"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

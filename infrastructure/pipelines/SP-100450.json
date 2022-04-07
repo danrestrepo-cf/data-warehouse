@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100450 - ETL to insert records into staging.history_octane.country_type using staging.staging_octane.country_type as the primary source",
-    "StartAt": "SP-100450",
+    "StartAt": "ETL-100450",
     "States": {
-        "SP-100450": {
+        "ETL-100450": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100450"
+                                    "Value": "ETL-100450"
                                 },
                                 {
                                     "Name": "INPUT_DATA",
@@ -53,12 +53,12 @@
                     "Next": "Success"
                 }
             ],
-            "Default": "Parallel"
+            "Default": "ETL-100450_Next_Step_Functions"
         },
         "Success": {
             "Type": "Succeed"
         },
-        "Parallel": {
+        "ETL-100450_Next_Step_Functions": {
             "Type": "Parallel",
             "End": true,
             "Branches": [

@@ -39,42 +39,45 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100874:
-    input_type: table
-    output_type: insert
-    json_output_field: cfc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.custom_field_choice
-      SELECT staging_table.cfc_pid
-           , staging_table.cfc_version
-           , staging_table.cfc_custom_field_setting_pid
-           , staging_table.cfc_choice_label
-           , staging_table.cfc_disabled
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.custom_field_choice staging_table
-      LEFT JOIN history_octane.custom_field_choice history_table
-                ON staging_table.cfc_pid = history_table.cfc_pid
-                    AND staging_table.cfc_version = history_table.cfc_version
-      WHERE history_table.cfc_pid IS NULL
-      UNION ALL
-      SELECT history_table.cfc_pid
-           , history_table.cfc_version + 1
-           , history_table.cfc_custom_field_setting_pid
-           , history_table.cfc_choice_label
-           , history_table.cfc_disabled
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.custom_field_choice history_table
-      LEFT JOIN staging_octane.custom_field_choice staging_table
-                ON staging_table.cfc_pid = history_table.cfc_pid
-      WHERE staging_table.cfc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.custom_field_choice deleted_records
-          WHERE deleted_records.cfc_pid = history_table.cfc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100874:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.custom_field_choice
+        json_output_field: cfc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.custom_field_choice
+          SELECT staging_table.cfc_pid
+               , staging_table.cfc_version
+               , staging_table.cfc_custom_field_setting_pid
+               , staging_table.cfc_choice_label
+               , staging_table.cfc_disabled
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.custom_field_choice staging_table
+          LEFT JOIN history_octane.custom_field_choice history_table
+                    ON staging_table.cfc_pid = history_table.cfc_pid
+                        AND staging_table.cfc_version = history_table.cfc_version
+          WHERE history_table.cfc_pid IS NULL
+          UNION ALL
+          SELECT history_table.cfc_pid
+               , history_table.cfc_version + 1
+               , history_table.cfc_custom_field_setting_pid
+               , history_table.cfc_choice_label
+               , history_table.cfc_disabled
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.custom_field_choice history_table
+          LEFT JOIN staging_octane.custom_field_choice staging_table
+                    ON staging_table.cfc_pid = history_table.cfc_pid
+          WHERE staging_table.cfc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.custom_field_choice deleted_records
+              WHERE deleted_records.cfc_pid = history_table.cfc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

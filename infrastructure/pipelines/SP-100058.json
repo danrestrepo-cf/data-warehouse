@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100058 - ETL to insert records into staging.history_octane.county using staging.staging_octane.county as the primary source",
-    "StartAt": "SP-100058",
+    "StartAt": "ETL-100058",
     "States": {
-        "SP-100058": {
+        "ETL-100058": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100058"
+                                    "Value": "ETL-100058"
                                 },
                                 {
                                     "Name": "INPUT_DATA",
@@ -53,12 +53,12 @@
                     "Next": "Success"
                 }
             ],
-            "Default": "Parallel"
+            "Default": "ETL-100058_Next_Step_Functions"
         },
         "Success": {
             "Type": "Succeed"
         },
-        "Parallel": {
+        "ETL-100058_Next_Step_Functions": {
             "Type": "Parallel",
             "End": true,
             "Branches": [

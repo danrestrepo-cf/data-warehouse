@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100835 - ETL to insert records into staging.history_octane.sap_status_type using staging.staging_octane.sap_status_type as the primary source",
-    "StartAt": "SP-100835",
+    "StartAt": "ETL-100835",
     "States": {
-        "SP-100835": {
+        "ETL-100835": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100835"
+                                    "Value": "ETL-100835"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100308 - ETL to insert records into staging.history_octane.borrower using staging.staging_octane.borrower as the primary source",
-    "StartAt": "SP-100308",
+    "StartAt": "ETL-100308",
     "States": {
-        "SP-100308": {
+        "ETL-100308": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100308"
+                                    "Value": "ETL-100308"
                                 },
                                 {
                                     "Name": "INPUT_DATA",
@@ -53,12 +53,12 @@
                     "Next": "Success"
                 }
             ],
-            "Default": "Parallel"
+            "Default": "ETL-100308_Next_Step_Functions"
         },
         "Success": {
             "Type": "Succeed"
         },
-        "Parallel": {
+        "ETL-100308_Next_Step_Functions": {
             "Type": "Parallel",
             "End": true,
             "Branches": [
@@ -146,6 +146,52 @@
                                     "ProcessId": {
                                         "DataType": "String",
                                         "StringValue": "SP-200021"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200022-insert",
+                    "StartAt": "SP-200022-insert_message",
+                    "States": {
+                        "SP-200022-insert_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "borrower_lkup",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200022-insert"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200022-update",
+                    "StartAt": "SP-200022-update_message",
+                    "States": {
+                        "SP-200022-update_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "borrower_lkup",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200022-update"
                                     }
                                 },
                                 "MessageBody.$": "States.JsonToString($)"

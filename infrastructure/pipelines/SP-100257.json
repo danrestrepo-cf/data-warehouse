@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100257 - ETL to insert records into staging.history_octane.recording_district using staging.staging_octane.recording_district as the primary source",
-    "StartAt": "SP-100257",
+    "StartAt": "ETL-100257",
     "States": {
-        "SP-100257": {
+        "ETL-100257": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100257"
+                                    "Value": "ETL-100257"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

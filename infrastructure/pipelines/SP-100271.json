@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100271 - ETL to insert records into staging.history_octane.deal_stage using staging.staging_octane.deal_stage as the primary source",
-    "StartAt": "SP-100271",
+    "StartAt": "ETL-100271",
     "States": {
-        "SP-100271": {
+        "ETL-100271": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100271"
+                                    "Value": "ETL-100271"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

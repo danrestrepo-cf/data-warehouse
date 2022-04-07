@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100740 - ETL to insert records into staging.history_octane.fha_special_program_type using staging.staging_octane.fha_special_program_type as the primary source",
-    "StartAt": "SP-100740",
+    "StartAt": "ETL-100740",
     "States": {
-        "SP-100740": {
+        "ETL-100740": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100740"
+                                    "Value": "ETL-100740"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100572 - ETL to insert records into staging.history_octane.loans_toolbox_permission_type using staging.staging_octane.loans_toolbox_permission_type as the primary source",
-    "StartAt": "SP-100572",
+    "StartAt": "ETL-100572",
     "States": {
-        "SP-100572": {
+        "ETL-100572": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100572"
+                                    "Value": "ETL-100572"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

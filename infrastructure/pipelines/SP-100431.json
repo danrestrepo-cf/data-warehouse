@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100431 - ETL to insert records into staging.history_octane.calendar_rule_type using staging.staging_octane.calendar_rule_type as the primary source",
-    "StartAt": "SP-100431",
+    "StartAt": "ETL-100431",
     "States": {
-        "SP-100431": {
+        "ETL-100431": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100431"
+                                    "Value": "ETL-100431"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

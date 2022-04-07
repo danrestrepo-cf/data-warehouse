@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100676 - ETL to insert records into staging.history_octane.va_borrower_certification_occupancy_type using staging.staging_octane.va_borrower_certification_occupancy_type as the primary source",
-    "StartAt": "SP-100676",
+    "StartAt": "ETL-100676",
     "States": {
-        "SP-100676": {
+        "ETL-100676": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100676"
+                                    "Value": "ETL-100676"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

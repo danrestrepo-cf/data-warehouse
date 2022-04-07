@@ -60,110 +60,116 @@ columns:
   is_active_hub_user:
     data_type: BOOLEAN
     update_flag: true
-etls:
+step_functions:
   SP-400001-insert-update:
-    input_type: table
-    output_type: insert_update
-    hardcoded_data_source: Octane
-    json_output_field: data_source_integration_id
-    insert_update_keys:
-    - data_source_integration_id
-    container_memory: 2048
-    input_sql: |-
-      --SP-400001-insert-update
-      SELECT 'lu_pid~data_source_dwid' AS data_source_integration_columns
-           , COALESCE( CAST( lender_user.lu_pid AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
-           , NOW( ) AS edw_created_datetime
-           , NOW( ) AS edw_modified_datetime
-           , lender_user.data_source_updated_datetime AS data_source_modified_datetime
-           , parent_org_node.on_org_node_id AS parent_node_id
-           , parent_org_node.on_org_node_name_latest AS parent_node_name
-           , lender_user.lu_company_user_id AS company_user_id
-           , lender_user.lu_username AS octane_username
-           , lender_user.lu_first_name AS first_name
-           , lender_user.lu_last_name AS last_name
-           , lender_user.lu_title AS professional_title
-           , lender_user.lu_email AS email
-           , lender_user.lu_hire_date AS hire_date
-           , lender_user.lu_termination_date AS termination_date
-           , (lender_user.lu_lender_user_status_type <> 'INACTIVE' AND lender_user.lu_hub_directory) AS is_active_hub_user
-      FROM (
-          SELECT lender_user.*
-          FROM history_octane.lender_user
-          LEFT JOIN history_octane.lender_user AS history_records
-                    ON lender_user.lu_pid = history_records.lu_pid
-                        AND lender_user.data_source_updated_datetime < history_records.data_source_updated_datetime
-          WHERE history_records.lu_pid IS NULL
-            AND NOT lender_user.data_source_deleted_flag
-            AND lender_user.lu_lender_user_type = 'EMPLOYEE'
-      ) AS lender_user
-      LEFT JOIN (
-          SELECT org_node.*
-          FROM history_octane.org_node
-          LEFT JOIN history_octane.org_node AS history_records
-                    ON org_node.on_pid = history_records.on_pid
-                        AND org_node.data_source_updated_datetime < history_records.data_source_updated_datetime
-          WHERE history_records.on_pid IS NULL
-            AND NOT org_node.data_source_deleted_flag
-      ) AS child_org_node
-           ON child_org_node.on_lender_user_pid = lender_user.lu_pid
-      LEFT JOIN (
-          SELECT org_node_version.*
-          FROM history_octane.org_node_version
-          LEFT JOIN history_octane.org_node_version AS history_records
-                    ON org_node_version.onv_pid = history_records.onv_pid
-                        AND org_node_version.data_source_updated_datetime < history_records.data_source_updated_datetime
-          WHERE history_records.onv_pid IS NULL
-            AND NOT org_node_version.data_source_deleted_flag
-            AND CURRENT_DATE BETWEEN org_node_version.onv_from_date
-              AND COALESCE( org_node_version.onv_through_date, CURRENT_DATE ) -- current version
-      ) AS org_node_version
-                ON child_org_node.on_pid = org_node_version.onv_org_node_pid
-      LEFT JOIN (
-          SELECT org_node.*
-          FROM history_octane.org_node
-          LEFT JOIN history_octane.org_node AS history_records
-                    ON org_node.on_pid = history_records.on_pid
-                        AND org_node.data_source_updated_datetime < history_records.data_source_updated_datetime
-          WHERE history_records.on_pid IS NULL
-            AND NOT org_node.data_source_deleted_flag
-      ) AS parent_org_node
-                ON org_node_version.onv_parent_org_node_pid = parent_org_node.on_pid
-      LEFT JOIN data_mart_business_applications.edw_employee_user_details
-                ON parent_org_node.on_org_node_id = edw_employee_user_details.parent_node_id
-                    AND parent_org_node.on_org_node_name_latest = edw_employee_user_details.parent_node_name
-                    AND lender_user.lu_company_user_id = edw_employee_user_details.company_user_id
-                    AND lender_user.lu_username = edw_employee_user_details.octane_username
-                    AND lender_user.lu_first_name = edw_employee_user_details.first_name
-                    AND lender_user.lu_last_name = edw_employee_user_details.last_name
-                    AND lender_user.lu_title = edw_employee_user_details.professional_title
-                    AND lender_user.lu_email = edw_employee_user_details.email
-                    AND lender_user.lu_hire_date = edw_employee_user_details.hire_date
-                    AND lender_user.lu_termination_date = edw_employee_user_details.termination_date
-                    AND (lender_user.lu_lender_user_status_type <> 'INACTIVE' AND lender_user.lu_hub_directory) =
-                        edw_employee_user_details.is_active_hub_user
-      WHERE edw_employee_user_details.dwid IS NULL;
+    etls:
+      ETL-400001-insert-update:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.data_mart_business_applications.edw_employee_user_details
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        input_sql: |-
+          --SP-400001-insert-update
+          SELECT 'lu_pid~data_source_dwid' AS data_source_integration_columns
+               , COALESCE( CAST( lender_user.lu_pid AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
+               , NOW( ) AS edw_created_datetime
+               , NOW( ) AS edw_modified_datetime
+               , lender_user.data_source_updated_datetime AS data_source_modified_datetime
+               , parent_org_node.on_org_node_id AS parent_node_id
+               , parent_org_node.on_org_node_name_latest AS parent_node_name
+               , lender_user.lu_company_user_id AS company_user_id
+               , lender_user.lu_username AS octane_username
+               , lender_user.lu_first_name AS first_name
+               , lender_user.lu_last_name AS last_name
+               , lender_user.lu_title AS professional_title
+               , lender_user.lu_email AS email
+               , lender_user.lu_hire_date AS hire_date
+               , lender_user.lu_termination_date AS termination_date
+               , (lender_user.lu_lender_user_status_type <> 'INACTIVE' AND lender_user.lu_hub_directory) AS is_active_hub_user
+          FROM (
+              SELECT lender_user.*
+              FROM history_octane.lender_user
+              LEFT JOIN history_octane.lender_user AS history_records
+                        ON lender_user.lu_pid = history_records.lu_pid
+                            AND lender_user.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.lu_pid IS NULL
+                AND NOT lender_user.data_source_deleted_flag
+                AND lender_user.lu_lender_user_type = 'EMPLOYEE'
+          ) AS lender_user
+          LEFT JOIN (
+              SELECT org_node.*
+              FROM history_octane.org_node
+              LEFT JOIN history_octane.org_node AS history_records
+                        ON org_node.on_pid = history_records.on_pid
+                            AND org_node.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.on_pid IS NULL
+                AND NOT org_node.data_source_deleted_flag
+          ) AS child_org_node
+               ON child_org_node.on_lender_user_pid = lender_user.lu_pid
+          LEFT JOIN (
+              SELECT org_node_version.*
+              FROM history_octane.org_node_version
+              LEFT JOIN history_octane.org_node_version AS history_records
+                        ON org_node_version.onv_pid = history_records.onv_pid
+                            AND org_node_version.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.onv_pid IS NULL
+                AND NOT org_node_version.data_source_deleted_flag
+                AND CURRENT_DATE BETWEEN org_node_version.onv_from_date
+                  AND COALESCE( org_node_version.onv_through_date, CURRENT_DATE ) -- current version
+          ) AS org_node_version
+                    ON child_org_node.on_pid = org_node_version.onv_org_node_pid
+          LEFT JOIN (
+              SELECT org_node.*
+              FROM history_octane.org_node
+              LEFT JOIN history_octane.org_node AS history_records
+                        ON org_node.on_pid = history_records.on_pid
+                            AND org_node.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.on_pid IS NULL
+                AND NOT org_node.data_source_deleted_flag
+          ) AS parent_org_node
+                    ON org_node_version.onv_parent_org_node_pid = parent_org_node.on_pid
+          LEFT JOIN data_mart_business_applications.edw_employee_user_details
+                    ON parent_org_node.on_org_node_id = edw_employee_user_details.parent_node_id
+                        AND parent_org_node.on_org_node_name_latest = edw_employee_user_details.parent_node_name
+                        AND lender_user.lu_company_user_id = edw_employee_user_details.company_user_id
+                        AND lender_user.lu_username = edw_employee_user_details.octane_username
+                        AND lender_user.lu_first_name = edw_employee_user_details.first_name
+                        AND lender_user.lu_last_name = edw_employee_user_details.last_name
+                        AND lender_user.lu_title = edw_employee_user_details.professional_title
+                        AND lender_user.lu_email = edw_employee_user_details.email
+                        AND lender_user.lu_hire_date = edw_employee_user_details.hire_date
+                        AND lender_user.lu_termination_date = edw_employee_user_details.termination_date
+                        AND (lender_user.lu_lender_user_status_type <> 'INACTIVE' AND lender_user.lu_hub_directory) =
+                            edw_employee_user_details.is_active_hub_user
+          WHERE edw_employee_user_details.dwid IS NULL;
   SP-400001-delete:
-    input_type: table
-    output_type: delete
-    json_output_field: data_source_integration_id
-    delete_keys:
-    - data_source_integration_id
-    container_memory: 2048
-    input_sql: |-
-      --SP-400001-delete
-      SELECT edw_employee_user_details.data_source_integration_id
-      FROM data_mart_business_applications.edw_employee_user_details
-      LEFT JOIN (
-          SELECT lender_user.*
-          FROM history_octane.lender_user
-          LEFT JOIN history_octane.lender_user AS history_records
-                    ON lender_user.lu_pid = history_records.lu_pid
-                        AND lender_user.data_source_updated_datetime < history_records.data_source_updated_datetime
-          WHERE history_records.lu_pid IS NULL
-            AND NOT lender_user.data_source_deleted_flag
-            AND lender_user.lu_lender_user_type = 'EMPLOYEE'
-      ) AS current_data
-                ON edw_employee_user_details.data_source_integration_id =
-                   COALESCE( CAST( current_data.lu_pid AS TEXT ), '<NULL>' ) || '~1'
-      WHERE current_data.lu_pid IS NULL;
+    etls:
+      ETL-400001-delete:
+        input_type: table
+        output_type: delete
+        output_table: staging.data_mart_business_applications.edw_employee_user_details
+        json_output_field: data_source_integration_id
+        delete_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        input_sql: |-
+          --SP-400001-delete
+          SELECT edw_employee_user_details.data_source_integration_id
+          FROM data_mart_business_applications.edw_employee_user_details
+          LEFT JOIN (
+              SELECT lender_user.*
+              FROM history_octane.lender_user
+              LEFT JOIN history_octane.lender_user AS history_records
+                        ON lender_user.lu_pid = history_records.lu_pid
+                            AND lender_user.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.lu_pid IS NULL
+                AND NOT lender_user.data_source_deleted_flag
+                AND lender_user.lu_lender_user_type = 'EMPLOYEE'
+          ) AS current_data
+                    ON edw_employee_user_details.data_source_integration_id =
+                       COALESCE( CAST( current_data.lu_pid AS TEXT ), '<NULL>' ) || '~1'
+          WHERE current_data.lu_pid IS NULL;

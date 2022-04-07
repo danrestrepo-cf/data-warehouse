@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100418 - ETL to insert records into staging.history_octane.bid_pool_status_type using staging.staging_octane.bid_pool_status_type as the primary source",
-    "StartAt": "SP-100418",
+    "StartAt": "ETL-100418",
     "States": {
-        "SP-100418": {
+        "ETL-100418": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100418"
+                                    "Value": "ETL-100418"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

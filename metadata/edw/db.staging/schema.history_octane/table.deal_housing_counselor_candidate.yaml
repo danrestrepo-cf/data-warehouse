@@ -175,98 +175,101 @@ columns:
       field: primary_source_table.columns.dhcc_web_url
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100080:
-    input_type: table
-    output_type: insert
-    json_output_field: dhcc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_housing_counselor_candidate
-      SELECT staging_table.dhcc_pid
-           , staging_table.dhcc_version
-           , staging_table.dhcc_deal_pid
-           , staging_table.dhcc_deal_housing_counselors_request_pid
-           , staging_table.dhcc_counseling_agency_id
-           , staging_table.dhcc_office_name
-           , staging_table.dhcc_office_address_street1
-           , staging_table.dhcc_office_address_street2
-           , staging_table.dhcc_office_address_city
-           , staging_table.dhcc_office_address_state
-           , staging_table.dhcc_office_address_postal_code
-           , staging_table.dhcc_office_address_country
-           , staging_table.dhcc_office_email
-           , staging_table.dhcc_office_fax
-           , staging_table.dhcc_office_phone1
-           , staging_table.dhcc_office_phone2
-           , staging_table.dhcc_mailing_address_street1
-           , staging_table.dhcc_mailing_address_street2
-           , staging_table.dhcc_mailing_address_city
-           , staging_table.dhcc_mailing_address_state
-           , staging_table.dhcc_mailing_address_postal_code
-           , staging_table.dhcc_mailing_address_country
-           , staging_table.dhcc_web_url
-           , staging_table.dhcc_language_codes
-           , staging_table.dhcc_address_latitude
-           , staging_table.dhcc_address_longitude
-           , staging_table.dhcc_service_codes
-           , staging_table.dhcc_county_name
-           , staging_table.dhcc_faith_based
-           , staging_table.dhcc_migrant_workers
-           , staging_table.dhcc_colonias
-           , staging_table.dhcc_parent_org_id
-           , staging_table.dhcc_ordinal
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_housing_counselor_candidate staging_table
-      LEFT JOIN history_octane.deal_housing_counselor_candidate history_table
-                ON staging_table.dhcc_pid = history_table.dhcc_pid
-                    AND staging_table.dhcc_version = history_table.dhcc_version
-      WHERE history_table.dhcc_pid IS NULL
-      UNION ALL
-      SELECT history_table.dhcc_pid
-           , history_table.dhcc_version + 1
-           , history_table.dhcc_deal_pid
-           , history_table.dhcc_deal_housing_counselors_request_pid
-           , history_table.dhcc_counseling_agency_id
-           , history_table.dhcc_office_name
-           , history_table.dhcc_office_address_street1
-           , history_table.dhcc_office_address_street2
-           , history_table.dhcc_office_address_city
-           , history_table.dhcc_office_address_state
-           , history_table.dhcc_office_address_postal_code
-           , history_table.dhcc_office_address_country
-           , history_table.dhcc_office_email
-           , history_table.dhcc_office_fax
-           , history_table.dhcc_office_phone1
-           , history_table.dhcc_office_phone2
-           , history_table.dhcc_mailing_address_street1
-           , history_table.dhcc_mailing_address_street2
-           , history_table.dhcc_mailing_address_city
-           , history_table.dhcc_mailing_address_state
-           , history_table.dhcc_mailing_address_postal_code
-           , history_table.dhcc_mailing_address_country
-           , history_table.dhcc_web_url
-           , history_table.dhcc_language_codes
-           , history_table.dhcc_address_latitude
-           , history_table.dhcc_address_longitude
-           , history_table.dhcc_service_codes
-           , history_table.dhcc_county_name
-           , history_table.dhcc_faith_based
-           , history_table.dhcc_migrant_workers
-           , history_table.dhcc_colonias
-           , history_table.dhcc_parent_org_id
-           , history_table.dhcc_ordinal
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_housing_counselor_candidate history_table
-      LEFT JOIN staging_octane.deal_housing_counselor_candidate staging_table
-                ON staging_table.dhcc_pid = history_table.dhcc_pid
-      WHERE staging_table.dhcc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_housing_counselor_candidate deleted_records
-          WHERE deleted_records.dhcc_pid = history_table.dhcc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100080:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_housing_counselor_candidate
+        json_output_field: dhcc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_housing_counselor_candidate
+          SELECT staging_table.dhcc_pid
+               , staging_table.dhcc_version
+               , staging_table.dhcc_deal_pid
+               , staging_table.dhcc_deal_housing_counselors_request_pid
+               , staging_table.dhcc_counseling_agency_id
+               , staging_table.dhcc_office_name
+               , staging_table.dhcc_office_address_street1
+               , staging_table.dhcc_office_address_street2
+               , staging_table.dhcc_office_address_city
+               , staging_table.dhcc_office_address_state
+               , staging_table.dhcc_office_address_postal_code
+               , staging_table.dhcc_office_address_country
+               , staging_table.dhcc_office_email
+               , staging_table.dhcc_office_fax
+               , staging_table.dhcc_office_phone1
+               , staging_table.dhcc_office_phone2
+               , staging_table.dhcc_mailing_address_street1
+               , staging_table.dhcc_mailing_address_street2
+               , staging_table.dhcc_mailing_address_city
+               , staging_table.dhcc_mailing_address_state
+               , staging_table.dhcc_mailing_address_postal_code
+               , staging_table.dhcc_mailing_address_country
+               , staging_table.dhcc_web_url
+               , staging_table.dhcc_language_codes
+               , staging_table.dhcc_address_latitude
+               , staging_table.dhcc_address_longitude
+               , staging_table.dhcc_service_codes
+               , staging_table.dhcc_county_name
+               , staging_table.dhcc_faith_based
+               , staging_table.dhcc_migrant_workers
+               , staging_table.dhcc_colonias
+               , staging_table.dhcc_parent_org_id
+               , staging_table.dhcc_ordinal
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_housing_counselor_candidate staging_table
+          LEFT JOIN history_octane.deal_housing_counselor_candidate history_table
+                    ON staging_table.dhcc_pid = history_table.dhcc_pid
+                        AND staging_table.dhcc_version = history_table.dhcc_version
+          WHERE history_table.dhcc_pid IS NULL
+          UNION ALL
+          SELECT history_table.dhcc_pid
+               , history_table.dhcc_version + 1
+               , history_table.dhcc_deal_pid
+               , history_table.dhcc_deal_housing_counselors_request_pid
+               , history_table.dhcc_counseling_agency_id
+               , history_table.dhcc_office_name
+               , history_table.dhcc_office_address_street1
+               , history_table.dhcc_office_address_street2
+               , history_table.dhcc_office_address_city
+               , history_table.dhcc_office_address_state
+               , history_table.dhcc_office_address_postal_code
+               , history_table.dhcc_office_address_country
+               , history_table.dhcc_office_email
+               , history_table.dhcc_office_fax
+               , history_table.dhcc_office_phone1
+               , history_table.dhcc_office_phone2
+               , history_table.dhcc_mailing_address_street1
+               , history_table.dhcc_mailing_address_street2
+               , history_table.dhcc_mailing_address_city
+               , history_table.dhcc_mailing_address_state
+               , history_table.dhcc_mailing_address_postal_code
+               , history_table.dhcc_mailing_address_country
+               , history_table.dhcc_web_url
+               , history_table.dhcc_language_codes
+               , history_table.dhcc_address_latitude
+               , history_table.dhcc_address_longitude
+               , history_table.dhcc_service_codes
+               , history_table.dhcc_county_name
+               , history_table.dhcc_faith_based
+               , history_table.dhcc_migrant_workers
+               , history_table.dhcc_colonias
+               , history_table.dhcc_parent_org_id
+               , history_table.dhcc_ordinal
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_housing_counselor_candidate history_table
+          LEFT JOIN staging_octane.deal_housing_counselor_candidate staging_table
+                    ON staging_table.dhcc_pid = history_table.dhcc_pid
+          WHERE staging_table.dhcc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_housing_counselor_candidate deleted_records
+              WHERE deleted_records.dhcc_pid = history_table.dhcc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

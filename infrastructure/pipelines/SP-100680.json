@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100680 - ETL to insert records into staging.history_octane.va_relative_relationship_type using staging.staging_octane.va_relative_relationship_type as the primary source",
-    "StartAt": "SP-100680",
+    "StartAt": "ETL-100680",
     "States": {
-        "SP-100680": {
+        "ETL-100680": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100680"
+                                    "Value": "ETL-100680"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

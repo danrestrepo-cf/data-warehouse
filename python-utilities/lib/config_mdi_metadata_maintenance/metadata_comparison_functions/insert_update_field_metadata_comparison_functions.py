@@ -31,15 +31,16 @@ class InsertUpdateFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
-                    for etl in table.etls:
-                        if etl.output_type == ETLOutputType.INSERT_UPDATE:
-                            for column in table.columns:
-                                if column.name != 'dwid':
-                                    metadata_table.add_row({
-                                        'process_name': etl.process_name,
-                                        'update_lookup': column.name,
-                                        'update_flag': 'Y' if column.update_flag else 'N'
-                                })
+                    for step_function in table.step_functions:
+                        for etl in step_function.etls:
+                            if etl.output_type == ETLOutputType.INSERT_UPDATE:
+                                for column in table.columns:
+                                    if column.name != 'dwid':
+                                        metadata_table.add_row({
+                                            'process_name': etl.process_name,
+                                            'update_lookup': column.name,
+                                            'update_flag': 'Y' if column.update_flag else 'N'
+                                    })
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:

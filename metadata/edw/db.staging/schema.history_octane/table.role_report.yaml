@@ -43,40 +43,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.rrp_version
-etls:
+step_functions:
   SP-100240:
-    input_type: table
-    output_type: insert
-    json_output_field: rrp_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.role_report
-      SELECT staging_table.rrp_pid
-           , staging_table.rrp_version
-           , staging_table.rrp_report_pid
-           , staging_table.rrp_role_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.role_report staging_table
-      LEFT JOIN history_octane.role_report history_table
-                ON staging_table.rrp_pid = history_table.rrp_pid
-                    AND staging_table.rrp_version = history_table.rrp_version
-      WHERE history_table.rrp_pid IS NULL
-      UNION ALL
-      SELECT history_table.rrp_pid
-           , history_table.rrp_version + 1
-           , history_table.rrp_report_pid
-           , history_table.rrp_role_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.role_report history_table
-      LEFT JOIN staging_octane.role_report staging_table
-                ON staging_table.rrp_pid = history_table.rrp_pid
-      WHERE staging_table.rrp_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.role_report deleted_records
-          WHERE deleted_records.rrp_pid = history_table.rrp_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100240:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.role_report
+        json_output_field: rrp_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.role_report
+          SELECT staging_table.rrp_pid
+               , staging_table.rrp_version
+               , staging_table.rrp_report_pid
+               , staging_table.rrp_role_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.role_report staging_table
+          LEFT JOIN history_octane.role_report history_table
+                    ON staging_table.rrp_pid = history_table.rrp_pid
+                        AND staging_table.rrp_version = history_table.rrp_version
+          WHERE history_table.rrp_pid IS NULL
+          UNION ALL
+          SELECT history_table.rrp_pid
+               , history_table.rrp_version + 1
+               , history_table.rrp_report_pid
+               , history_table.rrp_role_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.role_report history_table
+          LEFT JOIN staging_octane.role_report staging_table
+                    ON staging_table.rrp_pid = history_table.rrp_pid
+          WHERE staging_table.rrp_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.role_report deleted_records
+              WHERE deleted_records.rrp_pid = history_table.rrp_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

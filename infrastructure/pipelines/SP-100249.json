@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100249 - ETL to insert records into staging.history_octane.smart_mi_surcharge_case using staging.staging_octane.smart_mi_surcharge_case as the primary source",
-    "StartAt": "SP-100249",
+    "StartAt": "ETL-100249",
     "States": {
-        "SP-100249": {
+        "ETL-100249": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100249"
+                                    "Value": "ETL-100249"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

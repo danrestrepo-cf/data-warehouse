@@ -439,120 +439,123 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.prpr_version
-etls:
+step_functions:
   SP-100344:
-    input_type: table
-    output_type: insert
-    json_output_field: prpr_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.proposal_req
-      SELECT staging_table.prpr_pid
-           , staging_table.prpr_version
-           , staging_table.prpr_proposal_doc_pid
-           , staging_table.prpr_req_name
-           , staging_table.prpr_borrower_access
-           , staging_table.prpr_req_id
-           , staging_table.prpr_req_fulfill_status_type
-           , staging_table.prpr_fulfill_status_unparsed_name
-           , staging_table.prpr_fulfill_status_datetime
-           , staging_table.prpr_req_decision_status_type
-           , staging_table.prpr_decision_status_unparsed_name
-           , staging_table.prpr_decision_status_datetime
-           , staging_table.prpr_deal_pid
-           , staging_table.prpr_proposal_pid
-           , staging_table.prpr_loan_pid
-           , staging_table.prpr_borrower_pid
-           , staging_table.prpr_borrower_income_pid
-           , staging_table.prpr_job_income_pid
-           , staging_table.prpr_borrower_job_gap_pid
-           , staging_table.prpr_other_income_pid
-           , staging_table.prpr_business_income_pid
-           , staging_table.prpr_rental_income_pid
-           , staging_table.prpr_asset_pid
-           , staging_table.prpr_asset_large_deposit_pid
-           , staging_table.prpr_liability_pid
-           , staging_table.prpr_reo_place_pid
-           , staging_table.prpr_property_place_pid
-           , staging_table.prpr_residence_place_pid
-           , staging_table.prpr_borrower_residence_pid
-           , staging_table.prpr_application_pid
-           , staging_table.prpr_credit_inquiry_pid
-           , staging_table.prpr_appraisal_pid
-           , staging_table.prpr_appraisal_form_pid
-           , staging_table.prpr_tax_transcript_request_pid
-           , staging_table.prpr_deal_child_type
-           , staging_table.prpr_deal_child_name
-           , staging_table.prpr_smart_req
-           , staging_table.prpr_smart_req_criteria_html
-           , staging_table.prpr_trash
-           , staging_table.prpr_borrower_associated_address_pid
-           , staging_table.prpr_construction_cost_pid
-           , staging_table.prpr_construction_draw_pid
-           , staging_table.prpr_proposal_contractor_pid
-           , staging_table.prpr_proposal_review_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.proposal_req staging_table
-      LEFT JOIN history_octane.proposal_req history_table
-                ON staging_table.prpr_pid = history_table.prpr_pid
-                    AND staging_table.prpr_version = history_table.prpr_version
-      WHERE history_table.prpr_pid IS NULL
-      UNION ALL
-      SELECT history_table.prpr_pid
-           , history_table.prpr_version + 1
-           , history_table.prpr_proposal_doc_pid
-           , history_table.prpr_req_name
-           , history_table.prpr_borrower_access
-           , history_table.prpr_req_id
-           , history_table.prpr_req_fulfill_status_type
-           , history_table.prpr_fulfill_status_unparsed_name
-           , history_table.prpr_fulfill_status_datetime
-           , history_table.prpr_req_decision_status_type
-           , history_table.prpr_decision_status_unparsed_name
-           , history_table.prpr_decision_status_datetime
-           , history_table.prpr_deal_pid
-           , history_table.prpr_proposal_pid
-           , history_table.prpr_loan_pid
-           , history_table.prpr_borrower_pid
-           , history_table.prpr_borrower_income_pid
-           , history_table.prpr_job_income_pid
-           , history_table.prpr_borrower_job_gap_pid
-           , history_table.prpr_other_income_pid
-           , history_table.prpr_business_income_pid
-           , history_table.prpr_rental_income_pid
-           , history_table.prpr_asset_pid
-           , history_table.prpr_asset_large_deposit_pid
-           , history_table.prpr_liability_pid
-           , history_table.prpr_reo_place_pid
-           , history_table.prpr_property_place_pid
-           , history_table.prpr_residence_place_pid
-           , history_table.prpr_borrower_residence_pid
-           , history_table.prpr_application_pid
-           , history_table.prpr_credit_inquiry_pid
-           , history_table.prpr_appraisal_pid
-           , history_table.prpr_appraisal_form_pid
-           , history_table.prpr_tax_transcript_request_pid
-           , history_table.prpr_deal_child_type
-           , history_table.prpr_deal_child_name
-           , history_table.prpr_smart_req
-           , history_table.prpr_smart_req_criteria_html
-           , history_table.prpr_trash
-           , history_table.prpr_borrower_associated_address_pid
-           , history_table.prpr_construction_cost_pid
-           , history_table.prpr_construction_draw_pid
-           , history_table.prpr_proposal_contractor_pid
-           , history_table.prpr_proposal_review_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.proposal_req history_table
-      LEFT JOIN staging_octane.proposal_req staging_table
-                ON staging_table.prpr_pid = history_table.prpr_pid
-      WHERE staging_table.prpr_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.proposal_req deleted_records
-          WHERE deleted_records.prpr_pid = history_table.prpr_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100344:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.proposal_req
+        json_output_field: prpr_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.proposal_req
+          SELECT staging_table.prpr_pid
+               , staging_table.prpr_version
+               , staging_table.prpr_proposal_doc_pid
+               , staging_table.prpr_req_name
+               , staging_table.prpr_borrower_access
+               , staging_table.prpr_req_id
+               , staging_table.prpr_req_fulfill_status_type
+               , staging_table.prpr_fulfill_status_unparsed_name
+               , staging_table.prpr_fulfill_status_datetime
+               , staging_table.prpr_req_decision_status_type
+               , staging_table.prpr_decision_status_unparsed_name
+               , staging_table.prpr_decision_status_datetime
+               , staging_table.prpr_deal_pid
+               , staging_table.prpr_proposal_pid
+               , staging_table.prpr_loan_pid
+               , staging_table.prpr_borrower_pid
+               , staging_table.prpr_borrower_income_pid
+               , staging_table.prpr_job_income_pid
+               , staging_table.prpr_borrower_job_gap_pid
+               , staging_table.prpr_other_income_pid
+               , staging_table.prpr_business_income_pid
+               , staging_table.prpr_rental_income_pid
+               , staging_table.prpr_asset_pid
+               , staging_table.prpr_asset_large_deposit_pid
+               , staging_table.prpr_liability_pid
+               , staging_table.prpr_reo_place_pid
+               , staging_table.prpr_property_place_pid
+               , staging_table.prpr_residence_place_pid
+               , staging_table.prpr_borrower_residence_pid
+               , staging_table.prpr_application_pid
+               , staging_table.prpr_credit_inquiry_pid
+               , staging_table.prpr_appraisal_pid
+               , staging_table.prpr_appraisal_form_pid
+               , staging_table.prpr_tax_transcript_request_pid
+               , staging_table.prpr_deal_child_type
+               , staging_table.prpr_deal_child_name
+               , staging_table.prpr_smart_req
+               , staging_table.prpr_smart_req_criteria_html
+               , staging_table.prpr_trash
+               , staging_table.prpr_borrower_associated_address_pid
+               , staging_table.prpr_construction_cost_pid
+               , staging_table.prpr_construction_draw_pid
+               , staging_table.prpr_proposal_contractor_pid
+               , staging_table.prpr_proposal_review_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.proposal_req staging_table
+          LEFT JOIN history_octane.proposal_req history_table
+                    ON staging_table.prpr_pid = history_table.prpr_pid
+                        AND staging_table.prpr_version = history_table.prpr_version
+          WHERE history_table.prpr_pid IS NULL
+          UNION ALL
+          SELECT history_table.prpr_pid
+               , history_table.prpr_version + 1
+               , history_table.prpr_proposal_doc_pid
+               , history_table.prpr_req_name
+               , history_table.prpr_borrower_access
+               , history_table.prpr_req_id
+               , history_table.prpr_req_fulfill_status_type
+               , history_table.prpr_fulfill_status_unparsed_name
+               , history_table.prpr_fulfill_status_datetime
+               , history_table.prpr_req_decision_status_type
+               , history_table.prpr_decision_status_unparsed_name
+               , history_table.prpr_decision_status_datetime
+               , history_table.prpr_deal_pid
+               , history_table.prpr_proposal_pid
+               , history_table.prpr_loan_pid
+               , history_table.prpr_borrower_pid
+               , history_table.prpr_borrower_income_pid
+               , history_table.prpr_job_income_pid
+               , history_table.prpr_borrower_job_gap_pid
+               , history_table.prpr_other_income_pid
+               , history_table.prpr_business_income_pid
+               , history_table.prpr_rental_income_pid
+               , history_table.prpr_asset_pid
+               , history_table.prpr_asset_large_deposit_pid
+               , history_table.prpr_liability_pid
+               , history_table.prpr_reo_place_pid
+               , history_table.prpr_property_place_pid
+               , history_table.prpr_residence_place_pid
+               , history_table.prpr_borrower_residence_pid
+               , history_table.prpr_application_pid
+               , history_table.prpr_credit_inquiry_pid
+               , history_table.prpr_appraisal_pid
+               , history_table.prpr_appraisal_form_pid
+               , history_table.prpr_tax_transcript_request_pid
+               , history_table.prpr_deal_child_type
+               , history_table.prpr_deal_child_name
+               , history_table.prpr_smart_req
+               , history_table.prpr_smart_req_criteria_html
+               , history_table.prpr_trash
+               , history_table.prpr_borrower_associated_address_pid
+               , history_table.prpr_construction_cost_pid
+               , history_table.prpr_construction_draw_pid
+               , history_table.prpr_proposal_contractor_pid
+               , history_table.prpr_proposal_review_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.proposal_req history_table
+          LEFT JOIN staging_octane.proposal_req staging_table
+                    ON staging_table.prpr_pid = history_table.prpr_pid
+          WHERE staging_table.prpr_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.proposal_req deleted_records
+              WHERE deleted_records.prpr_pid = history_table.prpr_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

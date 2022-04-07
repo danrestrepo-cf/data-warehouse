@@ -203,11 +203,21 @@ function metadata_unit_test_fail_break() {
   set -e
 }
 
+# Run python-utilities tests
+
+# must use relative path for interoperability with Windows (absolute path starts with "c/Users"
+# on Windows, which Python considers invalid
+python_utilities_dir=$(realpath --relative-to=$(pwd) "$path_to_repo_root/python-utilities")
+# set the PYTHONPATH before running tests to ensure tests can import code from
+# lib module. This has to be done as a single command (setting PYTHONPATH first
+# on a separate line and then calling the tests doesn't produce the desired effect)
+PYTHONPATH=$python_utilities_dir python3 -m unittest discover "$python_utilities_dir/tests"
+
 # reset docker to have a clean EDW build for running tests on (in case it was already running)
 docker_reset
 
-# EDW metadata unit tests ################################################################
-echo "Proceeding with EDW metadata unit tests..."
+# Legacy EDW metadata unit tests ################################################################
+echo "Proceeding with legacy EDW metadata unit tests..."
 execute_edw_metadata_unit_test "test_1"
 execute_edw_metadata_unit_test "test_2"
 execute_edw_metadata_unit_test "test_3"
@@ -243,8 +253,6 @@ execute_edw_metadata_unit_test "test_32"
 execute_edw_metadata_unit_test "test_33"
 execute_edw_metadata_unit_test "test_34"
 execute_edw_metadata_unit_test "test_35"
-execute_edw_metadata_unit_test "test_36"
-execute_edw_metadata_unit_test "test_37"
 
 # If any EDW metadata unit tests fail, print the failures and ask the user whether to proceed with remaining unit tests
 # Otherwise, proceed with remaining unit tests

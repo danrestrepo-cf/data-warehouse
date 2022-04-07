@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100479 - ETL to insert records into staging.history_octane.delivery_aus_type using staging.staging_octane.delivery_aus_type as the primary source",
-    "StartAt": "SP-100479",
+    "StartAt": "ETL-100479",
     "States": {
-        "SP-100479": {
+        "ETL-100479": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100479"
+                                    "Value": "ETL-100479"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

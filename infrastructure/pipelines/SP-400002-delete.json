@@ -1,8 +1,8 @@
 {
     "Comment": "SP-400002-delete - ETL to delete records from staging.data_mart_business_applications.edw_current_parent_nodes using staging.history_octane.org_node as the primary source",
-    "StartAt": "SP-400002-delete",
+    "StartAt": "ETL-400002-delete",
     "States": {
-        "SP-400002-delete": {
+        "ETL-400002-delete": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-400002-delete"
+                                    "Value": "ETL-400002-delete"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

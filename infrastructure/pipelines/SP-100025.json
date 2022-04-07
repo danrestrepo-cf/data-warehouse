@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100025 - ETL to insert records into staging.history_octane.deal_change_updater_time using staging.staging_octane.deal_change_updater_time as the primary source",
-    "StartAt": "SP-100025",
+    "StartAt": "ETL-100025",
     "States": {
-        "SP-100025": {
+        "ETL-100025": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100025"
+                                    "Value": "ETL-100025"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -112,189 +112,192 @@ columns:
     source:
       field: primary_source_table.columns.b_sex_refused
     update_flag: false
-etls:
+step_functions:
   SP-200021:
-    input_type: table
-    output_type: insert_update
-    hardcoded_data_source: Octane
-    json_output_field: data_source_integration_id
-    insert_update_keys:
-    - data_source_integration_id
-    container_memory: 2048
-    input_sql: |-
-      WITH borrower_hmda_collection_dim_new_records AS (
-          SELECT 'ethnicity_collected_visual_or_surname_code~ethnicity_not_obtainable_flag~ethnicity_refused_code~race_collected_visual_or_surname_code~race_information_not_provided_flag~race_national_origin_refusal_flag~race_not_obtainable_flag~race_refused_code~sex_collected_visual_or_surname_code~sex_not_obtainable_flag~sex_refused_code~data_source_dwid' AS data_source_integration_columns
-               , COALESCE( CAST( borrower.b_ethnicity_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( borrower.b_ethnicity_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( borrower.b_ethnicity_refused AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( borrower.b_race_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( borrower.b_race_information_not_provided AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( borrower.b_race_national_origin_refusal AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( borrower.b_race_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( borrower.b_race_refused AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( borrower.b_sex_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( borrower.b_sex_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( borrower.b_sex_refused AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
-               , NOW( ) AS edw_created_datetime
-               , NOW( ) AS edw_modified_datetime
-               , MAX( borrower.data_source_updated_datetime ) AS data_source_modified_datetime
-               , ethnicity_collected_visual_or_surname_type.value AS ethnicity_collected_visual_or_surname
-               , borrower.b_ethnicity_collected_visual_or_surname AS ethnicity_collected_visual_or_surname_code
-               , borrower.b_ethnicity_not_obtainable AS ethnicity_not_obtainable_flag
-               , ethnicity_refused_type.value AS ethnicity_refused
-               , borrower.b_ethnicity_refused AS ethnicity_refused_code
-               , race_collected_visual_or_surname_type.value AS race_collected_visual_or_surname
-               , borrower.b_race_collected_visual_or_surname AS race_collected_visual_or_surname_code
-               , borrower.b_race_information_not_provided AS race_information_not_provided_flag
-               , borrower.b_race_national_origin_refusal AS race_national_origin_refusal_flag
-               , borrower.b_race_not_obtainable AS race_not_obtainable_flag
-               , race_refused_type.value AS race_refused
-               , borrower.b_race_refused AS race_refused_code
-               , sex_collected_visual_or_surname_type.value AS sex_collected_visual_or_surname
-               , borrower.b_sex_collected_visual_or_surname AS sex_collected_visual_or_surname_code
-               , borrower.b_sex_not_obtainable AS sex_not_obtainable_flag
-               , sex_refused_type.value AS sex_refused
-               , borrower.b_sex_refused AS sex_refused_code
-               , MAX( GREATEST( ethnicity_collected_visual_or_surname_type.etl_end_date_time, ethnicity_refused_type.etl_end_date_time,
-                                race_collected_visual_or_surname_type.etl_end_date_time, race_refused_type.etl_end_date_time,
-                                sex_collected_visual_or_surname_type.etl_end_date_time,
-                                sex_refused_type.etl_end_date_time ) ) AS max_source_etl_end_date_time
-          FROM (
-              SELECT <<borrower_partial_load_condition>> AS include_record
-                   , borrower.*
-              FROM history_octane.borrower
-              LEFT JOIN history_octane.borrower AS history_records
-                        ON borrower.b_pid = history_records.b_pid
-                            AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
-              WHERE history_records.b_pid IS NULL
-          ) AS borrower
-          JOIN (
-              SELECT *
+    etls:
+      ETL-200021:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.borrower_hmda_collection_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-200022-update
+        input_sql: |-
+          WITH borrower_hmda_collection_dim_new_records AS (
+              SELECT 'ethnicity_collected_visual_or_surname_code~ethnicity_not_obtainable_flag~ethnicity_refused_code~race_collected_visual_or_surname_code~race_information_not_provided_flag~race_national_origin_refusal_flag~race_not_obtainable_flag~race_refused_code~sex_collected_visual_or_surname_code~sex_not_obtainable_flag~sex_refused_code~data_source_dwid' AS data_source_integration_columns
+                   , COALESCE( CAST( borrower.b_ethnicity_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_ethnicity_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_ethnicity_refused AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_information_not_provided AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_national_origin_refusal AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_refused AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_sex_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_sex_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_sex_refused AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
+                   , NOW( ) AS edw_created_datetime
+                   , NOW( ) AS edw_modified_datetime
+                   , MAX( borrower.data_source_updated_datetime ) AS data_source_modified_datetime
+                   , ethnicity_collected_visual_or_surname_type.value AS ethnicity_collected_visual_or_surname
+                   , borrower.b_ethnicity_collected_visual_or_surname AS ethnicity_collected_visual_or_surname_code
+                   , borrower.b_ethnicity_not_obtainable AS ethnicity_not_obtainable_flag
+                   , ethnicity_refused_type.value AS ethnicity_refused
+                   , borrower.b_ethnicity_refused AS ethnicity_refused_code
+                   , race_collected_visual_or_surname_type.value AS race_collected_visual_or_surname
+                   , borrower.b_race_collected_visual_or_surname AS race_collected_visual_or_surname_code
+                   , borrower.b_race_information_not_provided AS race_information_not_provided_flag
+                   , borrower.b_race_national_origin_refusal AS race_national_origin_refusal_flag
+                   , borrower.b_race_not_obtainable AS race_not_obtainable_flag
+                   , race_refused_type.value AS race_refused
+                   , borrower.b_race_refused AS race_refused_code
+                   , sex_collected_visual_or_surname_type.value AS sex_collected_visual_or_surname
+                   , borrower.b_sex_collected_visual_or_surname AS sex_collected_visual_or_surname_code
+                   , borrower.b_sex_not_obtainable AS sex_not_obtainable_flag
+                   , sex_refused_type.value AS sex_refused
+                   , borrower.b_sex_refused AS sex_refused_code
+                   , MAX( GREATEST( ethnicity_collected_visual_or_surname_type.etl_end_date_time, ethnicity_refused_type.etl_end_date_time,
+                                    race_collected_visual_or_surname_type.etl_end_date_time, race_refused_type.etl_end_date_time,
+                                    sex_collected_visual_or_surname_type.etl_end_date_time,
+                                    sex_refused_type.etl_end_date_time ) ) AS max_source_etl_end_date_time
               FROM (
-                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
-                       , yes_no_unknown_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.yes_no_unknown_type
-                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
-                            ON yes_no_unknown_type.code = history_records.code
-                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS ethnicity_collected_visual_or_surname_type
-               ON borrower.b_ethnicity_collected_visual_or_surname = ethnicity_collected_visual_or_surname_type.code
+                  SELECT <<borrower_partial_load_condition>> AS include_record
+                       , borrower.*
+                  FROM history_octane.borrower
+                  LEFT JOIN history_octane.borrower AS history_records
+                            ON borrower.b_pid = history_records.b_pid
+                                AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.b_pid IS NULL
+              ) AS borrower
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                           , yes_no_unknown_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.yes_no_unknown_type
+                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                                ON yes_no_unknown_type.code = history_records.code
+                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS ethnicity_collected_visual_or_surname_type
+                   ON borrower.b_ethnicity_collected_visual_or_surname = ethnicity_collected_visual_or_surname_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                           , yes_no_unknown_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.yes_no_unknown_type
+                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                                ON yes_no_unknown_type.code = history_records.code
+                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS ethnicity_refused_type
+                   ON borrower.b_ethnicity_refused = ethnicity_refused_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                           , yes_no_unknown_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.yes_no_unknown_type
+                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                                ON yes_no_unknown_type.code = history_records.code
+                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS race_collected_visual_or_surname_type
+                   ON borrower.b_race_collected_visual_or_surname = race_collected_visual_or_surname_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                           , yes_no_unknown_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.yes_no_unknown_type
+                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                                ON yes_no_unknown_type.code = history_records.code
+                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS race_refused_type
+                   ON borrower.b_race_refused = race_refused_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                           , yes_no_unknown_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.yes_no_unknown_type
+                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                                ON yes_no_unknown_type.code = history_records.code
+                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS sex_collected_visual_or_surname_type
+                   ON borrower.b_sex_collected_visual_or_surname = sex_collected_visual_or_surname_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                           , yes_no_unknown_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.yes_no_unknown_type
+                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                                ON yes_no_unknown_type.code = history_records.code
+                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS sex_refused_type
+                   ON borrower.b_sex_refused = sex_refused_type.code
+              WHERE GREATEST( ethnicity_collected_visual_or_surname_type.include_record, borrower.include_record,
+                              ethnicity_refused_type.include_record,
+                              race_collected_visual_or_surname_type.include_record, race_refused_type.include_record,
+                              sex_collected_visual_or_surname_type.include_record, sex_refused_type.include_record ) IS TRUE
+              GROUP BY ethnicity_collected_visual_or_surname_type.value, borrower.b_ethnicity_collected_visual_or_surname
+                     , borrower.b_ethnicity_not_obtainable, ethnicity_refused_type.value, borrower.b_ethnicity_refused
+                     , race_collected_visual_or_surname_type.value, borrower.b_race_collected_visual_or_surname
+                     , borrower.b_race_information_not_provided
+                     , borrower.b_race_national_origin_refusal, borrower.b_race_not_obtainable, race_refused_type.value, borrower.b_race_refused
+                     , sex_collected_visual_or_surname_type.value, borrower.b_sex_collected_visual_or_surname, borrower.b_sex_not_obtainable
+                     , sex_refused_type.value, borrower.b_sex_refused
+          )
+          --new records that should be inserted
+          SELECT borrower_hmda_collection_dim_new_records.*
+          FROM borrower_hmda_collection_dim_new_records
+          LEFT JOIN star_loan.borrower_hmda_collection_dim
+                    ON borrower_hmda_collection_dim_new_records.data_source_integration_id = borrower_hmda_collection_dim.data_source_integration_id
+          WHERE borrower_hmda_collection_dim.dwid IS NULL
+          UNION ALL
+          --existing records that need to be updated
+          SELECT borrower_hmda_collection_dim_new_records.*
+          FROM borrower_hmda_collection_dim_new_records
           JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
-                       , yes_no_unknown_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.yes_no_unknown_type
-                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
-                            ON yes_no_unknown_type.code = history_records.code
-                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS ethnicity_refused_type
-               ON borrower.b_ethnicity_refused = ethnicity_refused_type.code
-          JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
-                       , yes_no_unknown_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.yes_no_unknown_type
-                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
-                            ON yes_no_unknown_type.code = history_records.code
-                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS race_collected_visual_or_surname_type
-               ON borrower.b_race_collected_visual_or_surname = race_collected_visual_or_surname_type.code
-          JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
-                       , yes_no_unknown_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.yes_no_unknown_type
-                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
-                            ON yes_no_unknown_type.code = history_records.code
-                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS race_refused_type
-               ON borrower.b_race_refused = race_refused_type.code
-          JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
-                       , yes_no_unknown_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.yes_no_unknown_type
-                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
-                            ON yes_no_unknown_type.code = history_records.code
-                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS sex_collected_visual_or_surname_type
-               ON borrower.b_sex_collected_visual_or_surname = sex_collected_visual_or_surname_type.code
-          JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
-                       , yes_no_unknown_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.yes_no_unknown_type
-                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
-                            ON yes_no_unknown_type.code = history_records.code
-                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS sex_refused_type
-               ON borrower.b_sex_refused = sex_refused_type.code
-          WHERE GREATEST( ethnicity_collected_visual_or_surname_type.include_record, borrower.include_record,
-                          ethnicity_refused_type.include_record,
-                          race_collected_visual_or_surname_type.include_record, race_refused_type.include_record,
-                          sex_collected_visual_or_surname_type.include_record, sex_refused_type.include_record ) IS TRUE
-          GROUP BY ethnicity_collected_visual_or_surname_type.value, borrower.b_ethnicity_collected_visual_or_surname
-                 , borrower.b_ethnicity_not_obtainable, ethnicity_refused_type.value, borrower.b_ethnicity_refused
-                 , race_collected_visual_or_surname_type.value, borrower.b_race_collected_visual_or_surname
-                 , borrower.b_race_information_not_provided
-                 , borrower.b_race_national_origin_refusal, borrower.b_race_not_obtainable, race_refused_type.value, borrower.b_race_refused
-                 , sex_collected_visual_or_surname_type.value, borrower.b_sex_collected_visual_or_surname, borrower.b_sex_not_obtainable
-                 , sex_refused_type.value, borrower.b_sex_refused
-      )
-      --new records that should be inserted
-      SELECT borrower_hmda_collection_dim_new_records.*
-      FROM borrower_hmda_collection_dim_new_records
-      LEFT JOIN star_loan.borrower_hmda_collection_dim
-                ON borrower_hmda_collection_dim_new_records.data_source_integration_id = borrower_hmda_collection_dim.data_source_integration_id
-      WHERE borrower_hmda_collection_dim.dwid IS NULL
-      UNION ALL
-      --existing records that need to be updated
-      SELECT borrower_hmda_collection_dim_new_records.*
-      FROM borrower_hmda_collection_dim_new_records
-      JOIN (
-          SELECT borrower_hmda_collection_dim.data_source_integration_id, etl_log.etl_start_date_time
-          FROM star_loan.borrower_hmda_collection_dim
-          JOIN star_common.etl_log
-               ON borrower_hmda_collection_dim.etl_batch_id = etl_log.etl_batch_id
-      ) AS borrower_hmda_collection_dim_etl_start_times
-           ON borrower_hmda_collection_dim_new_records.data_source_integration_id =
-              borrower_hmda_collection_dim_etl_start_times.data_source_integration_id
-               AND borrower_hmda_collection_dim_new_records.max_source_etl_end_date_time >=
-                   borrower_hmda_collection_dim_etl_start_times.etl_start_date_time;
-next_etls:
-- SP-200005-update
+              SELECT borrower_hmda_collection_dim.data_source_integration_id, etl_log.etl_start_date_time
+              FROM star_loan.borrower_hmda_collection_dim
+              JOIN star_common.etl_log
+                   ON borrower_hmda_collection_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_hmda_collection_dim_etl_start_times
+               ON borrower_hmda_collection_dim_new_records.data_source_integration_id =
+                  borrower_hmda_collection_dim_etl_start_times.data_source_integration_id
+                   AND borrower_hmda_collection_dim_new_records.max_source_etl_end_date_time >=
+                       borrower_hmda_collection_dim_etl_start_times.etl_start_date_time;

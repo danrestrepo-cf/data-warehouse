@@ -47,42 +47,45 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.wdspu_wf_deal_step_pid
-etls:
+step_functions:
   SP-100861:
-    input_type: table
-    output_type: insert
-    json_output_field: wdspu_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.wf_deal_step_performer_unavailable
-      SELECT staging_table.wdspu_pid
-           , staging_table.wdspu_version
-           , staging_table.wdspu_lender_user_pid
-           , staging_table.wdspu_wf_deal_step_pid
-           , staging_table.wdspu_days_unavailable
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.wf_deal_step_performer_unavailable staging_table
-      LEFT JOIN history_octane.wf_deal_step_performer_unavailable history_table
-                ON staging_table.wdspu_pid = history_table.wdspu_pid
-                    AND staging_table.wdspu_version = history_table.wdspu_version
-      WHERE history_table.wdspu_pid IS NULL
-      UNION ALL
-      SELECT history_table.wdspu_pid
-           , history_table.wdspu_version + 1
-           , history_table.wdspu_lender_user_pid
-           , history_table.wdspu_wf_deal_step_pid
-           , history_table.wdspu_days_unavailable
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.wf_deal_step_performer_unavailable history_table
-      LEFT JOIN staging_octane.wf_deal_step_performer_unavailable staging_table
-                ON staging_table.wdspu_pid = history_table.wdspu_pid
-      WHERE staging_table.wdspu_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.wf_deal_step_performer_unavailable deleted_records
-          WHERE deleted_records.wdspu_pid = history_table.wdspu_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100861:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.wf_deal_step_performer_unavailable
+        json_output_field: wdspu_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.wf_deal_step_performer_unavailable
+          SELECT staging_table.wdspu_pid
+               , staging_table.wdspu_version
+               , staging_table.wdspu_lender_user_pid
+               , staging_table.wdspu_wf_deal_step_pid
+               , staging_table.wdspu_days_unavailable
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.wf_deal_step_performer_unavailable staging_table
+          LEFT JOIN history_octane.wf_deal_step_performer_unavailable history_table
+                    ON staging_table.wdspu_pid = history_table.wdspu_pid
+                        AND staging_table.wdspu_version = history_table.wdspu_version
+          WHERE history_table.wdspu_pid IS NULL
+          UNION ALL
+          SELECT history_table.wdspu_pid
+               , history_table.wdspu_version + 1
+               , history_table.wdspu_lender_user_pid
+               , history_table.wdspu_wf_deal_step_pid
+               , history_table.wdspu_days_unavailable
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.wf_deal_step_performer_unavailable history_table
+          LEFT JOIN staging_octane.wf_deal_step_performer_unavailable staging_table
+                    ON staging_table.wdspu_pid = history_table.wdspu_pid
+          WHERE staging_table.wdspu_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.wf_deal_step_performer_unavailable deleted_records
+              WHERE deleted_records.wdspu_pid = history_table.wdspu_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

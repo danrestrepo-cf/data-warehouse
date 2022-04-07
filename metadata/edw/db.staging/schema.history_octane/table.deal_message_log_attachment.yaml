@@ -43,40 +43,43 @@ columns:
       field: primary_source_table.columns.dmloga_version
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100872:
-    input_type: table
-    output_type: insert
-    json_output_field: dmloga_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_message_log_attachment
-      SELECT staging_table.dmloga_pid
-           , staging_table.dmloga_version
-           , staging_table.dmloga_deal_message_log_pid
-           , staging_table.dmloga_deal_file_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_message_log_attachment staging_table
-      LEFT JOIN history_octane.deal_message_log_attachment history_table
-                ON staging_table.dmloga_pid = history_table.dmloga_pid
-                    AND staging_table.dmloga_version = history_table.dmloga_version
-      WHERE history_table.dmloga_pid IS NULL
-      UNION ALL
-      SELECT history_table.dmloga_pid
-           , history_table.dmloga_version + 1
-           , history_table.dmloga_deal_message_log_pid
-           , history_table.dmloga_deal_file_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_message_log_attachment history_table
-      LEFT JOIN staging_octane.deal_message_log_attachment staging_table
-                ON staging_table.dmloga_pid = history_table.dmloga_pid
-      WHERE staging_table.dmloga_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_message_log_attachment deleted_records
-          WHERE deleted_records.dmloga_pid = history_table.dmloga_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100872:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_message_log_attachment
+        json_output_field: dmloga_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_message_log_attachment
+          SELECT staging_table.dmloga_pid
+               , staging_table.dmloga_version
+               , staging_table.dmloga_deal_message_log_pid
+               , staging_table.dmloga_deal_file_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_message_log_attachment staging_table
+          LEFT JOIN history_octane.deal_message_log_attachment history_table
+                    ON staging_table.dmloga_pid = history_table.dmloga_pid
+                        AND staging_table.dmloga_version = history_table.dmloga_version
+          WHERE history_table.dmloga_pid IS NULL
+          UNION ALL
+          SELECT history_table.dmloga_pid
+               , history_table.dmloga_version + 1
+               , history_table.dmloga_deal_message_log_pid
+               , history_table.dmloga_deal_file_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_message_log_attachment history_table
+          LEFT JOIN staging_octane.deal_message_log_attachment staging_table
+                    ON staging_table.dmloga_pid = history_table.dmloga_pid
+          WHERE staging_table.dmloga_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_message_log_attachment deleted_records
+              WHERE deleted_records.dmloga_pid = history_table.dmloga_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

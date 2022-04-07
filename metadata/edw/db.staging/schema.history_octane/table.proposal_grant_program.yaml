@@ -51,44 +51,47 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pgp_version
-etls:
+step_functions:
   SP-100168:
-    input_type: table
-    output_type: insert
-    json_output_field: pgp_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.proposal_grant_program
-      SELECT staging_table.pgp_pid
-           , staging_table.pgp_version
-           , staging_table.pgp_proposal_pid
-           , staging_table.pgp_account_grant_program_pid
-           , staging_table.pgp_grant_amount
-           , staging_table.pgp_snapshotted_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.proposal_grant_program staging_table
-      LEFT JOIN history_octane.proposal_grant_program history_table
-                ON staging_table.pgp_pid = history_table.pgp_pid
-                    AND staging_table.pgp_version = history_table.pgp_version
-      WHERE history_table.pgp_pid IS NULL
-      UNION ALL
-      SELECT history_table.pgp_pid
-           , history_table.pgp_version + 1
-           , history_table.pgp_proposal_pid
-           , history_table.pgp_account_grant_program_pid
-           , history_table.pgp_grant_amount
-           , history_table.pgp_snapshotted_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.proposal_grant_program history_table
-      LEFT JOIN staging_octane.proposal_grant_program staging_table
-                ON staging_table.pgp_pid = history_table.pgp_pid
-      WHERE staging_table.pgp_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.proposal_grant_program deleted_records
-          WHERE deleted_records.pgp_pid = history_table.pgp_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100168:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.proposal_grant_program
+        json_output_field: pgp_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.proposal_grant_program
+          SELECT staging_table.pgp_pid
+               , staging_table.pgp_version
+               , staging_table.pgp_proposal_pid
+               , staging_table.pgp_account_grant_program_pid
+               , staging_table.pgp_grant_amount
+               , staging_table.pgp_snapshotted_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.proposal_grant_program staging_table
+          LEFT JOIN history_octane.proposal_grant_program history_table
+                    ON staging_table.pgp_pid = history_table.pgp_pid
+                        AND staging_table.pgp_version = history_table.pgp_version
+          WHERE history_table.pgp_pid IS NULL
+          UNION ALL
+          SELECT history_table.pgp_pid
+               , history_table.pgp_version + 1
+               , history_table.pgp_proposal_pid
+               , history_table.pgp_account_grant_program_pid
+               , history_table.pgp_grant_amount
+               , history_table.pgp_snapshotted_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.proposal_grant_program history_table
+          LEFT JOIN staging_octane.proposal_grant_program staging_table
+                    ON staging_table.pgp_pid = history_table.pgp_pid
+          WHERE staging_table.pgp_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.proposal_grant_program deleted_records
+              WHERE deleted_records.pgp_pid = history_table.pgp_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

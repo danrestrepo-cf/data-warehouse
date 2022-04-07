@@ -83,64 +83,67 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100221:
-    input_type: table
-    output_type: insert
-    json_output_field: cu_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.custodian
-      SELECT staging_table.cu_pid
-           , staging_table.cu_version
-           , staging_table.cu_account_pid
-           , staging_table.cu_custodian_id
-           , staging_table.cu_custodian_name
-           , staging_table.cu_address_street1
-           , staging_table.cu_address_street2
-           , staging_table.cu_address_city
-           , staging_table.cu_address_state
-           , staging_table.cu_address_postal_code
-           , staging_table.cu_address_country
-           , staging_table.cu_custodian_phone
-           , staging_table.cu_custodian_mers_org_id
-           , staging_table.cu_whole_loan_fin
-           , staging_table.cu_mbs_loan_fin
-           , staging_table.cu_register_with_mers
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.custodian staging_table
-      LEFT JOIN history_octane.custodian history_table
-                ON staging_table.cu_pid = history_table.cu_pid
-                    AND staging_table.cu_version = history_table.cu_version
-      WHERE history_table.cu_pid IS NULL
-      UNION ALL
-      SELECT history_table.cu_pid
-           , history_table.cu_version + 1
-           , history_table.cu_account_pid
-           , history_table.cu_custodian_id
-           , history_table.cu_custodian_name
-           , history_table.cu_address_street1
-           , history_table.cu_address_street2
-           , history_table.cu_address_city
-           , history_table.cu_address_state
-           , history_table.cu_address_postal_code
-           , history_table.cu_address_country
-           , history_table.cu_custodian_phone
-           , history_table.cu_custodian_mers_org_id
-           , history_table.cu_whole_loan_fin
-           , history_table.cu_mbs_loan_fin
-           , history_table.cu_register_with_mers
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.custodian history_table
-      LEFT JOIN staging_octane.custodian staging_table
-                ON staging_table.cu_pid = history_table.cu_pid
-      WHERE staging_table.cu_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.custodian deleted_records
-          WHERE deleted_records.cu_pid = history_table.cu_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100221:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.custodian
+        json_output_field: cu_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.custodian
+          SELECT staging_table.cu_pid
+               , staging_table.cu_version
+               , staging_table.cu_account_pid
+               , staging_table.cu_custodian_id
+               , staging_table.cu_custodian_name
+               , staging_table.cu_address_street1
+               , staging_table.cu_address_street2
+               , staging_table.cu_address_city
+               , staging_table.cu_address_state
+               , staging_table.cu_address_postal_code
+               , staging_table.cu_address_country
+               , staging_table.cu_custodian_phone
+               , staging_table.cu_custodian_mers_org_id
+               , staging_table.cu_whole_loan_fin
+               , staging_table.cu_mbs_loan_fin
+               , staging_table.cu_register_with_mers
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.custodian staging_table
+          LEFT JOIN history_octane.custodian history_table
+                    ON staging_table.cu_pid = history_table.cu_pid
+                        AND staging_table.cu_version = history_table.cu_version
+          WHERE history_table.cu_pid IS NULL
+          UNION ALL
+          SELECT history_table.cu_pid
+               , history_table.cu_version + 1
+               , history_table.cu_account_pid
+               , history_table.cu_custodian_id
+               , history_table.cu_custodian_name
+               , history_table.cu_address_street1
+               , history_table.cu_address_street2
+               , history_table.cu_address_city
+               , history_table.cu_address_state
+               , history_table.cu_address_postal_code
+               , history_table.cu_address_country
+               , history_table.cu_custodian_phone
+               , history_table.cu_custodian_mers_org_id
+               , history_table.cu_whole_loan_fin
+               , history_table.cu_mbs_loan_fin
+               , history_table.cu_register_with_mers
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.custodian history_table
+          LEFT JOIN staging_octane.custodian staging_table
+                    ON staging_table.cu_pid = history_table.cu_pid
+          WHERE staging_table.cu_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.custodian deleted_records
+              WHERE deleted_records.cu_pid = history_table.cu_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

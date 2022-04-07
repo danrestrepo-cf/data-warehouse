@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100612 - ETL to insert records into staging.history_octane.polling_interval_type using staging.staging_octane.polling_interval_type as the primary source",
-    "StartAt": "SP-100612",
+    "StartAt": "ETL-100612",
     "States": {
-        "SP-100612": {
+        "ETL-100612": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100612"
+                                    "Value": "ETL-100612"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

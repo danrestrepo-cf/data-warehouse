@@ -51,44 +51,47 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.slpc_version
-etls:
+step_functions:
   SP-100212:
-    input_type: table
-    output_type: insert
-    json_output_field: slpc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.smart_ledger_plan_case
-      SELECT staging_table.slpc_pid
-           , staging_table.slpc_version
-           , staging_table.slpc_account_pid
-           , staging_table.slpc_smart_ledger_plan_case_group_pid
-           , staging_table.slpc_case_id
-           , staging_table.slpc_ordinal
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.smart_ledger_plan_case staging_table
-      LEFT JOIN history_octane.smart_ledger_plan_case history_table
-                ON staging_table.slpc_pid = history_table.slpc_pid
-                    AND staging_table.slpc_version = history_table.slpc_version
-      WHERE history_table.slpc_pid IS NULL
-      UNION ALL
-      SELECT history_table.slpc_pid
-           , history_table.slpc_version + 1
-           , history_table.slpc_account_pid
-           , history_table.slpc_smart_ledger_plan_case_group_pid
-           , history_table.slpc_case_id
-           , history_table.slpc_ordinal
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.smart_ledger_plan_case history_table
-      LEFT JOIN staging_octane.smart_ledger_plan_case staging_table
-                ON staging_table.slpc_pid = history_table.slpc_pid
-      WHERE staging_table.slpc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.smart_ledger_plan_case deleted_records
-          WHERE deleted_records.slpc_pid = history_table.slpc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100212:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.smart_ledger_plan_case
+        json_output_field: slpc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.smart_ledger_plan_case
+          SELECT staging_table.slpc_pid
+               , staging_table.slpc_version
+               , staging_table.slpc_account_pid
+               , staging_table.slpc_smart_ledger_plan_case_group_pid
+               , staging_table.slpc_case_id
+               , staging_table.slpc_ordinal
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.smart_ledger_plan_case staging_table
+          LEFT JOIN history_octane.smart_ledger_plan_case history_table
+                    ON staging_table.slpc_pid = history_table.slpc_pid
+                        AND staging_table.slpc_version = history_table.slpc_version
+          WHERE history_table.slpc_pid IS NULL
+          UNION ALL
+          SELECT history_table.slpc_pid
+               , history_table.slpc_version + 1
+               , history_table.slpc_account_pid
+               , history_table.slpc_smart_ledger_plan_case_group_pid
+               , history_table.slpc_case_id
+               , history_table.slpc_ordinal
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.smart_ledger_plan_case history_table
+          LEFT JOIN staging_octane.smart_ledger_plan_case staging_table
+                    ON staging_table.slpc_pid = history_table.slpc_pid
+          WHERE staging_table.slpc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.smart_ledger_plan_case deleted_records
+              WHERE deleted_records.slpc_pid = history_table.slpc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

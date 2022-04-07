@@ -1,8 +1,8 @@
 {
-    "Comment": "SP-200005-update - ETL to insert_update records into staging.star_loan.borrower_dim using staging.history_octane.borrower as the primary source",
-    "StartAt": "SP-200005-update",
+    "Comment": "SP-200022-insert - ETL to insert records into staging.star_loan.borrower_lkup using staging.history_octane.borrower as the primary source",
+    "StartAt": "ETL-200022-insert",
     "States": {
-        "SP-200005-update": {
+        "ETL-200022-insert": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -19,14 +19,14 @@
                     }
                 },
                 "Overrides": {
-                    "Memory": "4096",
+                    "Memory": "2048",
                     "ContainerOverrides": [
                         {
-                            "Memory": 4096,
+                            "Memory": 2048,
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-200005-update"
+                                    "Value": "ETL-200022-insert"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

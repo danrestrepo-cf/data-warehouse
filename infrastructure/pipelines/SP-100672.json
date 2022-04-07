@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100672 - ETL to insert records into staging.history_octane.underwrite_risk_assessment_type using staging.staging_octane.underwrite_risk_assessment_type as the primary source",
-    "StartAt": "SP-100672",
+    "StartAt": "ETL-100672",
     "States": {
-        "SP-100672": {
+        "ETL-100672": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100672"
+                                    "Value": "ETL-100672"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -26,26 +26,28 @@ class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
-        # The inclusion of star_* schema specific 'standard' fields and loan_lender_user_access fields in the below
-        # list is a temporary workaround.
+        # The inclusion of star_* schema specific 'standard' fields and other star_loan columns involved in insert-only
+        # ETLs in the below list is a TEMPORARY workaround.
         # Such fields should be removed from this script once they are parseable by python-utilities;
         # see task https://app.asana.com/0/0/1201468659414065 for more information.
-        standard_sourceless_fields = ['data_source_updated_datetime', 'data_source_deleted_flag', 'etl_batch_id',
-                                      'data_source_dwid', 'edw_created_datetime', 'edw_modified_datetime',
-                                      'data_source_integration_columns', 'data_source_integration_id',
-                                      'data_source_modified_datetime', 'octane_username', 'loan_dwid', 'account_pid']
+        temp_sourceless_fields = ['data_source_updated_datetime', 'data_source_deleted_flag', 'etl_batch_id',
+                                  'data_source_dwid', 'edw_created_datetime', 'edw_modified_datetime',
+                                  'data_source_integration_columns', 'data_source_integration_id',
+                                  'data_source_modified_datetime', 'octane_username', 'loan_dwid', 'account_pid',
+                                  'borrower_dwid', 'borrower_pid', 'borrower_hmda_collection_dwid']
         metadata_table = self.construct_empty_metadata_table()
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
-                    for etl in table.etls:
-                        if etl.output_type == ETLOutputType.INSERT:
-                            for column in table.columns:
-                                if column.source is not None or column.name in standard_sourceless_fields:
-                                    metadata_table.add_row({
-                                        'process_name': etl.process_name,
-                                        'database_field_name': column.name
-                                    })
+                    for step_function in table.step_functions:
+                        for etl in step_function.etls:
+                            if etl.output_type == ETLOutputType.INSERT:
+                                for column in table.columns:
+                                    if column.source is not None or column.name in temp_sourceless_fields:
+                                        metadata_table.add_row({
+                                            'process_name': etl.process_name,
+                                            'database_field_name': column.name
+                                        })
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:

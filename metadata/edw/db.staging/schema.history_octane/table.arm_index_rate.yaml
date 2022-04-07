@@ -39,42 +39,45 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100218:
-    input_type: table
-    output_type: insert
-    json_output_field: air_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.arm_index_rate
-      SELECT staging_table.air_pid
-           , staging_table.air_version
-           , staging_table.air_arm_index_type
-           , staging_table.air_effective_datetime
-           , staging_table.air_rate
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.arm_index_rate staging_table
-      LEFT JOIN history_octane.arm_index_rate history_table
-                ON staging_table.air_pid = history_table.air_pid
-                    AND staging_table.air_version = history_table.air_version
-      WHERE history_table.air_pid IS NULL
-      UNION ALL
-      SELECT history_table.air_pid
-           , history_table.air_version + 1
-           , history_table.air_arm_index_type
-           , history_table.air_effective_datetime
-           , history_table.air_rate
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.arm_index_rate history_table
-      LEFT JOIN staging_octane.arm_index_rate staging_table
-                ON staging_table.air_pid = history_table.air_pid
-      WHERE staging_table.air_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.arm_index_rate deleted_records
-          WHERE deleted_records.air_pid = history_table.air_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100218:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.arm_index_rate
+        json_output_field: air_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.arm_index_rate
+          SELECT staging_table.air_pid
+               , staging_table.air_version
+               , staging_table.air_arm_index_type
+               , staging_table.air_effective_datetime
+               , staging_table.air_rate
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.arm_index_rate staging_table
+          LEFT JOIN history_octane.arm_index_rate history_table
+                    ON staging_table.air_pid = history_table.air_pid
+                        AND staging_table.air_version = history_table.air_version
+          WHERE history_table.air_pid IS NULL
+          UNION ALL
+          SELECT history_table.air_pid
+               , history_table.air_version + 1
+               , history_table.air_arm_index_type
+               , history_table.air_effective_datetime
+               , history_table.air_rate
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.arm_index_rate history_table
+          LEFT JOIN staging_octane.arm_index_rate staging_table
+                    ON staging_table.air_pid = history_table.air_pid
+          WHERE staging_table.air_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.arm_index_rate deleted_records
+              WHERE deleted_records.air_pid = history_table.air_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

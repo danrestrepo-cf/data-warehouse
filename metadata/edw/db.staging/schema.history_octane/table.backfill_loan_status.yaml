@@ -67,52 +67,55 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100272:
-    input_type: table
-    output_type: insert
-    json_output_field: bfls_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.backfill_loan_status
-      SELECT staging_table.bfls_pid
-           , staging_table.bfls_version
-           , staging_table.bfls_backfill_status_pid
-           , staging_table.bfls_los_loan_id
-           , staging_table.bfls_started_datetime
-           , staging_table.bfls_completed_datetime
-           , staging_table.bfls_backfill_status_type
-           , staging_table.bfls_failure_info
-           , staging_table.bfls_raw_loan_row
-           , staging_table.bfls_warning_info
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.backfill_loan_status staging_table
-      LEFT JOIN history_octane.backfill_loan_status history_table
-                ON staging_table.bfls_pid = history_table.bfls_pid
-                    AND staging_table.bfls_version = history_table.bfls_version
-      WHERE history_table.bfls_pid IS NULL
-      UNION ALL
-      SELECT history_table.bfls_pid
-           , history_table.bfls_version + 1
-           , history_table.bfls_backfill_status_pid
-           , history_table.bfls_los_loan_id
-           , history_table.bfls_started_datetime
-           , history_table.bfls_completed_datetime
-           , history_table.bfls_backfill_status_type
-           , history_table.bfls_failure_info
-           , history_table.bfls_raw_loan_row
-           , history_table.bfls_warning_info
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.backfill_loan_status history_table
-      LEFT JOIN staging_octane.backfill_loan_status staging_table
-                ON staging_table.bfls_pid = history_table.bfls_pid
-      WHERE staging_table.bfls_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.backfill_loan_status deleted_records
-          WHERE deleted_records.bfls_pid = history_table.bfls_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100272:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.backfill_loan_status
+        json_output_field: bfls_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.backfill_loan_status
+          SELECT staging_table.bfls_pid
+               , staging_table.bfls_version
+               , staging_table.bfls_backfill_status_pid
+               , staging_table.bfls_los_loan_id
+               , staging_table.bfls_started_datetime
+               , staging_table.bfls_completed_datetime
+               , staging_table.bfls_backfill_status_type
+               , staging_table.bfls_failure_info
+               , staging_table.bfls_raw_loan_row
+               , staging_table.bfls_warning_info
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.backfill_loan_status staging_table
+          LEFT JOIN history_octane.backfill_loan_status history_table
+                    ON staging_table.bfls_pid = history_table.bfls_pid
+                        AND staging_table.bfls_version = history_table.bfls_version
+          WHERE history_table.bfls_pid IS NULL
+          UNION ALL
+          SELECT history_table.bfls_pid
+               , history_table.bfls_version + 1
+               , history_table.bfls_backfill_status_pid
+               , history_table.bfls_los_loan_id
+               , history_table.bfls_started_datetime
+               , history_table.bfls_completed_datetime
+               , history_table.bfls_backfill_status_type
+               , history_table.bfls_failure_info
+               , history_table.bfls_raw_loan_row
+               , history_table.bfls_warning_info
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.backfill_loan_status history_table
+          LEFT JOIN staging_octane.backfill_loan_status staging_table
+                    ON staging_table.bfls_pid = history_table.bfls_pid
+          WHERE staging_table.bfls_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.backfill_loan_status deleted_records
+              WHERE deleted_records.bfls_pid = history_table.bfls_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

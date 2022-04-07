@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100750 - ETL to insert records into staging.history_octane.hve_confidence_level_type using staging.staging_octane.hve_confidence_level_type as the primary source",
-    "StartAt": "SP-100750",
+    "StartAt": "ETL-100750",
     "States": {
-        "SP-100750": {
+        "ETL-100750": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100750"
+                                    "Value": "ETL-100750"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -35,40 +35,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ofg_version
-etls:
+step_functions:
   SP-100003:
-    input_type: table
-    output_type: insert
-    json_output_field: ofg_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.offering_group
-      SELECT staging_table.ofg_pid
-           , staging_table.ofg_version
-           , staging_table.ofg_account_pid
-           , staging_table.ofg_name
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.offering_group staging_table
-      LEFT JOIN history_octane.offering_group history_table
-                ON staging_table.ofg_pid = history_table.ofg_pid
-                    AND staging_table.ofg_version = history_table.ofg_version
-      WHERE history_table.ofg_pid IS NULL
-      UNION ALL
-      SELECT history_table.ofg_pid
-           , history_table.ofg_version + 1
-           , history_table.ofg_account_pid
-           , history_table.ofg_name
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.offering_group history_table
-      LEFT JOIN staging_octane.offering_group staging_table
-                ON staging_table.ofg_pid = history_table.ofg_pid
-      WHERE staging_table.ofg_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.offering_group deleted_records
-          WHERE deleted_records.ofg_pid = history_table.ofg_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100003:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.offering_group
+        json_output_field: ofg_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.offering_group
+          SELECT staging_table.ofg_pid
+               , staging_table.ofg_version
+               , staging_table.ofg_account_pid
+               , staging_table.ofg_name
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.offering_group staging_table
+          LEFT JOIN history_octane.offering_group history_table
+                    ON staging_table.ofg_pid = history_table.ofg_pid
+                        AND staging_table.ofg_version = history_table.ofg_version
+          WHERE history_table.ofg_pid IS NULL
+          UNION ALL
+          SELECT history_table.ofg_pid
+               , history_table.ofg_version + 1
+               , history_table.ofg_account_pid
+               , history_table.ofg_name
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.offering_group history_table
+          LEFT JOIN staging_octane.offering_group staging_table
+                    ON staging_table.ofg_pid = history_table.ofg_pid
+          WHERE staging_table.ofg_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.offering_group deleted_records
+              WHERE deleted_records.ofg_pid = history_table.ofg_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

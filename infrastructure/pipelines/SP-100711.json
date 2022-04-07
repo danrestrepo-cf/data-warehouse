@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100711 - ETL to insert records into staging.history_octane.appraisal_entry_contact_type using staging.staging_octane.appraisal_entry_contact_type as the primary source",
-    "StartAt": "SP-100711",
+    "StartAt": "ETL-100711",
     "States": {
-        "SP-100711": {
+        "ETL-100711": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100711"
+                                    "Value": "ETL-100711"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

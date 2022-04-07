@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100112 - ETL to insert records into staging.history_octane.product_lock_term using staging.staging_octane.product_lock_term as the primary source",
-    "StartAt": "SP-100112",
+    "StartAt": "ETL-100112",
     "States": {
-        "SP-100112": {
+        "ETL-100112": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100112"
+                                    "Value": "ETL-100112"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

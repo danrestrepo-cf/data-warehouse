@@ -43,40 +43,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.tp_version
-etls:
+step_functions:
   SP-100354:
-    input_type: table
-    output_type: insert
-    json_output_field: tp_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.trade_product
-      SELECT staging_table.tp_pid
-           , staging_table.tp_version
-           , staging_table.tp_product_pid
-           , staging_table.tp_trade_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.trade_product staging_table
-      LEFT JOIN history_octane.trade_product history_table
-                ON staging_table.tp_pid = history_table.tp_pid
-                    AND staging_table.tp_version = history_table.tp_version
-      WHERE history_table.tp_pid IS NULL
-      UNION ALL
-      SELECT history_table.tp_pid
-           , history_table.tp_version + 1
-           , history_table.tp_product_pid
-           , history_table.tp_trade_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.trade_product history_table
-      LEFT JOIN staging_octane.trade_product staging_table
-                ON staging_table.tp_pid = history_table.tp_pid
-      WHERE staging_table.tp_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.trade_product deleted_records
-          WHERE deleted_records.tp_pid = history_table.tp_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100354:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.trade_product
+        json_output_field: tp_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.trade_product
+          SELECT staging_table.tp_pid
+               , staging_table.tp_version
+               , staging_table.tp_product_pid
+               , staging_table.tp_trade_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.trade_product staging_table
+          LEFT JOIN history_octane.trade_product history_table
+                    ON staging_table.tp_pid = history_table.tp_pid
+                        AND staging_table.tp_version = history_table.tp_version
+          WHERE history_table.tp_pid IS NULL
+          UNION ALL
+          SELECT history_table.tp_pid
+               , history_table.tp_version + 1
+               , history_table.tp_product_pid
+               , history_table.tp_trade_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.trade_product history_table
+          LEFT JOIN staging_octane.trade_product staging_table
+                    ON staging_table.tp_pid = history_table.tp_pid
+          WHERE staging_table.tp_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.trade_product deleted_records
+              WHERE deleted_records.tp_pid = history_table.tp_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

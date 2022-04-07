@@ -263,110 +263,113 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.il_version
-etls:
+step_functions:
   SP-100348:
-    input_type: table
-    output_type: insert
-    json_output_field: il_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.investor_lock
-      SELECT staging_table.il_pid
-           , staging_table.il_version
-           , staging_table.il_lender_lock_major_pid
-           , staging_table.il_product_terms_pid
-           , staging_table.il_mortgage_type
-           , staging_table.il_interest_only_type
-           , staging_table.il_buydown_schedule_type
-           , staging_table.il_prepay_penalty_schedule_type
-           , staging_table.il_lock_commitment_type
-           , staging_table.il_initial_duration_days
-           , staging_table.il_commitment_datetime
-           , staging_table.il_initial_commitment_expiration_datetime
-           , staging_table.il_effective_commitment_expiration_datetime
-           , staging_table.il_effective_duration_days
-           , staging_table.il_cancel_datetime
-           , staging_table.il_cancel_lender_user_pid
-           , staging_table.il_cancel_unparsed_name
-           , staging_table.il_confirm_datetime
-           , staging_table.il_confirm_lender_user_pid
-           , staging_table.il_confirm_unparsed_name
-           , staging_table.il_requester_lender_user_pid
-           , staging_table.il_requester_unparsed_name
-           , staging_table.il_request_datetime
-           , staging_table.il_notes
-           , staging_table.il_investor_base_note_rate_percent
-           , staging_table.il_investor_base_arm_margin_percent
-           , staging_table.il_investor_base_price_percent
-           , staging_table.il_lock_note_rate_percent
-           , staging_table.il_lock_initial_note_rate_percent
-           , staging_table.il_lock_arm_margin_percent
-           , staging_table.il_lock_price_percent
-           , staging_table.il_lock_price_raw_percent
-           , staging_table.il_maximum_rebate_percent
-           , staging_table.il_trade_pid
-           , staging_table.il_hedging
-           , staging_table.il_investor_lock_status_type
-           , staging_table.il_investor_loan_id
-           , staging_table.il_required_delivery_datetime
-           , staging_table.il_investor_commitment_id
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.investor_lock staging_table
-      LEFT JOIN history_octane.investor_lock history_table
-                ON staging_table.il_pid = history_table.il_pid
-                    AND staging_table.il_version = history_table.il_version
-      WHERE history_table.il_pid IS NULL
-      UNION ALL
-      SELECT history_table.il_pid
-           , history_table.il_version + 1
-           , history_table.il_lender_lock_major_pid
-           , history_table.il_product_terms_pid
-           , history_table.il_mortgage_type
-           , history_table.il_interest_only_type
-           , history_table.il_buydown_schedule_type
-           , history_table.il_prepay_penalty_schedule_type
-           , history_table.il_lock_commitment_type
-           , history_table.il_initial_duration_days
-           , history_table.il_commitment_datetime
-           , history_table.il_initial_commitment_expiration_datetime
-           , history_table.il_effective_commitment_expiration_datetime
-           , history_table.il_effective_duration_days
-           , history_table.il_cancel_datetime
-           , history_table.il_cancel_lender_user_pid
-           , history_table.il_cancel_unparsed_name
-           , history_table.il_confirm_datetime
-           , history_table.il_confirm_lender_user_pid
-           , history_table.il_confirm_unparsed_name
-           , history_table.il_requester_lender_user_pid
-           , history_table.il_requester_unparsed_name
-           , history_table.il_request_datetime
-           , history_table.il_notes
-           , history_table.il_investor_base_note_rate_percent
-           , history_table.il_investor_base_arm_margin_percent
-           , history_table.il_investor_base_price_percent
-           , history_table.il_lock_note_rate_percent
-           , history_table.il_lock_initial_note_rate_percent
-           , history_table.il_lock_arm_margin_percent
-           , history_table.il_lock_price_percent
-           , history_table.il_lock_price_raw_percent
-           , history_table.il_maximum_rebate_percent
-           , history_table.il_trade_pid
-           , history_table.il_hedging
-           , history_table.il_investor_lock_status_type
-           , history_table.il_investor_loan_id
-           , history_table.il_required_delivery_datetime
-           , history_table.il_investor_commitment_id
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.investor_lock history_table
-      LEFT JOIN staging_octane.investor_lock staging_table
-                ON staging_table.il_pid = history_table.il_pid
-      WHERE staging_table.il_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.investor_lock deleted_records
-          WHERE deleted_records.il_pid = history_table.il_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100348:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.investor_lock
+        json_output_field: il_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.investor_lock
+          SELECT staging_table.il_pid
+               , staging_table.il_version
+               , staging_table.il_lender_lock_major_pid
+               , staging_table.il_product_terms_pid
+               , staging_table.il_mortgage_type
+               , staging_table.il_interest_only_type
+               , staging_table.il_buydown_schedule_type
+               , staging_table.il_prepay_penalty_schedule_type
+               , staging_table.il_lock_commitment_type
+               , staging_table.il_initial_duration_days
+               , staging_table.il_commitment_datetime
+               , staging_table.il_initial_commitment_expiration_datetime
+               , staging_table.il_effective_commitment_expiration_datetime
+               , staging_table.il_effective_duration_days
+               , staging_table.il_cancel_datetime
+               , staging_table.il_cancel_lender_user_pid
+               , staging_table.il_cancel_unparsed_name
+               , staging_table.il_confirm_datetime
+               , staging_table.il_confirm_lender_user_pid
+               , staging_table.il_confirm_unparsed_name
+               , staging_table.il_requester_lender_user_pid
+               , staging_table.il_requester_unparsed_name
+               , staging_table.il_request_datetime
+               , staging_table.il_notes
+               , staging_table.il_investor_base_note_rate_percent
+               , staging_table.il_investor_base_arm_margin_percent
+               , staging_table.il_investor_base_price_percent
+               , staging_table.il_lock_note_rate_percent
+               , staging_table.il_lock_initial_note_rate_percent
+               , staging_table.il_lock_arm_margin_percent
+               , staging_table.il_lock_price_percent
+               , staging_table.il_lock_price_raw_percent
+               , staging_table.il_maximum_rebate_percent
+               , staging_table.il_trade_pid
+               , staging_table.il_hedging
+               , staging_table.il_investor_lock_status_type
+               , staging_table.il_investor_loan_id
+               , staging_table.il_required_delivery_datetime
+               , staging_table.il_investor_commitment_id
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.investor_lock staging_table
+          LEFT JOIN history_octane.investor_lock history_table
+                    ON staging_table.il_pid = history_table.il_pid
+                        AND staging_table.il_version = history_table.il_version
+          WHERE history_table.il_pid IS NULL
+          UNION ALL
+          SELECT history_table.il_pid
+               , history_table.il_version + 1
+               , history_table.il_lender_lock_major_pid
+               , history_table.il_product_terms_pid
+               , history_table.il_mortgage_type
+               , history_table.il_interest_only_type
+               , history_table.il_buydown_schedule_type
+               , history_table.il_prepay_penalty_schedule_type
+               , history_table.il_lock_commitment_type
+               , history_table.il_initial_duration_days
+               , history_table.il_commitment_datetime
+               , history_table.il_initial_commitment_expiration_datetime
+               , history_table.il_effective_commitment_expiration_datetime
+               , history_table.il_effective_duration_days
+               , history_table.il_cancel_datetime
+               , history_table.il_cancel_lender_user_pid
+               , history_table.il_cancel_unparsed_name
+               , history_table.il_confirm_datetime
+               , history_table.il_confirm_lender_user_pid
+               , history_table.il_confirm_unparsed_name
+               , history_table.il_requester_lender_user_pid
+               , history_table.il_requester_unparsed_name
+               , history_table.il_request_datetime
+               , history_table.il_notes
+               , history_table.il_investor_base_note_rate_percent
+               , history_table.il_investor_base_arm_margin_percent
+               , history_table.il_investor_base_price_percent
+               , history_table.il_lock_note_rate_percent
+               , history_table.il_lock_initial_note_rate_percent
+               , history_table.il_lock_arm_margin_percent
+               , history_table.il_lock_price_percent
+               , history_table.il_lock_price_raw_percent
+               , history_table.il_maximum_rebate_percent
+               , history_table.il_trade_pid
+               , history_table.il_hedging
+               , history_table.il_investor_lock_status_type
+               , history_table.il_investor_loan_id
+               , history_table.il_required_delivery_datetime
+               , history_table.il_investor_commitment_id
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.investor_lock history_table
+          LEFT JOIN staging_octane.investor_lock staging_table
+                    ON staging_table.il_pid = history_table.il_pid
+          WHERE staging_table.il_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.investor_lock deleted_records
+              WHERE deleted_records.il_pid = history_table.il_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

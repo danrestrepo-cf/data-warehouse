@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100453 - ETL to insert records into staging.history_octane.credit_bureau_type using staging.staging_octane.credit_bureau_type as the primary source",
-    "StartAt": "SP-100453",
+    "StartAt": "ETL-100453",
     "States": {
-        "SP-100453": {
+        "ETL-100453": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100453"
+                                    "Value": "ETL-100453"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

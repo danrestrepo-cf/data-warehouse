@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100087 - ETL to insert records into staging.history_octane.deal_summary using staging.staging_octane.deal_summary as the primary source",
-    "StartAt": "SP-100087",
+    "StartAt": "ETL-100087",
     "States": {
-        "SP-100087": {
+        "ETL-100087": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100087"
+                                    "Value": "ETL-100087"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

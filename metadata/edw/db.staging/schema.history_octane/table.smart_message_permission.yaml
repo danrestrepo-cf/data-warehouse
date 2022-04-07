@@ -55,42 +55,45 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.smp_version
-etls:
+step_functions:
   SP-100860:
-    input_type: table
-    output_type: insert
-    json_output_field: smp_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.smart_message_permission
-      SELECT staging_table.smp_pid
-           , staging_table.smp_version
-           , staging_table.smp_smart_message_pid
-           , staging_table.smp_role_pid
-           , staging_table.smp_permission_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.smart_message_permission staging_table
-      LEFT JOIN history_octane.smart_message_permission history_table
-                ON staging_table.smp_pid = history_table.smp_pid
-                    AND staging_table.smp_version = history_table.smp_version
-      WHERE history_table.smp_pid IS NULL
-      UNION ALL
-      SELECT history_table.smp_pid
-           , history_table.smp_version + 1
-           , history_table.smp_smart_message_pid
-           , history_table.smp_role_pid
-           , history_table.smp_permission_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.smart_message_permission history_table
-      LEFT JOIN staging_octane.smart_message_permission staging_table
-                ON staging_table.smp_pid = history_table.smp_pid
-      WHERE staging_table.smp_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.smart_message_permission deleted_records
-          WHERE deleted_records.smp_pid = history_table.smp_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100860:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.smart_message_permission
+        json_output_field: smp_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.smart_message_permission
+          SELECT staging_table.smp_pid
+               , staging_table.smp_version
+               , staging_table.smp_smart_message_pid
+               , staging_table.smp_role_pid
+               , staging_table.smp_permission_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.smart_message_permission staging_table
+          LEFT JOIN history_octane.smart_message_permission history_table
+                    ON staging_table.smp_pid = history_table.smp_pid
+                        AND staging_table.smp_version = history_table.smp_version
+          WHERE history_table.smp_pid IS NULL
+          UNION ALL
+          SELECT history_table.smp_pid
+               , history_table.smp_version + 1
+               , history_table.smp_smart_message_pid
+               , history_table.smp_role_pid
+               , history_table.smp_permission_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.smart_message_permission history_table
+          LEFT JOIN staging_octane.smart_message_permission staging_table
+                    ON staging_table.smp_pid = history_table.smp_pid
+          WHERE staging_table.smp_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.smart_message_permission deleted_records
+              WHERE deleted_records.smp_pid = history_table.smp_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

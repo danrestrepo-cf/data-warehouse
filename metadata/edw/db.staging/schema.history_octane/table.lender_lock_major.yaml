@@ -243,104 +243,107 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.llmj_void_unparsed_name
-etls:
+step_functions:
   SP-100151:
-    input_type: table
-    output_type: insert
-    json_output_field: llmj_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.lender_lock_major
-      SELECT staging_table.llmj_pid
-           , staging_table.llmj_version
-           , staging_table.llmj_major_version
-           , staging_table.llmj_lender_lock_id
-           , staging_table.llmj_loan_pid
-           , staging_table.llmj_lien_priority_type
-           , staging_table.llmj_account_pid
-           , staging_table.llmj_lock_datetime
-           , staging_table.llmj_initial_duration_days
-           , staging_table.llmj_initial_lock_expiration_datetime
-           , staging_table.llmj_requester_agent_type
-           , staging_table.llmj_requester_lender_user_pid
-           , staging_table.llmj_requester_unparsed_name
-           , staging_table.llmj_request_datetime
-           , staging_table.llmj_confirm_datetime
-           , staging_table.llmj_confirm_lender_user_pid
-           , staging_table.llmj_confirm_unparsed_name
-           , staging_table.llmj_void_request_datetime
-           , staging_table.llmj_void_request_lender_user_pid
-           , staging_table.llmj_void_request_unparsed_name
-           , staging_table.llmj_void_datetime
-           , staging_table.llmj_void_lender_user_pid
-           , staging_table.llmj_void_unparsed_name
-           , staging_table.llmj_cancel_datetime
-           , staging_table.llmj_cancel_lender_user_pid
-           , staging_table.llmj_cancel_unparsed_name
-           , staging_table.llmj_auto_confirmed
-           , staging_table.llmj_active
-           , staging_table.llmj_relock_fee_percent
-           , staging_table.llmj_notes
-           , staging_table.llmj_lender_concession_approved_amount
-           , staging_table.llmj_clear_extension_fees_relock
-           , staging_table.llmj_pricing_duration_days
-           , staging_table.llmj_pricing_commitment_type
-           , staging_table.llmj_expired_lock_successor
-           , staging_table.llmj_lock_series_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.lender_lock_major staging_table
-      LEFT JOIN history_octane.lender_lock_major history_table
-                ON staging_table.llmj_pid = history_table.llmj_pid
-                    AND staging_table.llmj_version = history_table.llmj_version
-      WHERE history_table.llmj_pid IS NULL
-      UNION ALL
-      SELECT history_table.llmj_pid
-           , history_table.llmj_version + 1
-           , history_table.llmj_major_version
-           , history_table.llmj_lender_lock_id
-           , history_table.llmj_loan_pid
-           , history_table.llmj_lien_priority_type
-           , history_table.llmj_account_pid
-           , history_table.llmj_lock_datetime
-           , history_table.llmj_initial_duration_days
-           , history_table.llmj_initial_lock_expiration_datetime
-           , history_table.llmj_requester_agent_type
-           , history_table.llmj_requester_lender_user_pid
-           , history_table.llmj_requester_unparsed_name
-           , history_table.llmj_request_datetime
-           , history_table.llmj_confirm_datetime
-           , history_table.llmj_confirm_lender_user_pid
-           , history_table.llmj_confirm_unparsed_name
-           , history_table.llmj_void_request_datetime
-           , history_table.llmj_void_request_lender_user_pid
-           , history_table.llmj_void_request_unparsed_name
-           , history_table.llmj_void_datetime
-           , history_table.llmj_void_lender_user_pid
-           , history_table.llmj_void_unparsed_name
-           , history_table.llmj_cancel_datetime
-           , history_table.llmj_cancel_lender_user_pid
-           , history_table.llmj_cancel_unparsed_name
-           , history_table.llmj_auto_confirmed
-           , history_table.llmj_active
-           , history_table.llmj_relock_fee_percent
-           , history_table.llmj_notes
-           , history_table.llmj_lender_concession_approved_amount
-           , history_table.llmj_clear_extension_fees_relock
-           , history_table.llmj_pricing_duration_days
-           , history_table.llmj_pricing_commitment_type
-           , history_table.llmj_expired_lock_successor
-           , history_table.llmj_lock_series_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.lender_lock_major history_table
-      LEFT JOIN staging_octane.lender_lock_major staging_table
-                ON staging_table.llmj_pid = history_table.llmj_pid
-      WHERE staging_table.llmj_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.lender_lock_major deleted_records
-          WHERE deleted_records.llmj_pid = history_table.llmj_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100151:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.lender_lock_major
+        json_output_field: llmj_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.lender_lock_major
+          SELECT staging_table.llmj_pid
+               , staging_table.llmj_version
+               , staging_table.llmj_major_version
+               , staging_table.llmj_lender_lock_id
+               , staging_table.llmj_loan_pid
+               , staging_table.llmj_lien_priority_type
+               , staging_table.llmj_account_pid
+               , staging_table.llmj_lock_datetime
+               , staging_table.llmj_initial_duration_days
+               , staging_table.llmj_initial_lock_expiration_datetime
+               , staging_table.llmj_requester_agent_type
+               , staging_table.llmj_requester_lender_user_pid
+               , staging_table.llmj_requester_unparsed_name
+               , staging_table.llmj_request_datetime
+               , staging_table.llmj_confirm_datetime
+               , staging_table.llmj_confirm_lender_user_pid
+               , staging_table.llmj_confirm_unparsed_name
+               , staging_table.llmj_void_request_datetime
+               , staging_table.llmj_void_request_lender_user_pid
+               , staging_table.llmj_void_request_unparsed_name
+               , staging_table.llmj_void_datetime
+               , staging_table.llmj_void_lender_user_pid
+               , staging_table.llmj_void_unparsed_name
+               , staging_table.llmj_cancel_datetime
+               , staging_table.llmj_cancel_lender_user_pid
+               , staging_table.llmj_cancel_unparsed_name
+               , staging_table.llmj_auto_confirmed
+               , staging_table.llmj_active
+               , staging_table.llmj_relock_fee_percent
+               , staging_table.llmj_notes
+               , staging_table.llmj_lender_concession_approved_amount
+               , staging_table.llmj_clear_extension_fees_relock
+               , staging_table.llmj_pricing_duration_days
+               , staging_table.llmj_pricing_commitment_type
+               , staging_table.llmj_expired_lock_successor
+               , staging_table.llmj_lock_series_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.lender_lock_major staging_table
+          LEFT JOIN history_octane.lender_lock_major history_table
+                    ON staging_table.llmj_pid = history_table.llmj_pid
+                        AND staging_table.llmj_version = history_table.llmj_version
+          WHERE history_table.llmj_pid IS NULL
+          UNION ALL
+          SELECT history_table.llmj_pid
+               , history_table.llmj_version + 1
+               , history_table.llmj_major_version
+               , history_table.llmj_lender_lock_id
+               , history_table.llmj_loan_pid
+               , history_table.llmj_lien_priority_type
+               , history_table.llmj_account_pid
+               , history_table.llmj_lock_datetime
+               , history_table.llmj_initial_duration_days
+               , history_table.llmj_initial_lock_expiration_datetime
+               , history_table.llmj_requester_agent_type
+               , history_table.llmj_requester_lender_user_pid
+               , history_table.llmj_requester_unparsed_name
+               , history_table.llmj_request_datetime
+               , history_table.llmj_confirm_datetime
+               , history_table.llmj_confirm_lender_user_pid
+               , history_table.llmj_confirm_unparsed_name
+               , history_table.llmj_void_request_datetime
+               , history_table.llmj_void_request_lender_user_pid
+               , history_table.llmj_void_request_unparsed_name
+               , history_table.llmj_void_datetime
+               , history_table.llmj_void_lender_user_pid
+               , history_table.llmj_void_unparsed_name
+               , history_table.llmj_cancel_datetime
+               , history_table.llmj_cancel_lender_user_pid
+               , history_table.llmj_cancel_unparsed_name
+               , history_table.llmj_auto_confirmed
+               , history_table.llmj_active
+               , history_table.llmj_relock_fee_percent
+               , history_table.llmj_notes
+               , history_table.llmj_lender_concession_approved_amount
+               , history_table.llmj_clear_extension_fees_relock
+               , history_table.llmj_pricing_duration_days
+               , history_table.llmj_pricing_commitment_type
+               , history_table.llmj_expired_lock_successor
+               , history_table.llmj_lock_series_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.lender_lock_major history_table
+          LEFT JOIN staging_octane.lender_lock_major staging_table
+                    ON staging_table.llmj_pid = history_table.llmj_pid
+          WHERE staging_table.llmj_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.lender_lock_major deleted_records
+              WHERE deleted_records.llmj_pid = history_table.llmj_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

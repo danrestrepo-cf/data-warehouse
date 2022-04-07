@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100178 - ETL to insert records into staging.history_octane.smart_doc_role using staging.staging_octane.smart_doc_role as the primary source",
-    "StartAt": "SP-100178",
+    "StartAt": "ETL-100178",
     "States": {
-        "SP-100178": {
+        "ETL-100178": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100178"
+                                    "Value": "ETL-100178"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

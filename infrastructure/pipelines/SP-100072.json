@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100072 - ETL to insert records into staging.history_octane.creditor using staging.staging_octane.creditor as the primary source",
-    "StartAt": "SP-100072",
+    "StartAt": "ETL-100072",
     "States": {
-        "SP-100072": {
+        "ETL-100072": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100072"
+                                    "Value": "ETL-100072"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -47,46 +47,49 @@ columns:
       field: primary_source_table.columns.enstq_yes_no_answer
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100143:
-    input_type: table
-    output_type: insert
-    json_output_field: enstq_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.ernst_request_question
-      SELECT staging_table.enstq_pid
-           , staging_table.enstq_version
-           , staging_table.enstq_ernst_request_pid
-           , staging_table.enstq_ernst_question_id
-           , staging_table.enstq_question
-           , staging_table.enstq_yes_no_answer
-           , staging_table.enstq_answer
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.ernst_request_question staging_table
-      LEFT JOIN history_octane.ernst_request_question history_table
-                ON staging_table.enstq_pid = history_table.enstq_pid
-                    AND staging_table.enstq_version = history_table.enstq_version
-      WHERE history_table.enstq_pid IS NULL
-      UNION ALL
-      SELECT history_table.enstq_pid
-           , history_table.enstq_version + 1
-           , history_table.enstq_ernst_request_pid
-           , history_table.enstq_ernst_question_id
-           , history_table.enstq_question
-           , history_table.enstq_yes_no_answer
-           , history_table.enstq_answer
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.ernst_request_question history_table
-      LEFT JOIN staging_octane.ernst_request_question staging_table
-                ON staging_table.enstq_pid = history_table.enstq_pid
-      WHERE staging_table.enstq_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.ernst_request_question deleted_records
-          WHERE deleted_records.enstq_pid = history_table.enstq_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100143:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.ernst_request_question
+        json_output_field: enstq_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.ernst_request_question
+          SELECT staging_table.enstq_pid
+               , staging_table.enstq_version
+               , staging_table.enstq_ernst_request_pid
+               , staging_table.enstq_ernst_question_id
+               , staging_table.enstq_question
+               , staging_table.enstq_yes_no_answer
+               , staging_table.enstq_answer
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.ernst_request_question staging_table
+          LEFT JOIN history_octane.ernst_request_question history_table
+                    ON staging_table.enstq_pid = history_table.enstq_pid
+                        AND staging_table.enstq_version = history_table.enstq_version
+          WHERE history_table.enstq_pid IS NULL
+          UNION ALL
+          SELECT history_table.enstq_pid
+               , history_table.enstq_version + 1
+               , history_table.enstq_ernst_request_pid
+               , history_table.enstq_ernst_question_id
+               , history_table.enstq_question
+               , history_table.enstq_yes_no_answer
+               , history_table.enstq_answer
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.ernst_request_question history_table
+          LEFT JOIN staging_octane.ernst_request_question staging_table
+                    ON staging_table.enstq_pid = history_table.enstq_pid
+          WHERE staging_table.enstq_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.ernst_request_question deleted_records
+              WHERE deleted_records.enstq_pid = history_table.enstq_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

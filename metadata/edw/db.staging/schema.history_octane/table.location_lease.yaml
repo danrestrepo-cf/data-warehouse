@@ -51,48 +51,51 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.locl_version
-etls:
+step_functions:
   SP-100850:
-    input_type: table
-    output_type: insert
-    json_output_field: locl_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.location_lease
-      SELECT staging_table.locl_pid
-           , staging_table.locl_version
-           , staging_table.locl_location_pid
-           , staging_table.locl_from_date
-           , staging_table.locl_through_date
-           , staging_table.locl_monthly_lease_amount
-           , staging_table.locl_cubicle_count
-           , staging_table.locl_office_count
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.location_lease staging_table
-      LEFT JOIN history_octane.location_lease history_table
-                ON staging_table.locl_pid = history_table.locl_pid
-                    AND staging_table.locl_version = history_table.locl_version
-      WHERE history_table.locl_pid IS NULL
-      UNION ALL
-      SELECT history_table.locl_pid
-           , history_table.locl_version + 1
-           , history_table.locl_location_pid
-           , history_table.locl_from_date
-           , history_table.locl_through_date
-           , history_table.locl_monthly_lease_amount
-           , history_table.locl_cubicle_count
-           , history_table.locl_office_count
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.location_lease history_table
-      LEFT JOIN staging_octane.location_lease staging_table
-                ON staging_table.locl_pid = history_table.locl_pid
-      WHERE staging_table.locl_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.location_lease deleted_records
-          WHERE deleted_records.locl_pid = history_table.locl_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100850:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.location_lease
+        json_output_field: locl_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.location_lease
+          SELECT staging_table.locl_pid
+               , staging_table.locl_version
+               , staging_table.locl_location_pid
+               , staging_table.locl_from_date
+               , staging_table.locl_through_date
+               , staging_table.locl_monthly_lease_amount
+               , staging_table.locl_cubicle_count
+               , staging_table.locl_office_count
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.location_lease staging_table
+          LEFT JOIN history_octane.location_lease history_table
+                    ON staging_table.locl_pid = history_table.locl_pid
+                        AND staging_table.locl_version = history_table.locl_version
+          WHERE history_table.locl_pid IS NULL
+          UNION ALL
+          SELECT history_table.locl_pid
+               , history_table.locl_version + 1
+               , history_table.locl_location_pid
+               , history_table.locl_from_date
+               , history_table.locl_through_date
+               , history_table.locl_monthly_lease_amount
+               , history_table.locl_cubicle_count
+               , history_table.locl_office_count
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.location_lease history_table
+          LEFT JOIN staging_octane.location_lease staging_table
+                    ON staging_table.locl_pid = history_table.locl_pid
+          WHERE staging_table.locl_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.location_lease deleted_records
+              WHERE deleted_records.locl_pid = history_table.locl_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100384 - ETL to insert records into staging.history_octane.obligation_type using staging.staging_octane.obligation_type as the primary source",
-    "StartAt": "SP-100384",
+    "StartAt": "ETL-100384",
     "States": {
-        "SP-100384": {
+        "ETL-100384": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100384"
+                                    "Value": "ETL-100384"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

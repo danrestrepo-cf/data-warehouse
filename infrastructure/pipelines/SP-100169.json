@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100169 - ETL to insert records into staging.history_octane.pte_request using staging.staging_octane.pte_request as the primary source",
-    "StartAt": "SP-100169",
+    "StartAt": "ETL-100169",
     "States": {
-        "SP-100169": {
+        "ETL-100169": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100169"
+                                    "Value": "ETL-100169"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

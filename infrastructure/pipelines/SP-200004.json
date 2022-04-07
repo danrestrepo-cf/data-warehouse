@@ -1,8 +1,8 @@
 {
     "Comment": "SP-200004 - ETL to insert_update records into staging.star_loan.borrower_demographics_dim using staging.history_octane.borrower as the primary source",
-    "StartAt": "SP-200004",
+    "StartAt": "ETL-200004",
     "States": {
-        "SP-200004": {
+        "ETL-200004": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-200004"
+                                    "Value": "ETL-200004"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -55,50 +55,53 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.sqr_version
-etls:
+step_functions:
   SP-100173:
-    input_type: table
-    output_type: insert
-    json_output_field: sqr_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.sap_quote_request
-      SELECT staging_table.sqr_pid
-           , staging_table.sqr_version
-           , staging_table.sqr_deal_pid
-           , staging_table.sqr_include_conventional
-           , staging_table.sqr_include_fha
-           , staging_table.sqr_include_va
-           , staging_table.sqr_include_fixed_rate
-           , staging_table.sqr_include_arm
-           , staging_table.sqr_due_in_term_months_string_list
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.sap_quote_request staging_table
-      LEFT JOIN history_octane.sap_quote_request history_table
-                ON staging_table.sqr_pid = history_table.sqr_pid
-                    AND staging_table.sqr_version = history_table.sqr_version
-      WHERE history_table.sqr_pid IS NULL
-      UNION ALL
-      SELECT history_table.sqr_pid
-           , history_table.sqr_version + 1
-           , history_table.sqr_deal_pid
-           , history_table.sqr_include_conventional
-           , history_table.sqr_include_fha
-           , history_table.sqr_include_va
-           , history_table.sqr_include_fixed_rate
-           , history_table.sqr_include_arm
-           , history_table.sqr_due_in_term_months_string_list
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.sap_quote_request history_table
-      LEFT JOIN staging_octane.sap_quote_request staging_table
-                ON staging_table.sqr_pid = history_table.sqr_pid
-      WHERE staging_table.sqr_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.sap_quote_request deleted_records
-          WHERE deleted_records.sqr_pid = history_table.sqr_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100173:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.sap_quote_request
+        json_output_field: sqr_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.sap_quote_request
+          SELECT staging_table.sqr_pid
+               , staging_table.sqr_version
+               , staging_table.sqr_deal_pid
+               , staging_table.sqr_include_conventional
+               , staging_table.sqr_include_fha
+               , staging_table.sqr_include_va
+               , staging_table.sqr_include_fixed_rate
+               , staging_table.sqr_include_arm
+               , staging_table.sqr_due_in_term_months_string_list
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.sap_quote_request staging_table
+          LEFT JOIN history_octane.sap_quote_request history_table
+                    ON staging_table.sqr_pid = history_table.sqr_pid
+                        AND staging_table.sqr_version = history_table.sqr_version
+          WHERE history_table.sqr_pid IS NULL
+          UNION ALL
+          SELECT history_table.sqr_pid
+               , history_table.sqr_version + 1
+               , history_table.sqr_deal_pid
+               , history_table.sqr_include_conventional
+               , history_table.sqr_include_fha
+               , history_table.sqr_include_va
+               , history_table.sqr_include_fixed_rate
+               , history_table.sqr_include_arm
+               , history_table.sqr_due_in_term_months_string_list
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.sap_quote_request history_table
+          LEFT JOIN staging_octane.sap_quote_request staging_table
+                    ON staging_table.sqr_pid = history_table.sqr_pid
+          WHERE staging_table.sqr_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.sap_quote_request deleted_records
+              WHERE deleted_records.sqr_pid = history_table.sqr_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

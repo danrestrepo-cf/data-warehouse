@@ -199,98 +199,101 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lia_version
-etls:
+step_functions:
   SP-100182:
-    input_type: table
-    output_type: insert
-    json_output_field: lia_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.liability
-      SELECT staging_table.lia_pid
-           , staging_table.lia_version
-           , staging_table.lia_proposal_pid
-           , staging_table.lia_aggregate_description
-           , staging_table.lia_credit_request_liability_pid
-           , staging_table.lia_description
-           , staging_table.lia_city
-           , staging_table.lia_country
-           , staging_table.lia_postal_code
-           , staging_table.lia_state
-           , staging_table.lia_street1
-           , staging_table.lia_street2
-           , staging_table.lia_holder_name
-           , staging_table.lia_holder_phone
-           , staging_table.lia_holder_phone_extension
-           , staging_table.lia_holder_fax
-           , staging_table.lia_holder_email
-           , staging_table.lia_account_opened_date
-           , staging_table.lia_liability_disposition_type
-           , staging_table.lia_liability_type
-           , staging_table.lia_monthly_payment_amount
-           , staging_table.lia_remaining_term_months
-           , staging_table.lia_high_balance_amount
-           , staging_table.lia_credit_limit_amount
-           , staging_table.lia_past_due_amount
-           , staging_table.lia_unpaid_balance_amount
-           , staging_table.lia_report_value_overridden
-           , staging_table.lia_bankruptcy_exception_type
-           , staging_table.lia_note
-           , staging_table.lia_terms_months_count
-           , staging_table.lia_payoff_amount
-           , staging_table.lia_energy_related_type
-           , staging_table.lia_snapshotted_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.liability staging_table
-      LEFT JOIN history_octane.liability history_table
-                ON staging_table.lia_pid = history_table.lia_pid
-                    AND staging_table.lia_version = history_table.lia_version
-      WHERE history_table.lia_pid IS NULL
-      UNION ALL
-      SELECT history_table.lia_pid
-           , history_table.lia_version + 1
-           , history_table.lia_proposal_pid
-           , history_table.lia_aggregate_description
-           , history_table.lia_credit_request_liability_pid
-           , history_table.lia_description
-           , history_table.lia_city
-           , history_table.lia_country
-           , history_table.lia_postal_code
-           , history_table.lia_state
-           , history_table.lia_street1
-           , history_table.lia_street2
-           , history_table.lia_holder_name
-           , history_table.lia_holder_phone
-           , history_table.lia_holder_phone_extension
-           , history_table.lia_holder_fax
-           , history_table.lia_holder_email
-           , history_table.lia_account_opened_date
-           , history_table.lia_liability_disposition_type
-           , history_table.lia_liability_type
-           , history_table.lia_monthly_payment_amount
-           , history_table.lia_remaining_term_months
-           , history_table.lia_high_balance_amount
-           , history_table.lia_credit_limit_amount
-           , history_table.lia_past_due_amount
-           , history_table.lia_unpaid_balance_amount
-           , history_table.lia_report_value_overridden
-           , history_table.lia_bankruptcy_exception_type
-           , history_table.lia_note
-           , history_table.lia_terms_months_count
-           , history_table.lia_payoff_amount
-           , history_table.lia_energy_related_type
-           , history_table.lia_snapshotted_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.liability history_table
-      LEFT JOIN staging_octane.liability staging_table
-                ON staging_table.lia_pid = history_table.lia_pid
-      WHERE staging_table.lia_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.liability deleted_records
-          WHERE deleted_records.lia_pid = history_table.lia_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100182:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.liability
+        json_output_field: lia_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.liability
+          SELECT staging_table.lia_pid
+               , staging_table.lia_version
+               , staging_table.lia_proposal_pid
+               , staging_table.lia_aggregate_description
+               , staging_table.lia_credit_request_liability_pid
+               , staging_table.lia_description
+               , staging_table.lia_city
+               , staging_table.lia_country
+               , staging_table.lia_postal_code
+               , staging_table.lia_state
+               , staging_table.lia_street1
+               , staging_table.lia_street2
+               , staging_table.lia_holder_name
+               , staging_table.lia_holder_phone
+               , staging_table.lia_holder_phone_extension
+               , staging_table.lia_holder_fax
+               , staging_table.lia_holder_email
+               , staging_table.lia_account_opened_date
+               , staging_table.lia_liability_disposition_type
+               , staging_table.lia_liability_type
+               , staging_table.lia_monthly_payment_amount
+               , staging_table.lia_remaining_term_months
+               , staging_table.lia_high_balance_amount
+               , staging_table.lia_credit_limit_amount
+               , staging_table.lia_past_due_amount
+               , staging_table.lia_unpaid_balance_amount
+               , staging_table.lia_report_value_overridden
+               , staging_table.lia_bankruptcy_exception_type
+               , staging_table.lia_note
+               , staging_table.lia_terms_months_count
+               , staging_table.lia_payoff_amount
+               , staging_table.lia_energy_related_type
+               , staging_table.lia_snapshotted_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.liability staging_table
+          LEFT JOIN history_octane.liability history_table
+                    ON staging_table.lia_pid = history_table.lia_pid
+                        AND staging_table.lia_version = history_table.lia_version
+          WHERE history_table.lia_pid IS NULL
+          UNION ALL
+          SELECT history_table.lia_pid
+               , history_table.lia_version + 1
+               , history_table.lia_proposal_pid
+               , history_table.lia_aggregate_description
+               , history_table.lia_credit_request_liability_pid
+               , history_table.lia_description
+               , history_table.lia_city
+               , history_table.lia_country
+               , history_table.lia_postal_code
+               , history_table.lia_state
+               , history_table.lia_street1
+               , history_table.lia_street2
+               , history_table.lia_holder_name
+               , history_table.lia_holder_phone
+               , history_table.lia_holder_phone_extension
+               , history_table.lia_holder_fax
+               , history_table.lia_holder_email
+               , history_table.lia_account_opened_date
+               , history_table.lia_liability_disposition_type
+               , history_table.lia_liability_type
+               , history_table.lia_monthly_payment_amount
+               , history_table.lia_remaining_term_months
+               , history_table.lia_high_balance_amount
+               , history_table.lia_credit_limit_amount
+               , history_table.lia_past_due_amount
+               , history_table.lia_unpaid_balance_amount
+               , history_table.lia_report_value_overridden
+               , history_table.lia_bankruptcy_exception_type
+               , history_table.lia_note
+               , history_table.lia_terms_months_count
+               , history_table.lia_payoff_amount
+               , history_table.lia_energy_related_type
+               , history_table.lia_snapshotted_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.liability history_table
+          LEFT JOIN staging_octane.liability staging_table
+                    ON staging_table.lia_pid = history_table.lia_pid
+          WHERE staging_table.lia_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.liability deleted_records
+              WHERE deleted_records.lia_pid = history_table.lia_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

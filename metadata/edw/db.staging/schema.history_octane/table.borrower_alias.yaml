@@ -71,54 +71,57 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100307:
-    input_type: table
-    output_type: insert
-    json_output_field: ba_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.borrower_alias
-      SELECT staging_table.ba_pid
-           , staging_table.ba_version
-           , staging_table.ba_account_number
-           , staging_table.ba_borrower_pid
-           , staging_table.ba_credit_request_pid
-           , staging_table.ba_creditor_name
-           , staging_table.ba_first_name
-           , staging_table.ba_last_name
-           , staging_table.ba_middle_name
-           , staging_table.ba_name_suffix
-           , staging_table.ba_credit_report_identifier
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.borrower_alias staging_table
-      LEFT JOIN history_octane.borrower_alias history_table
-                ON staging_table.ba_pid = history_table.ba_pid
-                    AND staging_table.ba_version = history_table.ba_version
-      WHERE history_table.ba_pid IS NULL
-      UNION ALL
-      SELECT history_table.ba_pid
-           , history_table.ba_version + 1
-           , history_table.ba_account_number
-           , history_table.ba_borrower_pid
-           , history_table.ba_credit_request_pid
-           , history_table.ba_creditor_name
-           , history_table.ba_first_name
-           , history_table.ba_last_name
-           , history_table.ba_middle_name
-           , history_table.ba_name_suffix
-           , history_table.ba_credit_report_identifier
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.borrower_alias history_table
-      LEFT JOIN staging_octane.borrower_alias staging_table
-                ON staging_table.ba_pid = history_table.ba_pid
-      WHERE staging_table.ba_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.borrower_alias deleted_records
-          WHERE deleted_records.ba_pid = history_table.ba_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100307:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.borrower_alias
+        json_output_field: ba_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.borrower_alias
+          SELECT staging_table.ba_pid
+               , staging_table.ba_version
+               , staging_table.ba_account_number
+               , staging_table.ba_borrower_pid
+               , staging_table.ba_credit_request_pid
+               , staging_table.ba_creditor_name
+               , staging_table.ba_first_name
+               , staging_table.ba_last_name
+               , staging_table.ba_middle_name
+               , staging_table.ba_name_suffix
+               , staging_table.ba_credit_report_identifier
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.borrower_alias staging_table
+          LEFT JOIN history_octane.borrower_alias history_table
+                    ON staging_table.ba_pid = history_table.ba_pid
+                        AND staging_table.ba_version = history_table.ba_version
+          WHERE history_table.ba_pid IS NULL
+          UNION ALL
+          SELECT history_table.ba_pid
+               , history_table.ba_version + 1
+               , history_table.ba_account_number
+               , history_table.ba_borrower_pid
+               , history_table.ba_credit_request_pid
+               , history_table.ba_creditor_name
+               , history_table.ba_first_name
+               , history_table.ba_last_name
+               , history_table.ba_middle_name
+               , history_table.ba_name_suffix
+               , history_table.ba_credit_report_identifier
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.borrower_alias history_table
+          LEFT JOIN staging_octane.borrower_alias staging_table
+                    ON staging_table.ba_pid = history_table.ba_pid
+          WHERE staging_table.ba_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.borrower_alias deleted_records
+              WHERE deleted_records.ba_pid = history_table.ba_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

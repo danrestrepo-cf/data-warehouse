@@ -17,23 +17,26 @@ columns:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.value
-etls:
+step_functions:
   SP-100530:
-    input_type: table
-    output_type: insert
-    json_output_field: code
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.hmda_purchaser_of_loan_2017_type
-      SELECT staging_table.code
-           , staging_table.value
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.hmda_purchaser_of_loan_2017_type staging_table
-      LEFT JOIN history_octane.hmda_purchaser_of_loan_2017_type history_table
-                ON staging_table.code = history_table.code
-                    AND staging_table.value = history_table.value
-      WHERE history_table.code IS NULL;
-next_etls:
-- SP-200007
+    etls:
+      ETL-100530:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.hmda_purchaser_of_loan_2017_type
+        json_output_field: code
+        truncate_table: false
+        container_memory: 2048
+        next_step_functions:
+        - SP-200007
+        input_sql: |-
+          --finding records to insert into history_octane.hmda_purchaser_of_loan_2017_type
+          SELECT staging_table.code
+               , staging_table.value
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.hmda_purchaser_of_loan_2017_type staging_table
+          LEFT JOIN history_octane.hmda_purchaser_of_loan_2017_type history_table
+                    ON staging_table.code = history_table.code
+                        AND staging_table.value = history_table.value
+          WHERE history_table.code IS NULL;

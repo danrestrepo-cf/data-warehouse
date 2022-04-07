@@ -155,100 +155,103 @@ columns:
       field: primary_source_table.columns.dcut_version
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100025:
-    input_type: table
-    output_type: insert
-    json_output_field: dcut_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_change_updater_time
-      SELECT staging_table.dcut_pid
-           , staging_table.dcut_version
-           , staging_table.dcut_account_pid
-           , staging_table.dcut_los_loan_id_main
-           , staging_table.dcut_start_time
-           , staging_table.dcut_start_date
-           , staging_table.dcut_overall_duration_ms
-           , staging_table.dcut_deal_checks_ms
-           , staging_table.dcut_deal_updates_ms
-           , staging_table.dcut_proposal_updates_ms
-           , staging_table.dcut_num_proposal_updates
-           , staging_table.dcut_application_updates_ms
-           , staging_table.dcut_num_application_updates
-           , staging_table.dcut_borrower_updates_ms
-           , staging_table.dcut_num_borrower_updates
-           , staging_table.dcut_place_updates_ms
-           , staging_table.dcut_num_place_updates
-           , staging_table.dcut_loan_updates_ms
-           , staging_table.dcut_num_loan_updates
-           , staging_table.dcut_proposal_updates_after_loan_updates_ms
-           , staging_table.dcut_updates_after_proposal_updates_ms
-           , staging_table.dcut_proposal_summary_updates_ms
-           , staging_table.dcut_deal_updates_after_all_proposal_updates_ms
-           , staging_table.dcut_smart_charge_update_ms
-           , staging_table.dcut_circumstance_change_updates_ms
-           , staging_table.dcut_num_circumstance_change_updates
-           , staging_table.dcut_tolerance_cure_update_ms
-           , staging_table.dcut_proposal_summary_updates_after_smart_charge_updates_ms
-           , staging_table.dcut_update_doc_sets_ms
-           , staging_table.dcut_closing_funds_itemization_ms
-           , staging_table.dcut_update_ribbon_for_deal_ms
-           , staging_table.dcut_num_construction_draw_updates
-           , staging_table.dcut_construction_draw_updates_ms
-           , staging_table.dcut_proposal_updates_after_proposal_save_ms
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_change_updater_time staging_table
-      LEFT JOIN history_octane.deal_change_updater_time history_table
-                ON staging_table.dcut_pid = history_table.dcut_pid
-                    AND staging_table.dcut_version = history_table.dcut_version
-      WHERE history_table.dcut_pid IS NULL
-      UNION ALL
-      SELECT history_table.dcut_pid
-           , history_table.dcut_version + 1
-           , history_table.dcut_account_pid
-           , history_table.dcut_los_loan_id_main
-           , history_table.dcut_start_time
-           , history_table.dcut_start_date
-           , history_table.dcut_overall_duration_ms
-           , history_table.dcut_deal_checks_ms
-           , history_table.dcut_deal_updates_ms
-           , history_table.dcut_proposal_updates_ms
-           , history_table.dcut_num_proposal_updates
-           , history_table.dcut_application_updates_ms
-           , history_table.dcut_num_application_updates
-           , history_table.dcut_borrower_updates_ms
-           , history_table.dcut_num_borrower_updates
-           , history_table.dcut_place_updates_ms
-           , history_table.dcut_num_place_updates
-           , history_table.dcut_loan_updates_ms
-           , history_table.dcut_num_loan_updates
-           , history_table.dcut_proposal_updates_after_loan_updates_ms
-           , history_table.dcut_updates_after_proposal_updates_ms
-           , history_table.dcut_proposal_summary_updates_ms
-           , history_table.dcut_deal_updates_after_all_proposal_updates_ms
-           , history_table.dcut_smart_charge_update_ms
-           , history_table.dcut_circumstance_change_updates_ms
-           , history_table.dcut_num_circumstance_change_updates
-           , history_table.dcut_tolerance_cure_update_ms
-           , history_table.dcut_proposal_summary_updates_after_smart_charge_updates_ms
-           , history_table.dcut_update_doc_sets_ms
-           , history_table.dcut_closing_funds_itemization_ms
-           , history_table.dcut_update_ribbon_for_deal_ms
-           , history_table.dcut_num_construction_draw_updates
-           , history_table.dcut_construction_draw_updates_ms
-           , history_table.dcut_proposal_updates_after_proposal_save_ms
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_change_updater_time history_table
-      LEFT JOIN staging_octane.deal_change_updater_time staging_table
-                ON staging_table.dcut_pid = history_table.dcut_pid
-      WHERE staging_table.dcut_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_change_updater_time deleted_records
-          WHERE deleted_records.dcut_pid = history_table.dcut_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100025:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_change_updater_time
+        json_output_field: dcut_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_change_updater_time
+          SELECT staging_table.dcut_pid
+               , staging_table.dcut_version
+               , staging_table.dcut_account_pid
+               , staging_table.dcut_los_loan_id_main
+               , staging_table.dcut_start_time
+               , staging_table.dcut_start_date
+               , staging_table.dcut_overall_duration_ms
+               , staging_table.dcut_deal_checks_ms
+               , staging_table.dcut_deal_updates_ms
+               , staging_table.dcut_proposal_updates_ms
+               , staging_table.dcut_num_proposal_updates
+               , staging_table.dcut_application_updates_ms
+               , staging_table.dcut_num_application_updates
+               , staging_table.dcut_borrower_updates_ms
+               , staging_table.dcut_num_borrower_updates
+               , staging_table.dcut_place_updates_ms
+               , staging_table.dcut_num_place_updates
+               , staging_table.dcut_loan_updates_ms
+               , staging_table.dcut_num_loan_updates
+               , staging_table.dcut_proposal_updates_after_loan_updates_ms
+               , staging_table.dcut_updates_after_proposal_updates_ms
+               , staging_table.dcut_proposal_summary_updates_ms
+               , staging_table.dcut_deal_updates_after_all_proposal_updates_ms
+               , staging_table.dcut_smart_charge_update_ms
+               , staging_table.dcut_circumstance_change_updates_ms
+               , staging_table.dcut_num_circumstance_change_updates
+               , staging_table.dcut_tolerance_cure_update_ms
+               , staging_table.dcut_proposal_summary_updates_after_smart_charge_updates_ms
+               , staging_table.dcut_update_doc_sets_ms
+               , staging_table.dcut_closing_funds_itemization_ms
+               , staging_table.dcut_update_ribbon_for_deal_ms
+               , staging_table.dcut_num_construction_draw_updates
+               , staging_table.dcut_construction_draw_updates_ms
+               , staging_table.dcut_proposal_updates_after_proposal_save_ms
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_change_updater_time staging_table
+          LEFT JOIN history_octane.deal_change_updater_time history_table
+                    ON staging_table.dcut_pid = history_table.dcut_pid
+                        AND staging_table.dcut_version = history_table.dcut_version
+          WHERE history_table.dcut_pid IS NULL
+          UNION ALL
+          SELECT history_table.dcut_pid
+               , history_table.dcut_version + 1
+               , history_table.dcut_account_pid
+               , history_table.dcut_los_loan_id_main
+               , history_table.dcut_start_time
+               , history_table.dcut_start_date
+               , history_table.dcut_overall_duration_ms
+               , history_table.dcut_deal_checks_ms
+               , history_table.dcut_deal_updates_ms
+               , history_table.dcut_proposal_updates_ms
+               , history_table.dcut_num_proposal_updates
+               , history_table.dcut_application_updates_ms
+               , history_table.dcut_num_application_updates
+               , history_table.dcut_borrower_updates_ms
+               , history_table.dcut_num_borrower_updates
+               , history_table.dcut_place_updates_ms
+               , history_table.dcut_num_place_updates
+               , history_table.dcut_loan_updates_ms
+               , history_table.dcut_num_loan_updates
+               , history_table.dcut_proposal_updates_after_loan_updates_ms
+               , history_table.dcut_updates_after_proposal_updates_ms
+               , history_table.dcut_proposal_summary_updates_ms
+               , history_table.dcut_deal_updates_after_all_proposal_updates_ms
+               , history_table.dcut_smart_charge_update_ms
+               , history_table.dcut_circumstance_change_updates_ms
+               , history_table.dcut_num_circumstance_change_updates
+               , history_table.dcut_tolerance_cure_update_ms
+               , history_table.dcut_proposal_summary_updates_after_smart_charge_updates_ms
+               , history_table.dcut_update_doc_sets_ms
+               , history_table.dcut_closing_funds_itemization_ms
+               , history_table.dcut_update_ribbon_for_deal_ms
+               , history_table.dcut_num_construction_draw_updates
+               , history_table.dcut_construction_draw_updates_ms
+               , history_table.dcut_proposal_updates_after_proposal_save_ms
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_change_updater_time history_table
+          LEFT JOIN staging_octane.deal_change_updater_time staging_table
+                    ON staging_table.dcut_pid = history_table.dcut_pid
+          WHERE staging_table.dcut_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_change_updater_time deleted_records
+              WHERE deleted_records.dcut_pid = history_table.dcut_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100755 - ETL to insert records into staging.history_octane.key_package_type using staging.staging_octane.key_package_type as the primary source",
-    "StartAt": "SP-100755",
+    "StartAt": "ETL-100755",
     "States": {
-        "SP-100755": {
+        "ETL-100755": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100755"
+                                    "Value": "ETL-100755"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

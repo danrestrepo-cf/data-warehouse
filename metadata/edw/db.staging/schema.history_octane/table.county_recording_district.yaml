@@ -43,40 +43,43 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100258:
-    input_type: table
-    output_type: insert
-    json_output_field: crdi_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.county_recording_district
-      SELECT staging_table.crdi_pid
-           , staging_table.crdi_version
-           , staging_table.crdi_county_pid
-           , staging_table.crdi_recording_district_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.county_recording_district staging_table
-      LEFT JOIN history_octane.county_recording_district history_table
-                ON staging_table.crdi_pid = history_table.crdi_pid
-                    AND staging_table.crdi_version = history_table.crdi_version
-      WHERE history_table.crdi_pid IS NULL
-      UNION ALL
-      SELECT history_table.crdi_pid
-           , history_table.crdi_version + 1
-           , history_table.crdi_county_pid
-           , history_table.crdi_recording_district_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.county_recording_district history_table
-      LEFT JOIN staging_octane.county_recording_district staging_table
-                ON staging_table.crdi_pid = history_table.crdi_pid
-      WHERE staging_table.crdi_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.county_recording_district deleted_records
-          WHERE deleted_records.crdi_pid = history_table.crdi_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100258:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.county_recording_district
+        json_output_field: crdi_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.county_recording_district
+          SELECT staging_table.crdi_pid
+               , staging_table.crdi_version
+               , staging_table.crdi_county_pid
+               , staging_table.crdi_recording_district_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.county_recording_district staging_table
+          LEFT JOIN history_octane.county_recording_district history_table
+                    ON staging_table.crdi_pid = history_table.crdi_pid
+                        AND staging_table.crdi_version = history_table.crdi_version
+          WHERE history_table.crdi_pid IS NULL
+          UNION ALL
+          SELECT history_table.crdi_pid
+               , history_table.crdi_version + 1
+               , history_table.crdi_county_pid
+               , history_table.crdi_recording_district_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.county_recording_district history_table
+          LEFT JOIN staging_octane.county_recording_district staging_table
+                    ON staging_table.crdi_pid = history_table.crdi_pid
+          WHERE staging_table.crdi_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.county_recording_district deleted_records
+              WHERE deleted_records.crdi_pid = history_table.crdi_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

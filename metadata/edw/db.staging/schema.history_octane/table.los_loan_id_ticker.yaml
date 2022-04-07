@@ -35,40 +35,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ltk_version
-etls:
+step_functions:
   SP-100226:
-    input_type: table
-    output_type: insert
-    json_output_field: ltk_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.los_loan_id_ticker
-      SELECT staging_table.ltk_pid
-           , staging_table.ltk_version
-           , staging_table.ltk_account_pid
-           , staging_table.ltk_next_los_loan_id
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.los_loan_id_ticker staging_table
-      LEFT JOIN history_octane.los_loan_id_ticker history_table
-                ON staging_table.ltk_pid = history_table.ltk_pid
-                    AND staging_table.ltk_version = history_table.ltk_version
-      WHERE history_table.ltk_pid IS NULL
-      UNION ALL
-      SELECT history_table.ltk_pid
-           , history_table.ltk_version + 1
-           , history_table.ltk_account_pid
-           , history_table.ltk_next_los_loan_id
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.los_loan_id_ticker history_table
-      LEFT JOIN staging_octane.los_loan_id_ticker staging_table
-                ON staging_table.ltk_pid = history_table.ltk_pid
-      WHERE staging_table.ltk_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.los_loan_id_ticker deleted_records
-          WHERE deleted_records.ltk_pid = history_table.ltk_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100226:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.los_loan_id_ticker
+        json_output_field: ltk_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.los_loan_id_ticker
+          SELECT staging_table.ltk_pid
+               , staging_table.ltk_version
+               , staging_table.ltk_account_pid
+               , staging_table.ltk_next_los_loan_id
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.los_loan_id_ticker staging_table
+          LEFT JOIN history_octane.los_loan_id_ticker history_table
+                    ON staging_table.ltk_pid = history_table.ltk_pid
+                        AND staging_table.ltk_version = history_table.ltk_version
+          WHERE history_table.ltk_pid IS NULL
+          UNION ALL
+          SELECT history_table.ltk_pid
+               , history_table.ltk_version + 1
+               , history_table.ltk_account_pid
+               , history_table.ltk_next_los_loan_id
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.los_loan_id_ticker history_table
+          LEFT JOIN staging_octane.los_loan_id_ticker staging_table
+                    ON staging_table.ltk_pid = history_table.ltk_pid
+          WHERE staging_table.ltk_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.los_loan_id_ticker deleted_records
+              WHERE deleted_records.ltk_pid = history_table.ltk_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100468 - ETL to insert records into staging.history_octane.deal_child_relationship_type using staging.staging_octane.deal_child_relationship_type as the primary source",
-    "StartAt": "SP-100468",
+    "StartAt": "ETL-100468",
     "States": {
-        "SP-100468": {
+        "ETL-100468": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100468"
+                                    "Value": "ETL-100468"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

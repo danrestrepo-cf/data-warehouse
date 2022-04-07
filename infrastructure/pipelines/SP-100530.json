@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100530 - ETL to insert records into staging.history_octane.hmda_purchaser_of_loan_2017_type using staging.staging_octane.hmda_purchaser_of_loan_2017_type as the primary source",
-    "StartAt": "SP-100530",
+    "StartAt": "ETL-100530",
     "States": {
-        "SP-100530": {
+        "ETL-100530": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100530"
+                                    "Value": "ETL-100530"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

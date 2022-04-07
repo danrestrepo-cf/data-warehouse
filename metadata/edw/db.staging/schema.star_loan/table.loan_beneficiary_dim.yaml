@@ -137,192 +137,195 @@ columns:
     source:
       field: primary_source_table.columns.lb_loan_benef_transfer_status_type
     update_flag: true
-etls:
+step_functions:
   SP-200011:
-    input_type: table
-    output_type: insert_update
-    hardcoded_data_source: Octane
-    json_output_field: data_source_integration_id
-    insert_update_keys:
-      - data_source_integration_id
-    container_memory: 2048
-    input_sql: |-
-      WITH loan_beneficiary_dim_incl_new_records AS (
-          SELECT 'loan_beneficiary_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
-               , COALESCE( CAST( primary_table.lb_pid AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
-               , NOW( ) AS edw_created_datetime
-               , NOW( ) AS edw_modified_datetime
-               , primary_table.data_source_updated_datetime AS data_source_modified_datetime
-               , t347.value AS collateral_courier
-               , t351.value AS loan_file_courier
-               , t348.value AS delivery_aus
-               , primary_table.lb_mers_mom AS mers_mom_flag
-               , primary_table.lb_pid AS loan_beneficiary_pid
-               , primary_table.lb_mers_transfer_status_type AS mers_transfer_status_code
-               , primary_table.lb_mers_transfer_override AS mers_transfer_override_flag
-               , primary_table.lb_loan_file_courier_type AS loan_file_courier_code
-               , primary_table.lb_collateral_courier_type AS collateral_courier_code
-               , primary_table.lb_loan_pid AS loan_pid
-               , primary_table.lb_delivery_aus_type AS delivery_aus_code
-               , primary_table.lb_early_funding AS early_funding_code
-               , primary_table.lb_pool_id AS pool_id
-               , primary_table.lb_loan_file_delivery_method_type AS loan_file_delivery_method_code
-               , primary_table.lb_loan_benef_transfer_status_type AS transfer_status_code
-               , primary_table.lb_initial AS initial_flag
-               , primary_table.lb_current AS current_flag
-               , primary_table.lb_investor_loan_id AS investor_loan_id
-               , t350.value AS transfer_status
-               , t352.value AS loan_file_delivery_method
-               , t353.value AS mers_transfer_status
-               , t349.value AS early_funding
-               , GREATEST( primary_table.etl_end_date_time, t347.etl_end_date_time, t351.etl_end_date_time, t348.etl_end_date_time,
-                           t350.etl_end_date_time, t352.etl_end_date_time, t353.etl_end_date_time,
-                           t349.etl_end_date_time ) AS max_source_etl_end_date_time
-          FROM (
-              SELECT <<loan_beneficiary_partial_load_condition>> AS include_record
-                   , loan_beneficiary.*
-                   , etl_log.etl_end_date_time
-              FROM history_octane.loan_beneficiary
-              LEFT JOIN history_octane.loan_beneficiary AS history_records
-                        ON loan_beneficiary.lb_pid = history_records.lb_pid
-                            AND loan_beneficiary.data_source_updated_datetime < history_records.data_source_updated_datetime
+    etls:
+      ETL-200011:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.loan_beneficiary_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-300001-insert-update
+        input_sql: |-
+          WITH loan_beneficiary_dim_incl_new_records AS (
+              SELECT 'loan_beneficiary_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
+                   , COALESCE( CAST( primary_table.lb_pid AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
+                   , NOW( ) AS edw_created_datetime
+                   , NOW( ) AS edw_modified_datetime
+                   , primary_table.data_source_updated_datetime AS data_source_modified_datetime
+                   , t347.value AS collateral_courier
+                   , t351.value AS loan_file_courier
+                   , t348.value AS delivery_aus
+                   , primary_table.lb_mers_mom AS mers_mom_flag
+                   , primary_table.lb_pid AS loan_beneficiary_pid
+                   , primary_table.lb_mers_transfer_status_type AS mers_transfer_status_code
+                   , primary_table.lb_mers_transfer_override AS mers_transfer_override_flag
+                   , primary_table.lb_loan_file_courier_type AS loan_file_courier_code
+                   , primary_table.lb_collateral_courier_type AS collateral_courier_code
+                   , primary_table.lb_loan_pid AS loan_pid
+                   , primary_table.lb_delivery_aus_type AS delivery_aus_code
+                   , primary_table.lb_early_funding AS early_funding_code
+                   , primary_table.lb_pool_id AS pool_id
+                   , primary_table.lb_loan_file_delivery_method_type AS loan_file_delivery_method_code
+                   , primary_table.lb_loan_benef_transfer_status_type AS transfer_status_code
+                   , primary_table.lb_initial AS initial_flag
+                   , primary_table.lb_current AS current_flag
+                   , primary_table.lb_investor_loan_id AS investor_loan_id
+                   , t350.value AS transfer_status
+                   , t352.value AS loan_file_delivery_method
+                   , t353.value AS mers_transfer_status
+                   , t349.value AS early_funding
+                   , GREATEST( primary_table.etl_end_date_time, t347.etl_end_date_time, t351.etl_end_date_time, t348.etl_end_date_time,
+                               t350.etl_end_date_time, t352.etl_end_date_time, t353.etl_end_date_time,
+                               t349.etl_end_date_time ) AS max_source_etl_end_date_time
+              FROM (
+                  SELECT <<loan_beneficiary_partial_load_condition>> AS include_record
+                       , loan_beneficiary.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.loan_beneficiary
+                  LEFT JOIN history_octane.loan_beneficiary AS history_records
+                            ON loan_beneficiary.lb_pid = history_records.lb_pid
+                                AND loan_beneficiary.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON loan_beneficiary.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.lb_pid IS NULL
+              ) AS primary_table
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<courier_type_partial_load_condition>> AS include_record
+                           , courier_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.courier_type
+                      LEFT JOIN history_octane.courier_type AS history_records
+                                ON courier_type.code = history_records.code
+                                    AND courier_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON courier_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t347
+                         ON primary_table.lb_collateral_courier_type = t347.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<courier_type_partial_load_condition>> AS include_record
+                           , courier_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.courier_type
+                      LEFT JOIN history_octane.courier_type AS history_records
+                                ON courier_type.code = history_records.code
+                                    AND courier_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON courier_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t351
+                         ON primary_table.lb_loan_file_courier_type = t351.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<delivery_aus_type_partial_load_condition>> AS include_record
+                           , delivery_aus_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.delivery_aus_type
+                      LEFT JOIN history_octane.delivery_aus_type AS history_records
+                                ON delivery_aus_type.code = history_records.code
+                                    AND delivery_aus_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON delivery_aus_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t348
+                         ON primary_table.lb_delivery_aus_type = t348.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<loan_benef_transfer_status_type_partial_load_condition>> AS include_record
+                           , loan_benef_transfer_status_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.loan_benef_transfer_status_type
+                      LEFT JOIN history_octane.loan_benef_transfer_status_type AS history_records
+                                ON loan_benef_transfer_status_type.code = history_records.code
+                                    AND loan_benef_transfer_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON loan_benef_transfer_status_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t350
+                         ON primary_table.lb_loan_benef_transfer_status_type = t350.code
+              LEFT JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<loan_file_delivery_method_type_partial_load_condition>> AS include_record
+                           , loan_file_delivery_method_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.loan_file_delivery_method_type
+                      LEFT JOIN history_octane.loan_file_delivery_method_type AS history_records
+                                ON loan_file_delivery_method_type.code = history_records.code
+                                    AND loan_file_delivery_method_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON loan_file_delivery_method_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t352
+                        ON primary_table.lb_loan_file_delivery_method_type = t352.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<mers_transfer_status_type_partial_load_condition>> AS include_record
+                           , mers_transfer_status_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.mers_transfer_status_type
+                      LEFT JOIN history_octane.mers_transfer_status_type AS history_records
+                                ON mers_transfer_status_type.code = history_records.code
+                                    AND mers_transfer_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON mers_transfer_status_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t353
+                         ON primary_table.lb_mers_transfer_status_type = t353.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                           , yes_no_unknown_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.yes_no_unknown_type
+                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                                ON yes_no_unknown_type.code = history_records.code
+                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t349
+                         ON primary_table.lb_early_funding = t349.code
+              WHERE GREATEST( primary_table.include_record, t347.include_record, t351.include_record, t348.include_record, t350.include_record,
+                              t352.include_record, t353.include_record, t349.include_record ) IS TRUE
+          )
+          --new records that should be inserted
+          SELECT loan_beneficiary_dim_incl_new_records.*
+          FROM loan_beneficiary_dim_incl_new_records
+          LEFT JOIN star_loan.loan_beneficiary_dim
+                    ON loan_beneficiary_dim_incl_new_records.data_source_integration_id = loan_beneficiary_dim.data_source_integration_id
+          WHERE loan_beneficiary_dim.dwid IS NULL
+          UNION ALL
+          --existing records that need to be updated
+          SELECT loan_beneficiary_dim_incl_new_records.*
+          FROM loan_beneficiary_dim_incl_new_records
+          JOIN (
+              SELECT loan_beneficiary_dim.data_source_integration_id, etl_log.etl_start_date_time
+              FROM star_loan.loan_beneficiary_dim
               JOIN star_common.etl_log
-                   ON loan_beneficiary.etl_batch_id = etl_log.etl_batch_id
-              WHERE history_records.lb_pid IS NULL
-          ) AS primary_table
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<courier_type_partial_load_condition>> AS include_record
-                       , courier_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.courier_type
-                  LEFT JOIN history_octane.courier_type AS history_records
-                            ON courier_type.code = history_records.code
-                                AND courier_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON courier_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t347
-                     ON primary_table.lb_collateral_courier_type = t347.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<courier_type_partial_load_condition>> AS include_record
-                       , courier_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.courier_type
-                  LEFT JOIN history_octane.courier_type AS history_records
-                            ON courier_type.code = history_records.code
-                                AND courier_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON courier_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t351
-                     ON primary_table.lb_loan_file_courier_type = t351.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<delivery_aus_type_partial_load_condition>> AS include_record
-                       , delivery_aus_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.delivery_aus_type
-                  LEFT JOIN history_octane.delivery_aus_type AS history_records
-                            ON delivery_aus_type.code = history_records.code
-                                AND delivery_aus_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON delivery_aus_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t348
-                     ON primary_table.lb_delivery_aus_type = t348.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<loan_benef_transfer_status_type_partial_load_condition>> AS include_record
-                       , loan_benef_transfer_status_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.loan_benef_transfer_status_type
-                  LEFT JOIN history_octane.loan_benef_transfer_status_type AS history_records
-                            ON loan_benef_transfer_status_type.code = history_records.code
-                                AND loan_benef_transfer_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON loan_benef_transfer_status_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t350
-                     ON primary_table.lb_loan_benef_transfer_status_type = t350.code
-          LEFT JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<loan_file_delivery_method_type_partial_load_condition>> AS include_record
-                       , loan_file_delivery_method_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.loan_file_delivery_method_type
-                  LEFT JOIN history_octane.loan_file_delivery_method_type AS history_records
-                            ON loan_file_delivery_method_type.code = history_records.code
-                                AND loan_file_delivery_method_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON loan_file_delivery_method_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t352
-                    ON primary_table.lb_loan_file_delivery_method_type = t352.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<mers_transfer_status_type_partial_load_condition>> AS include_record
-                       , mers_transfer_status_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.mers_transfer_status_type
-                  LEFT JOIN history_octane.mers_transfer_status_type AS history_records
-                            ON mers_transfer_status_type.code = history_records.code
-                                AND mers_transfer_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON mers_transfer_status_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t353
-                     ON primary_table.lb_mers_transfer_status_type = t353.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
-                       , yes_no_unknown_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.yes_no_unknown_type
-                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
-                            ON yes_no_unknown_type.code = history_records.code
-                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t349
-                     ON primary_table.lb_early_funding = t349.code
-          WHERE GREATEST( primary_table.include_record, t347.include_record, t351.include_record, t348.include_record, t350.include_record,
-                          t352.include_record, t353.include_record, t349.include_record ) IS TRUE
-      )
-      --new records that should be inserted
-      SELECT loan_beneficiary_dim_incl_new_records.*
-      FROM loan_beneficiary_dim_incl_new_records
-      LEFT JOIN star_loan.loan_beneficiary_dim
-                ON loan_beneficiary_dim_incl_new_records.data_source_integration_id = loan_beneficiary_dim.data_source_integration_id
-      WHERE loan_beneficiary_dim.dwid IS NULL
-      UNION ALL
-      --existing records that need to be updated
-      SELECT loan_beneficiary_dim_incl_new_records.*
-      FROM loan_beneficiary_dim_incl_new_records
-      JOIN (
-          SELECT loan_beneficiary_dim.data_source_integration_id, etl_log.etl_start_date_time
-          FROM star_loan.loan_beneficiary_dim
-          JOIN star_common.etl_log
-               ON loan_beneficiary_dim.etl_batch_id = etl_log.etl_batch_id
-      ) AS loan_beneficiary_dim_etl_start_times
-           ON loan_beneficiary_dim_incl_new_records.data_source_integration_id = loan_beneficiary_dim_etl_start_times.data_source_integration_id
-               AND loan_beneficiary_dim_incl_new_records.max_source_etl_end_date_time >= loan_beneficiary_dim_etl_start_times.etl_start_date_time;
-next_etls:
-  - SP-300001-insert-update
+                   ON loan_beneficiary_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS loan_beneficiary_dim_etl_start_times
+               ON loan_beneficiary_dim_incl_new_records.data_source_integration_id = loan_beneficiary_dim_etl_start_times.data_source_integration_id
+                   AND loan_beneficiary_dim_incl_new_records.max_source_etl_end_date_time >= loan_beneficiary_dim_etl_start_times.etl_start_date_time;

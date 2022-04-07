@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100725 - ETL to insert records into staging.history_octane.deal_context_permission_type using staging.staging_octane.deal_context_permission_type as the primary source",
-    "StartAt": "SP-100725",
+    "StartAt": "ETL-100725",
     "States": {
-        "SP-100725": {
+        "ETL-100725": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100725"
+                                    "Value": "ETL-100725"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

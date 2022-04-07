@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100078 - ETL to insert records into staging.history_octane.deal_contact using staging.staging_octane.deal_contact as the primary source",
-    "StartAt": "SP-100078",
+    "StartAt": "ETL-100078",
     "States": {
-        "SP-100078": {
+        "ETL-100078": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100078"
+                                    "Value": "ETL-100078"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

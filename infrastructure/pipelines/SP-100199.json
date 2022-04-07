@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100199 - ETL to insert records into staging.history_octane.wf_fork_process using staging.staging_octane.wf_fork_process as the primary source",
-    "StartAt": "SP-100199",
+    "StartAt": "ETL-100199",
     "States": {
-        "SP-100199": {
+        "ETL-100199": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100199"
+                                    "Value": "ETL-100199"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

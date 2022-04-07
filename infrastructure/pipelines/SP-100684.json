@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100684 - ETL to insert records into staging.history_octane.voe_verbal_verify_method_type using staging.staging_octane.voe_verbal_verify_method_type as the primary source",
-    "StartAt": "SP-100684",
+    "StartAt": "ETL-100684",
     "States": {
-        "SP-100684": {
+        "ETL-100684": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100684"
+                                    "Value": "ETL-100684"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

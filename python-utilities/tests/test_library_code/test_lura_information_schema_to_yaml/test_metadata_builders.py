@@ -4,14 +4,10 @@ from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging
                                                                    map_msql_data_type,
                                                                    generate_history_octane_metadata,
                                                                    add_deleted_tables_and_columns_to_history_octane_metadata,
-                                                                   remove_deleted_column_metadata_from_column,
-                                                                   remove_deleted_table_metadata_from_table)
+                                                                   remove_deleted_column_metadata_from_column)
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
-from lib.metadata_core.data_warehouse_metadata import (TableMetadata,
-                                                       ColumnMetadata,
-                                                       ColumnSourceComponents,
-                                                       SourceForeignKeyPath,
-                                                       TablePath)
+from lib.metadata_core.data_warehouse_metadata import ColumnMetadata
+
 
 class TestBuildStagingOctaneMetadata(unittest.TestCase):
 
@@ -203,8 +199,8 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                 'data_type': 'TEXT',
                 'source': {
                     'field': 'primary_source_table.columns.wt_column_{}'.format(wide_table_column_counter)
-                    }
                 }
+            }
             wide_table_column_counter += 1
 
         # add standard history_octane columns to wide_table_history_columns_dict
@@ -308,12 +304,49 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
         }
         self.staging_metadata = construct_data_warehouse_metadata_from_dict(self.metadata_dict)
 
-        self.table_to_process_map = {
-            'account': {'process': 'SP-1', 'next_processes': ['SP-10', 'SP-11']},
-            'account_type': {'process': 'SP-2', 'next_processes': ['SP-20', 'SP-21']}
-        }
-
-        self.current_max_process_number = 2
+        self.existing_yaml_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 'account',
+                                    'step_functions': {
+                                        'SP-1': {
+                                            'etls': {
+                                                'ETL-1': {
+                                                    'input_type': 'table',
+                                                    'output_type': 'insert',
+                                                    'next_step_functions': ['SP-10', 'SP-11']
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    'name': 'account_type',
+                                    'step_functions': {
+                                        'SP-2': {
+                                            'etls': {
+                                                'ETL-2': {
+                                                    'input_type': 'table',
+                                                    'output_type': 'insert',
+                                                    'next_step_functions': ['SP-20', 'SP-21']
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
 
         # noinspection PyTypeChecker
         self.metadata_dict['databases'][0]['schemas'].append({
@@ -376,46 +409,50 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                             'data_type': 'TEXT'
                         }
                     },
-                    'etls': {
+                    'step_functions': {
                         'SP-1': {
-                            'input_type': 'table',
-                            'output_type': 'insert',
-                            'json_output_field': 'a_pid',
-                            'truncate_table': False,
-                            'container_memory': 2048,
-                            'input_sql': "--finding records to insert into history_octane.account\n" +
-                                         "SELECT staging_table.a_pid\n" +
-                                         "     , staging_table.a_fk_col_1\n" +
-                                         "     , staging_table.a_fk_col_2\n" +
-                                         "     , staging_table.a_version\n" +
-                                         "     , FALSE AS data_source_deleted_flag\n" +
-                                         "     , NOW( ) AS data_source_updated_datetime\n" +
-                                         "FROM staging_octane.account staging_table\n" +
-                                         "LEFT JOIN history_octane.account history_table\n" +
-                                         "          ON staging_table.a_pid = history_table.a_pid\n" +
-                                         "              AND staging_table.a_version = history_table.a_version\n" +
-                                         "WHERE history_table.a_pid IS NULL\n" +
-                                         "UNION ALL\n" +
-                                         "SELECT history_table.a_pid\n" +
-                                         "     , history_table.a_fk_col_1\n" +
-                                         "     , history_table.a_fk_col_2\n" +
-                                         "     , history_table.a_version + 1\n" +
-                                         "     , TRUE AS data_source_deleted_flag\n" +
-                                         "     , NOW( ) AS data_source_updated_datetime\n" +
-                                         "FROM history_octane.account history_table\n" +
-                                         "LEFT JOIN staging_octane.account staging_table\n" +
-                                         "          ON staging_table.a_pid = history_table.a_pid\n" +
-                                         "WHERE staging_table.a_pid IS NULL\n" +
-                                         "  AND NOT EXISTS(\n" +
-                                         "    SELECT 1\n" +
-                                         "    FROM history_octane.account deleted_records\n" +
-                                         "    WHERE deleted_records.a_pid = history_table.a_pid\n" +
-                                         "      AND deleted_records.data_source_deleted_flag = TRUE\n" +
-                                         "    );"
-
+                            'etls': {
+                                'ETL-1': {
+                                    'input_type': 'table',
+                                    'output_type': 'insert',
+                                    'output_table': 'staging.history_octane.account',
+                                    'json_output_field': 'a_pid',
+                                    'truncate_table': False,
+                                    'container_memory': 2048,
+                                    'next_step_functions': ['SP-10', 'SP-11'],
+                                    'input_sql': "--finding records to insert into history_octane.account\n" +
+                                                 "SELECT staging_table.a_pid\n" +
+                                                 "     , staging_table.a_fk_col_1\n" +
+                                                 "     , staging_table.a_fk_col_2\n" +
+                                                 "     , staging_table.a_version\n" +
+                                                 "     , FALSE AS data_source_deleted_flag\n" +
+                                                 "     , NOW( ) AS data_source_updated_datetime\n" +
+                                                 "FROM staging_octane.account staging_table\n" +
+                                                 "LEFT JOIN history_octane.account history_table\n" +
+                                                 "          ON staging_table.a_pid = history_table.a_pid\n" +
+                                                 "              AND staging_table.a_version = history_table.a_version\n" +
+                                                 "WHERE history_table.a_pid IS NULL\n" +
+                                                 "UNION ALL\n" +
+                                                 "SELECT history_table.a_pid\n" +
+                                                 "     , history_table.a_fk_col_1\n" +
+                                                 "     , history_table.a_fk_col_2\n" +
+                                                 "     , history_table.a_version + 1\n" +
+                                                 "     , TRUE AS data_source_deleted_flag\n" +
+                                                 "     , NOW( ) AS data_source_updated_datetime\n" +
+                                                 "FROM history_octane.account history_table\n" +
+                                                 "LEFT JOIN staging_octane.account staging_table\n" +
+                                                 "          ON staging_table.a_pid = history_table.a_pid\n" +
+                                                 "WHERE staging_table.a_pid IS NULL\n" +
+                                                 "  AND NOT EXISTS(\n" +
+                                                 "    SELECT 1\n" +
+                                                 "    FROM history_octane.account deleted_records\n" +
+                                                 "    WHERE deleted_records.a_pid = history_table.a_pid\n" +
+                                                 "      AND deleted_records.data_source_deleted_flag = TRUE\n" +
+                                                 "    );"
+                                }
+                            }
                         }
-                    },
-                    'next_etls': ['SP-10', 'SP-11']
+                    }
                 },
                 {
                     'name': 'account_type',
@@ -444,26 +481,31 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                             'data_type': 'TEXT'
                         }
                     },
-                    'etls': {
+                    'step_functions': {
                         'SP-2': {
-                            'input_type': 'table',
-                            'output_type': 'insert',
-                            'json_output_field': 'code',
-                            'truncate_table': False,
-                            'container_memory': 2048,
-                            'input_sql': "--finding records to insert into history_octane.account_type\n" +
-                                         "SELECT staging_table.code\n" +
-                                         "     , staging_table.value\n" +
-                                         "     , FALSE AS data_source_deleted_flag\n" +
-                                         "     , NOW( ) AS data_source_updated_datetime\n" +
-                                         "FROM staging_octane.account_type staging_table\n" +
-                                         "LEFT JOIN history_octane.account_type history_table\n" +
-                                         "          ON staging_table.code = history_table.code\n" +
-                                         "              AND staging_table.value = history_table.value\n" +
-                                         "WHERE history_table.code IS NULL;"
+                            'etls': {
+                                'ETL-2': {
+                                    'input_type': 'table',
+                                    'output_type': 'insert',
+                                    'output_table': 'staging.history_octane.account_type',
+                                    'json_output_field': 'code',
+                                    'truncate_table': False,
+                                    'container_memory': 2048,
+                                    'next_step_functions': ['SP-20', 'SP-21'],
+                                    'input_sql': "--finding records to insert into history_octane.account_type\n" +
+                                                 "SELECT staging_table.code\n" +
+                                                 "     , staging_table.value\n" +
+                                                 "     , FALSE AS data_source_deleted_flag\n" +
+                                                 "     , NOW( ) AS data_source_updated_datetime\n" +
+                                                 "FROM staging_octane.account_type staging_table\n" +
+                                                 "LEFT JOIN history_octane.account_type history_table\n" +
+                                                 "          ON staging_table.code = history_table.code\n" +
+                                                 "              AND staging_table.value = history_table.value\n" +
+                                                 "WHERE history_table.code IS NULL;"
+                                }
+                            }
                         }
-                    },
-                    'next_etls': ['SP-20', 'SP-21']
+                    }
                 },
                 {
                     'name': 'a_new_type',
@@ -492,23 +534,28 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                             'data_type': 'TEXT'
                         }
                     },
-                    'etls': {
+                    'step_functions': {
                         'SP-3': {
-                            'input_type': 'table',
-                            'output_type': 'insert',
-                            'json_output_field': 'code',
-                            'truncate_table': False,
-                            'container_memory': 2048,
-                            'input_sql': "--finding records to insert into history_octane.a_new_type\n" +
-                                         "SELECT staging_table.code\n" +
-                                         "     , staging_table.value\n" +
-                                         "     , FALSE AS data_source_deleted_flag\n" +
-                                         "     , NOW( ) AS data_source_updated_datetime\n" +
-                                         "FROM staging_octane.a_new_type staging_table\n" +
-                                         "LEFT JOIN history_octane.a_new_type history_table\n" +
-                                         "          ON staging_table.code = history_table.code\n" +
-                                         "              AND staging_table.value = history_table.value\n" +
-                                         "WHERE history_table.code IS NULL;"
+                            'etls': {
+                                'ETL-3': {
+                                    'input_type': 'table',
+                                    'output_type': 'insert',
+                                    'output_table': 'staging.history_octane.a_new_type',
+                                    'json_output_field': 'code',
+                                    'truncate_table': False,
+                                    'container_memory': 2048,
+                                    'input_sql': "--finding records to insert into history_octane.a_new_type\n" +
+                                                 "SELECT staging_table.code\n" +
+                                                 "     , staging_table.value\n" +
+                                                 "     , FALSE AS data_source_deleted_flag\n" +
+                                                 "     , NOW( ) AS data_source_updated_datetime\n" +
+                                                 "FROM staging_octane.a_new_type staging_table\n" +
+                                                 "LEFT JOIN history_octane.a_new_type history_table\n" +
+                                                 "          ON staging_table.code = history_table.code\n" +
+                                                 "              AND staging_table.value = history_table.value\n" +
+                                                 "WHERE history_table.code IS NULL;"
+                                }
+                            }
                         }
                     }
                 },
@@ -539,23 +586,28 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                             'data_type': 'TEXT'
                         }
                     },
-                    'etls': {
+                    'step_functions': {
                         'SP-4': {
-                            'input_type': 'table',
-                            'output_type': 'insert',
-                            'json_output_field': 'code',
-                            'truncate_table': False,
-                            'container_memory': 2048,
-                            'input_sql': "--finding records to insert into history_octane.another_new_type\n" +
-                                         "SELECT staging_table.code\n" +
-                                         "     , staging_table.value\n" +
-                                         "     , FALSE AS data_source_deleted_flag\n" +
-                                         "     , NOW( ) AS data_source_updated_datetime\n" +
-                                         "FROM staging_octane.another_new_type staging_table\n" +
-                                         "LEFT JOIN history_octane.another_new_type history_table\n" +
-                                         "          ON staging_table.code = history_table.code\n" +
-                                         "              AND staging_table.value = history_table.value\n" +
-                                         "WHERE history_table.code IS NULL;"
+                            'etls': {
+                                'ETL-4': {
+                                    'input_type': 'table',
+                                    'output_type': 'insert',
+                                    'output_table': 'staging.history_octane.another_new_type',
+                                    'json_output_field': 'code',
+                                    'truncate_table': False,
+                                    'container_memory': 2048,
+                                    'input_sql': "--finding records to insert into history_octane.another_new_type\n" +
+                                                 "SELECT staging_table.code\n" +
+                                                 "     , staging_table.value\n" +
+                                                 "     , FALSE AS data_source_deleted_flag\n" +
+                                                 "     , NOW( ) AS data_source_updated_datetime\n" +
+                                                 "FROM staging_octane.another_new_type staging_table\n" +
+                                                 "LEFT JOIN history_octane.another_new_type history_table\n" +
+                                                 "          ON staging_table.code = history_table.code\n" +
+                                                 "              AND staging_table.value = history_table.value\n" +
+                                                 "WHERE history_table.code IS NULL;"
+                                }
+                            }
                         }
                     }
                 },
@@ -565,238 +617,243 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                     'primary_key': ['wt_pid', 'wt_version'],
                     'foreign_keys': {},
                     'columns': self.wide_table_history_columns_dict,
-                    'etls': {
+                    'step_functions': {
                         'SP-5': {
-                            'input_type': 'table',
-                            'output_type': 'insert',
-                            'json_output_field': 'wt_pid',
-                            'truncate_table': False,
-                            'container_memory': 4096,
-                            'input_sql': "--finding records to insert into history_octane.wide_table\n" +
-                                         "SELECT staging_table.wt_pid\n" +
-                                         "     , staging_table.wt_version\n" +
-                                         "     , staging_table.wt_column_1\n" +
-                                         "     , staging_table.wt_column_2\n" +
-                                         "     , staging_table.wt_column_3\n" +
-                                         "     , staging_table.wt_column_4\n" +
-                                         "     , staging_table.wt_column_5\n" +
-                                         "     , staging_table.wt_column_6\n" +
-                                         "     , staging_table.wt_column_7\n" +
-                                         "     , staging_table.wt_column_8\n" +
-                                         "     , staging_table.wt_column_9\n" +
-                                         "     , staging_table.wt_column_10\n" +
-                                         "     , staging_table.wt_column_11\n" +
-                                         "     , staging_table.wt_column_12\n" +
-                                         "     , staging_table.wt_column_13\n" +
-                                         "     , staging_table.wt_column_14\n" +
-                                         "     , staging_table.wt_column_15\n" +
-                                         "     , staging_table.wt_column_16\n" +
-                                         "     , staging_table.wt_column_17\n" +
-                                         "     , staging_table.wt_column_18\n" +
-                                         "     , staging_table.wt_column_19\n" +
-                                         "     , staging_table.wt_column_20\n" +
-                                         "     , staging_table.wt_column_21\n" +
-                                         "     , staging_table.wt_column_22\n" +
-                                         "     , staging_table.wt_column_23\n" +
-                                         "     , staging_table.wt_column_24\n" +
-                                         "     , staging_table.wt_column_25\n" +
-                                         "     , staging_table.wt_column_26\n" +
-                                         "     , staging_table.wt_column_27\n" +
-                                         "     , staging_table.wt_column_28\n" +
-                                         "     , staging_table.wt_column_29\n" +
-                                         "     , staging_table.wt_column_30\n" +
-                                         "     , staging_table.wt_column_31\n" +
-                                         "     , staging_table.wt_column_32\n" +
-                                         "     , staging_table.wt_column_33\n" +
-                                         "     , staging_table.wt_column_34\n" +
-                                         "     , staging_table.wt_column_35\n" +
-                                         "     , staging_table.wt_column_36\n" +
-                                         "     , staging_table.wt_column_37\n" +
-                                         "     , staging_table.wt_column_38\n" +
-                                         "     , staging_table.wt_column_39\n" +
-                                         "     , staging_table.wt_column_40\n" +
-                                         "     , staging_table.wt_column_41\n" +
-                                         "     , staging_table.wt_column_42\n" +
-                                         "     , staging_table.wt_column_43\n" +
-                                         "     , staging_table.wt_column_44\n" +
-                                         "     , staging_table.wt_column_45\n" +
-                                         "     , staging_table.wt_column_46\n" +
-                                         "     , staging_table.wt_column_47\n" +
-                                         "     , staging_table.wt_column_48\n" +
-                                         "     , staging_table.wt_column_49\n" +
-                                         "     , staging_table.wt_column_50\n" +
-                                         "     , staging_table.wt_column_51\n" +
-                                         "     , staging_table.wt_column_52\n" +
-                                         "     , staging_table.wt_column_53\n" +
-                                         "     , staging_table.wt_column_54\n" +
-                                         "     , staging_table.wt_column_55\n" +
-                                         "     , staging_table.wt_column_56\n" +
-                                         "     , staging_table.wt_column_57\n" +
-                                         "     , staging_table.wt_column_58\n" +
-                                         "     , staging_table.wt_column_59\n" +
-                                         "     , staging_table.wt_column_60\n" +
-                                         "     , staging_table.wt_column_61\n" +
-                                         "     , staging_table.wt_column_62\n" +
-                                         "     , staging_table.wt_column_63\n" +
-                                         "     , staging_table.wt_column_64\n" +
-                                         "     , staging_table.wt_column_65\n" +
-                                         "     , staging_table.wt_column_66\n" +
-                                         "     , staging_table.wt_column_67\n" +
-                                         "     , staging_table.wt_column_68\n" +
-                                         "     , staging_table.wt_column_69\n" +
-                                         "     , staging_table.wt_column_70\n" +
-                                         "     , staging_table.wt_column_71\n" +
-                                         "     , staging_table.wt_column_72\n" +
-                                         "     , staging_table.wt_column_73\n" +
-                                         "     , staging_table.wt_column_74\n" +
-                                         "     , staging_table.wt_column_75\n" +
-                                         "     , staging_table.wt_column_76\n" +
-                                         "     , staging_table.wt_column_77\n" +
-                                         "     , staging_table.wt_column_78\n" +
-                                         "     , staging_table.wt_column_79\n" +
-                                         "     , staging_table.wt_column_80\n" +
-                                         "     , staging_table.wt_column_81\n" +
-                                         "     , staging_table.wt_column_82\n" +
-                                         "     , staging_table.wt_column_83\n" +
-                                         "     , staging_table.wt_column_84\n" +
-                                         "     , staging_table.wt_column_85\n" +
-                                         "     , staging_table.wt_column_86\n" +
-                                         "     , staging_table.wt_column_87\n" +
-                                         "     , staging_table.wt_column_88\n" +
-                                         "     , staging_table.wt_column_89\n" +
-                                         "     , staging_table.wt_column_90\n" +
-                                         "     , staging_table.wt_column_91\n" +
-                                         "     , staging_table.wt_column_92\n" +
-                                         "     , staging_table.wt_column_93\n" +
-                                         "     , staging_table.wt_column_94\n" +
-                                         "     , staging_table.wt_column_95\n" +
-                                         "     , staging_table.wt_column_96\n" +
-                                         "     , staging_table.wt_column_97\n" +
-                                         "     , staging_table.wt_column_98\n" +
-                                         "     , staging_table.wt_column_99\n" +
-                                         "     , staging_table.wt_column_100\n" +
-                                         "     , FALSE AS data_source_deleted_flag\n" +
-                                         "     , NOW( ) AS data_source_updated_datetime\n" +
-                                         "FROM staging_octane.wide_table staging_table\n" +
-                                         "LEFT JOIN history_octane.wide_table history_table\n" +
-                                         "          ON staging_table.wt_pid = history_table.wt_pid\n" +
-                                         "              AND staging_table.wt_version = history_table.wt_version\n" +
-                                         "WHERE history_table.wt_pid IS NULL\n" +
-                                         "UNION ALL\n" +
-                                         "SELECT history_table.wt_pid\n" +
-                                         "     , history_table.wt_version + 1\n" +
-                                         "     , history_table.wt_column_1\n" +
-                                         "     , history_table.wt_column_2\n" +
-                                         "     , history_table.wt_column_3\n" +
-                                         "     , history_table.wt_column_4\n" +
-                                         "     , history_table.wt_column_5\n" +
-                                         "     , history_table.wt_column_6\n" +
-                                         "     , history_table.wt_column_7\n" +
-                                         "     , history_table.wt_column_8\n" +
-                                         "     , history_table.wt_column_9\n" +
-                                         "     , history_table.wt_column_10\n" +
-                                         "     , history_table.wt_column_11\n" +
-                                         "     , history_table.wt_column_12\n" +
-                                         "     , history_table.wt_column_13\n" +
-                                         "     , history_table.wt_column_14\n" +
-                                         "     , history_table.wt_column_15\n" +
-                                         "     , history_table.wt_column_16\n" +
-                                         "     , history_table.wt_column_17\n" +
-                                         "     , history_table.wt_column_18\n" +
-                                         "     , history_table.wt_column_19\n" +
-                                         "     , history_table.wt_column_20\n" +
-                                         "     , history_table.wt_column_21\n" +
-                                         "     , history_table.wt_column_22\n" +
-                                         "     , history_table.wt_column_23\n" +
-                                         "     , history_table.wt_column_24\n" +
-                                         "     , history_table.wt_column_25\n" +
-                                         "     , history_table.wt_column_26\n" +
-                                         "     , history_table.wt_column_27\n" +
-                                         "     , history_table.wt_column_28\n" +
-                                         "     , history_table.wt_column_29\n" +
-                                         "     , history_table.wt_column_30\n" +
-                                         "     , history_table.wt_column_31\n" +
-                                         "     , history_table.wt_column_32\n" +
-                                         "     , history_table.wt_column_33\n" +
-                                         "     , history_table.wt_column_34\n" +
-                                         "     , history_table.wt_column_35\n" +
-                                         "     , history_table.wt_column_36\n" +
-                                         "     , history_table.wt_column_37\n" +
-                                         "     , history_table.wt_column_38\n" +
-                                         "     , history_table.wt_column_39\n" +
-                                         "     , history_table.wt_column_40\n" +
-                                         "     , history_table.wt_column_41\n" +
-                                         "     , history_table.wt_column_42\n" +
-                                         "     , history_table.wt_column_43\n" +
-                                         "     , history_table.wt_column_44\n" +
-                                         "     , history_table.wt_column_45\n" +
-                                         "     , history_table.wt_column_46\n" +
-                                         "     , history_table.wt_column_47\n" +
-                                         "     , history_table.wt_column_48\n" +
-                                         "     , history_table.wt_column_49\n" +
-                                         "     , history_table.wt_column_50\n" +
-                                         "     , history_table.wt_column_51\n" +
-                                         "     , history_table.wt_column_52\n" +
-                                         "     , history_table.wt_column_53\n" +
-                                         "     , history_table.wt_column_54\n" +
-                                         "     , history_table.wt_column_55\n" +
-                                         "     , history_table.wt_column_56\n" +
-                                         "     , history_table.wt_column_57\n" +
-                                         "     , history_table.wt_column_58\n" +
-                                         "     , history_table.wt_column_59\n" +
-                                         "     , history_table.wt_column_60\n" +
-                                         "     , history_table.wt_column_61\n" +
-                                         "     , history_table.wt_column_62\n" +
-                                         "     , history_table.wt_column_63\n" +
-                                         "     , history_table.wt_column_64\n" +
-                                         "     , history_table.wt_column_65\n" +
-                                         "     , history_table.wt_column_66\n" +
-                                         "     , history_table.wt_column_67\n" +
-                                         "     , history_table.wt_column_68\n" +
-                                         "     , history_table.wt_column_69\n" +
-                                         "     , history_table.wt_column_70\n" +
-                                         "     , history_table.wt_column_71\n" +
-                                         "     , history_table.wt_column_72\n" +
-                                         "     , history_table.wt_column_73\n" +
-                                         "     , history_table.wt_column_74\n" +
-                                         "     , history_table.wt_column_75\n" +
-                                         "     , history_table.wt_column_76\n" +
-                                         "     , history_table.wt_column_77\n" +
-                                         "     , history_table.wt_column_78\n" +
-                                         "     , history_table.wt_column_79\n" +
-                                         "     , history_table.wt_column_80\n" +
-                                         "     , history_table.wt_column_81\n" +
-                                         "     , history_table.wt_column_82\n" +
-                                         "     , history_table.wt_column_83\n" +
-                                         "     , history_table.wt_column_84\n" +
-                                         "     , history_table.wt_column_85\n" +
-                                         "     , history_table.wt_column_86\n" +
-                                         "     , history_table.wt_column_87\n" +
-                                         "     , history_table.wt_column_88\n" +
-                                         "     , history_table.wt_column_89\n" +
-                                         "     , history_table.wt_column_90\n" +
-                                         "     , history_table.wt_column_91\n" +
-                                         "     , history_table.wt_column_92\n" +
-                                         "     , history_table.wt_column_93\n" +
-                                         "     , history_table.wt_column_94\n" +
-                                         "     , history_table.wt_column_95\n" +
-                                         "     , history_table.wt_column_96\n" +
-                                         "     , history_table.wt_column_97\n" +
-                                         "     , history_table.wt_column_98\n" +
-                                         "     , history_table.wt_column_99\n" +
-                                         "     , history_table.wt_column_100\n" +
-                                         "     , TRUE AS data_source_deleted_flag\n" +
-                                         "     , NOW( ) AS data_source_updated_datetime\n" +
-                                         "FROM history_octane.wide_table history_table\n" +
-                                         "LEFT JOIN staging_octane.wide_table staging_table\n" +
-                                         "          ON staging_table.wt_pid = history_table.wt_pid\n" +
-                                         "WHERE staging_table.wt_pid IS NULL\n" +
-                                         "  AND NOT EXISTS(\n" +
-                                         "    SELECT 1\n" +
-                                         "    FROM history_octane.wide_table deleted_records\n" +
-                                         "    WHERE deleted_records.wt_pid = history_table.wt_pid\n" +
-                                         "      AND deleted_records.data_source_deleted_flag = TRUE\n" +
-                                         "    );"
+                            'etls': {
+                                'ETL-5': {
+                                    'input_type': 'table',
+                                    'output_type': 'insert',
+                                    'output_table': 'staging.history_octane.wide_table',
+                                    'json_output_field': 'wt_pid',
+                                    'truncate_table': False,
+                                    'container_memory': 4096,
+                                    'input_sql': "--finding records to insert into history_octane.wide_table\n" +
+                                                 "SELECT staging_table.wt_pid\n" +
+                                                 "     , staging_table.wt_version\n" +
+                                                 "     , staging_table.wt_column_1\n" +
+                                                 "     , staging_table.wt_column_2\n" +
+                                                 "     , staging_table.wt_column_3\n" +
+                                                 "     , staging_table.wt_column_4\n" +
+                                                 "     , staging_table.wt_column_5\n" +
+                                                 "     , staging_table.wt_column_6\n" +
+                                                 "     , staging_table.wt_column_7\n" +
+                                                 "     , staging_table.wt_column_8\n" +
+                                                 "     , staging_table.wt_column_9\n" +
+                                                 "     , staging_table.wt_column_10\n" +
+                                                 "     , staging_table.wt_column_11\n" +
+                                                 "     , staging_table.wt_column_12\n" +
+                                                 "     , staging_table.wt_column_13\n" +
+                                                 "     , staging_table.wt_column_14\n" +
+                                                 "     , staging_table.wt_column_15\n" +
+                                                 "     , staging_table.wt_column_16\n" +
+                                                 "     , staging_table.wt_column_17\n" +
+                                                 "     , staging_table.wt_column_18\n" +
+                                                 "     , staging_table.wt_column_19\n" +
+                                                 "     , staging_table.wt_column_20\n" +
+                                                 "     , staging_table.wt_column_21\n" +
+                                                 "     , staging_table.wt_column_22\n" +
+                                                 "     , staging_table.wt_column_23\n" +
+                                                 "     , staging_table.wt_column_24\n" +
+                                                 "     , staging_table.wt_column_25\n" +
+                                                 "     , staging_table.wt_column_26\n" +
+                                                 "     , staging_table.wt_column_27\n" +
+                                                 "     , staging_table.wt_column_28\n" +
+                                                 "     , staging_table.wt_column_29\n" +
+                                                 "     , staging_table.wt_column_30\n" +
+                                                 "     , staging_table.wt_column_31\n" +
+                                                 "     , staging_table.wt_column_32\n" +
+                                                 "     , staging_table.wt_column_33\n" +
+                                                 "     , staging_table.wt_column_34\n" +
+                                                 "     , staging_table.wt_column_35\n" +
+                                                 "     , staging_table.wt_column_36\n" +
+                                                 "     , staging_table.wt_column_37\n" +
+                                                 "     , staging_table.wt_column_38\n" +
+                                                 "     , staging_table.wt_column_39\n" +
+                                                 "     , staging_table.wt_column_40\n" +
+                                                 "     , staging_table.wt_column_41\n" +
+                                                 "     , staging_table.wt_column_42\n" +
+                                                 "     , staging_table.wt_column_43\n" +
+                                                 "     , staging_table.wt_column_44\n" +
+                                                 "     , staging_table.wt_column_45\n" +
+                                                 "     , staging_table.wt_column_46\n" +
+                                                 "     , staging_table.wt_column_47\n" +
+                                                 "     , staging_table.wt_column_48\n" +
+                                                 "     , staging_table.wt_column_49\n" +
+                                                 "     , staging_table.wt_column_50\n" +
+                                                 "     , staging_table.wt_column_51\n" +
+                                                 "     , staging_table.wt_column_52\n" +
+                                                 "     , staging_table.wt_column_53\n" +
+                                                 "     , staging_table.wt_column_54\n" +
+                                                 "     , staging_table.wt_column_55\n" +
+                                                 "     , staging_table.wt_column_56\n" +
+                                                 "     , staging_table.wt_column_57\n" +
+                                                 "     , staging_table.wt_column_58\n" +
+                                                 "     , staging_table.wt_column_59\n" +
+                                                 "     , staging_table.wt_column_60\n" +
+                                                 "     , staging_table.wt_column_61\n" +
+                                                 "     , staging_table.wt_column_62\n" +
+                                                 "     , staging_table.wt_column_63\n" +
+                                                 "     , staging_table.wt_column_64\n" +
+                                                 "     , staging_table.wt_column_65\n" +
+                                                 "     , staging_table.wt_column_66\n" +
+                                                 "     , staging_table.wt_column_67\n" +
+                                                 "     , staging_table.wt_column_68\n" +
+                                                 "     , staging_table.wt_column_69\n" +
+                                                 "     , staging_table.wt_column_70\n" +
+                                                 "     , staging_table.wt_column_71\n" +
+                                                 "     , staging_table.wt_column_72\n" +
+                                                 "     , staging_table.wt_column_73\n" +
+                                                 "     , staging_table.wt_column_74\n" +
+                                                 "     , staging_table.wt_column_75\n" +
+                                                 "     , staging_table.wt_column_76\n" +
+                                                 "     , staging_table.wt_column_77\n" +
+                                                 "     , staging_table.wt_column_78\n" +
+                                                 "     , staging_table.wt_column_79\n" +
+                                                 "     , staging_table.wt_column_80\n" +
+                                                 "     , staging_table.wt_column_81\n" +
+                                                 "     , staging_table.wt_column_82\n" +
+                                                 "     , staging_table.wt_column_83\n" +
+                                                 "     , staging_table.wt_column_84\n" +
+                                                 "     , staging_table.wt_column_85\n" +
+                                                 "     , staging_table.wt_column_86\n" +
+                                                 "     , staging_table.wt_column_87\n" +
+                                                 "     , staging_table.wt_column_88\n" +
+                                                 "     , staging_table.wt_column_89\n" +
+                                                 "     , staging_table.wt_column_90\n" +
+                                                 "     , staging_table.wt_column_91\n" +
+                                                 "     , staging_table.wt_column_92\n" +
+                                                 "     , staging_table.wt_column_93\n" +
+                                                 "     , staging_table.wt_column_94\n" +
+                                                 "     , staging_table.wt_column_95\n" +
+                                                 "     , staging_table.wt_column_96\n" +
+                                                 "     , staging_table.wt_column_97\n" +
+                                                 "     , staging_table.wt_column_98\n" +
+                                                 "     , staging_table.wt_column_99\n" +
+                                                 "     , staging_table.wt_column_100\n" +
+                                                 "     , FALSE AS data_source_deleted_flag\n" +
+                                                 "     , NOW( ) AS data_source_updated_datetime\n" +
+                                                 "FROM staging_octane.wide_table staging_table\n" +
+                                                 "LEFT JOIN history_octane.wide_table history_table\n" +
+                                                 "          ON staging_table.wt_pid = history_table.wt_pid\n" +
+                                                 "              AND staging_table.wt_version = history_table.wt_version\n" +
+                                                 "WHERE history_table.wt_pid IS NULL\n" +
+                                                 "UNION ALL\n" +
+                                                 "SELECT history_table.wt_pid\n" +
+                                                 "     , history_table.wt_version + 1\n" +
+                                                 "     , history_table.wt_column_1\n" +
+                                                 "     , history_table.wt_column_2\n" +
+                                                 "     , history_table.wt_column_3\n" +
+                                                 "     , history_table.wt_column_4\n" +
+                                                 "     , history_table.wt_column_5\n" +
+                                                 "     , history_table.wt_column_6\n" +
+                                                 "     , history_table.wt_column_7\n" +
+                                                 "     , history_table.wt_column_8\n" +
+                                                 "     , history_table.wt_column_9\n" +
+                                                 "     , history_table.wt_column_10\n" +
+                                                 "     , history_table.wt_column_11\n" +
+                                                 "     , history_table.wt_column_12\n" +
+                                                 "     , history_table.wt_column_13\n" +
+                                                 "     , history_table.wt_column_14\n" +
+                                                 "     , history_table.wt_column_15\n" +
+                                                 "     , history_table.wt_column_16\n" +
+                                                 "     , history_table.wt_column_17\n" +
+                                                 "     , history_table.wt_column_18\n" +
+                                                 "     , history_table.wt_column_19\n" +
+                                                 "     , history_table.wt_column_20\n" +
+                                                 "     , history_table.wt_column_21\n" +
+                                                 "     , history_table.wt_column_22\n" +
+                                                 "     , history_table.wt_column_23\n" +
+                                                 "     , history_table.wt_column_24\n" +
+                                                 "     , history_table.wt_column_25\n" +
+                                                 "     , history_table.wt_column_26\n" +
+                                                 "     , history_table.wt_column_27\n" +
+                                                 "     , history_table.wt_column_28\n" +
+                                                 "     , history_table.wt_column_29\n" +
+                                                 "     , history_table.wt_column_30\n" +
+                                                 "     , history_table.wt_column_31\n" +
+                                                 "     , history_table.wt_column_32\n" +
+                                                 "     , history_table.wt_column_33\n" +
+                                                 "     , history_table.wt_column_34\n" +
+                                                 "     , history_table.wt_column_35\n" +
+                                                 "     , history_table.wt_column_36\n" +
+                                                 "     , history_table.wt_column_37\n" +
+                                                 "     , history_table.wt_column_38\n" +
+                                                 "     , history_table.wt_column_39\n" +
+                                                 "     , history_table.wt_column_40\n" +
+                                                 "     , history_table.wt_column_41\n" +
+                                                 "     , history_table.wt_column_42\n" +
+                                                 "     , history_table.wt_column_43\n" +
+                                                 "     , history_table.wt_column_44\n" +
+                                                 "     , history_table.wt_column_45\n" +
+                                                 "     , history_table.wt_column_46\n" +
+                                                 "     , history_table.wt_column_47\n" +
+                                                 "     , history_table.wt_column_48\n" +
+                                                 "     , history_table.wt_column_49\n" +
+                                                 "     , history_table.wt_column_50\n" +
+                                                 "     , history_table.wt_column_51\n" +
+                                                 "     , history_table.wt_column_52\n" +
+                                                 "     , history_table.wt_column_53\n" +
+                                                 "     , history_table.wt_column_54\n" +
+                                                 "     , history_table.wt_column_55\n" +
+                                                 "     , history_table.wt_column_56\n" +
+                                                 "     , history_table.wt_column_57\n" +
+                                                 "     , history_table.wt_column_58\n" +
+                                                 "     , history_table.wt_column_59\n" +
+                                                 "     , history_table.wt_column_60\n" +
+                                                 "     , history_table.wt_column_61\n" +
+                                                 "     , history_table.wt_column_62\n" +
+                                                 "     , history_table.wt_column_63\n" +
+                                                 "     , history_table.wt_column_64\n" +
+                                                 "     , history_table.wt_column_65\n" +
+                                                 "     , history_table.wt_column_66\n" +
+                                                 "     , history_table.wt_column_67\n" +
+                                                 "     , history_table.wt_column_68\n" +
+                                                 "     , history_table.wt_column_69\n" +
+                                                 "     , history_table.wt_column_70\n" +
+                                                 "     , history_table.wt_column_71\n" +
+                                                 "     , history_table.wt_column_72\n" +
+                                                 "     , history_table.wt_column_73\n" +
+                                                 "     , history_table.wt_column_74\n" +
+                                                 "     , history_table.wt_column_75\n" +
+                                                 "     , history_table.wt_column_76\n" +
+                                                 "     , history_table.wt_column_77\n" +
+                                                 "     , history_table.wt_column_78\n" +
+                                                 "     , history_table.wt_column_79\n" +
+                                                 "     , history_table.wt_column_80\n" +
+                                                 "     , history_table.wt_column_81\n" +
+                                                 "     , history_table.wt_column_82\n" +
+                                                 "     , history_table.wt_column_83\n" +
+                                                 "     , history_table.wt_column_84\n" +
+                                                 "     , history_table.wt_column_85\n" +
+                                                 "     , history_table.wt_column_86\n" +
+                                                 "     , history_table.wt_column_87\n" +
+                                                 "     , history_table.wt_column_88\n" +
+                                                 "     , history_table.wt_column_89\n" +
+                                                 "     , history_table.wt_column_90\n" +
+                                                 "     , history_table.wt_column_91\n" +
+                                                 "     , history_table.wt_column_92\n" +
+                                                 "     , history_table.wt_column_93\n" +
+                                                 "     , history_table.wt_column_94\n" +
+                                                 "     , history_table.wt_column_95\n" +
+                                                 "     , history_table.wt_column_96\n" +
+                                                 "     , history_table.wt_column_97\n" +
+                                                 "     , history_table.wt_column_98\n" +
+                                                 "     , history_table.wt_column_99\n" +
+                                                 "     , history_table.wt_column_100\n" +
+                                                 "     , TRUE AS data_source_deleted_flag\n" +
+                                                 "     , NOW( ) AS data_source_updated_datetime\n" +
+                                                 "FROM history_octane.wide_table history_table\n" +
+                                                 "LEFT JOIN staging_octane.wide_table staging_table\n" +
+                                                 "          ON staging_table.wt_pid = history_table.wt_pid\n" +
+                                                 "WHERE staging_table.wt_pid IS NULL\n" +
+                                                 "  AND NOT EXISTS(\n" +
+                                                 "    SELECT 1\n" +
+                                                 "    FROM history_octane.wide_table deleted_records\n" +
+                                                 "    WHERE deleted_records.wt_pid = history_table.wt_pid\n" +
+                                                 "      AND deleted_records.data_source_deleted_flag = TRUE\n" +
+                                                 "    );"
+                                }
+                            }
                         }
                     }
                 }
@@ -805,29 +862,26 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
 
     def test_throws_value_error_if_given_metadata_doesnt_contain_staging_octane_schema(self):
         with self.assertRaises(ValueError):
-            generate_history_octane_metadata(construct_data_warehouse_metadata_from_dict({'name': 'edw'}), {},
-                                             self.current_max_process_number)
+            generate_history_octane_metadata(construct_data_warehouse_metadata_from_dict({'name': 'edw'}), self.existing_yaml_metadata)
 
     def test_generates_history_octane_metadata_that_mirrors_existing_staging_octane_metadata_while_adding_history_specific_etl_data(self):
         expected = construct_data_warehouse_metadata_from_dict(self.metadata_dict)
-        self.assertEqual(expected, generate_history_octane_metadata(self.staging_metadata, self.table_to_process_map,
-                                                                    self.current_max_process_number))
+        self.assertEqual(expected, generate_history_octane_metadata(self.staging_metadata, self.existing_yaml_metadata))
 
 
 class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
     def test_remove_deleted_column_metadata_from_column(self):
-        source_column = ColumnMetadata(name = 'c1'
-                                       , data_type = 'TEXT'
-                                       ,source = None
-                                       ,update_flag = True)
+        source_column = ColumnMetadata(name='c1'
+                                       , data_type='TEXT'
+                                       , source=None
+                                       , update_flag=True)
 
-        expected_column = ColumnMetadata(name = 'c1'
-                                         ,data_type = 'TEXT'
-                                         ,source = None
-                                         ,update_flag = None)
+        expected_column = ColumnMetadata(name='c1'
+                                         , data_type='TEXT'
+                                         , source=None
+                                         , update_flag=None)
 
         self.assertEqual(expected_column, remove_deleted_column_metadata_from_column(source_column))
-
 
     def test_renaming_field_in_staging_octane_schema(self):
         octane_metadata = construct_data_warehouse_metadata_from_dict({
@@ -952,7 +1006,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                         }
                                     },
                                     'next_etls': ['SP-1'],
-                                    'primary_source_table':'staging.staging_octane.t1'
+                                    'primary_source_table': 'staging.staging_octane.t1'
                                 }
                             ]
                         },
@@ -1064,7 +1118,8 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
 
-        self.assertEqual(expected_datawarehouse_metadata, add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
+        self.assertEqual(expected_datawarehouse_metadata,
+                         add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
 
     def test_renaming_table_in_staging_octane_schema(self):
         octane_metadata = construct_data_warehouse_metadata_from_dict({
@@ -1287,7 +1342,8 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
 
-        self.assertEqual(expected_datawarehouse_metadata, add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
+        self.assertEqual(expected_datawarehouse_metadata,
+                         add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
 
     def test_adding_field_to_staging_octane_schema(self):
         octane_metadata = construct_data_warehouse_metadata_from_dict({
@@ -1527,7 +1583,8 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
 
-        self.assertEqual(expected_datawarehouse_metadata, add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
+        self.assertEqual(expected_datawarehouse_metadata,
+                         add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
 
     def test_removing_field_from_staging_octane_schema(self):
         octane_metadata = construct_data_warehouse_metadata_from_dict({
@@ -1770,7 +1827,9 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
 
-        self.assertEqual(add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata), expected_datawarehouse_metadata)
+        self.assertEqual(add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata),
+                         expected_datawarehouse_metadata)
+
 
 if __name__ == '__main__':
     unittest.main()

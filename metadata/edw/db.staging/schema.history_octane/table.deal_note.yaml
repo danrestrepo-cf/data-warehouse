@@ -119,58 +119,61 @@ columns:
       field: primary_source_table.columns.dn_wf_deal_step_pid
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100360:
-    input_type: table
-    output_type: insert
-    json_output_field: dn_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_note
-      SELECT staging_table.dn_pid
-           , staging_table.dn_version
-           , staging_table.dn_deal_pid
-           , staging_table.dn_create_datetime
-           , staging_table.dn_content
-           , staging_table.dn_author_unparsed_name
-           , staging_table.dn_author_lender_user_pid
-           , staging_table.dn_scope_type
-           , staging_table.dn_scope_name
-           , staging_table.dn_wf_deal_step_pid
-           , staging_table.dn_proposal_doc_pid
-           , staging_table.dn_proposal_review_pid
-           , staging_table.dn_category_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_note staging_table
-      LEFT JOIN history_octane.deal_note history_table
-                ON staging_table.dn_pid = history_table.dn_pid
-                    AND staging_table.dn_version = history_table.dn_version
-      WHERE history_table.dn_pid IS NULL
-      UNION ALL
-      SELECT history_table.dn_pid
-           , history_table.dn_version + 1
-           , history_table.dn_deal_pid
-           , history_table.dn_create_datetime
-           , history_table.dn_content
-           , history_table.dn_author_unparsed_name
-           , history_table.dn_author_lender_user_pid
-           , history_table.dn_scope_type
-           , history_table.dn_scope_name
-           , history_table.dn_wf_deal_step_pid
-           , history_table.dn_proposal_doc_pid
-           , history_table.dn_proposal_review_pid
-           , history_table.dn_category_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_note history_table
-      LEFT JOIN staging_octane.deal_note staging_table
-                ON staging_table.dn_pid = history_table.dn_pid
-      WHERE staging_table.dn_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_note deleted_records
-          WHERE deleted_records.dn_pid = history_table.dn_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100360:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_note
+        json_output_field: dn_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_note
+          SELECT staging_table.dn_pid
+               , staging_table.dn_version
+               , staging_table.dn_deal_pid
+               , staging_table.dn_create_datetime
+               , staging_table.dn_content
+               , staging_table.dn_author_unparsed_name
+               , staging_table.dn_author_lender_user_pid
+               , staging_table.dn_scope_type
+               , staging_table.dn_scope_name
+               , staging_table.dn_wf_deal_step_pid
+               , staging_table.dn_proposal_doc_pid
+               , staging_table.dn_proposal_review_pid
+               , staging_table.dn_category_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_note staging_table
+          LEFT JOIN history_octane.deal_note history_table
+                    ON staging_table.dn_pid = history_table.dn_pid
+                        AND staging_table.dn_version = history_table.dn_version
+          WHERE history_table.dn_pid IS NULL
+          UNION ALL
+          SELECT history_table.dn_pid
+               , history_table.dn_version + 1
+               , history_table.dn_deal_pid
+               , history_table.dn_create_datetime
+               , history_table.dn_content
+               , history_table.dn_author_unparsed_name
+               , history_table.dn_author_lender_user_pid
+               , history_table.dn_scope_type
+               , history_table.dn_scope_name
+               , history_table.dn_wf_deal_step_pid
+               , history_table.dn_proposal_doc_pid
+               , history_table.dn_proposal_review_pid
+               , history_table.dn_category_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_note history_table
+          LEFT JOIN staging_octane.deal_note staging_table
+                    ON staging_table.dn_pid = history_table.dn_pid
+          WHERE staging_table.dn_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_note deleted_records
+              WHERE deleted_records.dn_pid = history_table.dn_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

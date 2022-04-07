@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100101 - ETL to insert records into staging.history_octane.lender_user_sign_on using staging.staging_octane.lender_user_sign_on as the primary source",
-    "StartAt": "SP-100101",
+    "StartAt": "ETL-100101",
     "States": {
-        "SP-100101": {
+        "ETL-100101": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100101"
+                                    "Value": "ETL-100101"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

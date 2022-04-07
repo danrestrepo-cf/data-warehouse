@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100905 - ETL to insert records into staging.history_octane.business_income_borrower_title_type using staging.staging_octane.business_income_borrower_title_type as the primary source",
-    "StartAt": "SP-100905",
+    "StartAt": "ETL-100905",
     "States": {
-        "SP-100905": {
+        "ETL-100905": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100905"
+                                    "Value": "ETL-100905"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

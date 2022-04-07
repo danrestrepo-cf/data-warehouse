@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100534 - ETL to insert records into staging.history_octane.income_history_calc_method_type using staging.staging_octane.income_history_calc_method_type as the primary source",
-    "StartAt": "SP-100534",
+    "StartAt": "ETL-100534",
     "States": {
-        "SP-100534": {
+        "ETL-100534": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100534"
+                                    "Value": "ETL-100534"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

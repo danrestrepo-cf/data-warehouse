@@ -79,58 +79,61 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.tco_version
-etls:
+step_functions:
   SP-100067:
-    input_type: table
-    output_type: insert
-    json_output_field: tco_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.title_company_office
-      SELECT staging_table.tco_pid
-           , staging_table.tco_version
-           , staging_table.tco_title_company_pid
-           , staging_table.tco_address_street1
-           , staging_table.tco_address_street2
-           , staging_table.tco_address_city
-           , staging_table.tco_address_state
-           , staging_table.tco_address_postal_code
-           , staging_table.tco_address_country
-           , staging_table.tco_phone
-           , staging_table.tco_fax
-           , staging_table.tco_email
-           , staging_table.tco_active
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.title_company_office staging_table
-      LEFT JOIN history_octane.title_company_office history_table
-                ON staging_table.tco_pid = history_table.tco_pid
-                    AND staging_table.tco_version = history_table.tco_version
-      WHERE history_table.tco_pid IS NULL
-      UNION ALL
-      SELECT history_table.tco_pid
-           , history_table.tco_version + 1
-           , history_table.tco_title_company_pid
-           , history_table.tco_address_street1
-           , history_table.tco_address_street2
-           , history_table.tco_address_city
-           , history_table.tco_address_state
-           , history_table.tco_address_postal_code
-           , history_table.tco_address_country
-           , history_table.tco_phone
-           , history_table.tco_fax
-           , history_table.tco_email
-           , history_table.tco_active
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.title_company_office history_table
-      LEFT JOIN staging_octane.title_company_office staging_table
-                ON staging_table.tco_pid = history_table.tco_pid
-      WHERE staging_table.tco_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.title_company_office deleted_records
-          WHERE deleted_records.tco_pid = history_table.tco_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100067:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.title_company_office
+        json_output_field: tco_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.title_company_office
+          SELECT staging_table.tco_pid
+               , staging_table.tco_version
+               , staging_table.tco_title_company_pid
+               , staging_table.tco_address_street1
+               , staging_table.tco_address_street2
+               , staging_table.tco_address_city
+               , staging_table.tco_address_state
+               , staging_table.tco_address_postal_code
+               , staging_table.tco_address_country
+               , staging_table.tco_phone
+               , staging_table.tco_fax
+               , staging_table.tco_email
+               , staging_table.tco_active
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.title_company_office staging_table
+          LEFT JOIN history_octane.title_company_office history_table
+                    ON staging_table.tco_pid = history_table.tco_pid
+                        AND staging_table.tco_version = history_table.tco_version
+          WHERE history_table.tco_pid IS NULL
+          UNION ALL
+          SELECT history_table.tco_pid
+               , history_table.tco_version + 1
+               , history_table.tco_title_company_pid
+               , history_table.tco_address_street1
+               , history_table.tco_address_street2
+               , history_table.tco_address_city
+               , history_table.tco_address_state
+               , history_table.tco_address_postal_code
+               , history_table.tco_address_country
+               , history_table.tco_phone
+               , history_table.tco_fax
+               , history_table.tco_email
+               , history_table.tco_active
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.title_company_office history_table
+          LEFT JOIN staging_octane.title_company_office staging_table
+                    ON staging_table.tco_pid = history_table.tco_pid
+          WHERE staging_table.tco_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.title_company_office deleted_records
+              WHERE deleted_records.tco_pid = history_table.tco_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

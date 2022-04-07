@@ -1,8 +1,8 @@
 {
     "Comment": "SP-200013 - ETL to insert_update records into staging.star_loan.loan_funding_dim using staging.history_octane.loan_funding as the primary source",
-    "StartAt": "SP-200013",
+    "StartAt": "ETL-200013",
     "States": {
-        "SP-200013": {
+        "ETL-200013": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-200013"
+                                    "Value": "ETL-200013"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -35,40 +35,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ptm_version
-etls:
+step_functions:
   SP-100041:
-    input_type: table
-    output_type: insert
-    json_output_field: ptm_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.performer_team
-      SELECT staging_table.ptm_pid
-           , staging_table.ptm_version
-           , staging_table.ptm_account_pid
-           , staging_table.ptm_name
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.performer_team staging_table
-      LEFT JOIN history_octane.performer_team history_table
-                ON staging_table.ptm_pid = history_table.ptm_pid
-                    AND staging_table.ptm_version = history_table.ptm_version
-      WHERE history_table.ptm_pid IS NULL
-      UNION ALL
-      SELECT history_table.ptm_pid
-           , history_table.ptm_version + 1
-           , history_table.ptm_account_pid
-           , history_table.ptm_name
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.performer_team history_table
-      LEFT JOIN staging_octane.performer_team staging_table
-                ON staging_table.ptm_pid = history_table.ptm_pid
-      WHERE staging_table.ptm_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.performer_team deleted_records
-          WHERE deleted_records.ptm_pid = history_table.ptm_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100041:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.performer_team
+        json_output_field: ptm_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.performer_team
+          SELECT staging_table.ptm_pid
+               , staging_table.ptm_version
+               , staging_table.ptm_account_pid
+               , staging_table.ptm_name
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.performer_team staging_table
+          LEFT JOIN history_octane.performer_team history_table
+                    ON staging_table.ptm_pid = history_table.ptm_pid
+                        AND staging_table.ptm_version = history_table.ptm_version
+          WHERE history_table.ptm_pid IS NULL
+          UNION ALL
+          SELECT history_table.ptm_pid
+               , history_table.ptm_version + 1
+               , history_table.ptm_account_pid
+               , history_table.ptm_name
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.performer_team history_table
+          LEFT JOIN staging_octane.performer_team staging_table
+                    ON staging_table.ptm_pid = history_table.ptm_pid
+          WHERE staging_table.ptm_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.performer_team deleted_records
+              WHERE deleted_records.ptm_pid = history_table.ptm_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

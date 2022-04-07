@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100525 - ETL to insert records into staging.history_octane.gse_version_type using staging.staging_octane.gse_version_type as the primary source",
-    "StartAt": "SP-100525",
+    "StartAt": "ETL-100525",
     "States": {
-        "SP-100525": {
+        "ETL-100525": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100525"
+                                    "Value": "ETL-100525"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

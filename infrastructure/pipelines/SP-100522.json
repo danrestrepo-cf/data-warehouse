@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100522 - ETL to insert records into staging.history_octane.fre_purchase_eligibility_type using staging.staging_octane.fre_purchase_eligibility_type as the primary source",
-    "StartAt": "SP-100522",
+    "StartAt": "ETL-100522",
     "States": {
-        "SP-100522": {
+        "ETL-100522": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100522"
+                                    "Value": "ETL-100522"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100400 - ETL to insert records into staging.history_octane.admin_user_status_type using staging.staging_octane.admin_user_status_type as the primary source",
-    "StartAt": "SP-100400",
+    "StartAt": "ETL-100400",
     "States": {
-        "SP-100400": {
+        "ETL-100400": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100400"
+                                    "Value": "ETL-100400"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

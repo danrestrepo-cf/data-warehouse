@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100419 - ETL to insert records into staging.history_octane.borrower_relationship_type using staging.staging_octane.borrower_relationship_type as the primary source",
-    "StartAt": "SP-100419",
+    "StartAt": "ETL-100419",
     "States": {
-        "SP-100419": {
+        "ETL-100419": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100419"
+                                    "Value": "ETL-100419"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

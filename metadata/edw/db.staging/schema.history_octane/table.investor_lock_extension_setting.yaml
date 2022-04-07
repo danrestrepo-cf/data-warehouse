@@ -51,48 +51,51 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.iles_version
-etls:
+step_functions:
   SP-100088:
-    input_type: table
-    output_type: insert
-    json_output_field: iles_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.investor_lock_extension_setting
-      SELECT staging_table.iles_pid
-           , staging_table.iles_version
-           , staging_table.iles_investor_pid
-           , staging_table.iles_from_date
-           , staging_table.iles_through_date
-           , staging_table.iles_extension_days
-           , staging_table.iles_price_adjustment_percent
-           , staging_table.iles_auto_confirm
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.investor_lock_extension_setting staging_table
-      LEFT JOIN history_octane.investor_lock_extension_setting history_table
-                ON staging_table.iles_pid = history_table.iles_pid
-                    AND staging_table.iles_version = history_table.iles_version
-      WHERE history_table.iles_pid IS NULL
-      UNION ALL
-      SELECT history_table.iles_pid
-           , history_table.iles_version + 1
-           , history_table.iles_investor_pid
-           , history_table.iles_from_date
-           , history_table.iles_through_date
-           , history_table.iles_extension_days
-           , history_table.iles_price_adjustment_percent
-           , history_table.iles_auto_confirm
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.investor_lock_extension_setting history_table
-      LEFT JOIN staging_octane.investor_lock_extension_setting staging_table
-                ON staging_table.iles_pid = history_table.iles_pid
-      WHERE staging_table.iles_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.investor_lock_extension_setting deleted_records
-          WHERE deleted_records.iles_pid = history_table.iles_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100088:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.investor_lock_extension_setting
+        json_output_field: iles_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.investor_lock_extension_setting
+          SELECT staging_table.iles_pid
+               , staging_table.iles_version
+               , staging_table.iles_investor_pid
+               , staging_table.iles_from_date
+               , staging_table.iles_through_date
+               , staging_table.iles_extension_days
+               , staging_table.iles_price_adjustment_percent
+               , staging_table.iles_auto_confirm
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.investor_lock_extension_setting staging_table
+          LEFT JOIN history_octane.investor_lock_extension_setting history_table
+                    ON staging_table.iles_pid = history_table.iles_pid
+                        AND staging_table.iles_version = history_table.iles_version
+          WHERE history_table.iles_pid IS NULL
+          UNION ALL
+          SELECT history_table.iles_pid
+               , history_table.iles_version + 1
+               , history_table.iles_investor_pid
+               , history_table.iles_from_date
+               , history_table.iles_through_date
+               , history_table.iles_extension_days
+               , history_table.iles_price_adjustment_percent
+               , history_table.iles_auto_confirm
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.investor_lock_extension_setting history_table
+          LEFT JOIN staging_octane.investor_lock_extension_setting staging_table
+                    ON staging_table.iles_pid = history_table.iles_pid
+          WHERE staging_table.iles_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.investor_lock_extension_setting deleted_records
+              WHERE deleted_records.iles_pid = history_table.iles_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -43,40 +43,43 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100206:
-    input_type: table
-    output_type: insert
-    json_output_field: czc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.county_zip_code
-      SELECT staging_table.czc_pid
-           , staging_table.czc_version
-           , staging_table.czc_county_pid
-           , staging_table.czc_zip_code_info_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.county_zip_code staging_table
-      LEFT JOIN history_octane.county_zip_code history_table
-                ON staging_table.czc_pid = history_table.czc_pid
-                    AND staging_table.czc_version = history_table.czc_version
-      WHERE history_table.czc_pid IS NULL
-      UNION ALL
-      SELECT history_table.czc_pid
-           , history_table.czc_version + 1
-           , history_table.czc_county_pid
-           , history_table.czc_zip_code_info_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.county_zip_code history_table
-      LEFT JOIN staging_octane.county_zip_code staging_table
-                ON staging_table.czc_pid = history_table.czc_pid
-      WHERE staging_table.czc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.county_zip_code deleted_records
-          WHERE deleted_records.czc_pid = history_table.czc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100206:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.county_zip_code
+        json_output_field: czc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.county_zip_code
+          SELECT staging_table.czc_pid
+               , staging_table.czc_version
+               , staging_table.czc_county_pid
+               , staging_table.czc_zip_code_info_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.county_zip_code staging_table
+          LEFT JOIN history_octane.county_zip_code history_table
+                    ON staging_table.czc_pid = history_table.czc_pid
+                        AND staging_table.czc_version = history_table.czc_version
+          WHERE history_table.czc_pid IS NULL
+          UNION ALL
+          SELECT history_table.czc_pid
+               , history_table.czc_version + 1
+               , history_table.czc_county_pid
+               , history_table.czc_zip_code_info_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.county_zip_code history_table
+          LEFT JOIN staging_octane.county_zip_code staging_table
+                    ON staging_table.czc_pid = history_table.czc_pid
+          WHERE staging_table.czc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.county_zip_code deleted_records
+              WHERE deleted_records.czc_pid = history_table.czc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

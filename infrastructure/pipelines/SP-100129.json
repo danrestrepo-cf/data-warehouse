@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100129 - ETL to insert records into staging.history_octane.borrower_user_change_email using staging.staging_octane.borrower_user_change_email as the primary source",
-    "StartAt": "SP-100129",
+    "StartAt": "ETL-100129",
     "States": {
-        "SP-100129": {
+        "ETL-100129": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100129"
+                                    "Value": "ETL-100129"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

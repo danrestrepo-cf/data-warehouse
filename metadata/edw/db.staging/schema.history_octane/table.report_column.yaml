@@ -47,42 +47,45 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.rpc_version
-etls:
+step_functions:
   SP-100046:
-    input_type: table
-    output_type: insert
-    json_output_field: rpc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.report_column
-      SELECT staging_table.rpc_pid
-           , staging_table.rpc_version
-           , staging_table.rpc_report_row_pid
-           , staging_table.rpc_report_column_type
-           , staging_table.rpc_ordinal
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.report_column staging_table
-      LEFT JOIN history_octane.report_column history_table
-                ON staging_table.rpc_pid = history_table.rpc_pid
-                    AND staging_table.rpc_version = history_table.rpc_version
-      WHERE history_table.rpc_pid IS NULL
-      UNION ALL
-      SELECT history_table.rpc_pid
-           , history_table.rpc_version + 1
-           , history_table.rpc_report_row_pid
-           , history_table.rpc_report_column_type
-           , history_table.rpc_ordinal
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.report_column history_table
-      LEFT JOIN staging_octane.report_column staging_table
-                ON staging_table.rpc_pid = history_table.rpc_pid
-      WHERE staging_table.rpc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.report_column deleted_records
-          WHERE deleted_records.rpc_pid = history_table.rpc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100046:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.report_column
+        json_output_field: rpc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.report_column
+          SELECT staging_table.rpc_pid
+               , staging_table.rpc_version
+               , staging_table.rpc_report_row_pid
+               , staging_table.rpc_report_column_type
+               , staging_table.rpc_ordinal
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.report_column staging_table
+          LEFT JOIN history_octane.report_column history_table
+                    ON staging_table.rpc_pid = history_table.rpc_pid
+                        AND staging_table.rpc_version = history_table.rpc_version
+          WHERE history_table.rpc_pid IS NULL
+          UNION ALL
+          SELECT history_table.rpc_pid
+               , history_table.rpc_version + 1
+               , history_table.rpc_report_row_pid
+               , history_table.rpc_report_column_type
+               , history_table.rpc_ordinal
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.report_column history_table
+          LEFT JOIN staging_octane.report_column staging_table
+                    ON staging_table.rpc_pid = history_table.rpc_pid
+          WHERE staging_table.rpc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.report_column deleted_records
+              WHERE deleted_records.rpc_pid = history_table.rpc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

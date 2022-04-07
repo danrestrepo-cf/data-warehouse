@@ -66,60 +66,63 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.qmrst_version
-etls:
+step_functions:
   SP-100896:
-    input_type: table
-    output_type: insert
-    json_output_field: qmrst_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.qm_rate_spread_thresholds
-      SELECT staging_table.qmrst_pid
-           , staging_table.qmrst_version
-           , staging_table.qmrst_effective_date
-           , staging_table.qmrst_first_lien_manufactured_loan_amount_threshold
-           , staging_table.qmrst_first_lien_manufactured_max_rate_spread_over_threshold
-           , staging_table.qmrst_first_lien_manufactured_max_rate_spread_under_threshold
-           , staging_table.qmrst_first_lien_high_loan_amount_threshold
-           , staging_table.qmrst_first_lien_low_loan_amount_threshold
-           , staging_table.qmrst_first_lien_max_rate_spread_over_high_threshold
-           , staging_table.qmrst_first_lien_max_rate_spread_under_high_over_low_threshold
-           , staging_table.qmrst_first_lien_max_rate_spread_under_low_threshold
-           , staging_table.qmrst_subordinate_lien_loan_amount_threshold
-           , staging_table.qmrst_subordinate_lien_max_rate_spread_over_threshold
-           , staging_table.qmrst_subordinate_lien_max_rate_spread_under_threshold
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.qm_rate_spread_thresholds staging_table
-      LEFT JOIN history_octane.qm_rate_spread_thresholds history_table
-                ON staging_table.qmrst_pid = history_table.qmrst_pid
-                    AND staging_table.qmrst_version = history_table.qmrst_version
-      WHERE history_table.qmrst_pid IS NULL
-      UNION ALL
-      SELECT history_table.qmrst_pid
-           , history_table.qmrst_version + 1
-           , history_table.qmrst_effective_date
-           , history_table.qmrst_first_lien_manufactured_loan_amount_threshold
-           , history_table.qmrst_first_lien_manufactured_max_rate_spread_over_threshold
-           , history_table.qmrst_first_lien_manufactured_max_rate_spread_under_threshold
-           , history_table.qmrst_first_lien_high_loan_amount_threshold
-           , history_table.qmrst_first_lien_low_loan_amount_threshold
-           , history_table.qmrst_first_lien_max_rate_spread_over_high_threshold
-           , history_table.qmrst_first_lien_max_rate_spread_under_high_over_low_threshold
-           , history_table.qmrst_first_lien_max_rate_spread_under_low_threshold
-           , history_table.qmrst_subordinate_lien_loan_amount_threshold
-           , history_table.qmrst_subordinate_lien_max_rate_spread_over_threshold
-           , history_table.qmrst_subordinate_lien_max_rate_spread_under_threshold
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.qm_rate_spread_thresholds history_table
-      LEFT JOIN staging_octane.qm_rate_spread_thresholds staging_table
-                ON staging_table.qmrst_pid = history_table.qmrst_pid
-      WHERE staging_table.qmrst_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.qm_rate_spread_thresholds deleted_records
-          WHERE deleted_records.qmrst_pid = history_table.qmrst_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100896:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.qm_rate_spread_thresholds
+        json_output_field: qmrst_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.qm_rate_spread_thresholds
+          SELECT staging_table.qmrst_pid
+               , staging_table.qmrst_version
+               , staging_table.qmrst_effective_date
+               , staging_table.qmrst_first_lien_manufactured_loan_amount_threshold
+               , staging_table.qmrst_first_lien_manufactured_max_rate_spread_over_threshold
+               , staging_table.qmrst_first_lien_manufactured_max_rate_spread_under_threshold
+               , staging_table.qmrst_first_lien_high_loan_amount_threshold
+               , staging_table.qmrst_first_lien_low_loan_amount_threshold
+               , staging_table.qmrst_first_lien_max_rate_spread_over_high_threshold
+               , staging_table.qmrst_first_lien_max_rate_spread_under_high_over_low_threshold
+               , staging_table.qmrst_first_lien_max_rate_spread_under_low_threshold
+               , staging_table.qmrst_subordinate_lien_loan_amount_threshold
+               , staging_table.qmrst_subordinate_lien_max_rate_spread_over_threshold
+               , staging_table.qmrst_subordinate_lien_max_rate_spread_under_threshold
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.qm_rate_spread_thresholds staging_table
+          LEFT JOIN history_octane.qm_rate_spread_thresholds history_table
+                    ON staging_table.qmrst_pid = history_table.qmrst_pid
+                        AND staging_table.qmrst_version = history_table.qmrst_version
+          WHERE history_table.qmrst_pid IS NULL
+          UNION ALL
+          SELECT history_table.qmrst_pid
+               , history_table.qmrst_version + 1
+               , history_table.qmrst_effective_date
+               , history_table.qmrst_first_lien_manufactured_loan_amount_threshold
+               , history_table.qmrst_first_lien_manufactured_max_rate_spread_over_threshold
+               , history_table.qmrst_first_lien_manufactured_max_rate_spread_under_threshold
+               , history_table.qmrst_first_lien_high_loan_amount_threshold
+               , history_table.qmrst_first_lien_low_loan_amount_threshold
+               , history_table.qmrst_first_lien_max_rate_spread_over_high_threshold
+               , history_table.qmrst_first_lien_max_rate_spread_under_high_over_low_threshold
+               , history_table.qmrst_first_lien_max_rate_spread_under_low_threshold
+               , history_table.qmrst_subordinate_lien_loan_amount_threshold
+               , history_table.qmrst_subordinate_lien_max_rate_spread_over_threshold
+               , history_table.qmrst_subordinate_lien_max_rate_spread_under_threshold
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.qm_rate_spread_thresholds history_table
+          LEFT JOIN staging_octane.qm_rate_spread_thresholds staging_table
+                    ON staging_table.qmrst_pid = history_table.qmrst_pid
+          WHERE staging_table.qmrst_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.qm_rate_spread_thresholds deleted_records
+              WHERE deleted_records.qmrst_pid = history_table.qmrst_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

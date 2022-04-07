@@ -127,78 +127,81 @@ columns:
       field: primary_source_table.columns.drea_version
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100086:
-    input_type: table
-    output_type: insert
-    json_output_field: drea_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_real_estate_agent
-      SELECT staging_table.drea_pid
-           , staging_table.drea_version
-           , staging_table.drea_deal_pid
-           , staging_table.drea_first_name
-           , staging_table.drea_middle_name
-           , staging_table.drea_last_name
-           , staging_table.drea_name_suffix
-           , staging_table.drea_company_name
-           , staging_table.drea_title
-           , staging_table.drea_office_phone
-           , staging_table.drea_office_phone_extension
-           , staging_table.drea_mobile_phone
-           , staging_table.drea_email
-           , staging_table.drea_fax
-           , staging_table.drea_street_1
-           , staging_table.drea_street_2
-           , staging_table.drea_city
-           , staging_table.drea_state
-           , staging_table.drea_country
-           , staging_table.drea_postal_code
-           , staging_table.drea_license_id
-           , staging_table.drea_company_license_id
-           , staging_table.drea_agency_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_real_estate_agent staging_table
-      LEFT JOIN history_octane.deal_real_estate_agent history_table
-                ON staging_table.drea_pid = history_table.drea_pid
-                    AND staging_table.drea_version = history_table.drea_version
-      WHERE history_table.drea_pid IS NULL
-      UNION ALL
-      SELECT history_table.drea_pid
-           , history_table.drea_version + 1
-           , history_table.drea_deal_pid
-           , history_table.drea_first_name
-           , history_table.drea_middle_name
-           , history_table.drea_last_name
-           , history_table.drea_name_suffix
-           , history_table.drea_company_name
-           , history_table.drea_title
-           , history_table.drea_office_phone
-           , history_table.drea_office_phone_extension
-           , history_table.drea_mobile_phone
-           , history_table.drea_email
-           , history_table.drea_fax
-           , history_table.drea_street_1
-           , history_table.drea_street_2
-           , history_table.drea_city
-           , history_table.drea_state
-           , history_table.drea_country
-           , history_table.drea_postal_code
-           , history_table.drea_license_id
-           , history_table.drea_company_license_id
-           , history_table.drea_agency_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_real_estate_agent history_table
-      LEFT JOIN staging_octane.deal_real_estate_agent staging_table
-                ON staging_table.drea_pid = history_table.drea_pid
-      WHERE staging_table.drea_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_real_estate_agent deleted_records
-          WHERE deleted_records.drea_pid = history_table.drea_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100086:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_real_estate_agent
+        json_output_field: drea_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_real_estate_agent
+          SELECT staging_table.drea_pid
+               , staging_table.drea_version
+               , staging_table.drea_deal_pid
+               , staging_table.drea_first_name
+               , staging_table.drea_middle_name
+               , staging_table.drea_last_name
+               , staging_table.drea_name_suffix
+               , staging_table.drea_company_name
+               , staging_table.drea_title
+               , staging_table.drea_office_phone
+               , staging_table.drea_office_phone_extension
+               , staging_table.drea_mobile_phone
+               , staging_table.drea_email
+               , staging_table.drea_fax
+               , staging_table.drea_street_1
+               , staging_table.drea_street_2
+               , staging_table.drea_city
+               , staging_table.drea_state
+               , staging_table.drea_country
+               , staging_table.drea_postal_code
+               , staging_table.drea_license_id
+               , staging_table.drea_company_license_id
+               , staging_table.drea_agency_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_real_estate_agent staging_table
+          LEFT JOIN history_octane.deal_real_estate_agent history_table
+                    ON staging_table.drea_pid = history_table.drea_pid
+                        AND staging_table.drea_version = history_table.drea_version
+          WHERE history_table.drea_pid IS NULL
+          UNION ALL
+          SELECT history_table.drea_pid
+               , history_table.drea_version + 1
+               , history_table.drea_deal_pid
+               , history_table.drea_first_name
+               , history_table.drea_middle_name
+               , history_table.drea_last_name
+               , history_table.drea_name_suffix
+               , history_table.drea_company_name
+               , history_table.drea_title
+               , history_table.drea_office_phone
+               , history_table.drea_office_phone_extension
+               , history_table.drea_mobile_phone
+               , history_table.drea_email
+               , history_table.drea_fax
+               , history_table.drea_street_1
+               , history_table.drea_street_2
+               , history_table.drea_city
+               , history_table.drea_state
+               , history_table.drea_country
+               , history_table.drea_postal_code
+               , history_table.drea_license_id
+               , history_table.drea_company_license_id
+               , history_table.drea_agency_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_real_estate_agent history_table
+          LEFT JOIN staging_octane.deal_real_estate_agent staging_table
+                    ON staging_table.drea_pid = history_table.drea_pid
+          WHERE staging_table.drea_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_real_estate_agent deleted_records
+              WHERE deleted_records.drea_pid = history_table.drea_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

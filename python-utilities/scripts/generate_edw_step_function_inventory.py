@@ -8,7 +8,7 @@ PROJECT_DIR_PATH = os.path.realpath(os.path.join(os.path.dirname(os.path.realpat
 sys.path.append(PROJECT_DIR_PATH)
 
 from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml
-from lib.state_machines_generator.state_machines_generator import AllStateMachinesGenerator, GroupStateMachineGenerator
+from lib.state_machines_generator.state_machines_generator import generate_all_state_machines, GroupStateMachineGenerator
 
 
 def main():
@@ -29,13 +29,14 @@ def main():
     # define group state machines
     group_state_machines = [
         GroupStateMachineGenerator(
-            group_criteria_function=lambda x: x.target_schema == 'history_octane',
+            group_criteria_function=lambda step_function: step_function.primary_target_table.schema == 'history_octane',
             group_state_limit=max_states,
             base_name='SP-GROUP-1',
             comment='Trigger every history_octane ETL - This should process all staging_octane data into '
                     'history_octane and will trigger any downstream processes'),
         GroupStateMachineGenerator(
-            group_criteria_function=lambda x: x.target_schema == 'history_octane' and x.has_dependency,
+            group_criteria_function=lambda step_function: step_function.primary_target_table.schema == 'history_octane' and
+                                                          step_function.etls_have_next_step_functions,
             group_state_limit=max_states,
             base_name='SP-GROUP-2',
             comment='Trigger history_octane ETLs that have one or more dependent ETLs - This should process all '
@@ -43,8 +44,7 @@ def main():
     ]
 
     # generate state machines
-    state_machine_generator = AllStateMachinesGenerator(data_warehouse_metadata, group_state_machines)
-    state_machine_configs = state_machine_generator.build_state_machines()
+    state_machine_configs = generate_all_state_machines(data_warehouse_metadata, group_state_machines)
     formatted_config_strings = format_data_for_outputting(state_machine_configs)
     # output config files
     for name, config in formatted_config_strings.items():
@@ -55,7 +55,8 @@ def main():
 def delete_prior_state_machine_configurations(directory: str, state_machine_file_extension: str):
     non_state_machine_files = list(filter(lambda x: not x.endswith(f'.{state_machine_file_extension}'), os.listdir(directory)))
     if non_state_machine_files:
-        raise RuntimeError(f'Output directory contains unexpected non-{state_machine_file_extension} files, and may be invalid. Now exiting.')
+        raise RuntimeError(f'Output directory contains unexpected non-{state_machine_file_extension} files, and may be invalid. '
+                           f'Now exiting.')
     deleted_files_count = 0
     for file in os.listdir(directory):
         if file.endswith(state_machine_file_extension):
@@ -76,9 +77,8 @@ def format_data_for_outputting(state_machine_configs: dict) -> dict:
 
 def write_to_file(file_contents: str, file_path: str):
     try:
-        f = open(file_path, "w")
-        f.write(file_contents)
-        f.close()
+        with open(file_path, "w", newline='\n') as file:
+            file.write(file_contents)
     except Exception as e:
         print(f"Could not open or save file {file_path}!")
         print(f"The file's contents would have been: {str(file_contents)}")

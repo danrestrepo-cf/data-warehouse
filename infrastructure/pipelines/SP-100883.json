@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100883 - ETL to insert records into staging.history_octane.branch_license_contact using staging.staging_octane.branch_license_contact as the primary source",
-    "StartAt": "SP-100883",
+    "StartAt": "ETL-100883",
     "States": {
-        "SP-100883": {
+        "ETL-100883": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100883"
+                                    "Value": "ETL-100883"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -35,40 +35,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lltk_version
-etls:
+step_functions:
   SP-100223:
-    input_type: table
-    output_type: insert
-    json_output_field: lltk_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.lender_lock_id_ticker
-      SELECT staging_table.lltk_pid
-           , staging_table.lltk_version
-           , staging_table.lltk_account_pid
-           , staging_table.lltk_next_lender_lock_id
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.lender_lock_id_ticker staging_table
-      LEFT JOIN history_octane.lender_lock_id_ticker history_table
-                ON staging_table.lltk_pid = history_table.lltk_pid
-                    AND staging_table.lltk_version = history_table.lltk_version
-      WHERE history_table.lltk_pid IS NULL
-      UNION ALL
-      SELECT history_table.lltk_pid
-           , history_table.lltk_version + 1
-           , history_table.lltk_account_pid
-           , history_table.lltk_next_lender_lock_id
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.lender_lock_id_ticker history_table
-      LEFT JOIN staging_octane.lender_lock_id_ticker staging_table
-                ON staging_table.lltk_pid = history_table.lltk_pid
-      WHERE staging_table.lltk_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.lender_lock_id_ticker deleted_records
-          WHERE deleted_records.lltk_pid = history_table.lltk_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100223:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.lender_lock_id_ticker
+        json_output_field: lltk_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.lender_lock_id_ticker
+          SELECT staging_table.lltk_pid
+               , staging_table.lltk_version
+               , staging_table.lltk_account_pid
+               , staging_table.lltk_next_lender_lock_id
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.lender_lock_id_ticker staging_table
+          LEFT JOIN history_octane.lender_lock_id_ticker history_table
+                    ON staging_table.lltk_pid = history_table.lltk_pid
+                        AND staging_table.lltk_version = history_table.lltk_version
+          WHERE history_table.lltk_pid IS NULL
+          UNION ALL
+          SELECT history_table.lltk_pid
+               , history_table.lltk_version + 1
+               , history_table.lltk_account_pid
+               , history_table.lltk_next_lender_lock_id
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.lender_lock_id_ticker history_table
+          LEFT JOIN staging_octane.lender_lock_id_ticker staging_table
+                    ON staging_table.lltk_pid = history_table.lltk_pid
+          WHERE staging_table.lltk_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.lender_lock_id_ticker deleted_records
+              WHERE deleted_records.lltk_pid = history_table.lltk_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

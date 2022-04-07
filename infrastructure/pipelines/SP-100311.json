@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100311 - ETL to insert records into staging.history_octane.lp_request_credit using staging.staging_octane.lp_request_credit as the primary source",
-    "StartAt": "SP-100311",
+    "StartAt": "ETL-100311",
     "States": {
-        "SP-100311": {
+        "ETL-100311": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100311"
+                                    "Value": "ETL-100311"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

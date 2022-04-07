@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100039 - ETL to insert records into staging.history_octane.lead_campaign using staging.staging_octane.lead_campaign as the primary source",
-    "StartAt": "SP-100039",
+    "StartAt": "ETL-100039",
     "States": {
-        "SP-100039": {
+        "ETL-100039": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100039"
+                                    "Value": "ETL-100039"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

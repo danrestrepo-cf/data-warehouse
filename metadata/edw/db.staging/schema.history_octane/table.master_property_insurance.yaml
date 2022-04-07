@@ -179,96 +179,99 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.mpi_version
-etls:
+step_functions:
   SP-100140:
-    input_type: table
-    output_type: insert
-    json_output_field: mpi_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.master_property_insurance
-      SELECT staging_table.mpi_pid
-           , staging_table.mpi_version
-           , staging_table.mpi_proposal_pid
-           , staging_table.mpi_master_property_insurance_type
-           , staging_table.mpi_policy_effective_date
-           , staging_table.mpi_policy_expiration_date
-           , staging_table.mpi_next_payment_date
-           , staging_table.mpi_policy_property_coverage_amount
-           , staging_table.mpi_policy_liability_coverage_amount
-           , staging_table.mpi_policy_fidelity_coverage_amount
-           , staging_table.mpi_policy_deductible_amount
-           , staging_table.mpi_replacement_cost_amount
-           , staging_table.mpi_coinsurance
-           , staging_table.mpi_agreed_amount_endorsement
-           , staging_table.mpi_company_name
-           , staging_table.mpi_first_name
-           , staging_table.mpi_middle_name
-           , staging_table.mpi_last_name
-           , staging_table.mpi_name_suffix
-           , staging_table.mpi_title
-           , staging_table.mpi_email
-           , staging_table.mpi_mobile_phone
-           , staging_table.mpi_office_phone
-           , staging_table.mpi_office_phone_extension
-           , staging_table.mpi_fax
-           , staging_table.mpi_address_street1
-           , staging_table.mpi_address_street2
-           , staging_table.mpi_address_city
-           , staging_table.mpi_address_state
-           , staging_table.mpi_address_postal_code
-           , staging_table.mpi_address_country
-           , staging_table.mpi_policy_id
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.master_property_insurance staging_table
-      LEFT JOIN history_octane.master_property_insurance history_table
-                ON staging_table.mpi_pid = history_table.mpi_pid
-                    AND staging_table.mpi_version = history_table.mpi_version
-      WHERE history_table.mpi_pid IS NULL
-      UNION ALL
-      SELECT history_table.mpi_pid
-           , history_table.mpi_version + 1
-           , history_table.mpi_proposal_pid
-           , history_table.mpi_master_property_insurance_type
-           , history_table.mpi_policy_effective_date
-           , history_table.mpi_policy_expiration_date
-           , history_table.mpi_next_payment_date
-           , history_table.mpi_policy_property_coverage_amount
-           , history_table.mpi_policy_liability_coverage_amount
-           , history_table.mpi_policy_fidelity_coverage_amount
-           , history_table.mpi_policy_deductible_amount
-           , history_table.mpi_replacement_cost_amount
-           , history_table.mpi_coinsurance
-           , history_table.mpi_agreed_amount_endorsement
-           , history_table.mpi_company_name
-           , history_table.mpi_first_name
-           , history_table.mpi_middle_name
-           , history_table.mpi_last_name
-           , history_table.mpi_name_suffix
-           , history_table.mpi_title
-           , history_table.mpi_email
-           , history_table.mpi_mobile_phone
-           , history_table.mpi_office_phone
-           , history_table.mpi_office_phone_extension
-           , history_table.mpi_fax
-           , history_table.mpi_address_street1
-           , history_table.mpi_address_street2
-           , history_table.mpi_address_city
-           , history_table.mpi_address_state
-           , history_table.mpi_address_postal_code
-           , history_table.mpi_address_country
-           , history_table.mpi_policy_id
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.master_property_insurance history_table
-      LEFT JOIN staging_octane.master_property_insurance staging_table
-                ON staging_table.mpi_pid = history_table.mpi_pid
-      WHERE staging_table.mpi_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.master_property_insurance deleted_records
-          WHERE deleted_records.mpi_pid = history_table.mpi_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100140:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.master_property_insurance
+        json_output_field: mpi_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.master_property_insurance
+          SELECT staging_table.mpi_pid
+               , staging_table.mpi_version
+               , staging_table.mpi_proposal_pid
+               , staging_table.mpi_master_property_insurance_type
+               , staging_table.mpi_policy_effective_date
+               , staging_table.mpi_policy_expiration_date
+               , staging_table.mpi_next_payment_date
+               , staging_table.mpi_policy_property_coverage_amount
+               , staging_table.mpi_policy_liability_coverage_amount
+               , staging_table.mpi_policy_fidelity_coverage_amount
+               , staging_table.mpi_policy_deductible_amount
+               , staging_table.mpi_replacement_cost_amount
+               , staging_table.mpi_coinsurance
+               , staging_table.mpi_agreed_amount_endorsement
+               , staging_table.mpi_company_name
+               , staging_table.mpi_first_name
+               , staging_table.mpi_middle_name
+               , staging_table.mpi_last_name
+               , staging_table.mpi_name_suffix
+               , staging_table.mpi_title
+               , staging_table.mpi_email
+               , staging_table.mpi_mobile_phone
+               , staging_table.mpi_office_phone
+               , staging_table.mpi_office_phone_extension
+               , staging_table.mpi_fax
+               , staging_table.mpi_address_street1
+               , staging_table.mpi_address_street2
+               , staging_table.mpi_address_city
+               , staging_table.mpi_address_state
+               , staging_table.mpi_address_postal_code
+               , staging_table.mpi_address_country
+               , staging_table.mpi_policy_id
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.master_property_insurance staging_table
+          LEFT JOIN history_octane.master_property_insurance history_table
+                    ON staging_table.mpi_pid = history_table.mpi_pid
+                        AND staging_table.mpi_version = history_table.mpi_version
+          WHERE history_table.mpi_pid IS NULL
+          UNION ALL
+          SELECT history_table.mpi_pid
+               , history_table.mpi_version + 1
+               , history_table.mpi_proposal_pid
+               , history_table.mpi_master_property_insurance_type
+               , history_table.mpi_policy_effective_date
+               , history_table.mpi_policy_expiration_date
+               , history_table.mpi_next_payment_date
+               , history_table.mpi_policy_property_coverage_amount
+               , history_table.mpi_policy_liability_coverage_amount
+               , history_table.mpi_policy_fidelity_coverage_amount
+               , history_table.mpi_policy_deductible_amount
+               , history_table.mpi_replacement_cost_amount
+               , history_table.mpi_coinsurance
+               , history_table.mpi_agreed_amount_endorsement
+               , history_table.mpi_company_name
+               , history_table.mpi_first_name
+               , history_table.mpi_middle_name
+               , history_table.mpi_last_name
+               , history_table.mpi_name_suffix
+               , history_table.mpi_title
+               , history_table.mpi_email
+               , history_table.mpi_mobile_phone
+               , history_table.mpi_office_phone
+               , history_table.mpi_office_phone_extension
+               , history_table.mpi_fax
+               , history_table.mpi_address_street1
+               , history_table.mpi_address_street2
+               , history_table.mpi_address_city
+               , history_table.mpi_address_state
+               , history_table.mpi_address_postal_code
+               , history_table.mpi_address_country
+               , history_table.mpi_policy_id
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.master_property_insurance history_table
+          LEFT JOIN staging_octane.master_property_insurance staging_table
+                    ON staging_table.mpi_pid = history_table.mpi_pid
+          WHERE staging_table.mpi_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.master_property_insurance deleted_records
+              WHERE deleted_records.mpi_pid = history_table.mpi_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

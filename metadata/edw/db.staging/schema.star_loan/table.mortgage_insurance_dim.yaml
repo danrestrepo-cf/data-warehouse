@@ -232,255 +232,258 @@ columns:
     source:
       field: primary_source_table.columns.l_mi_upfront_percent
     update_flag: true
-etls:
+step_functions:
   SP-200015:
-    input_type: table
-    output_type: insert_update
-    hardcoded_data_source: Octane
-    json_output_field: data_source_integration_id
-    insert_update_keys:
-      - data_source_integration_id
-    container_memory: 4096
-    input_sql: |-
-      WITH mortgage_insurance_dim_incl_new_records AS (
-          SELECT 'loan_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
-               , COALESCE( CAST( primary_table.l_pid AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
-               , NOW( ) AS edw_created_datetime
-               , NOW( ) AS edw_modified_datetime
-               , primary_table.data_source_updated_datetime AS data_source_modified_datetime
-               , primary_table.l_mi_rate_quote_id AS mi_rate_quote_id
-               , primary_table.l_mi_base_upfront_payment_amount AS mi_base_upfront_payment_amount
-               , primary_table.l_mi_base_monthly_payment_amount AS mi_base_monthly_payment_amount
-               , primary_table.l_mi_base_upfront_percent AS mi_base_upfront_percent
-               , primary_table.l_mi_base_monthly_payment_annual_percent AS mi_base_monthly_payment_annual_percent
-               , primary_table.l_mi_base_rate_label AS mi_base_rate_label
-               , primary_table.l_mi_renewal_calculated_rate_type AS mi_renewal_calculated_rate_code
-               , primary_table.l_mi_initial_calculated_rate_type AS mi_initial_calculated_rate_code
-               , primary_table.l_mi_initial_monthly_payment_annual_percent AS mi_initial_monthly_payment_annual_percent
-               , primary_table.l_mi_initial_duration_months AS mi_initial_duration_months
-               , primary_table.l_mi_renewal_monthly_payment_amount AS mi_renewal_monthly_payment_amount
-               , primary_table.l_mi_renewal_monthly_payment_annual_percent AS mi_renewal_monthly_payment_annual_percent
-               , primary_table.l_mi_initial_monthly_payment_amount AS mi_initial_monthly_payment_amount
-               , primary_table.l_mi_upfront_percent AS mi_upront_percent
-               , primary_table.l_mi_upfront_amount AS mi_upfront_amount
-               , primary_table.l_mi_payment_type AS mi_payment_code
-               , primary_table.l_mi_actual_monthly_payment_count AS mi_actual_monthly_payment_count
-               , primary_table.l_mi_required_monthly_payment_count AS mi_required_monthly_payment_count
-               , primary_table.l_mi_midpoint_cutoff_required AS mi_midpoint_cutoff_required_flag
-               , primary_table.l_mi_ltv_cutoff_percent AS mi_ltv_cutoff_percent
-               , primary_table.l_mi_coverage_percent AS mi_coverage_percent
-               , primary_table.l_mi_payer_type AS mi_payer_code
-               , primary_table.l_mi_renewal_calculation_type AS mi_renewal_calculation_code
-               , primary_table.l_mi_initial_calculation_type AS mi_initial_calculation_code
-               , primary_table.l_mi_premium_refundable_type AS mi_premium_refundable_code
-               , primary_table.l_mi_certificate_id AS mi_certificate_id
-               , primary_table.l_mi_company_name_type AS mi_company_code
-               , primary_table.l_mi_input_type AS mi_input_code
-               , primary_table.l_mi_no_mi_product AS no_mi_product_flag
-               , primary_table.l_mi_auto_compute AS mi_auto_compute_flag
-               , primary_table.l_pid AS loan_pid
-               , primary_table.l_mi_lender_paid_rate_adjustment_percent AS mi_lender_paid_rate_adjustment_percent
-               , t471.value AS mi_initial_calculated_rate
-               , t477.value AS mi_renewal_calcuated_rate
-               , t470.value AS mi_company
-               , t472.value AS mi_initial_calculation
-               , t473.value AS mi_input
-               , t474.value AS mi_payer
-               , t475.value AS mi_payment
-               , t476.value AS mi_premium_refundable
-               , t478.value AS mi_renewal_calculation
-               , t1739.dwid AS loan_dwid
-               , GREATEST( primary_table.etl_end_date_time, t471.etl_end_date_time, t477.etl_end_date_time, t470.etl_end_date_time,
-                           t472.etl_end_date_time, t473.etl_end_date_time, t474.etl_end_date_time, t475.etl_end_date_time, t476.etl_end_date_time,
-                           t478.etl_end_date_time, t1739.etl_end_date_time ) AS max_source_etl_end_date_time
-          FROM (
-              SELECT <<loan_partial_load_condition>> AS include_record
-                   , loan.*
-                   , etl_log.etl_end_date_time
-              FROM history_octane.loan
-              LEFT JOIN history_octane.loan AS history_records
-                        ON loan.l_pid = history_records.l_pid
-                            AND loan.data_source_updated_datetime < history_records.data_source_updated_datetime
+    etls:
+      ETL-200015:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.mortgage_insurance_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 4096
+        next_step_functions:
+        - SP-300001-insert-update
+        input_sql: |-
+          WITH mortgage_insurance_dim_incl_new_records AS (
+              SELECT 'loan_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
+                   , COALESCE( CAST( primary_table.l_pid AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
+                   , NOW( ) AS edw_created_datetime
+                   , NOW( ) AS edw_modified_datetime
+                   , primary_table.data_source_updated_datetime AS data_source_modified_datetime
+                   , primary_table.l_mi_rate_quote_id AS mi_rate_quote_id
+                   , primary_table.l_mi_base_upfront_payment_amount AS mi_base_upfront_payment_amount
+                   , primary_table.l_mi_base_monthly_payment_amount AS mi_base_monthly_payment_amount
+                   , primary_table.l_mi_base_upfront_percent AS mi_base_upfront_percent
+                   , primary_table.l_mi_base_monthly_payment_annual_percent AS mi_base_monthly_payment_annual_percent
+                   , primary_table.l_mi_base_rate_label AS mi_base_rate_label
+                   , primary_table.l_mi_renewal_calculated_rate_type AS mi_renewal_calculated_rate_code
+                   , primary_table.l_mi_initial_calculated_rate_type AS mi_initial_calculated_rate_code
+                   , primary_table.l_mi_initial_monthly_payment_annual_percent AS mi_initial_monthly_payment_annual_percent
+                   , primary_table.l_mi_initial_duration_months AS mi_initial_duration_months
+                   , primary_table.l_mi_renewal_monthly_payment_amount AS mi_renewal_monthly_payment_amount
+                   , primary_table.l_mi_renewal_monthly_payment_annual_percent AS mi_renewal_monthly_payment_annual_percent
+                   , primary_table.l_mi_initial_monthly_payment_amount AS mi_initial_monthly_payment_amount
+                   , primary_table.l_mi_upfront_percent AS mi_upront_percent
+                   , primary_table.l_mi_upfront_amount AS mi_upfront_amount
+                   , primary_table.l_mi_payment_type AS mi_payment_code
+                   , primary_table.l_mi_actual_monthly_payment_count AS mi_actual_monthly_payment_count
+                   , primary_table.l_mi_required_monthly_payment_count AS mi_required_monthly_payment_count
+                   , primary_table.l_mi_midpoint_cutoff_required AS mi_midpoint_cutoff_required_flag
+                   , primary_table.l_mi_ltv_cutoff_percent AS mi_ltv_cutoff_percent
+                   , primary_table.l_mi_coverage_percent AS mi_coverage_percent
+                   , primary_table.l_mi_payer_type AS mi_payer_code
+                   , primary_table.l_mi_renewal_calculation_type AS mi_renewal_calculation_code
+                   , primary_table.l_mi_initial_calculation_type AS mi_initial_calculation_code
+                   , primary_table.l_mi_premium_refundable_type AS mi_premium_refundable_code
+                   , primary_table.l_mi_certificate_id AS mi_certificate_id
+                   , primary_table.l_mi_company_name_type AS mi_company_code
+                   , primary_table.l_mi_input_type AS mi_input_code
+                   , primary_table.l_mi_no_mi_product AS no_mi_product_flag
+                   , primary_table.l_mi_auto_compute AS mi_auto_compute_flag
+                   , primary_table.l_pid AS loan_pid
+                   , primary_table.l_mi_lender_paid_rate_adjustment_percent AS mi_lender_paid_rate_adjustment_percent
+                   , t471.value AS mi_initial_calculated_rate
+                   , t477.value AS mi_renewal_calcuated_rate
+                   , t470.value AS mi_company
+                   , t472.value AS mi_initial_calculation
+                   , t473.value AS mi_input
+                   , t474.value AS mi_payer
+                   , t475.value AS mi_payment
+                   , t476.value AS mi_premium_refundable
+                   , t478.value AS mi_renewal_calculation
+                   , t1739.dwid AS loan_dwid
+                   , GREATEST( primary_table.etl_end_date_time, t471.etl_end_date_time, t477.etl_end_date_time, t470.etl_end_date_time,
+                               t472.etl_end_date_time, t473.etl_end_date_time, t474.etl_end_date_time, t475.etl_end_date_time, t476.etl_end_date_time,
+                               t478.etl_end_date_time, t1739.etl_end_date_time ) AS max_source_etl_end_date_time
+              FROM (
+                  SELECT <<loan_partial_load_condition>> AS include_record
+                       , loan.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.loan
+                  LEFT JOIN history_octane.loan AS history_records
+                            ON loan.l_pid = history_records.l_pid
+                                AND loan.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON loan.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.l_pid IS NULL
+              ) AS primary_table
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<mi_calculated_rate_type_partial_load_condition>> AS include_record
+                           , mi_calculated_rate_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.mi_calculated_rate_type
+                      LEFT JOIN history_octane.mi_calculated_rate_type AS history_records
+                                ON mi_calculated_rate_type.code = history_records.code
+                                    AND mi_calculated_rate_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON mi_calculated_rate_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t471
+                         ON primary_table.l_mi_initial_calculated_rate_type = t471.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<mi_calculated_rate_type_partial_load_condition>> AS include_record
+                           , mi_calculated_rate_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.mi_calculated_rate_type
+                      LEFT JOIN history_octane.mi_calculated_rate_type AS history_records
+                                ON mi_calculated_rate_type.code = history_records.code
+                                    AND mi_calculated_rate_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON mi_calculated_rate_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t477
+                         ON primary_table.l_mi_renewal_calculated_rate_type = t477.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<mi_company_name_type_partial_load_condition>> AS include_record
+                           , mi_company_name_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.mi_company_name_type
+                      LEFT JOIN history_octane.mi_company_name_type AS history_records
+                                ON mi_company_name_type.code = history_records.code
+                                    AND mi_company_name_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON mi_company_name_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t470
+                         ON primary_table.l_mi_company_name_type = t470.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<mi_initial_calculation_type_partial_load_condition>> AS include_record
+                           , mi_initial_calculation_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.mi_initial_calculation_type
+                      LEFT JOIN history_octane.mi_initial_calculation_type AS history_records
+                                ON mi_initial_calculation_type.code = history_records.code
+                                    AND mi_initial_calculation_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON mi_initial_calculation_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t472
+                         ON primary_table.l_mi_initial_calculation_type = t472.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<mi_input_type_partial_load_condition>> AS include_record
+                           , mi_input_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.mi_input_type
+                      LEFT JOIN history_octane.mi_input_type AS history_records
+                                ON mi_input_type.code = history_records.code
+                                    AND mi_input_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON mi_input_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t473
+                         ON primary_table.l_mi_input_type = t473.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<mi_payer_type_partial_load_condition>> AS include_record
+                           , mi_payer_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.mi_payer_type
+                      LEFT JOIN history_octane.mi_payer_type AS history_records
+                                ON mi_payer_type.code = history_records.code
+                                    AND mi_payer_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON mi_payer_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t474
+                         ON primary_table.l_mi_payer_type = t474.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<mi_payment_type_partial_load_condition>> AS include_record
+                           , mi_payment_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.mi_payment_type
+                      LEFT JOIN history_octane.mi_payment_type AS history_records
+                                ON mi_payment_type.code = history_records.code
+                                    AND mi_payment_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON mi_payment_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t475
+                         ON primary_table.l_mi_payment_type = t475.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<mi_premium_refundable_type_partial_load_condition>> AS include_record
+                           , mi_premium_refundable_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.mi_premium_refundable_type
+                      LEFT JOIN history_octane.mi_premium_refundable_type AS history_records
+                                ON mi_premium_refundable_type.code = history_records.code
+                                    AND mi_premium_refundable_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON mi_premium_refundable_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t476
+                         ON primary_table.l_mi_premium_refundable_type = t476.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<mi_renewal_calculation_type_partial_load_condition>> AS include_record
+                           , mi_renewal_calculation_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.mi_renewal_calculation_type
+                      LEFT JOIN history_octane.mi_renewal_calculation_type AS history_records
+                                ON mi_renewal_calculation_type.code = history_records.code
+                                    AND mi_renewal_calculation_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON mi_renewal_calculation_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t478
+                         ON primary_table.l_mi_renewal_calculation_type = t478.code
+              INNER JOIN (
+                  SELECT <<loan_dim_partial_load_condition>> AS include_record
+                       , loan_dim.*
+                       , etl_log.etl_end_date_time
+                  FROM star_loan.loan_dim
+                  JOIN star_common.etl_log
+                       ON loan_dim.etl_batch_id = etl_log.etl_batch_id
+              ) AS t1739
+                         ON primary_table.l_pid = t1739.loan_pid AND t1739.data_source_dwid = 1
+              WHERE GREATEST( primary_table.include_record, t471.include_record, t477.include_record, t470.include_record, t472.include_record,
+                              t473.include_record, t474.include_record, t475.include_record, t476.include_record, t478.include_record,
+                              t1739.include_record ) IS TRUE
+          )
+          --new records that should be inserted
+          SELECT mortgage_insurance_dim_incl_new_records.*
+          FROM mortgage_insurance_dim_incl_new_records
+          LEFT JOIN star_loan.mortgage_insurance_dim
+                    ON mortgage_insurance_dim_incl_new_records.data_source_integration_id = mortgage_insurance_dim.data_source_integration_id
+          WHERE mortgage_insurance_dim.loan_dwid IS NULL
+          UNION ALL
+          --existing records that need to be updated
+          SELECT mortgage_insurance_dim_incl_new_records.*
+          FROM mortgage_insurance_dim_incl_new_records
+          JOIN (
+              SELECT mortgage_insurance_dim.data_source_integration_id, etl_log.etl_start_date_time
+              FROM star_loan.mortgage_insurance_dim
               JOIN star_common.etl_log
-                   ON loan.etl_batch_id = etl_log.etl_batch_id
-              WHERE history_records.l_pid IS NULL
-          ) AS primary_table
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<mi_calculated_rate_type_partial_load_condition>> AS include_record
-                       , mi_calculated_rate_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.mi_calculated_rate_type
-                  LEFT JOIN history_octane.mi_calculated_rate_type AS history_records
-                            ON mi_calculated_rate_type.code = history_records.code
-                                AND mi_calculated_rate_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON mi_calculated_rate_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t471
-                     ON primary_table.l_mi_initial_calculated_rate_type = t471.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<mi_calculated_rate_type_partial_load_condition>> AS include_record
-                       , mi_calculated_rate_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.mi_calculated_rate_type
-                  LEFT JOIN history_octane.mi_calculated_rate_type AS history_records
-                            ON mi_calculated_rate_type.code = history_records.code
-                                AND mi_calculated_rate_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON mi_calculated_rate_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t477
-                     ON primary_table.l_mi_renewal_calculated_rate_type = t477.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<mi_company_name_type_partial_load_condition>> AS include_record
-                       , mi_company_name_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.mi_company_name_type
-                  LEFT JOIN history_octane.mi_company_name_type AS history_records
-                            ON mi_company_name_type.code = history_records.code
-                                AND mi_company_name_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON mi_company_name_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t470
-                     ON primary_table.l_mi_company_name_type = t470.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<mi_initial_calculation_type_partial_load_condition>> AS include_record
-                       , mi_initial_calculation_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.mi_initial_calculation_type
-                  LEFT JOIN history_octane.mi_initial_calculation_type AS history_records
-                            ON mi_initial_calculation_type.code = history_records.code
-                                AND mi_initial_calculation_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON mi_initial_calculation_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t472
-                     ON primary_table.l_mi_initial_calculation_type = t472.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<mi_input_type_partial_load_condition>> AS include_record
-                       , mi_input_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.mi_input_type
-                  LEFT JOIN history_octane.mi_input_type AS history_records
-                            ON mi_input_type.code = history_records.code
-                                AND mi_input_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON mi_input_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t473
-                     ON primary_table.l_mi_input_type = t473.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<mi_payer_type_partial_load_condition>> AS include_record
-                       , mi_payer_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.mi_payer_type
-                  LEFT JOIN history_octane.mi_payer_type AS history_records
-                            ON mi_payer_type.code = history_records.code
-                                AND mi_payer_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON mi_payer_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t474
-                     ON primary_table.l_mi_payer_type = t474.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<mi_payment_type_partial_load_condition>> AS include_record
-                       , mi_payment_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.mi_payment_type
-                  LEFT JOIN history_octane.mi_payment_type AS history_records
-                            ON mi_payment_type.code = history_records.code
-                                AND mi_payment_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON mi_payment_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t475
-                     ON primary_table.l_mi_payment_type = t475.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<mi_premium_refundable_type_partial_load_condition>> AS include_record
-                       , mi_premium_refundable_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.mi_premium_refundable_type
-                  LEFT JOIN history_octane.mi_premium_refundable_type AS history_records
-                            ON mi_premium_refundable_type.code = history_records.code
-                                AND mi_premium_refundable_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON mi_premium_refundable_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t476
-                     ON primary_table.l_mi_premium_refundable_type = t476.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<mi_renewal_calculation_type_partial_load_condition>> AS include_record
-                       , mi_renewal_calculation_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.mi_renewal_calculation_type
-                  LEFT JOIN history_octane.mi_renewal_calculation_type AS history_records
-                            ON mi_renewal_calculation_type.code = history_records.code
-                                AND mi_renewal_calculation_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON mi_renewal_calculation_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t478
-                     ON primary_table.l_mi_renewal_calculation_type = t478.code
-          INNER JOIN (
-              SELECT <<loan_dim_partial_load_condition>> AS include_record
-                   , loan_dim.*
-                   , etl_log.etl_end_date_time
-              FROM star_loan.loan_dim
-              JOIN star_common.etl_log
-                   ON loan_dim.etl_batch_id = etl_log.etl_batch_id
-          ) AS t1739
-                     ON primary_table.l_pid = t1739.loan_pid AND t1739.data_source_dwid = 1
-          WHERE GREATEST( primary_table.include_record, t471.include_record, t477.include_record, t470.include_record, t472.include_record,
-                          t473.include_record, t474.include_record, t475.include_record, t476.include_record, t478.include_record,
-                          t1739.include_record ) IS TRUE
-      )
-      --new records that should be inserted
-      SELECT mortgage_insurance_dim_incl_new_records.*
-      FROM mortgage_insurance_dim_incl_new_records
-      LEFT JOIN star_loan.mortgage_insurance_dim
-                ON mortgage_insurance_dim_incl_new_records.data_source_integration_id = mortgage_insurance_dim.data_source_integration_id
-      WHERE mortgage_insurance_dim.loan_dwid IS NULL
-      UNION ALL
-      --existing records that need to be updated
-      SELECT mortgage_insurance_dim_incl_new_records.*
-      FROM mortgage_insurance_dim_incl_new_records
-      JOIN (
-          SELECT mortgage_insurance_dim.data_source_integration_id, etl_log.etl_start_date_time
-          FROM star_loan.mortgage_insurance_dim
-          JOIN star_common.etl_log
-               ON mortgage_insurance_dim.etl_batch_id = etl_log.etl_batch_id
-      ) AS mortgage_insurance_dim_etl_start_times
-           ON mortgage_insurance_dim_incl_new_records.data_source_integration_id =
-              mortgage_insurance_dim_etl_start_times.data_source_integration_id
-               AND mortgage_insurance_dim_incl_new_records.max_source_etl_end_date_time >= mortgage_insurance_dim_etl_start_times.etl_start_date_time;
-next_etls:
-  - SP-300001-insert-update
+                   ON mortgage_insurance_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS mortgage_insurance_dim_etl_start_times
+               ON mortgage_insurance_dim_incl_new_records.data_source_integration_id =
+                  mortgage_insurance_dim_etl_start_times.data_source_integration_id
+                   AND mortgage_insurance_dim_incl_new_records.max_source_etl_end_date_time >= mortgage_insurance_dim_etl_start_times.etl_start_date_time;

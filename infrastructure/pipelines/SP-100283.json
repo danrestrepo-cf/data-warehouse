@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100283 - ETL to insert records into staging.history_octane.product_minimum_investor_price using staging.staging_octane.product_minimum_investor_price as the primary source",
-    "StartAt": "SP-100283",
+    "StartAt": "ETL-100283",
     "States": {
-        "SP-100283": {
+        "ETL-100283": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100283"
+                                    "Value": "ETL-100283"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

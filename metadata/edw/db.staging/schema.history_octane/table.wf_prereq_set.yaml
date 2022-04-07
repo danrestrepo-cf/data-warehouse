@@ -35,40 +35,43 @@ columns:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.wps_wf_prereq_set_name
-etls:
+step_functions:
   SP-100831:
-    input_type: table
-    output_type: insert
-    json_output_field: wps_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.wf_prereq_set
-      SELECT staging_table.wps_pid
-           , staging_table.wps_version
-           , staging_table.wps_account_pid
-           , staging_table.wps_wf_prereq_set_name
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.wf_prereq_set staging_table
-      LEFT JOIN history_octane.wf_prereq_set history_table
-                ON staging_table.wps_pid = history_table.wps_pid
-                    AND staging_table.wps_version = history_table.wps_version
-      WHERE history_table.wps_pid IS NULL
-      UNION ALL
-      SELECT history_table.wps_pid
-           , history_table.wps_version + 1
-           , history_table.wps_account_pid
-           , history_table.wps_wf_prereq_set_name
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.wf_prereq_set history_table
-      LEFT JOIN staging_octane.wf_prereq_set staging_table
-                ON staging_table.wps_pid = history_table.wps_pid
-      WHERE staging_table.wps_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.wf_prereq_set deleted_records
-          WHERE deleted_records.wps_pid = history_table.wps_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100831:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.wf_prereq_set
+        json_output_field: wps_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.wf_prereq_set
+          SELECT staging_table.wps_pid
+               , staging_table.wps_version
+               , staging_table.wps_account_pid
+               , staging_table.wps_wf_prereq_set_name
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.wf_prereq_set staging_table
+          LEFT JOIN history_octane.wf_prereq_set history_table
+                    ON staging_table.wps_pid = history_table.wps_pid
+                        AND staging_table.wps_version = history_table.wps_version
+          WHERE history_table.wps_pid IS NULL
+          UNION ALL
+          SELECT history_table.wps_pid
+               , history_table.wps_version + 1
+               , history_table.wps_account_pid
+               , history_table.wps_wf_prereq_set_name
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.wf_prereq_set history_table
+          LEFT JOIN staging_octane.wf_prereq_set staging_table
+                    ON staging_table.wps_pid = history_table.wps_pid
+          WHERE staging_table.wps_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.wf_prereq_set deleted_records
+              WHERE deleted_records.wps_pid = history_table.wps_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

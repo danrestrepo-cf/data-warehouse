@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100045 - ETL to insert records into staging.history_octane.formula_report_column using staging.staging_octane.formula_report_column as the primary source",
-    "StartAt": "SP-100045",
+    "StartAt": "ETL-100045",
     "States": {
-        "SP-100045": {
+        "ETL-100045": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100045"
+                                    "Value": "ETL-100045"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

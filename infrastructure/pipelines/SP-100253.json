@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100253 - ETL to insert records into staging.history_octane.disaster_declaration using staging.staging_octane.disaster_declaration as the primary source",
-    "StartAt": "SP-100253",
+    "StartAt": "ETL-100253",
     "States": {
-        "SP-100253": {
+        "ETL-100253": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100253"
+                                    "Value": "ETL-100253"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -151,78 +151,81 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100884:
-    input_type: table
-    output_type: insert
-    json_output_field: cs_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.company_settings
-      SELECT staging_table.cs_pid
-           , staging_table.cs_version
-           , staging_table.cs_company_pid
-           , staging_table.cs_equifax_mortgage_services_internal_account_id
-           , staging_table.cs_factual_data_internal_account_id
-           , staging_table.cs_sharper_lending_internal_account_id
-           , staging_table.cs_va_lender_id
-           , staging_table.cs_usda_lender_id
-           , staging_table.cs_fha_sponsor_address_country
-           , staging_table.cs_fha_sponsor_id
-           , staging_table.cs_fha_sponsor_company_name
-           , staging_table.cs_fha_non_supervised_mortgagee
-           , staging_table.cs_fha_sponsor_address_city
-           , staging_table.cs_fha_lender_id
-           , staging_table.cs_fha_sponsor_address_street2
-           , staging_table.cs_fha_sponsor_address_street1
-           , staging_table.cs_fha_sponsor_address_state
-           , staging_table.cs_fha_home_office_location_pid
-           , staging_table.cs_fha_sponsor_address_postal_code
-           , staging_table.cs_fha_settings_present
-           , staging_table.cs_va_settings_present
-           , staging_table.cs_usda_settings_present
-           , staging_table.cs_fha_origination_sponsored
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.company_settings staging_table
-      LEFT JOIN history_octane.company_settings history_table
-                ON staging_table.cs_pid = history_table.cs_pid
-                    AND staging_table.cs_version = history_table.cs_version
-      WHERE history_table.cs_pid IS NULL
-      UNION ALL
-      SELECT history_table.cs_pid
-           , history_table.cs_version + 1
-           , history_table.cs_company_pid
-           , history_table.cs_equifax_mortgage_services_internal_account_id
-           , history_table.cs_factual_data_internal_account_id
-           , history_table.cs_sharper_lending_internal_account_id
-           , history_table.cs_va_lender_id
-           , history_table.cs_usda_lender_id
-           , history_table.cs_fha_sponsor_address_country
-           , history_table.cs_fha_sponsor_id
-           , history_table.cs_fha_sponsor_company_name
-           , history_table.cs_fha_non_supervised_mortgagee
-           , history_table.cs_fha_sponsor_address_city
-           , history_table.cs_fha_lender_id
-           , history_table.cs_fha_sponsor_address_street2
-           , history_table.cs_fha_sponsor_address_street1
-           , history_table.cs_fha_sponsor_address_state
-           , history_table.cs_fha_home_office_location_pid
-           , history_table.cs_fha_sponsor_address_postal_code
-           , history_table.cs_fha_settings_present
-           , history_table.cs_va_settings_present
-           , history_table.cs_usda_settings_present
-           , history_table.cs_fha_origination_sponsored
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.company_settings history_table
-      LEFT JOIN staging_octane.company_settings staging_table
-                ON staging_table.cs_pid = history_table.cs_pid
-      WHERE staging_table.cs_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.company_settings deleted_records
-          WHERE deleted_records.cs_pid = history_table.cs_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100884:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.company_settings
+        json_output_field: cs_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.company_settings
+          SELECT staging_table.cs_pid
+               , staging_table.cs_version
+               , staging_table.cs_company_pid
+               , staging_table.cs_equifax_mortgage_services_internal_account_id
+               , staging_table.cs_factual_data_internal_account_id
+               , staging_table.cs_sharper_lending_internal_account_id
+               , staging_table.cs_va_lender_id
+               , staging_table.cs_usda_lender_id
+               , staging_table.cs_fha_sponsor_address_country
+               , staging_table.cs_fha_sponsor_id
+               , staging_table.cs_fha_sponsor_company_name
+               , staging_table.cs_fha_non_supervised_mortgagee
+               , staging_table.cs_fha_sponsor_address_city
+               , staging_table.cs_fha_lender_id
+               , staging_table.cs_fha_sponsor_address_street2
+               , staging_table.cs_fha_sponsor_address_street1
+               , staging_table.cs_fha_sponsor_address_state
+               , staging_table.cs_fha_home_office_location_pid
+               , staging_table.cs_fha_sponsor_address_postal_code
+               , staging_table.cs_fha_settings_present
+               , staging_table.cs_va_settings_present
+               , staging_table.cs_usda_settings_present
+               , staging_table.cs_fha_origination_sponsored
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.company_settings staging_table
+          LEFT JOIN history_octane.company_settings history_table
+                    ON staging_table.cs_pid = history_table.cs_pid
+                        AND staging_table.cs_version = history_table.cs_version
+          WHERE history_table.cs_pid IS NULL
+          UNION ALL
+          SELECT history_table.cs_pid
+               , history_table.cs_version + 1
+               , history_table.cs_company_pid
+               , history_table.cs_equifax_mortgage_services_internal_account_id
+               , history_table.cs_factual_data_internal_account_id
+               , history_table.cs_sharper_lending_internal_account_id
+               , history_table.cs_va_lender_id
+               , history_table.cs_usda_lender_id
+               , history_table.cs_fha_sponsor_address_country
+               , history_table.cs_fha_sponsor_id
+               , history_table.cs_fha_sponsor_company_name
+               , history_table.cs_fha_non_supervised_mortgagee
+               , history_table.cs_fha_sponsor_address_city
+               , history_table.cs_fha_lender_id
+               , history_table.cs_fha_sponsor_address_street2
+               , history_table.cs_fha_sponsor_address_street1
+               , history_table.cs_fha_sponsor_address_state
+               , history_table.cs_fha_home_office_location_pid
+               , history_table.cs_fha_sponsor_address_postal_code
+               , history_table.cs_fha_settings_present
+               , history_table.cs_va_settings_present
+               , history_table.cs_usda_settings_present
+               , history_table.cs_fha_origination_sponsored
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.company_settings history_table
+          LEFT JOIN staging_octane.company_settings staging_table
+                    ON staging_table.cs_pid = history_table.cs_pid
+          WHERE staging_table.cs_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.company_settings deleted_records
+              WHERE deleted_records.cs_pid = history_table.cs_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

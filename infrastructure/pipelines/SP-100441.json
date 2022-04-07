@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100441 - ETL to insert records into staging.history_octane.community_lending_type using staging.staging_octane.community_lending_type as the primary source",
-    "StartAt": "SP-100441",
+    "StartAt": "ETL-100441",
     "States": {
-        "SP-100441": {
+        "ETL-100441": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100441"
+                                    "Value": "ETL-100441"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

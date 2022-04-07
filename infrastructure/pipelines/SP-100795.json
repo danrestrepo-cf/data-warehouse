@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100795 - ETL to insert records into staging.history_octane.secondary_admin_event_entity_type using staging.staging_octane.secondary_admin_event_entity_type as the primary source",
-    "StartAt": "SP-100795",
+    "StartAt": "ETL-100795",
     "States": {
-        "SP-100795": {
+        "ETL-100795": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100795"
+                                    "Value": "ETL-100795"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

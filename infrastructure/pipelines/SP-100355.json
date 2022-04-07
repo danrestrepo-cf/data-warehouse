@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100355 - ETL to insert records into staging.history_octane.unpaid_balance_adjustment using staging.staging_octane.unpaid_balance_adjustment as the primary source",
-    "StartAt": "SP-100355",
+    "StartAt": "ETL-100355",
     "States": {
-        "SP-100355": {
+        "ETL-100355": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100355"
+                                    "Value": "ETL-100355"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

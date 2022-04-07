@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100445 - ETL to insert records into staging.history_octane.construction_cost_category_type using staging.staging_octane.construction_cost_category_type as the primary source",
-    "StartAt": "SP-100445",
+    "StartAt": "ETL-100445",
     "States": {
-        "SP-100445": {
+        "ETL-100445": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100445"
+                                    "Value": "ETL-100445"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -47,42 +47,45 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pa_version
-etls:
+step_functions:
   SP-100104:
-    input_type: table
-    output_type: insert
-    json_output_field: pa_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.performer_assignment
-      SELECT staging_table.pa_pid
-           , staging_table.pa_version
-           , staging_table.pa_role_pid
-           , staging_table.pa_lender_user_pid
-           , staging_table.pa_last_assign_datetime
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.performer_assignment staging_table
-      LEFT JOIN history_octane.performer_assignment history_table
-                ON staging_table.pa_pid = history_table.pa_pid
-                    AND staging_table.pa_version = history_table.pa_version
-      WHERE history_table.pa_pid IS NULL
-      UNION ALL
-      SELECT history_table.pa_pid
-           , history_table.pa_version + 1
-           , history_table.pa_role_pid
-           , history_table.pa_lender_user_pid
-           , history_table.pa_last_assign_datetime
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.performer_assignment history_table
-      LEFT JOIN staging_octane.performer_assignment staging_table
-                ON staging_table.pa_pid = history_table.pa_pid
-      WHERE staging_table.pa_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.performer_assignment deleted_records
-          WHERE deleted_records.pa_pid = history_table.pa_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100104:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.performer_assignment
+        json_output_field: pa_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.performer_assignment
+          SELECT staging_table.pa_pid
+               , staging_table.pa_version
+               , staging_table.pa_role_pid
+               , staging_table.pa_lender_user_pid
+               , staging_table.pa_last_assign_datetime
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.performer_assignment staging_table
+          LEFT JOIN history_octane.performer_assignment history_table
+                    ON staging_table.pa_pid = history_table.pa_pid
+                        AND staging_table.pa_version = history_table.pa_version
+          WHERE history_table.pa_pid IS NULL
+          UNION ALL
+          SELECT history_table.pa_pid
+               , history_table.pa_version + 1
+               , history_table.pa_role_pid
+               , history_table.pa_lender_user_pid
+               , history_table.pa_last_assign_datetime
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.performer_assignment history_table
+          LEFT JOIN staging_octane.performer_assignment staging_table
+                    ON staging_table.pa_pid = history_table.pa_pid
+          WHERE staging_table.pa_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.performer_assignment deleted_records
+              WHERE deleted_records.pa_pid = history_table.pa_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

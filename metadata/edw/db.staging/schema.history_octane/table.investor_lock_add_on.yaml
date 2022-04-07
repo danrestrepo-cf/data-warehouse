@@ -67,52 +67,55 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ila_version
-etls:
+step_functions:
   SP-100349:
-    input_type: table
-    output_type: insert
-    json_output_field: ila_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.investor_lock_add_on
-      SELECT staging_table.ila_pid
-           , staging_table.ila_version
-           , staging_table.ila_investor_lock_pid
-           , staging_table.ila_create_datetime
-           , staging_table.ila_creator_lender_user_pid
-           , staging_table.ila_creator_unparsed_name
-           , staging_table.ila_summary
-           , staging_table.ila_rate_adjustment_percent
-           , staging_table.ila_price_adjustment_percent
-           , staging_table.ila_arm_margin_adjustment_percent
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.investor_lock_add_on staging_table
-      LEFT JOIN history_octane.investor_lock_add_on history_table
-                ON staging_table.ila_pid = history_table.ila_pid
-                    AND staging_table.ila_version = history_table.ila_version
-      WHERE history_table.ila_pid IS NULL
-      UNION ALL
-      SELECT history_table.ila_pid
-           , history_table.ila_version + 1
-           , history_table.ila_investor_lock_pid
-           , history_table.ila_create_datetime
-           , history_table.ila_creator_lender_user_pid
-           , history_table.ila_creator_unparsed_name
-           , history_table.ila_summary
-           , history_table.ila_rate_adjustment_percent
-           , history_table.ila_price_adjustment_percent
-           , history_table.ila_arm_margin_adjustment_percent
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.investor_lock_add_on history_table
-      LEFT JOIN staging_octane.investor_lock_add_on staging_table
-                ON staging_table.ila_pid = history_table.ila_pid
-      WHERE staging_table.ila_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.investor_lock_add_on deleted_records
-          WHERE deleted_records.ila_pid = history_table.ila_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100349:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.investor_lock_add_on
+        json_output_field: ila_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.investor_lock_add_on
+          SELECT staging_table.ila_pid
+               , staging_table.ila_version
+               , staging_table.ila_investor_lock_pid
+               , staging_table.ila_create_datetime
+               , staging_table.ila_creator_lender_user_pid
+               , staging_table.ila_creator_unparsed_name
+               , staging_table.ila_summary
+               , staging_table.ila_rate_adjustment_percent
+               , staging_table.ila_price_adjustment_percent
+               , staging_table.ila_arm_margin_adjustment_percent
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.investor_lock_add_on staging_table
+          LEFT JOIN history_octane.investor_lock_add_on history_table
+                    ON staging_table.ila_pid = history_table.ila_pid
+                        AND staging_table.ila_version = history_table.ila_version
+          WHERE history_table.ila_pid IS NULL
+          UNION ALL
+          SELECT history_table.ila_pid
+               , history_table.ila_version + 1
+               , history_table.ila_investor_lock_pid
+               , history_table.ila_create_datetime
+               , history_table.ila_creator_lender_user_pid
+               , history_table.ila_creator_unparsed_name
+               , history_table.ila_summary
+               , history_table.ila_rate_adjustment_percent
+               , history_table.ila_price_adjustment_percent
+               , history_table.ila_arm_margin_adjustment_percent
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.investor_lock_add_on history_table
+          LEFT JOIN staging_octane.investor_lock_add_on staging_table
+                    ON staging_table.ila_pid = history_table.ila_pid
+          WHERE staging_table.ila_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.investor_lock_add_on deleted_records
+              WHERE deleted_records.ila_pid = history_table.ila_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

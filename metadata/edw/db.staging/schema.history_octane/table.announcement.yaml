@@ -34,44 +34,47 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100018:
-    input_type: table
-    output_type: insert
-    json_output_field: ann_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.announcement
-      SELECT staging_table.ann_pid
-           , staging_table.ann_version
-           , staging_table.ann_lender_text
-           , staging_table.ann_borrower_text
-           , staging_table.ann_from_datetime
-           , staging_table.ann_to_datetime
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.announcement staging_table
-      LEFT JOIN history_octane.announcement history_table
-                ON staging_table.ann_pid = history_table.ann_pid
-                    AND staging_table.ann_version = history_table.ann_version
-      WHERE history_table.ann_pid IS NULL
-      UNION ALL
-      SELECT history_table.ann_pid
-           , history_table.ann_version + 1
-           , history_table.ann_lender_text
-           , history_table.ann_borrower_text
-           , history_table.ann_from_datetime
-           , history_table.ann_to_datetime
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.announcement history_table
-      LEFT JOIN staging_octane.announcement staging_table
-                ON staging_table.ann_pid = history_table.ann_pid
-      WHERE staging_table.ann_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.announcement deleted_records
-          WHERE deleted_records.ann_pid = history_table.ann_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100018:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.announcement
+        json_output_field: ann_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.announcement
+          SELECT staging_table.ann_pid
+               , staging_table.ann_version
+               , staging_table.ann_lender_text
+               , staging_table.ann_borrower_text
+               , staging_table.ann_from_datetime
+               , staging_table.ann_to_datetime
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.announcement staging_table
+          LEFT JOIN history_octane.announcement history_table
+                    ON staging_table.ann_pid = history_table.ann_pid
+                        AND staging_table.ann_version = history_table.ann_version
+          WHERE history_table.ann_pid IS NULL
+          UNION ALL
+          SELECT history_table.ann_pid
+               , history_table.ann_version + 1
+               , history_table.ann_lender_text
+               , history_table.ann_borrower_text
+               , history_table.ann_from_datetime
+               , history_table.ann_to_datetime
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.announcement history_table
+          LEFT JOIN staging_octane.announcement staging_table
+                    ON staging_table.ann_pid = history_table.ann_pid
+          WHERE staging_table.ann_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.announcement deleted_records
+              WHERE deleted_records.ann_pid = history_table.ann_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

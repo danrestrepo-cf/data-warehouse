@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100154 - ETL to insert records into staging.history_octane.net_tangible_benefit using staging.staging_octane.net_tangible_benefit as the primary source",
-    "StartAt": "SP-100154",
+    "StartAt": "ETL-100154",
     "States": {
-        "SP-100154": {
+        "ETL-100154": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100154"
+                                    "Value": "ETL-100154"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -43,40 +43,43 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100314:
-    input_type: table
-    output_type: insert
-    json_output_field: bci_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.borrower_credit_inquiry
-      SELECT staging_table.bci_pid
-           , staging_table.bci_version
-           , staging_table.bci_credit_inquiry_pid
-           , staging_table.bci_borrower_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.borrower_credit_inquiry staging_table
-      LEFT JOIN history_octane.borrower_credit_inquiry history_table
-                ON staging_table.bci_pid = history_table.bci_pid
-                    AND staging_table.bci_version = history_table.bci_version
-      WHERE history_table.bci_pid IS NULL
-      UNION ALL
-      SELECT history_table.bci_pid
-           , history_table.bci_version + 1
-           , history_table.bci_credit_inquiry_pid
-           , history_table.bci_borrower_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.borrower_credit_inquiry history_table
-      LEFT JOIN staging_octane.borrower_credit_inquiry staging_table
-                ON staging_table.bci_pid = history_table.bci_pid
-      WHERE staging_table.bci_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.borrower_credit_inquiry deleted_records
-          WHERE deleted_records.bci_pid = history_table.bci_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100314:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.borrower_credit_inquiry
+        json_output_field: bci_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.borrower_credit_inquiry
+          SELECT staging_table.bci_pid
+               , staging_table.bci_version
+               , staging_table.bci_credit_inquiry_pid
+               , staging_table.bci_borrower_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.borrower_credit_inquiry staging_table
+          LEFT JOIN history_octane.borrower_credit_inquiry history_table
+                    ON staging_table.bci_pid = history_table.bci_pid
+                        AND staging_table.bci_version = history_table.bci_version
+          WHERE history_table.bci_pid IS NULL
+          UNION ALL
+          SELECT history_table.bci_pid
+               , history_table.bci_version + 1
+               , history_table.bci_credit_inquiry_pid
+               , history_table.bci_borrower_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.borrower_credit_inquiry history_table
+          LEFT JOIN staging_octane.borrower_credit_inquiry staging_table
+                    ON staging_table.bci_pid = history_table.bci_pid
+          WHERE staging_table.bci_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.borrower_credit_inquiry deleted_records
+              WHERE deleted_records.bci_pid = history_table.bci_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100174 - ETL to insert records into staging.history_octane.secondary_settings using staging.staging_octane.secondary_settings as the primary source",
-    "StartAt": "SP-100174",
+    "StartAt": "ETL-100174",
     "States": {
-        "SP-100174": {
+        "ETL-100174": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100174"
+                                    "Value": "ETL-100174"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

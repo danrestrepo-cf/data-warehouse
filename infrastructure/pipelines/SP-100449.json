@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100449 - ETL to insert records into staging.history_octane.construction_lot_ownership_status_type using staging.staging_octane.construction_lot_ownership_status_type as the primary source",
-    "StartAt": "SP-100449",
+    "StartAt": "ETL-100449",
     "States": {
-        "SP-100449": {
+        "ETL-100449": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100449"
+                                    "Value": "ETL-100449"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

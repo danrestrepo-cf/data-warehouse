@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100363 - ETL to insert records into staging.history_octane.deal_note_role_tag using staging.staging_octane.deal_note_role_tag as the primary source",
-    "StartAt": "SP-100363",
+    "StartAt": "ETL-100363",
     "States": {
-        "SP-100363": {
+        "ETL-100363": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100363"
+                                    "Value": "ETL-100363"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100374 - ETL to insert records into staging.history_octane.ledger_entry_review_note using staging.staging_octane.ledger_entry_review_note as the primary source",
-    "StartAt": "SP-100374",
+    "StartAt": "ETL-100374",
     "States": {
-        "SP-100374": {
+        "ETL-100374": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100374"
+                                    "Value": "ETL-100374"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

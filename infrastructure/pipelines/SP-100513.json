@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100513 - ETL to insert records into staging.history_octane.fnm_arm_plan_type using staging.staging_octane.fnm_arm_plan_type as the primary source",
-    "StartAt": "SP-100513",
+    "StartAt": "ETL-100513",
     "States": {
-        "SP-100513": {
+        "ETL-100513": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100513"
+                                    "Value": "ETL-100513"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

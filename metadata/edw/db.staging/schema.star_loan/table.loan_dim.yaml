@@ -53,10 +53,10 @@ columns:
             ELSE $4
           END
         using:
-          - primary_source_table.columns.l_lien_priority_type
-          - primary_source_table.foreign_keys.fk_loan_1.columns.prp_structure_type
-          - primary_source_table.foreign_keys.fk_loan_1.foreign_keys.fk_proposal_1.columns.d_los_loan_id_main
-          - primary_source_table.foreign_keys.fk_loan_1.foreign_keys.fk_proposal_1.columns.d_los_loan_id_piggyback
+        - primary_source_table.columns.l_lien_priority_type
+        - primary_source_table.foreign_keys.fk_loan_1.columns.prp_structure_type
+        - primary_source_table.foreign_keys.fk_loan_1.foreign_keys.fk_proposal_1.columns.d_los_loan_id_main
+        - primary_source_table.foreign_keys.fk_loan_1.foreign_keys.fk_proposal_1.columns.d_los_loan_id_piggyback
     update_flag: true
   arm_index_current_value_percent:
     data_type: NUMERIC(15,9)
@@ -153,111 +153,114 @@ columns:
     source:
       field: primary_source_table.columns.l_uldd_loan_comment
     update_flag: true
-etls:
+step_functions:
   SP-200012:
-    input_type: table
-    output_type: insert_update
-    hardcoded_data_source: Octane
-    json_output_field: data_source_integration_id
-    insert_update_keys:
-      - data_source_integration_id
-    container_memory: 2048
-    input_sql: |-
-      WITH loan_dim_incl_new_records AS (
-          SELECT 'loan_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
-               , COALESCE( CAST( primary_table.l_pid AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
-               , NOW( ) AS edw_created_datetime
-               , NOW( ) AS edw_modified_datetime
-               , primary_table.data_source_updated_datetime AS data_source_modified_datetime
-               , primary_table.l_last_unprocessed_changes_datetime AS last_unprocessed_changes_datetime
-               , primary_table.l_locked_price_change_percent AS locked_price_change_percent
-               , primary_table.l_mi_requirement_ltv_ratio_percent AS mi_requirement_ltv_ratio_percent
-               , primary_table.l_base_loan_amount_ltv_ratio_percent AS base_loan_amount_ltv_ratio_percent
-               , primary_table.l_arm_index_current_value_percent AS arm_index_current_value_percent
-               , primary_table.l_arm_index_datetime AS arm_index_datetime
-               , primary_table.l_product_terms_pid AS product_terms_pid
-               , primary_table.l_proposal_pid AS proposal_pid
-               , primary_table.l_pid AS loan_pid
-               , primary_table.l_fhac_case_assignment_messages AS fhac_case_assignment_messages
-               , primary_table.l_product_choice_datetime AS product_choice_datetime
-               , primary_table.l_fnm_mbs_investor_contract_id AS fnm_mbs_investor_contract_id
-               , primary_table.l_base_guaranty_fee_basis_points AS base_guaranty_fee_percent
-               , primary_table.l_guaranty_fee_basis_points AS guaranty_fee_percent
-               , primary_table.l_guaranty_fee_after_alternate_payment_method_basis_points AS guaranty_fee_after_alternate_payment_method_percent
-               , primary_table.l_fnm_investor_product_plan_id AS fnm_investor_product_plan_id
-               , primary_table.l_uldd_loan_comment AS uldd_loan_comment
-               , primary_table.l_hmda_rate_spread_percent AS hmda_rate_spread_percent
-               , primary_table.l_hoepa_apr AS hoepa_apr
-               , primary_table.l_hoepa_rate_spread AS hoepa_rate_spread
-               , primary_table.l_rate_sheet_undiscounted_rate_percent AS rate_sheet_undiscounted_rate_percent
-               , primary_table.l_effective_undiscounted_rate_percent AS effective_undiscounted_rate_percent
-               , CASE
-                     WHEN primary_table.l_lien_priority_type IS NULL OR t1317.prp_structure_type IS NULL THEN NULL
-                     WHEN primary_table.l_lien_priority_type = 'FIRST' OR t1317.prp_structure_type = 'STANDALONE_2ND'
-                         THEN t1317.d_los_loan_id_main
-                     ELSE t1317.d_los_loan_id_piggyback END AS los_loan_number
-               , GREATEST( primary_table.etl_end_date_time, t1317.etl_end_date_time ) AS max_source_etl_end_date_time
-          FROM (
-              SELECT <<loan_partial_load_condition>> AS include_record
-                   , loan.*
-                   , etl_log.etl_end_date_time
-              FROM history_octane.loan
-              LEFT JOIN history_octane.loan AS history_records
-                        ON loan.l_pid = history_records.l_pid
-                            AND loan.data_source_updated_datetime < history_records.data_source_updated_datetime
-              JOIN star_common.etl_log
-                   ON loan.etl_batch_id = etl_log.etl_batch_id
-              WHERE history_records.l_pid IS NULL
-          ) AS primary_table
-          INNER JOIN (
-              SELECT *
+    etls:
+      ETL-200012:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.loan_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-200015
+        - SP-300001-insert-update
+        input_sql: |-
+          WITH loan_dim_incl_new_records AS (
+              SELECT 'loan_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
+                   , COALESCE( CAST( primary_table.l_pid AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
+                   , NOW( ) AS edw_created_datetime
+                   , NOW( ) AS edw_modified_datetime
+                   , primary_table.data_source_updated_datetime AS data_source_modified_datetime
+                   , primary_table.l_last_unprocessed_changes_datetime AS last_unprocessed_changes_datetime
+                   , primary_table.l_locked_price_change_percent AS locked_price_change_percent
+                   , primary_table.l_mi_requirement_ltv_ratio_percent AS mi_requirement_ltv_ratio_percent
+                   , primary_table.l_base_loan_amount_ltv_ratio_percent AS base_loan_amount_ltv_ratio_percent
+                   , primary_table.l_arm_index_current_value_percent AS arm_index_current_value_percent
+                   , primary_table.l_arm_index_datetime AS arm_index_datetime
+                   , primary_table.l_product_terms_pid AS product_terms_pid
+                   , primary_table.l_proposal_pid AS proposal_pid
+                   , primary_table.l_pid AS loan_pid
+                   , primary_table.l_fhac_case_assignment_messages AS fhac_case_assignment_messages
+                   , primary_table.l_product_choice_datetime AS product_choice_datetime
+                   , primary_table.l_fnm_mbs_investor_contract_id AS fnm_mbs_investor_contract_id
+                   , primary_table.l_base_guaranty_fee_basis_points AS base_guaranty_fee_percent
+                   , primary_table.l_guaranty_fee_basis_points AS guaranty_fee_percent
+                   , primary_table.l_guaranty_fee_after_alternate_payment_method_basis_points AS guaranty_fee_after_alternate_payment_method_percent
+                   , primary_table.l_fnm_investor_product_plan_id AS fnm_investor_product_plan_id
+                   , primary_table.l_uldd_loan_comment AS uldd_loan_comment
+                   , primary_table.l_hmda_rate_spread_percent AS hmda_rate_spread_percent
+                   , primary_table.l_hoepa_apr AS hoepa_apr
+                   , primary_table.l_hoepa_rate_spread AS hoepa_rate_spread
+                   , primary_table.l_rate_sheet_undiscounted_rate_percent AS rate_sheet_undiscounted_rate_percent
+                   , primary_table.l_effective_undiscounted_rate_percent AS effective_undiscounted_rate_percent
+                   , CASE
+                         WHEN primary_table.l_lien_priority_type IS NULL OR t1317.prp_structure_type IS NULL THEN NULL
+                         WHEN primary_table.l_lien_priority_type = 'FIRST' OR t1317.prp_structure_type = 'STANDALONE_2ND'
+                             THEN t1317.d_los_loan_id_main
+                         ELSE t1317.d_los_loan_id_piggyback END AS los_loan_number
+                   , GREATEST( primary_table.etl_end_date_time, t1317.etl_end_date_time ) AS max_source_etl_end_date_time
               FROM (
-                  SELECT proposal.*
-                  FROM history_octane.proposal
-                  LEFT JOIN history_octane.proposal AS history_records
-                            ON proposal.prp_pid = history_records.prp_pid
-                                AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  WHERE history_records.prp_pid IS NULL
-              ) AS primary_table
-                  -- child join start
-              INNER JOIN
-              (
-                  SELECT <<deal_partial_load_condition>> AS include_record
-                       , deal.*
+                  SELECT <<loan_partial_load_condition>> AS include_record
+                       , loan.*
                        , etl_log.etl_end_date_time
-                  FROM history_octane.deal
-                  LEFT JOIN history_octane.deal AS history_records
-                            ON deal.d_pid = history_records.d_pid
-                                AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  FROM history_octane.loan
+                  LEFT JOIN history_octane.loan AS history_records
+                            ON loan.l_pid = history_records.l_pid
+                                AND loan.data_source_updated_datetime < history_records.data_source_updated_datetime
                   JOIN star_common.etl_log
-                       ON deal.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.d_pid IS NULL
-              ) AS t1441
-              ON primary_table.prp_deal_pid = t1441.d_pid
-              -- child join end
-          ) AS t1317
-                     ON primary_table.l_proposal_pid = t1317.prp_pid
-          WHERE GREATEST( primary_table.include_record, t1317.include_record ) IS TRUE
-      )
-      --new records that should be inserted
-      SELECT loan_dim_incl_new_records.*
-      FROM loan_dim_incl_new_records
-      LEFT JOIN star_loan.loan_dim
-                ON loan_dim_incl_new_records.data_source_integration_id = loan_dim.data_source_integration_id
-      WHERE loan_dim.dwid IS NULL
-      UNION ALL
-      --existing records that need to be updated
-      SELECT loan_dim_incl_new_records.*
-      FROM loan_dim_incl_new_records
-      JOIN (
-          SELECT loan_dim.data_source_integration_id, etl_log.etl_start_date_time
-          FROM star_loan.loan_dim
-          JOIN star_common.etl_log
-               ON loan_dim.etl_batch_id = etl_log.etl_batch_id
-      ) AS loan_dim_etl_start_times
-           ON loan_dim_incl_new_records.data_source_integration_id = loan_dim_etl_start_times.data_source_integration_id
-               AND loan_dim_incl_new_records.max_source_etl_end_date_time >= loan_dim_etl_start_times.etl_start_date_time;
-next_etls:
-  - SP-200015
-  - SP-300001-insert-update
+                       ON loan.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.l_pid IS NULL
+              ) AS primary_table
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT proposal.*
+                      FROM history_octane.proposal
+                      LEFT JOIN history_octane.proposal AS history_records
+                                ON proposal.prp_pid = history_records.prp_pid
+                                    AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.prp_pid IS NULL
+                  ) AS primary_table
+                      -- child join start
+                  INNER JOIN
+                  (
+                      SELECT <<deal_partial_load_condition>> AS include_record
+                           , deal.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.deal
+                      LEFT JOIN history_octane.deal AS history_records
+                                ON deal.d_pid = history_records.d_pid
+                                    AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON deal.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.d_pid IS NULL
+                  ) AS t1441
+                  ON primary_table.prp_deal_pid = t1441.d_pid
+                  -- child join end
+              ) AS t1317
+                         ON primary_table.l_proposal_pid = t1317.prp_pid
+              WHERE GREATEST( primary_table.include_record, t1317.include_record ) IS TRUE
+          )
+          --new records that should be inserted
+          SELECT loan_dim_incl_new_records.*
+          FROM loan_dim_incl_new_records
+          LEFT JOIN star_loan.loan_dim
+                    ON loan_dim_incl_new_records.data_source_integration_id = loan_dim.data_source_integration_id
+          WHERE loan_dim.dwid IS NULL
+          UNION ALL
+          --existing records that need to be updated
+          SELECT loan_dim_incl_new_records.*
+          FROM loan_dim_incl_new_records
+          JOIN (
+              SELECT loan_dim.data_source_integration_id, etl_log.etl_start_date_time
+              FROM star_loan.loan_dim
+              JOIN star_common.etl_log
+                   ON loan_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS loan_dim_etl_start_times
+               ON loan_dim_incl_new_records.data_source_integration_id = loan_dim_etl_start_times.data_source_integration_id
+                   AND loan_dim_incl_new_records.max_source_etl_end_date_time >= loan_dim_etl_start_times.etl_start_date_time;

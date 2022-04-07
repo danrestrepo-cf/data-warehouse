@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100457 - ETL to insert records into staging.history_octane.credit_limit_type using staging.staging_octane.credit_limit_type as the primary source",
-    "StartAt": "SP-100457",
+    "StartAt": "ETL-100457",
     "States": {
-        "SP-100457": {
+        "ETL-100457": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100457"
+                                    "Value": "ETL-100457"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

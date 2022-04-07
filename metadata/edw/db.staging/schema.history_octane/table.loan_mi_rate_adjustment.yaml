@@ -39,42 +39,45 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lmra_version
-etls:
+step_functions:
   SP-100146:
-    input_type: table
-    output_type: insert
-    json_output_field: lmra_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.loan_mi_rate_adjustment
-      SELECT staging_table.lmra_pid
-           , staging_table.lmra_version
-           , staging_table.lmra_loan_pid
-           , staging_table.lmra_case_name
-           , staging_table.lmra_rate_adjustment_percent
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.loan_mi_rate_adjustment staging_table
-      LEFT JOIN history_octane.loan_mi_rate_adjustment history_table
-                ON staging_table.lmra_pid = history_table.lmra_pid
-                    AND staging_table.lmra_version = history_table.lmra_version
-      WHERE history_table.lmra_pid IS NULL
-      UNION ALL
-      SELECT history_table.lmra_pid
-           , history_table.lmra_version + 1
-           , history_table.lmra_loan_pid
-           , history_table.lmra_case_name
-           , history_table.lmra_rate_adjustment_percent
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.loan_mi_rate_adjustment history_table
-      LEFT JOIN staging_octane.loan_mi_rate_adjustment staging_table
-                ON staging_table.lmra_pid = history_table.lmra_pid
-      WHERE staging_table.lmra_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.loan_mi_rate_adjustment deleted_records
-          WHERE deleted_records.lmra_pid = history_table.lmra_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100146:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.loan_mi_rate_adjustment
+        json_output_field: lmra_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.loan_mi_rate_adjustment
+          SELECT staging_table.lmra_pid
+               , staging_table.lmra_version
+               , staging_table.lmra_loan_pid
+               , staging_table.lmra_case_name
+               , staging_table.lmra_rate_adjustment_percent
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.loan_mi_rate_adjustment staging_table
+          LEFT JOIN history_octane.loan_mi_rate_adjustment history_table
+                    ON staging_table.lmra_pid = history_table.lmra_pid
+                        AND staging_table.lmra_version = history_table.lmra_version
+          WHERE history_table.lmra_pid IS NULL
+          UNION ALL
+          SELECT history_table.lmra_pid
+               , history_table.lmra_version + 1
+               , history_table.lmra_loan_pid
+               , history_table.lmra_case_name
+               , history_table.lmra_rate_adjustment_percent
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.loan_mi_rate_adjustment history_table
+          LEFT JOIN staging_octane.loan_mi_rate_adjustment staging_table
+                    ON staging_table.lmra_pid = history_table.lmra_pid
+          WHERE staging_table.lmra_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.loan_mi_rate_adjustment deleted_records
+              WHERE deleted_records.lmra_pid = history_table.lmra_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

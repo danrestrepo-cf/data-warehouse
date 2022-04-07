@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100833 - ETL to insert records into staging.history_octane.mortgage_delinquency_exception_type using staging.staging_octane.mortgage_delinquency_exception_type as the primary source",
-    "StartAt": "SP-100833",
+    "StartAt": "ETL-100833",
     "States": {
-        "SP-100833": {
+        "ETL-100833": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100833"
+                                    "Value": "ETL-100833"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

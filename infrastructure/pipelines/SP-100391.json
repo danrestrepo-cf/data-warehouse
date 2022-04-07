@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100391 - ETL to insert records into staging.history_octane.annual_monthly_type using staging.staging_octane.annual_monthly_type as the primary source",
-    "StartAt": "SP-100391",
+    "StartAt": "ETL-100391",
     "States": {
-        "SP-100391": {
+        "ETL-100391": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100391"
+                                    "Value": "ETL-100391"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

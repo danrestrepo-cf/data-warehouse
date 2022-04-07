@@ -59,48 +59,51 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.r_version
-etls:
+step_functions:
   SP-100047:
-    input_type: table
-    output_type: insert
-    json_output_field: r_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.role
-      SELECT staging_table.r_pid
-           , staging_table.r_version
-           , staging_table.r_account_pid
-           , staging_table.r_role_name
-           , staging_table.r_borrower_viewable
-           , staging_table.r_loan_access_type
-           , staging_table.r_internal
-           , staging_table.r_training_applicable
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.role staging_table
-      LEFT JOIN history_octane.role history_table
-                ON staging_table.r_pid = history_table.r_pid
-                    AND staging_table.r_version = history_table.r_version
-      WHERE history_table.r_pid IS NULL
-      UNION ALL
-      SELECT history_table.r_pid
-           , history_table.r_version + 1
-           , history_table.r_account_pid
-           , history_table.r_role_name
-           , history_table.r_borrower_viewable
-           , history_table.r_loan_access_type
-           , history_table.r_internal
-           , history_table.r_training_applicable
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.role history_table
-      LEFT JOIN staging_octane.role staging_table
-                ON staging_table.r_pid = history_table.r_pid
-      WHERE staging_table.r_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.role deleted_records
-          WHERE deleted_records.r_pid = history_table.r_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100047:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.role
+        json_output_field: r_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.role
+          SELECT staging_table.r_pid
+               , staging_table.r_version
+               , staging_table.r_account_pid
+               , staging_table.r_role_name
+               , staging_table.r_borrower_viewable
+               , staging_table.r_loan_access_type
+               , staging_table.r_internal
+               , staging_table.r_training_applicable
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.role staging_table
+          LEFT JOIN history_octane.role history_table
+                    ON staging_table.r_pid = history_table.r_pid
+                        AND staging_table.r_version = history_table.r_version
+          WHERE history_table.r_pid IS NULL
+          UNION ALL
+          SELECT history_table.r_pid
+               , history_table.r_version + 1
+               , history_table.r_account_pid
+               , history_table.r_role_name
+               , history_table.r_borrower_viewable
+               , history_table.r_loan_access_type
+               , history_table.r_internal
+               , history_table.r_training_applicable
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.role history_table
+          LEFT JOIN staging_octane.role staging_table
+                    ON staging_table.r_pid = history_table.r_pid
+          WHERE staging_table.r_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.role deleted_records
+              WHERE deleted_records.r_pid = history_table.r_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

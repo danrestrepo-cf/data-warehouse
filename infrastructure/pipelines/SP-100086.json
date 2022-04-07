@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100086 - ETL to insert records into staging.history_octane.deal_real_estate_agent using staging.staging_octane.deal_real_estate_agent as the primary source",
-    "StartAt": "SP-100086",
+    "StartAt": "ETL-100086",
     "States": {
-        "SP-100086": {
+        "ETL-100086": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100086"
+                                    "Value": "ETL-100086"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

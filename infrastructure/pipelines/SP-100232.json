@@ -1,8 +1,8 @@
 {
     "Comment": "SP-100232 - ETL to insert records into staging.history_octane.relock_fee_setting using staging.staging_octane.relock_fee_setting as the primary source",
-    "StartAt": "SP-100232",
+    "StartAt": "ETL-100232",
     "States": {
-        "SP-100232": {
+        "ETL-100232": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100232"
+                                    "Value": "ETL-100232"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

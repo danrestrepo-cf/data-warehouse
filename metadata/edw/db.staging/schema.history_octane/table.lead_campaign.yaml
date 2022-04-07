@@ -55,46 +55,49 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ldc_version
-etls:
+step_functions:
   SP-100039:
-    input_type: table
-    output_type: insert
-    json_output_field: ldc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.lead_campaign
-      SELECT staging_table.ldc_pid
-           , staging_table.ldc_version
-           , staging_table.ldc_account_pid
-           , staging_table.ldc_lead_source_pid
-           , staging_table.ldc_campaign_id
-           , staging_table.ldc_campaign_name
-           , staging_table.ldc_velocify_campaign_title
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.lead_campaign staging_table
-      LEFT JOIN history_octane.lead_campaign history_table
-                ON staging_table.ldc_pid = history_table.ldc_pid
-                    AND staging_table.ldc_version = history_table.ldc_version
-      WHERE history_table.ldc_pid IS NULL
-      UNION ALL
-      SELECT history_table.ldc_pid
-           , history_table.ldc_version + 1
-           , history_table.ldc_account_pid
-           , history_table.ldc_lead_source_pid
-           , history_table.ldc_campaign_id
-           , history_table.ldc_campaign_name
-           , history_table.ldc_velocify_campaign_title
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.lead_campaign history_table
-      LEFT JOIN staging_octane.lead_campaign staging_table
-                ON staging_table.ldc_pid = history_table.ldc_pid
-      WHERE staging_table.ldc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.lead_campaign deleted_records
-          WHERE deleted_records.ldc_pid = history_table.ldc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100039:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.lead_campaign
+        json_output_field: ldc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.lead_campaign
+          SELECT staging_table.ldc_pid
+               , staging_table.ldc_version
+               , staging_table.ldc_account_pid
+               , staging_table.ldc_lead_source_pid
+               , staging_table.ldc_campaign_id
+               , staging_table.ldc_campaign_name
+               , staging_table.ldc_velocify_campaign_title
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.lead_campaign staging_table
+          LEFT JOIN history_octane.lead_campaign history_table
+                    ON staging_table.ldc_pid = history_table.ldc_pid
+                        AND staging_table.ldc_version = history_table.ldc_version
+          WHERE history_table.ldc_pid IS NULL
+          UNION ALL
+          SELECT history_table.ldc_pid
+               , history_table.ldc_version + 1
+               , history_table.ldc_account_pid
+               , history_table.ldc_lead_source_pid
+               , history_table.ldc_campaign_id
+               , history_table.ldc_campaign_name
+               , history_table.ldc_velocify_campaign_title
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.lead_campaign history_table
+          LEFT JOIN staging_octane.lead_campaign staging_table
+                    ON staging_table.ldc_pid = history_table.ldc_pid
+          WHERE staging_table.ldc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.lead_campaign deleted_records
+              WHERE deleted_records.ldc_pid = history_table.ldc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );
