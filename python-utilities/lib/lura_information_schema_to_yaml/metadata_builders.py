@@ -416,7 +416,7 @@ def generate_history_octane_table_input_sql(table: TableMetadata) -> str:
                            f'FROM (\n' + \
                            generate_most_recent_history_octane_table_record_subquery(table) + '\n' + \
                            f'      AND current_records.data_source_deleted_flag = FALSE\n' + \
-                           f'     ) AS history_table\n' + \
+                           f') AS history_table\n' + \
                            f'LEFT JOIN staging_octane.{table.name} staging_table\n' + \
                            generate_staging_to_history_join_columns_string([primary_key_column]) + '\n' + \
                            f'WHERE staging_table.{primary_key_column} IS NULL'
@@ -461,11 +461,11 @@ def generate_staging_to_history_join_columns_string(columns: List[str], base_ind
     return join_columns_str
 
 
-def generate_most_recent_history_octane_table_record_subquery(table: TableMetadata, base_indent: int = 6) -> str:
+def generate_most_recent_history_octane_table_record_subquery(table: TableMetadata, base_indent: int = 4) -> str:
     """Generate a full SQL subquery string to show the most recently updated record for each primary key in a history_octane table.
 
-    The base_indent defaults to 6 because this is a subquery which will generally
-    be following 'FROM (' which is exactly 6 characters
+    The base_indent defaults to 4 because this is a subquery which will generally
+    be following 'FROM (' which is exactly 4 characters (aligned under the space before "(")
     """
     base_indent_str = base_indent * ' '
 
@@ -473,10 +473,8 @@ def generate_most_recent_history_octane_table_record_subquery(table: TableMetada
         f'{base_indent_str}SELECT current_records.*\n' + \
         f'{base_indent_str}FROM history_octane.{table.name} AS current_records\n' + \
         f'{base_indent_str}LEFT JOIN history_octane.{table.name} AS history_records\n' + \
-        f'{base_indent_str}  ON current_records.{table.primary_key[0]} =\n' + \
-        f'{base_indent_str}      history_records.{table.primary_key[0]}\n' + \
-        f'{base_indent_str}    AND current_records.data_source_updated_datetime <\n' + \
-        f'{base_indent_str}        history_records.data_source_updated_datetime\n' + \
+        f'{base_indent_str}          ON current_records.{table.primary_key[0]} = history_records.{table.primary_key[0]}\n' + \
+        f'{base_indent_str}              AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime\n' + \
         f'{base_indent_str}WHERE history_records.data_source_updated_datetime IS NULL'
 
     return current_history_octane_record_subquery
@@ -485,4 +483,3 @@ def generate_most_recent_history_octane_table_record_subquery(table: TableMetada
 def generate_staging_to_history_join_column_string(column: str) -> str:
     """Generate a single join condition between a staging_octane column and its history_octane counterpart."""
     return f'staging_table.{column} = history_table.{column}'
-

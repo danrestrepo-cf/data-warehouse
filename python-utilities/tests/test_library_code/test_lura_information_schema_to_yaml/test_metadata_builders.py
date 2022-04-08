@@ -440,16 +440,14 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                                                  "     , TRUE AS data_source_deleted_flag\n" +
                                                  "     , NOW( ) AS data_source_updated_datetime\n" +
                                                  "FROM (\n" +
-                                                 "      SELECT current_records.*\n" +
-                                                 "      FROM history_octane.account AS current_records\n" +
-                                                 "      LEFT JOIN history_octane.account AS history_records\n" +
-                                                 "        ON current_records.a_pid =\n"
-                                                 "            history_records.a_pid\n" +
-                                                 "          AND current_records.data_source_updated_datetime <\n" +
-                                                 "              history_records.data_source_updated_datetime\n" +
-                                                 "      WHERE history_records.data_source_updated_datetime IS NULL\n" +
+                                                 "    SELECT current_records.*\n" +
+                                                 "    FROM history_octane.account AS current_records\n" +
+                                                 "    LEFT JOIN history_octane.account AS history_records\n" +
+                                                 "              ON current_records.a_pid = history_records.a_pid\n" +
+                                                 "                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime\n" +
+                                                 "    WHERE history_records.data_source_updated_datetime IS NULL\n" +
                                                  "      AND current_records.data_source_deleted_flag = FALSE\n" +
-                                                 "     ) AS history_table\n" +
+                                                 ") AS history_table\n" +
                                                  "LEFT JOIN staging_octane.account staging_table\n" +
                                                  "          ON staging_table.a_pid = history_table.a_pid\n" +
                                                  "WHERE staging_table.a_pid IS NULL;"
@@ -847,16 +845,14 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                                                  "     , TRUE AS data_source_deleted_flag\n" +
                                                  "     , NOW( ) AS data_source_updated_datetime\n" +
                                                  "FROM (\n" +
-                                                 "      SELECT current_records.*\n" +
-                                                 "      FROM history_octane.wide_table AS current_records\n" +
-                                                 "      LEFT JOIN history_octane.wide_table AS history_records\n" +
-                                                 "        ON current_records.wt_pid =\n" +
-                                                 "            history_records.wt_pid\n" +
-                                                 "          AND current_records.data_source_updated_datetime <\n" +
-                                                 "              history_records.data_source_updated_datetime\n" +
-                                                 "      WHERE history_records.data_source_updated_datetime IS NULL\n"
+                                                 "    SELECT current_records.*\n" +
+                                                 "    FROM history_octane.wide_table AS current_records\n" +
+                                                 "    LEFT JOIN history_octane.wide_table AS history_records\n" +
+                                                 "              ON current_records.wt_pid = history_records.wt_pid\n" +
+                                                 "                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime\n" +
+                                                 "    WHERE history_records.data_source_updated_datetime IS NULL\n"
                                                  "      AND current_records.data_source_deleted_flag = FALSE\n" +
-                                                 "     ) AS history_table\n" +
+                                                 ") AS history_table\n" +
                                                  "LEFT JOIN staging_octane.wide_table staging_table\n" +
                                                  "          ON staging_table.wt_pid = history_table.wt_pid\n" +
                                                  "WHERE staging_table.wt_pid IS NULL;"
