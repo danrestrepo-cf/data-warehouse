@@ -1,0 +1,153 @@
+name: change_request_add_user_rate_search
+primary_source_table: staging.staging_octane.change_request_add_user_rate_search
+primary_key:
+- chraurs_pid
+- chraurs_version
+foreign_keys:
+  fk_change_request_add_user_rate_search_1:
+    columns:
+    - chraurs_change_request_pid
+    references:
+      columns:
+      - chr_pid
+      schema: history_octane
+      table: change_request
+  fk_change_request_add_user_rate_search_2:
+    columns:
+    - chraurs_branch_pid
+    references:
+      columns:
+      - br_pid
+      schema: history_octane
+      table: branch
+columns:
+  chraurs_branch_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.chraurs_branch_pid
+  chraurs_change_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.chraurs_change_request_pid
+  chraurs_channel_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.chraurs_channel_id
+  chraurs_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.chraurs_email
+  chraurs_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.chraurs_first_name
+  chraurs_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.chraurs_last_name
+  chraurs_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.chraurs_middle_name
+  chraurs_office_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.chraurs_office_phone
+  chraurs_office_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.chraurs_office_phone_extension
+  chraurs_parent_org_node_id:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.chraurs_parent_org_node_id
+  chraurs_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.chraurs_pid
+  chraurs_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.chraurs_suffix
+  chraurs_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.chraurs_through_date
+  chraurs_title:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.chraurs_title
+  chraurs_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.chraurs_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+step_functions:
+  SP-100911:
+    etls:
+      ETL-100911:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.change_request_add_user_rate_search
+        json_output_field: chraurs_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.change_request_add_user_rate_search
+          SELECT staging_table.chraurs_pid
+               , staging_table.chraurs_version
+               , staging_table.chraurs_change_request_pid
+               , staging_table.chraurs_first_name
+               , staging_table.chraurs_last_name
+               , staging_table.chraurs_middle_name
+               , staging_table.chraurs_suffix
+               , staging_table.chraurs_email
+               , staging_table.chraurs_title
+               , staging_table.chraurs_through_date
+               , staging_table.chraurs_branch_pid
+               , staging_table.chraurs_office_phone
+               , staging_table.chraurs_office_phone_extension
+               , staging_table.chraurs_parent_org_node_id
+               , staging_table.chraurs_channel_id
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.change_request_add_user_rate_search staging_table
+          LEFT JOIN history_octane.change_request_add_user_rate_search history_table
+                    ON staging_table.chraurs_pid = history_table.chraurs_pid
+                        AND staging_table.chraurs_version = history_table.chraurs_version
+          WHERE history_table.chraurs_pid IS NULL
+          UNION ALL
+          SELECT history_table.chraurs_pid
+               , history_table.chraurs_version + 1
+               , history_table.chraurs_change_request_pid
+               , history_table.chraurs_first_name
+               , history_table.chraurs_last_name
+               , history_table.chraurs_middle_name
+               , history_table.chraurs_suffix
+               , history_table.chraurs_email
+               , history_table.chraurs_title
+               , history_table.chraurs_through_date
+               , history_table.chraurs_branch_pid
+               , history_table.chraurs_office_phone
+               , history_table.chraurs_office_phone_extension
+               , history_table.chraurs_parent_org_node_id
+               , history_table.chraurs_channel_id
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.change_request_add_user_rate_search AS current_records
+              LEFT JOIN history_octane.change_request_add_user_rate_search AS history_records
+                        ON current_records.chraurs_pid = history_records.chraurs_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
+          LEFT JOIN staging_octane.change_request_add_user_rate_search staging_table
+                    ON staging_table.chraurs_pid = history_table.chraurs_pid
+          WHERE staging_table.chraurs_pid IS NULL;

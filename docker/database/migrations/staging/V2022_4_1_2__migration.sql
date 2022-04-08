@@ -1,0 +1,5583 @@
+--
+-- EDW | Truncate history_octane tables not currently maintained by EDW pipeline
+-- https://app.asana.com/0/0/1202095170583662
+--
+
+TRUNCATE history_octane.account;
+TRUNCATE history_octane.account_contact;
+TRUNCATE history_octane.account_event;
+TRUNCATE history_octane.account_event_type;
+TRUNCATE history_octane.account_grant_program;
+TRUNCATE history_octane.account_id_sequence;
+TRUNCATE history_octane.account_status_type;
+TRUNCATE history_octane.admin_user;
+TRUNCATE history_octane.admin_user_event;
+TRUNCATE history_octane.admin_user_event_type;
+TRUNCATE history_octane.admin_user_status_type;
+TRUNCATE history_octane.agency_type;
+TRUNCATE history_octane.agent_type;
+TRUNCATE history_octane.announcement;
+TRUNCATE history_octane.annual_monthly_type;
+TRUNCATE history_octane.apor;
+TRUNCATE history_octane.application_type;
+TRUNCATE history_octane.appraisal;
+TRUNCATE history_octane.appraisal_condition_type;
+TRUNCATE history_octane.appraisal_entry_contact_type;
+TRUNCATE history_octane.appraisal_file;
+TRUNCATE history_octane.appraisal_file_type;
+TRUNCATE history_octane.appraisal_form;
+TRUNCATE history_octane.appraisal_form_type;
+TRUNCATE history_octane.appraisal_hold_reason_type;
+TRUNCATE history_octane.appraisal_hold_type;
+TRUNCATE history_octane.appraisal_id_ticker;
+TRUNCATE history_octane.appraisal_management_company_type;
+TRUNCATE history_octane.appraisal_order_coarse_status_type;
+TRUNCATE history_octane.appraisal_order_request;
+TRUNCATE history_octane.appraisal_order_request_file;
+TRUNCATE history_octane.appraisal_order_request_file_type;
+TRUNCATE history_octane.appraisal_order_request_type;
+TRUNCATE history_octane.appraisal_order_status_type;
+TRUNCATE history_octane.appraisal_purpose_type;
+TRUNCATE history_octane.appraisal_source_type;
+TRUNCATE history_octane.appraisal_underwriter_type;
+TRUNCATE history_octane.area_median_income_row;
+TRUNCATE history_octane.area_median_income_table;
+TRUNCATE history_octane.arm_index_rate;
+TRUNCATE history_octane.asset;
+TRUNCATE history_octane.asset_account_holder_type;
+TRUNCATE history_octane.asset_large_deposit;
+TRUNCATE history_octane.asset_type;
+TRUNCATE history_octane.aus_credit_service_type;
+TRUNCATE history_octane.aus_request_number_ticker;
+TRUNCATE history_octane.backfill_loan_status;
+TRUNCATE history_octane.backfill_status;
+TRUNCATE history_octane.backfill_status_type;
+TRUNCATE history_octane.bankruptcy_exception_type;
+TRUNCATE history_octane.bid_pool;
+TRUNCATE history_octane.bid_pool_file;
+TRUNCATE history_octane.bid_pool_lender_lock;
+TRUNCATE history_octane.bid_pool_note;
+TRUNCATE history_octane.bid_pool_note_comment;
+TRUNCATE history_octane.bid_pool_note_monitor;
+TRUNCATE history_octane.bid_pool_status_type;
+TRUNCATE history_octane.borrower_alias;
+TRUNCATE history_octane.borrower_asset;
+TRUNCATE history_octane.borrower_associated_address;
+TRUNCATE history_octane.borrower_associated_address_explanation_type;
+TRUNCATE history_octane.borrower_associated_address_source_type;
+TRUNCATE history_octane.borrower_credit_inquiry;
+TRUNCATE history_octane.borrower_declarations;
+TRUNCATE history_octane.borrower_dependent;
+TRUNCATE history_octane.borrower_income;
+TRUNCATE history_octane.borrower_income_category_type;
+TRUNCATE history_octane.borrower_job_gap;
+TRUNCATE history_octane.borrower_liability;
+TRUNCATE history_octane.borrower_public_record;
+TRUNCATE history_octane.borrower_reo;
+TRUNCATE history_octane.borrower_residency_basis_type;
+TRUNCATE history_octane.borrower_tax_filing;
+TRUNCATE history_octane.borrower_user;
+TRUNCATE history_octane.borrower_user_account_status_type;
+TRUNCATE history_octane.borrower_user_change_email;
+TRUNCATE history_octane.borrower_user_deal;
+TRUNCATE history_octane.borrower_user_deal_access_type;
+TRUNCATE history_octane.borrower_va;
+TRUNCATE history_octane.branch;
+TRUNCATE history_octane.branch_account_executive;
+TRUNCATE history_octane.branch_license;
+TRUNCATE history_octane.branch_license_contact;
+TRUNCATE history_octane.branch_status_type;
+TRUNCATE history_octane.business_disposition_type;
+TRUNCATE history_octane.business_income;
+TRUNCATE history_octane.business_income_borrower_title_type;
+TRUNCATE history_octane.business_income_type;
+TRUNCATE history_octane.business_ownership_type;
+TRUNCATE history_octane.calendar_rule_type;
+TRUNCATE history_octane.challenge_question_type;
+TRUNCATE history_octane.channel;
+TRUNCATE history_octane.channel_type;
+TRUNCATE history_octane.charge_input_type;
+TRUNCATE history_octane.charge_payee_type;
+TRUNCATE history_octane.charge_payer_type;
+TRUNCATE history_octane.charge_source_type;
+TRUNCATE history_octane.charge_type;
+TRUNCATE history_octane.charge_wire_action_type;
+TRUNCATE history_octane.circumstance_change;
+TRUNCATE history_octane.circumstance_change_type;
+TRUNCATE history_octane.clg_flood_cert_status_type;
+TRUNCATE history_octane.coarse_event_type;
+TRUNCATE history_octane.company;
+TRUNCATE history_octane.company_admin_event;
+TRUNCATE history_octane.company_admin_event_entity_type;
+TRUNCATE history_octane.company_license;
+TRUNCATE history_octane.company_license_contact;
+TRUNCATE history_octane.company_location;
+TRUNCATE history_octane.company_location_type;
+TRUNCATE history_octane.company_settings;
+TRUNCATE history_octane.company_state_license_type;
+TRUNCATE history_octane.compass_analytics_report_request;
+TRUNCATE history_octane.compensation_type;
+TRUNCATE history_octane.config_export_permission_type;
+TRUNCATE history_octane.config_note;
+TRUNCATE history_octane.config_note_comment;
+TRUNCATE history_octane.config_note_monitor;
+TRUNCATE history_octane.config_note_scope_type;
+TRUNCATE history_octane.construction_cost;
+TRUNCATE history_octane.construction_cost_calculation_type;
+TRUNCATE history_octane.construction_cost_category_type;
+TRUNCATE history_octane.construction_cost_funding_type;
+TRUNCATE history_octane.construction_cost_payee_type;
+TRUNCATE history_octane.construction_cost_status_type;
+TRUNCATE history_octane.construction_draw;
+TRUNCATE history_octane.construction_draw_item;
+TRUNCATE history_octane.construction_draw_number_ticker;
+TRUNCATE history_octane.construction_draw_status_type;
+TRUNCATE history_octane.construction_draw_type;
+TRUNCATE history_octane.construction_lot_ownership_status_type;
+TRUNCATE history_octane.construction_permit;
+TRUNCATE history_octane.construction_permit_requested_by_type;
+TRUNCATE history_octane.construction_permit_type;
+TRUNCATE history_octane.consumer_privacy_affected_borrower;
+TRUNCATE history_octane.consumer_privacy_request;
+TRUNCATE history_octane.consumer_privacy_request_type;
+TRUNCATE history_octane.contractor;
+TRUNCATE history_octane.contractor_license;
+TRUNCATE history_octane.contractor_validation_status_type;
+TRUNCATE history_octane.county_city;
+TRUNCATE history_octane.county_recording_district;
+TRUNCATE history_octane.county_sub_jurisdiction;
+TRUNCATE history_octane.county_zip_code;
+TRUNCATE history_octane.creditor;
+TRUNCATE history_octane.creditor_lookup_name;
+TRUNCATE history_octane.credit_business_type;
+TRUNCATE history_octane.credit_inquiry;
+TRUNCATE history_octane.credit_inquiry_explanation_type;
+TRUNCATE history_octane.credit_inquiry_result_type;
+TRUNCATE history_octane.credit_limit;
+TRUNCATE history_octane.credit_limit_type;
+TRUNCATE history_octane.credit_loan_type;
+TRUNCATE history_octane.credit_report_request_action_type;
+TRUNCATE history_octane.credit_report_type;
+TRUNCATE history_octane.credit_request;
+TRUNCATE history_octane.credit_request_liability;
+TRUNCATE history_octane.credit_request_status_type;
+TRUNCATE history_octane.credit_request_type;
+TRUNCATE history_octane.credit_request_via_type;
+TRUNCATE history_octane.credit_score_model_type;
+TRUNCATE history_octane.criteria;
+TRUNCATE history_octane.criteria_owner_type;
+TRUNCATE history_octane.criteria_pid_operand;
+TRUNCATE history_octane.criteria_pid_operand_type;
+TRUNCATE history_octane.criteria_snippet;
+TRUNCATE history_octane.custodian;
+TRUNCATE history_octane.custom_field_choice;
+TRUNCATE history_octane.custom_field_scope_type;
+TRUNCATE history_octane.custom_field_setting;
+TRUNCATE history_octane.custom_field_value_type;
+TRUNCATE history_octane.custom_form;
+TRUNCATE history_octane.custom_form_merge_field;
+TRUNCATE history_octane.deal_appraisal;
+TRUNCATE history_octane.deal_cancel_reason_type;
+TRUNCATE history_octane.deal_change_updater_time;
+TRUNCATE history_octane.deal_check_severity_type;
+TRUNCATE history_octane.deal_check_type;
+TRUNCATE history_octane.deal_child_relationship_type;
+TRUNCATE history_octane.deal_child_type;
+TRUNCATE history_octane.deal_contact;
+TRUNCATE history_octane.deal_contact_role_type;
+TRUNCATE history_octane.deal_context_permission_type;
+TRUNCATE history_octane.deal_create_type;
+TRUNCATE history_octane.deal_data_vendor_document_import;
+TRUNCATE history_octane.deal_disaster_declaration;
+TRUNCATE history_octane.deal_dropbox_file;
+TRUNCATE history_octane.deal_du;
+TRUNCATE history_octane.deal_event;
+TRUNCATE history_octane.deal_event_type;
+TRUNCATE history_octane.deal_file;
+TRUNCATE history_octane.deal_file_signature;
+TRUNCATE history_octane.deal_file_thumbnail;
+TRUNCATE history_octane.deal_fraud_risk;
+TRUNCATE history_octane.deal_housing_counselors_request;
+TRUNCATE history_octane.deal_housing_counselor_candidate;
+TRUNCATE history_octane.deal_id_sequence;
+TRUNCATE history_octane.deal_invoice;
+TRUNCATE history_octane.deal_invoice_file;
+TRUNCATE history_octane.deal_invoice_file_type;
+TRUNCATE history_octane.deal_invoice_item;
+TRUNCATE history_octane.deal_invoice_payment_method;
+TRUNCATE history_octane.deal_invoice_status_type;
+TRUNCATE history_octane.deal_lender_user_event;
+TRUNCATE history_octane.deal_lp;
+TRUNCATE history_octane.deal_message_log;
+TRUNCATE history_octane.deal_message_log_attachment;
+TRUNCATE history_octane.deal_note;
+TRUNCATE history_octane.deal_note_category_type;
+TRUNCATE history_octane.deal_note_comment;
+TRUNCATE history_octane.deal_note_monitor;
+TRUNCATE history_octane.deal_note_role_tag;
+TRUNCATE history_octane.deal_note_scope_type;
+TRUNCATE history_octane.deal_orphan_status_type;
+TRUNCATE history_octane.deal_pending_update;
+TRUNCATE history_octane.deal_performer_team;
+TRUNCATE history_octane.deal_performer_team_user;
+TRUNCATE history_octane.deal_real_estate_agent;
+TRUNCATE history_octane.deal_sap;
+TRUNCATE history_octane.deal_settlement;
+TRUNCATE history_octane.deal_signer;
+TRUNCATE history_octane.deal_snapshot;
+TRUNCATE history_octane.deal_status_type;
+TRUNCATE history_octane.deal_summary;
+TRUNCATE history_octane.deal_system_file;
+TRUNCATE history_octane.deal_tag;
+TRUNCATE history_octane.deal_tag_access_type;
+TRUNCATE history_octane.deal_tag_definition;
+TRUNCATE history_octane.deal_tag_level_type;
+TRUNCATE history_octane.deal_task;
+TRUNCATE history_octane.deal_task_status_type;
+TRUNCATE history_octane.deal_update_type;
+TRUNCATE history_octane.disaster_declaration;
+TRUNCATE history_octane.disaster_declaration_check_date_type;
+TRUNCATE history_octane.disclosure_action_type;
+TRUNCATE history_octane.document_import_status_type;
+TRUNCATE history_octane.document_import_vendor_type;
+TRUNCATE history_octane.docusign_package;
+TRUNCATE history_octane.doc_action_type;
+TRUNCATE history_octane.doc_approval_type;
+TRUNCATE history_octane.doc_borrower_access_mode_type;
+TRUNCATE history_octane.doc_category_type;
+TRUNCATE history_octane.doc_external_provider_type;
+TRUNCATE history_octane.doc_file_source_type;
+TRUNCATE history_octane.doc_fulfill_status_type;
+TRUNCATE history_octane.doc_key_date_type;
+TRUNCATE history_octane.doc_level_type;
+TRUNCATE history_octane.doc_package_canceled_reason_type;
+TRUNCATE history_octane.doc_package_delivery_method_type;
+TRUNCATE history_octane.doc_package_status_type;
+TRUNCATE history_octane.doc_permission_type;
+TRUNCATE history_octane.doc_provider_group_type;
+TRUNCATE history_octane.doc_req_fulfill_status_type;
+TRUNCATE history_octane.doc_set_type;
+TRUNCATE history_octane.doc_status_type;
+TRUNCATE history_octane.doc_validity_type;
+TRUNCATE history_octane.du_finding;
+TRUNCATE history_octane.du_finding_message_type;
+TRUNCATE history_octane.du_recommendation_type;
+TRUNCATE history_octane.du_request;
+TRUNCATE history_octane.du_request_credit;
+TRUNCATE history_octane.du_request_status_type;
+TRUNCATE history_octane.du_special_feature_code;
+TRUNCATE history_octane.dw_export_request;
+TRUNCATE history_octane.dw_export_request_status_type;
+TRUNCATE history_octane.ecoa_denial_reason_type;
+TRUNCATE history_octane.effective_property_value_explanation_type;
+TRUNCATE history_octane.effective_property_value_type;
+TRUNCATE history_octane.email_closing_type;
+TRUNCATE history_octane.ernst_deed_request_type;
+TRUNCATE history_octane.ernst_page_rec_type;
+TRUNCATE history_octane.ernst_request;
+TRUNCATE history_octane.ernst_request_question;
+TRUNCATE history_octane.ernst_request_status_type;
+TRUNCATE history_octane.ernst_security_instrument_request_type;
+TRUNCATE history_octane.esign_package_status_type;
+TRUNCATE history_octane.esign_vendor_type;
+TRUNCATE history_octane.exclusive_assignment;
+TRUNCATE history_octane.export_permission_type;
+TRUNCATE history_octane.export_type;
+TRUNCATE history_octane.external_entity_type;
+TRUNCATE history_octane.fault_tolerant_event_registration;
+TRUNCATE history_octane.fema_flood_zone_designation_type;
+TRUNCATE history_octane.fha_case_type;
+TRUNCATE history_octane.fha_non_arms_length_ltv_limit_exception_type;
+TRUNCATE history_octane.fha_va_bor_cert_sales_price_exceeds_type;
+TRUNCATE history_octane.field_type;
+TRUNCATE history_octane.financed_property_improvements_category_type;
+TRUNCATE history_octane.flood_cert;
+TRUNCATE history_octane.flood_certificate_type;
+TRUNCATE history_octane.flood_cert_vendor_type;
+TRUNCATE history_octane.fnm_community_seconds_repayment_structure_type;
+TRUNCATE history_octane.formula_report_column;
+TRUNCATE history_octane.for_further_credit_type;
+TRUNCATE history_octane.fre_ctp_closing_feature_type;
+TRUNCATE history_octane.fre_doc_level_description_type;
+TRUNCATE history_octane.fre_purchase_eligibility_type;
+TRUNCATE history_octane.gender_type;
+TRUNCATE history_octane.google_sheet_export;
+TRUNCATE history_octane.gse_version_type;
+TRUNCATE history_octane.hmda_action_type;
+TRUNCATE history_octane.hmda_agency_id_type;
+TRUNCATE history_octane.hmda_denial_reason_type;
+TRUNCATE history_octane.hmda_ethnicity_2017_type;
+TRUNCATE history_octane.hmda_race_2017_type;
+TRUNCATE history_octane.hmda_report_request;
+TRUNCATE history_octane.hoepa_thresholds;
+TRUNCATE history_octane.hud_fha_de_approval_type;
+TRUNCATE history_octane.hve_confidence_level_type;
+TRUNCATE history_octane.ignored_mortech_add_on;
+TRUNCATE history_octane.income_history_calc_method_type;
+TRUNCATE history_octane.intent_to_proceed_type;
+TRUNCATE history_octane.investor_group;
+TRUNCATE history_octane.investor_lock;
+TRUNCATE history_octane.investor_lock_add_on;
+TRUNCATE history_octane.investor_lock_extension;
+TRUNCATE history_octane.investor_lock_extension_setting;
+TRUNCATE history_octane.investor_lock_status_type;
+TRUNCATE history_octane.invoice_item_category_type;
+TRUNCATE history_octane.invoice_payer_type;
+TRUNCATE history_octane.invoice_payment_submission_type;
+TRUNCATE history_octane.job_gap_reason_type;
+TRUNCATE history_octane.job_income;
+TRUNCATE history_octane.key_creditor_type;
+TRUNCATE history_octane.key_doc_type;
+TRUNCATE history_octane.key_package;
+TRUNCATE history_octane.key_package_type;
+TRUNCATE history_octane.key_role;
+TRUNCATE history_octane.key_role_type;
+TRUNCATE history_octane.lava_zone_type;
+TRUNCATE history_octane.lead;
+TRUNCATE history_octane.lead_campaign;
+TRUNCATE history_octane.lead_source;
+TRUNCATE history_octane.lead_supplemental_margin_row;
+TRUNCATE history_octane.lead_supplemental_margin_table;
+TRUNCATE history_octane.ledger_basis_points_input_type;
+TRUNCATE history_octane.ledger_book;
+TRUNCATE history_octane.ledger_book_status_type;
+TRUNCATE history_octane.ledger_book_type;
+TRUNCATE history_octane.ledger_entry;
+TRUNCATE history_octane.ledger_entry_decision_status_type;
+TRUNCATE history_octane.ledger_entry_import_loan_status;
+TRUNCATE history_octane.ledger_entry_import_status;
+TRUNCATE history_octane.ledger_entry_import_status_type;
+TRUNCATE history_octane.ledger_entry_review;
+TRUNCATE history_octane.ledger_entry_review_note;
+TRUNCATE history_octane.ledger_entry_review_note_comment;
+TRUNCATE history_octane.ledger_entry_review_note_monitor;
+TRUNCATE history_octane.ledger_entry_review_reason_type;
+TRUNCATE history_octane.ledger_entry_review_status_type;
+TRUNCATE history_octane.ledger_entry_source_type;
+TRUNCATE history_octane.ledger_entry_type;
+TRUNCATE history_octane.legacy_role_assignment_type;
+TRUNCATE history_octane.legal_description_type;
+TRUNCATE history_octane.lender_concession_item;
+TRUNCATE history_octane.lender_concession_request;
+TRUNCATE history_octane.lender_concession_request_number_ticker;
+TRUNCATE history_octane.lender_concession_request_status_type;
+TRUNCATE history_octane.lender_concession_request_type;
+TRUNCATE history_octane.lender_lock_add_on;
+TRUNCATE history_octane.lender_lock_extension;
+TRUNCATE history_octane.lender_lock_id_ticker;
+TRUNCATE history_octane.lender_lock_major;
+TRUNCATE history_octane.lender_lock_minor;
+TRUNCATE history_octane.lender_lock_status_type;
+TRUNCATE history_octane.lender_settings;
+TRUNCATE history_octane.lender_toolbox_permission_type;
+TRUNCATE history_octane.lender_trade_id_ticker;
+TRUNCATE history_octane.lender_user_allowed_ip;
+TRUNCATE history_octane.lender_user_allowed_ip_status_type;
+TRUNCATE history_octane.lender_user_deal_visit;
+TRUNCATE history_octane.lender_user_interest;
+TRUNCATE history_octane.lender_user_interest_type;
+TRUNCATE history_octane.lender_user_language;
+TRUNCATE history_octane.lender_user_language_type;
+TRUNCATE history_octane.lender_user_lead_source;
+TRUNCATE history_octane.lender_user_license;
+TRUNCATE history_octane.lender_user_location;
+TRUNCATE history_octane.lender_user_location_type;
+TRUNCATE history_octane.lender_user_notice;
+TRUNCATE history_octane.lender_user_notice_type;
+TRUNCATE history_octane.lender_user_photo;
+TRUNCATE history_octane.lender_user_reset_type;
+TRUNCATE history_octane.lender_user_role;
+TRUNCATE history_octane.lender_user_role_addendum;
+TRUNCATE history_octane.lender_user_role_org_node;
+TRUNCATE history_octane.lender_user_role_queue_type;
+TRUNCATE history_octane.lender_user_sign_on;
+TRUNCATE history_octane.lender_user_suspend_reason_type;
+TRUNCATE history_octane.lender_user_unavailable;
+TRUNCATE history_octane.liability;
+TRUNCATE history_octane.liability_account_ownership_type;
+TRUNCATE history_octane.liability_account_status_type;
+TRUNCATE history_octane.liability_current_rating_type;
+TRUNCATE history_octane.liability_disposition_type;
+TRUNCATE history_octane.liability_energy_related_type;
+TRUNCATE history_octane.liability_financing_type;
+TRUNCATE history_octane.liability_foreclosure_exception_type;
+TRUNCATE history_octane.liability_mi_type;
+TRUNCATE history_octane.liability_mortgage_payoff;
+TRUNCATE history_octane.liability_place;
+TRUNCATE history_octane.liability_type;
+TRUNCATE history_octane.license_req;
+TRUNCATE history_octane.license_type;
+TRUNCATE history_octane.loans_toolbox_permission_type;
+TRUNCATE history_octane.loan_access_type;
+TRUNCATE history_octane.loan_charge;
+TRUNCATE history_octane.loan_charge_payer_item;
+TRUNCATE history_octane.loan_charge_payer_item_source_type;
+TRUNCATE history_octane.loan_eligible_investor;
+TRUNCATE history_octane.loan_hedge;
+TRUNCATE history_octane.loan_limit_row;
+TRUNCATE history_octane.loan_limit_table;
+TRUNCATE history_octane.loan_limit_table_type;
+TRUNCATE history_octane.loan_limit_type;
+TRUNCATE history_octane.loan_mi_rate_adjustment;
+TRUNCATE history_octane.loan_mi_surcharge;
+TRUNCATE history_octane.loan_org_lineage;
+TRUNCATE history_octane.loan_org_lineage_source_type;
+TRUNCATE history_octane.loan_org_lineage_update;
+TRUNCATE history_octane.loan_position_type;
+TRUNCATE history_octane.loan_price_add_on;
+TRUNCATE history_octane.loan_recording;
+TRUNCATE history_octane.loan_safe_product_type;
+TRUNCATE history_octane.loan_servicer;
+TRUNCATE history_octane.location;
+TRUNCATE history_octane.location_id_ticker;
+TRUNCATE history_octane.location_lease;
+TRUNCATE history_octane.location_status_type;
+TRUNCATE history_octane.lock_add_on_type;
+TRUNCATE history_octane.lock_commitment_type;
+TRUNCATE history_octane.lock_extension_status_type;
+TRUNCATE history_octane.lock_series;
+TRUNCATE history_octane.lock_term_setting;
+TRUNCATE history_octane.los_loan_id_ticker;
+TRUNCATE history_octane.lp_case_state_type;
+TRUNCATE history_octane.lp_credit_risk_classification_type;
+TRUNCATE history_octane.lp_dtd_version_type;
+TRUNCATE history_octane.lp_evaluation_status_type;
+TRUNCATE history_octane.lp_finding;
+TRUNCATE history_octane.lp_finding_message_type;
+TRUNCATE history_octane.lp_interface_version_type;
+TRUNCATE history_octane.lp_request;
+TRUNCATE history_octane.lp_request_credit;
+TRUNCATE history_octane.lp_request_status_type;
+TRUNCATE history_octane.lp_submission_type;
+TRUNCATE history_octane.lura_file_repository_type;
+TRUNCATE history_octane.lura_setting_type;
+TRUNCATE history_octane.manufactured_home_certificate_of_title_type;
+TRUNCATE history_octane.manufactured_home_leasehold_property_interest_type;
+TRUNCATE history_octane.manufactured_home_loan_purpose_type;
+TRUNCATE history_octane.master_property_insurance;
+TRUNCATE history_octane.master_property_insurance_type;
+TRUNCATE history_octane.mcr_error_status_type;
+TRUNCATE history_octane.mcr_loan;
+TRUNCATE history_octane.mcr_loan_status_type;
+TRUNCATE history_octane.mcr_request;
+TRUNCATE history_octane.mcr_snapshot;
+TRUNCATE history_octane.mcr_status_type;
+TRUNCATE history_octane.mercury_client_group;
+TRUNCATE history_octane.mercury_network_status_request;
+TRUNCATE history_octane.mercury_network_status_type;
+TRUNCATE history_octane.mers_daily_report;
+TRUNCATE history_octane.mers_daily_report_import_status_type;
+TRUNCATE history_octane.mers_registration_status_type;
+TRUNCATE history_octane.mers_transfer_batch;
+TRUNCATE history_octane.military_branch_type;
+TRUNCATE history_octane.military_service;
+TRUNCATE history_octane.military_service_type;
+TRUNCATE history_octane.military_status_type;
+TRUNCATE history_octane.minimum_required_residual_income_row;
+TRUNCATE history_octane.minimum_required_residual_income_table;
+TRUNCATE history_octane.mismo_version_type;
+TRUNCATE history_octane.mi_integration_request_type;
+TRUNCATE history_octane.mi_integration_vendor_request;
+TRUNCATE history_octane.mi_integration_vendor_request_status_type;
+TRUNCATE history_octane.mi_submission_type;
+TRUNCATE history_octane.mortech_account;
+TRUNCATE history_octane.mortgage_credit_certificate_issuer;
+TRUNCATE history_octane.mortgage_delinquency_exception_type;
+TRUNCATE history_octane.native_american_lands_type;
+TRUNCATE history_octane.net_tangible_benefit;
+TRUNCATE history_octane.net_tangible_benefit_type;
+TRUNCATE history_octane.new_lock_only_add_on;
+TRUNCATE history_octane.nfip_community_participation_status_type;
+TRUNCATE history_octane.obligation;
+TRUNCATE history_octane.obligation_amount_input_type;
+TRUNCATE history_octane.obligation_charge_input_type;
+TRUNCATE history_octane.obligation_type;
+TRUNCATE history_octane.offering;
+TRUNCATE history_octane.offering_group;
+TRUNCATE history_octane.offering_product;
+TRUNCATE history_octane.org_lineage;
+TRUNCATE history_octane.org_lineage_node;
+TRUNCATE history_octane.org_lineage_tracker;
+TRUNCATE history_octane.org_lineage_tracker_custom_field_update;
+TRUNCATE history_octane.org_lineage_tracker_custom_field_update_status_type;
+TRUNCATE history_octane.org_node_custom_field;
+TRUNCATE history_octane.org_node_doc;
+TRUNCATE history_octane.org_node_tree;
+TRUNCATE history_octane.org_node_type;
+TRUNCATE history_octane.origination_source_type;
+TRUNCATE history_octane.other_income;
+TRUNCATE history_octane.other_income_type;
+TRUNCATE history_octane.password_settings;
+TRUNCATE history_octane.payment_fulfill_type;
+TRUNCATE history_octane.payment_processing_company_type;
+TRUNCATE history_octane.payment_request_type;
+TRUNCATE history_octane.payment_type;
+TRUNCATE history_octane.payoff_request_delivery_type;
+TRUNCATE history_octane.payroll_ledger_book_id_ticker;
+TRUNCATE history_octane.performer_assignment;
+TRUNCATE history_octane.performer_team;
+TRUNCATE history_octane.polling_interval_type;
+TRUNCATE history_octane.preferred_settlement;
+TRUNCATE history_octane.price_processing_time;
+TRUNCATE history_octane.pricing_engine_type;
+TRUNCATE history_octane.prior_to_type;
+TRUNCATE history_octane.product_add_on;
+TRUNCATE history_octane.product_add_on_rule;
+TRUNCATE history_octane.product_branch;
+TRUNCATE history_octane.product_buydown;
+TRUNCATE history_octane.product_deal_check_exclusion;
+TRUNCATE history_octane.product_eligibility;
+TRUNCATE history_octane.product_eligibility_rule;
+TRUNCATE history_octane.product_interest_only;
+TRUNCATE history_octane.product_lock_term;
+TRUNCATE history_octane.product_maximum_investor_price;
+TRUNCATE history_octane.product_maximum_rebate;
+TRUNCATE history_octane.product_minimum_investor_price;
+TRUNCATE history_octane.product_originator;
+TRUNCATE history_octane.product_prepay_penalty;
+TRUNCATE history_octane.product_rule_domain_input_type;
+TRUNCATE history_octane.product_third_party_community_second_program;
+TRUNCATE history_octane.profit_margin_detail;
+TRUNCATE history_octane.profit_margin_type;
+TRUNCATE history_octane.project_classification_type;
+TRUNCATE history_octane.project_design_type;
+TRUNCATE history_octane.property_repairs_holdback_calc_type;
+TRUNCATE history_octane.property_repairs_holdback_payer_type;
+TRUNCATE history_octane.property_repairs_required_type;
+TRUNCATE history_octane.proposal_construction;
+TRUNCATE history_octane.proposal_contractor;
+TRUNCATE history_octane.proposal_doc;
+TRUNCATE history_octane.proposal_doc_borrower_access;
+TRUNCATE history_octane.proposal_doc_file;
+TRUNCATE history_octane.proposal_doc_file_type;
+TRUNCATE history_octane.proposal_doc_set;
+TRUNCATE history_octane.proposal_doc_set_id_ticker;
+TRUNCATE history_octane.proposal_doc_set_signer;
+TRUNCATE history_octane.proposal_doc_set_snapshot;
+TRUNCATE history_octane.proposal_doc_validity;
+TRUNCATE history_octane.proposal_engagement;
+TRUNCATE history_octane.proposal_grant_program;
+TRUNCATE history_octane.proposal_hud_consultant;
+TRUNCATE history_octane.proposal_req;
+TRUNCATE history_octane.proposal_review;
+TRUNCATE history_octane.proposal_review_request_type;
+TRUNCATE history_octane.proposal_review_status_type;
+TRUNCATE history_octane.proposal_review_ticker;
+TRUNCATE history_octane.proposal_summary;
+TRUNCATE history_octane.proposal_type;
+TRUNCATE history_octane.pte_request;
+TRUNCATE history_octane.pte_request_status_type;
+TRUNCATE history_octane.pte_response_status_type;
+TRUNCATE history_octane.public_record;
+TRUNCATE history_octane.public_record_disposition_type;
+TRUNCATE history_octane.public_record_type;
+TRUNCATE history_octane.qm_points_and_fees_thresholds;
+TRUNCATE history_octane.qm_rate_spread_thresholds;
+TRUNCATE history_octane.qualified_mortgage_rule_version_type;
+TRUNCATE history_octane.quarter_type;
+TRUNCATE history_octane.quote_filter_pivot_type;
+TRUNCATE history_octane.rate_sheet;
+TRUNCATE history_octane.rate_sheet_group;
+TRUNCATE history_octane.rate_sheet_group_member;
+TRUNCATE history_octane.rate_sheet_price;
+TRUNCATE history_octane.rate_sheet_rate;
+TRUNCATE history_octane.realty_agent_scenario_type;
+TRUNCATE history_octane.recording_city;
+TRUNCATE history_octane.recording_district;
+TRUNCATE history_octane.recording_district_type;
+TRUNCATE history_octane.refinance_improvements_type;
+TRUNCATE history_octane.region_ernst_page_rec;
+TRUNCATE history_octane.relock_fee_setting;
+TRUNCATE history_octane.rental_income;
+TRUNCATE history_octane.reo_disposition_status_type;
+TRUNCATE history_octane.report;
+TRUNCATE history_octane.report_column;
+TRUNCATE history_octane.report_request_status_type;
+TRUNCATE history_octane.report_row;
+TRUNCATE history_octane.report_type;
+TRUNCATE history_octane.repository_file;
+TRUNCATE history_octane.req_decision_status_type;
+TRUNCATE history_octane.req_fulfill_status_type;
+TRUNCATE history_octane.rescission_notification_type;
+TRUNCATE history_octane.respa_section_type;
+TRUNCATE history_octane.road_type;
+TRUNCATE history_octane.role;
+TRUNCATE history_octane.role_charge_permissions;
+TRUNCATE history_octane.role_config_export_permission;
+TRUNCATE history_octane.role_deal_context;
+TRUNCATE history_octane.role_export_permission;
+TRUNCATE history_octane.role_lender_toolbox;
+TRUNCATE history_octane.role_loans_toolbox;
+TRUNCATE history_octane.role_performer_assign;
+TRUNCATE history_octane.role_report;
+TRUNCATE history_octane.sanitation_type;
+TRUNCATE history_octane.sap_deal_step;
+TRUNCATE history_octane.sap_quote_request;
+TRUNCATE history_octane.sap_status_type;
+TRUNCATE history_octane.sap_step_type;
+TRUNCATE history_octane.secondary_admin_event;
+TRUNCATE history_octane.secondary_admin_event_entity_type;
+TRUNCATE history_octane.secondary_settings;
+TRUNCATE history_octane.section_of_act_type;
+TRUNCATE history_octane.security_instrument_type;
+TRUNCATE history_octane.senior_lien_restriction_type;
+TRUNCATE history_octane.servicer_loan_id_assignment;
+TRUNCATE history_octane.servicer_loan_id_assign_type;
+TRUNCATE history_octane.servicer_loan_id_import_request;
+TRUNCATE history_octane.servicer_loan_id_import_request_status_type;
+TRUNCATE history_octane.settlement_agent;
+TRUNCATE history_octane.settlement_agent_office;
+TRUNCATE history_octane.settlement_agent_wire;
+TRUNCATE history_octane.sheet_format_type;
+TRUNCATE history_octane.signature_part_type;
+TRUNCATE history_octane.site_allowed_ip;
+TRUNCATE history_octane.smart_charge;
+TRUNCATE history_octane.smart_charge_apr_type;
+TRUNCATE history_octane.smart_charge_case;
+TRUNCATE history_octane.smart_charge_group;
+TRUNCATE history_octane.smart_charge_group_case;
+TRUNCATE history_octane.smart_doc;
+TRUNCATE history_octane.smart_doc_criteria;
+TRUNCATE history_octane.smart_doc_prior_to_type_case;
+TRUNCATE history_octane.smart_doc_provider_type_case;
+TRUNCATE history_octane.smart_doc_role;
+TRUNCATE history_octane.smart_doc_set;
+TRUNCATE history_octane.smart_doc_validity_date_case;
+TRUNCATE history_octane.smart_ledger_pay_frequency_type;
+TRUNCATE history_octane.smart_ledger_plan;
+TRUNCATE history_octane.smart_ledger_plan_case;
+TRUNCATE history_octane.smart_ledger_plan_case_group;
+TRUNCATE history_octane.smart_ledger_plan_case_group_calculation_type;
+TRUNCATE history_octane.smart_ledger_plan_case_group_type;
+TRUNCATE history_octane.smart_ledger_plan_case_level_type;
+TRUNCATE history_octane.smart_ledger_plan_case_measure_source_date_type;
+TRUNCATE history_octane.smart_ledger_plan_case_measure_type;
+TRUNCATE history_octane.smart_ledger_plan_case_population_period_type;
+TRUNCATE history_octane.smart_ledger_plan_case_version;
+TRUNCATE history_octane.smart_message;
+TRUNCATE history_octane.smart_message_available_attachment;
+TRUNCATE history_octane.smart_message_delivery_type;
+TRUNCATE history_octane.smart_message_email_recipient_type;
+TRUNCATE history_octane.smart_message_permission;
+TRUNCATE history_octane.smart_message_permission_type;
+TRUNCATE history_octane.smart_message_recipient;
+TRUNCATE history_octane.smart_message_recipient_type;
+TRUNCATE history_octane.smart_message_source_type;
+TRUNCATE history_octane.smart_mi;
+TRUNCATE history_octane.smart_mi_eligibility_case;
+TRUNCATE history_octane.smart_mi_rate_adjustment_case;
+TRUNCATE history_octane.smart_mi_rate_card;
+TRUNCATE history_octane.smart_mi_rate_case;
+TRUNCATE history_octane.smart_mi_surcharge;
+TRUNCATE history_octane.smart_mi_surcharge_case;
+TRUNCATE history_octane.smart_req;
+TRUNCATE history_octane.smart_separator;
+TRUNCATE history_octane.smart_set_doc;
+TRUNCATE history_octane.smart_stack;
+TRUNCATE history_octane.smart_stack_doc;
+TRUNCATE history_octane.smart_stack_doc_set_include_option_type;
+TRUNCATE history_octane.smart_stack_doc_set_include_type;
+TRUNCATE history_octane.smart_task;
+TRUNCATE history_octane.smart_task_tag_modifier;
+TRUNCATE history_octane.solar_panel_type;
+TRUNCATE history_octane.stack_doc_type;
+TRUNCATE history_octane.stack_export_file;
+TRUNCATE history_octane.stack_export_file_name_format_type;
+TRUNCATE history_octane.stack_export_file_type;
+TRUNCATE history_octane.stack_export_loan_name_format_type;
+TRUNCATE history_octane.stack_export_request;
+TRUNCATE history_octane.stack_export_request_loan_export_type;
+TRUNCATE history_octane.stack_export_request_status_type;
+TRUNCATE history_octane.street_links_product_type;
+TRUNCATE history_octane.stripe_payment;
+TRUNCATE history_octane.stripe_payment_status_type;
+TRUNCATE history_octane.taxpayer_identifier_type;
+TRUNCATE history_octane.tax_filing_status_type;
+TRUNCATE history_octane.tax_transcript_request;
+TRUNCATE history_octane.tax_transcript_request_status_type;
+TRUNCATE history_octane.third_party_community_second_program;
+TRUNCATE history_octane.timeout_time_zone_type;
+TRUNCATE history_octane.title_company;
+TRUNCATE history_octane.title_company_office;
+TRUNCATE history_octane.title_manner_held_type;
+TRUNCATE history_octane.total_expert_account_type;
+TRUNCATE history_octane.trade;
+TRUNCATE history_octane.trade_audit;
+TRUNCATE history_octane.trade_audit_type;
+TRUNCATE history_octane.trade_fee;
+TRUNCATE history_octane.trade_fee_type;
+TRUNCATE history_octane.trade_file;
+TRUNCATE history_octane.trade_lock_filter;
+TRUNCATE history_octane.trade_note;
+TRUNCATE history_octane.trade_note_comment;
+TRUNCATE history_octane.trade_note_monitor;
+TRUNCATE history_octane.trade_pricing_type;
+TRUNCATE history_octane.trade_product;
+TRUNCATE history_octane.trade_status_type;
+TRUNCATE history_octane.trustee;
+TRUNCATE history_octane.trust_classification_type;
+TRUNCATE history_octane.underwrite_disposition_type;
+TRUNCATE history_octane.underwrite_method_type;
+TRUNCATE history_octane.underwrite_risk_assessment_type;
+TRUNCATE history_octane.unique_dwelling_type;
+TRUNCATE history_octane.unpaid_balance_adjustment;
+TRUNCATE history_octane.usda_rd_single_family_housing_type;
+TRUNCATE history_octane.uuts_loan_originator_type;
+TRUNCATE history_octane.va_borrower_certification_occupancy_type;
+TRUNCATE history_octane.va_entitlement_code_type;
+TRUNCATE history_octane.va_entitlement_restoration_type;
+TRUNCATE history_octane.va_notice_of_value_source_type;
+TRUNCATE history_octane.va_past_credit_record_type;
+TRUNCATE history_octane.va_regional_loan_center_type;
+TRUNCATE history_octane.va_relative_relationship_type;
+TRUNCATE history_octane.vendor_credential_source_type;
+TRUNCATE history_octane.vendor_document_event;
+TRUNCATE history_octane.vendor_document_event_type;
+TRUNCATE history_octane.vendor_document_repository_file;
+TRUNCATE history_octane.vendor_import_document_type;
+TRUNCATE history_octane.veteran_status_type;
+TRUNCATE history_octane.view_wf_deal_step_started;
+TRUNCATE history_octane.voe_third_party_verifier_type;
+TRUNCATE history_octane.voe_verbal_verify_method_type;
+TRUNCATE history_octane.voe_verify_method_type;
+TRUNCATE history_octane.water_type;
+TRUNCATE history_octane.wf_deal_fork_process;
+TRUNCATE history_octane.wf_deal_function_queue;
+TRUNCATE history_octane.wf_deal_outcome;
+TRUNCATE history_octane.wf_deal_process;
+TRUNCATE history_octane.wf_deal_process_status_type;
+TRUNCATE history_octane.wf_deal_step;
+TRUNCATE history_octane.wf_deal_step_performer_unavailable;
+TRUNCATE history_octane.wf_deal_step_status_type;
+TRUNCATE history_octane.wf_deal_step_timeout;
+TRUNCATE history_octane.wf_fork_process;
+TRUNCATE history_octane.wf_outcome;
+TRUNCATE history_octane.wf_outcome_type;
+TRUNCATE history_octane.wf_phase;
+TRUNCATE history_octane.wf_polling_time_slice;
+TRUNCATE history_octane.wf_prereq;
+TRUNCATE history_octane.wf_prereq_set;
+TRUNCATE history_octane.wf_process;
+TRUNCATE history_octane.wf_process_status_type;
+TRUNCATE history_octane.wf_process_type;
+TRUNCATE history_octane.wf_step;
+TRUNCATE history_octane.wf_step_deal_check;
+TRUNCATE history_octane.wf_step_deal_check_definition;
+TRUNCATE history_octane.wf_step_deal_check_dependency;
+TRUNCATE history_octane.wf_step_deal_tag_modifier;
+TRUNCATE history_octane.wf_step_function_parameters;
+TRUNCATE history_octane.wf_step_function_type;
+TRUNCATE history_octane.wf_step_performer_assign_type;
+TRUNCATE history_octane.wf_step_reassign_type;
+TRUNCATE history_octane.wf_step_timeout_type;
+TRUNCATE history_octane.wf_step_type;
+TRUNCATE history_octane.workspace_type;
+TRUNCATE history_octane.zip_code_info;
+
+--
+-- EDW | history_octane ETLs are writing multiple records for deleted records in staging_octane
+-- https://app.asana.com/0/0/1202009355727701
+--
+
+/*
+ Delete all records from history_octane tables where the following criteria is met:
+ - table has a pid and version (i.e. is not a type table)
+ - row has data_source_deleted_flag set to TRUE
+ - row's version is *not* the most recent version for the associated pid
+ */
+
+--account
+DELETE
+FROM history_octane.account non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.account current_records
+    WHERE current_records.a_pid = non_current_records.a_pid
+      AND current_records.a_version > non_current_records.a_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--account_contact
+DELETE
+FROM history_octane.account_contact non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.account_contact current_records
+    WHERE current_records.ac_pid = non_current_records.ac_pid
+      AND current_records.ac_version > non_current_records.ac_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--account_event
+DELETE
+FROM history_octane.account_event non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.account_event current_records
+    WHERE current_records.ae_pid = non_current_records.ae_pid
+      AND current_records.ae_version > non_current_records.ae_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--account_grant_program
+DELETE
+FROM history_octane.account_grant_program non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.account_grant_program current_records
+    WHERE current_records.agp_pid = non_current_records.agp_pid
+      AND current_records.agp_version > non_current_records.agp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--admin_user
+DELETE
+FROM history_octane.admin_user non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.admin_user current_records
+    WHERE current_records.au_pid = non_current_records.au_pid
+      AND current_records.au_version > non_current_records.au_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--admin_user_event
+DELETE
+FROM history_octane.admin_user_event non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.admin_user_event current_records
+    WHERE current_records.aue_pid = non_current_records.aue_pid
+      AND current_records.aue_version > non_current_records.aue_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--announcement
+DELETE
+FROM history_octane.announcement non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.announcement current_records
+    WHERE current_records.ann_pid = non_current_records.ann_pid
+      AND current_records.ann_version > non_current_records.ann_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--apor
+DELETE
+FROM history_octane.apor non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.apor current_records
+    WHERE current_records.ap_pid = non_current_records.ap_pid
+      AND current_records.ap_version > non_current_records.ap_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--application
+DELETE
+FROM history_octane.application non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.application current_records
+    WHERE current_records.apl_pid = non_current_records.apl_pid
+      AND current_records.apl_version > non_current_records.apl_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--appraisal
+DELETE
+FROM history_octane.appraisal non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.appraisal current_records
+    WHERE current_records.apr_pid = non_current_records.apr_pid
+      AND current_records.apr_version > non_current_records.apr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--appraisal_file
+DELETE
+FROM history_octane.appraisal_file non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.appraisal_file current_records
+    WHERE current_records.aprf_pid = non_current_records.aprf_pid
+      AND current_records.aprf_version > non_current_records.aprf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--appraisal_form
+DELETE
+FROM history_octane.appraisal_form non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.appraisal_form current_records
+    WHERE current_records.aprfm_pid = non_current_records.aprfm_pid
+      AND current_records.aprfm_version > non_current_records.aprfm_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--appraisal_id_ticker
+DELETE
+FROM history_octane.appraisal_id_ticker non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.appraisal_id_ticker current_records
+    WHERE current_records.aprtk_pid = non_current_records.aprtk_pid
+      AND current_records.aprtk_version > non_current_records.aprtk_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--appraisal_order_request
+DELETE
+FROM history_octane.appraisal_order_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.appraisal_order_request current_records
+    WHERE current_records.aprq_pid = non_current_records.aprq_pid
+      AND current_records.aprq_version > non_current_records.aprq_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--appraisal_order_request_file
+DELETE
+FROM history_octane.appraisal_order_request_file non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.appraisal_order_request_file current_records
+    WHERE current_records.aorf_pid = non_current_records.aorf_pid
+      AND current_records.aorf_version > non_current_records.aorf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--area_median_income_row
+DELETE
+FROM history_octane.area_median_income_row non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.area_median_income_row current_records
+    WHERE current_records.amir_pid = non_current_records.amir_pid
+      AND current_records.amir_version > non_current_records.amir_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--area_median_income_table
+DELETE
+FROM history_octane.area_median_income_table non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.area_median_income_table current_records
+    WHERE current_records.amit_pid = non_current_records.amit_pid
+      AND current_records.amit_version > non_current_records.amit_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--arm_index_rate
+DELETE
+FROM history_octane.arm_index_rate non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.arm_index_rate current_records
+    WHERE current_records.air_pid = non_current_records.air_pid
+      AND current_records.air_version > non_current_records.air_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--asset
+DELETE
+FROM history_octane.asset non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.asset current_records
+    WHERE current_records.as_pid = non_current_records.as_pid
+      AND current_records.as_version > non_current_records.as_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--asset_large_deposit
+DELETE
+FROM history_octane.asset_large_deposit non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.asset_large_deposit current_records
+    WHERE current_records.ald_pid = non_current_records.ald_pid
+      AND current_records.ald_version > non_current_records.ald_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--aus_request_number_ticker
+DELETE
+FROM history_octane.aus_request_number_ticker non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.aus_request_number_ticker current_records
+    WHERE current_records.arnt_pid = non_current_records.arnt_pid
+      AND current_records.arnt_version > non_current_records.arnt_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--backfill_loan_status
+DELETE
+FROM history_octane.backfill_loan_status non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.backfill_loan_status current_records
+    WHERE current_records.bfls_pid = non_current_records.bfls_pid
+      AND current_records.bfls_version > non_current_records.bfls_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--backfill_status
+DELETE
+FROM history_octane.backfill_status non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.backfill_status current_records
+    WHERE current_records.bfs_pid = non_current_records.bfs_pid
+      AND current_records.bfs_version > non_current_records.bfs_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--bid_pool
+DELETE
+FROM history_octane.bid_pool non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.bid_pool current_records
+    WHERE current_records.bp_pid = non_current_records.bp_pid
+      AND current_records.bp_version > non_current_records.bp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--bid_pool_file
+DELETE
+FROM history_octane.bid_pool_file non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.bid_pool_file current_records
+    WHERE current_records.bpf_pid = non_current_records.bpf_pid
+      AND current_records.bpf_version > non_current_records.bpf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--bid_pool_lender_lock
+DELETE
+FROM history_octane.bid_pool_lender_lock non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.bid_pool_lender_lock current_records
+    WHERE current_records.bpll_pid = non_current_records.bpll_pid
+      AND current_records.bpll_version > non_current_records.bpll_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--bid_pool_note
+DELETE
+FROM history_octane.bid_pool_note non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.bid_pool_note current_records
+    WHERE current_records.bpn_pid = non_current_records.bpn_pid
+      AND current_records.bpn_version > non_current_records.bpn_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--bid_pool_note_comment
+DELETE
+FROM history_octane.bid_pool_note_comment non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.bid_pool_note_comment current_records
+    WHERE current_records.bpnc_pid = non_current_records.bpnc_pid
+      AND current_records.bpnc_version > non_current_records.bpnc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--bid_pool_note_monitor
+DELETE
+FROM history_octane.bid_pool_note_monitor non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.bid_pool_note_monitor current_records
+    WHERE current_records.bpnm_pid = non_current_records.bpnm_pid
+      AND current_records.bpnm_version > non_current_records.bpnm_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower
+DELETE
+FROM history_octane.borrower non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower current_records
+    WHERE current_records.b_pid = non_current_records.b_pid
+      AND current_records.b_version > non_current_records.b_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_alias
+DELETE
+FROM history_octane.borrower_alias non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_alias current_records
+    WHERE current_records.ba_pid = non_current_records.ba_pid
+      AND current_records.ba_version > non_current_records.ba_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_asset
+DELETE
+FROM history_octane.borrower_asset non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_asset current_records
+    WHERE current_records.bas_pid = non_current_records.bas_pid
+      AND current_records.bas_version > non_current_records.bas_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_associated_address
+DELETE
+FROM history_octane.borrower_associated_address non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_associated_address current_records
+    WHERE current_records.baa_pid = non_current_records.baa_pid
+      AND current_records.baa_version > non_current_records.baa_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_credit_inquiry
+DELETE
+FROM history_octane.borrower_credit_inquiry non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_credit_inquiry current_records
+    WHERE current_records.bci_pid = non_current_records.bci_pid
+      AND current_records.bci_version > non_current_records.bci_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_declarations
+DELETE
+FROM history_octane.borrower_declarations non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_declarations current_records
+    WHERE current_records.bdec_pid = non_current_records.bdec_pid
+      AND current_records.bdec_version > non_current_records.bdec_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_dependent
+DELETE
+FROM history_octane.borrower_dependent non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_dependent current_records
+    WHERE current_records.bd_pid = non_current_records.bd_pid
+      AND current_records.bd_version > non_current_records.bd_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_income
+DELETE
+FROM history_octane.borrower_income non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_income current_records
+    WHERE current_records.bi_pid = non_current_records.bi_pid
+      AND current_records.bi_version > non_current_records.bi_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_job_gap
+DELETE
+FROM history_octane.borrower_job_gap non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_job_gap current_records
+    WHERE current_records.bjg_pid = non_current_records.bjg_pid
+      AND current_records.bjg_version > non_current_records.bjg_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_liability
+DELETE
+FROM history_octane.borrower_liability non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_liability current_records
+    WHERE current_records.bl_pid = non_current_records.bl_pid
+      AND current_records.bl_version > non_current_records.bl_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_public_record
+DELETE
+FROM history_octane.borrower_public_record non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_public_record current_records
+    WHERE current_records.bpr_pid = non_current_records.bpr_pid
+      AND current_records.bpr_version > non_current_records.bpr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_reo
+DELETE
+FROM history_octane.borrower_reo non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_reo current_records
+    WHERE current_records.breo_pid = non_current_records.breo_pid
+      AND current_records.breo_version > non_current_records.breo_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_residence
+DELETE
+FROM history_octane.borrower_residence non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_residence current_records
+    WHERE current_records.bres_pid = non_current_records.bres_pid
+      AND current_records.bres_version > non_current_records.bres_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_tax_filing
+DELETE
+FROM history_octane.borrower_tax_filing non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_tax_filing current_records
+    WHERE current_records.btf_pid = non_current_records.btf_pid
+      AND current_records.btf_version > non_current_records.btf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_user
+DELETE
+FROM history_octane.borrower_user non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_user current_records
+    WHERE current_records.bu_pid = non_current_records.bu_pid
+      AND current_records.bu_version > non_current_records.bu_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_user_change_email
+DELETE
+FROM history_octane.borrower_user_change_email non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_user_change_email current_records
+    WHERE current_records.buce_pid = non_current_records.buce_pid
+      AND current_records.buce_version > non_current_records.buce_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_user_deal
+DELETE
+FROM history_octane.borrower_user_deal non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_user_deal current_records
+    WHERE current_records.bud_pid = non_current_records.bud_pid
+      AND current_records.bud_version > non_current_records.bud_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--borrower_va
+DELETE
+FROM history_octane.borrower_va non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.borrower_va current_records
+    WHERE current_records.bva_pid = non_current_records.bva_pid
+      AND current_records.bva_version > non_current_records.bva_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--branch
+DELETE
+FROM history_octane.branch non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.branch current_records
+    WHERE current_records.br_pid = non_current_records.br_pid
+      AND current_records.br_version > non_current_records.br_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--branch_account_executive
+DELETE
+FROM history_octane.branch_account_executive non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.branch_account_executive current_records
+    WHERE current_records.brae_pid = non_current_records.brae_pid
+      AND current_records.brae_version > non_current_records.brae_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--branch_license
+DELETE
+FROM history_octane.branch_license non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.branch_license current_records
+    WHERE current_records.brml_pid = non_current_records.brml_pid
+      AND current_records.brml_version > non_current_records.brml_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--branch_license_contact
+DELETE
+FROM history_octane.branch_license_contact non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.branch_license_contact current_records
+    WHERE current_records.brlc_pid = non_current_records.brlc_pid
+      AND current_records.brlc_version > non_current_records.brlc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--business_income
+DELETE
+FROM history_octane.business_income non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.business_income current_records
+    WHERE current_records.bui_pid = non_current_records.bui_pid
+      AND current_records.bui_version > non_current_records.bui_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--channel
+DELETE
+FROM history_octane.channel non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.channel current_records
+    WHERE current_records.ch_pid = non_current_records.ch_pid
+      AND current_records.ch_version > non_current_records.ch_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--circumstance_change
+DELETE
+FROM history_octane.circumstance_change non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.circumstance_change current_records
+    WHERE current_records.cc_pid = non_current_records.cc_pid
+      AND current_records.cc_version > non_current_records.cc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--company
+DELETE
+FROM history_octane.company non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.company current_records
+    WHERE current_records.cm_pid = non_current_records.cm_pid
+      AND current_records.cm_version > non_current_records.cm_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--company_admin_event
+DELETE
+FROM history_octane.company_admin_event non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.company_admin_event current_records
+    WHERE current_records.cae_pid = non_current_records.cae_pid
+      AND current_records.cae_version > non_current_records.cae_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--company_license
+DELETE
+FROM history_octane.company_license non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.company_license current_records
+    WHERE current_records.cml_pid = non_current_records.cml_pid
+      AND current_records.cml_version > non_current_records.cml_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--company_license_contact
+DELETE
+FROM history_octane.company_license_contact non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.company_license_contact current_records
+    WHERE current_records.cmlc_pid = non_current_records.cmlc_pid
+      AND current_records.cmlc_version > non_current_records.cmlc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--company_location
+DELETE
+FROM history_octane.company_location non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.company_location current_records
+    WHERE current_records.cmloc_pid = non_current_records.cmloc_pid
+      AND current_records.cmloc_version > non_current_records.cmloc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--company_settings
+DELETE
+FROM history_octane.company_settings non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.company_settings current_records
+    WHERE current_records.cs_pid = non_current_records.cs_pid
+      AND current_records.cs_version > non_current_records.cs_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--compass_analytics_report_request
+DELETE
+FROM history_octane.compass_analytics_report_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.compass_analytics_report_request current_records
+    WHERE current_records.carr_pid = non_current_records.carr_pid
+      AND current_records.carr_version > non_current_records.carr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--config_note
+DELETE
+FROM history_octane.config_note non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.config_note current_records
+    WHERE current_records.cn_pid = non_current_records.cn_pid
+      AND current_records.cn_version > non_current_records.cn_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--config_note_comment
+DELETE
+FROM history_octane.config_note_comment non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.config_note_comment current_records
+    WHERE current_records.cnc_pid = non_current_records.cnc_pid
+      AND current_records.cnc_version > non_current_records.cnc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--config_note_monitor
+DELETE
+FROM history_octane.config_note_monitor non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.config_note_monitor current_records
+    WHERE current_records.cnm_pid = non_current_records.cnm_pid
+      AND current_records.cnm_version > non_current_records.cnm_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--construction_cost
+DELETE
+FROM history_octane.construction_cost non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.construction_cost current_records
+    WHERE current_records.coc_pid = non_current_records.coc_pid
+      AND current_records.coc_version > non_current_records.coc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--construction_draw
+DELETE
+FROM history_octane.construction_draw non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.construction_draw current_records
+    WHERE current_records.cd_pid = non_current_records.cd_pid
+      AND current_records.cd_version > non_current_records.cd_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--construction_draw_item
+DELETE
+FROM history_octane.construction_draw_item non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.construction_draw_item current_records
+    WHERE current_records.cdi_pid = non_current_records.cdi_pid
+      AND current_records.cdi_version > non_current_records.cdi_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--construction_draw_number_ticker
+DELETE
+FROM history_octane.construction_draw_number_ticker non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.construction_draw_number_ticker current_records
+    WHERE current_records.cdnt_pid = non_current_records.cdnt_pid
+      AND current_records.cdnt_version > non_current_records.cdnt_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--construction_permit
+DELETE
+FROM history_octane.construction_permit non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.construction_permit current_records
+    WHERE current_records.cop_pid = non_current_records.cop_pid
+      AND current_records.cop_version > non_current_records.cop_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--consumer_privacy_affected_borrower
+DELETE
+FROM history_octane.consumer_privacy_affected_borrower non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.consumer_privacy_affected_borrower current_records
+    WHERE current_records.cpab_pid = non_current_records.cpab_pid
+      AND current_records.cpab_version > non_current_records.cpab_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--consumer_privacy_request
+DELETE
+FROM history_octane.consumer_privacy_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.consumer_privacy_request current_records
+    WHERE current_records.cpr_pid = non_current_records.cpr_pid
+      AND current_records.cpr_version > non_current_records.cpr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--contractor
+DELETE
+FROM history_octane.contractor non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.contractor current_records
+    WHERE current_records.ctr_pid = non_current_records.ctr_pid
+      AND current_records.ctr_version > non_current_records.ctr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--contractor_license
+DELETE
+FROM history_octane.contractor_license non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.contractor_license current_records
+    WHERE current_records.ctrl_pid = non_current_records.ctrl_pid
+      AND current_records.ctrl_version > non_current_records.ctrl_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--county
+DELETE
+FROM history_octane.county non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.county current_records
+    WHERE current_records.c_pid = non_current_records.c_pid
+      AND current_records.c_version > non_current_records.c_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--county_city
+DELETE
+FROM history_octane.county_city non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.county_city current_records
+    WHERE current_records.cci_pid = non_current_records.cci_pid
+      AND current_records.cci_version > non_current_records.cci_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--county_recording_district
+DELETE
+FROM history_octane.county_recording_district non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.county_recording_district current_records
+    WHERE current_records.crdi_pid = non_current_records.crdi_pid
+      AND current_records.crdi_version > non_current_records.crdi_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--county_sub_jurisdiction
+DELETE
+FROM history_octane.county_sub_jurisdiction non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.county_sub_jurisdiction current_records
+    WHERE current_records.csju_pid = non_current_records.csju_pid
+      AND current_records.csju_version > non_current_records.csju_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--county_zip_code
+DELETE
+FROM history_octane.county_zip_code non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.county_zip_code current_records
+    WHERE current_records.czc_pid = non_current_records.czc_pid
+      AND current_records.czc_version > non_current_records.czc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--creditor
+DELETE
+FROM history_octane.creditor non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.creditor current_records
+    WHERE current_records.crd_pid = non_current_records.crd_pid
+      AND current_records.crd_version > non_current_records.crd_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--creditor_lookup_name
+DELETE
+FROM history_octane.creditor_lookup_name non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.creditor_lookup_name current_records
+    WHERE current_records.cln_pid = non_current_records.cln_pid
+      AND current_records.cln_version > non_current_records.cln_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--credit_inquiry
+DELETE
+FROM history_octane.credit_inquiry non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.credit_inquiry current_records
+    WHERE current_records.ci_pid = non_current_records.ci_pid
+      AND current_records.ci_version > non_current_records.ci_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--credit_limit
+DELETE
+FROM history_octane.credit_limit non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.credit_limit current_records
+    WHERE current_records.cl_pid = non_current_records.cl_pid
+      AND current_records.cl_version > non_current_records.cl_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--credit_request
+DELETE
+FROM history_octane.credit_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.credit_request current_records
+    WHERE current_records.crdr_pid = non_current_records.crdr_pid
+      AND current_records.crdr_version > non_current_records.crdr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--credit_request_liability
+DELETE
+FROM history_octane.credit_request_liability non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.credit_request_liability current_records
+    WHERE current_records.crl_pid = non_current_records.crl_pid
+      AND current_records.crl_version > non_current_records.crl_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--criteria
+DELETE
+FROM history_octane.criteria non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.criteria current_records
+    WHERE current_records.cr_pid = non_current_records.cr_pid
+      AND current_records.cr_version > non_current_records.cr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--criteria_pid_operand
+DELETE
+FROM history_octane.criteria_pid_operand non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.criteria_pid_operand current_records
+    WHERE current_records.crpo_pid = non_current_records.crpo_pid
+      AND current_records.crpo_version > non_current_records.crpo_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--criteria_snippet
+DELETE
+FROM history_octane.criteria_snippet non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.criteria_snippet current_records
+    WHERE current_records.crs_pid = non_current_records.crs_pid
+      AND current_records.crs_version > non_current_records.crs_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--custodian
+DELETE
+FROM history_octane.custodian non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.custodian current_records
+    WHERE current_records.cu_pid = non_current_records.cu_pid
+      AND current_records.cu_version > non_current_records.cu_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--custom_field_choice
+DELETE
+FROM history_octane.custom_field_choice non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.custom_field_choice current_records
+    WHERE current_records.cfc_pid = non_current_records.cfc_pid
+      AND current_records.cfc_version > non_current_records.cfc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--custom_field_setting
+DELETE
+FROM history_octane.custom_field_setting non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.custom_field_setting current_records
+    WHERE current_records.cfs_pid = non_current_records.cfs_pid
+      AND current_records.cfs_version > non_current_records.cfs_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--custom_form
+DELETE
+FROM history_octane.custom_form non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.custom_form current_records
+    WHERE current_records.cf_pid = non_current_records.cf_pid
+      AND current_records.cf_version > non_current_records.cf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--custom_form_merge_field
+DELETE
+FROM history_octane.custom_form_merge_field non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.custom_form_merge_field current_records
+    WHERE current_records.cfmf_pid = non_current_records.cfmf_pid
+      AND current_records.cfmf_version > non_current_records.cfmf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal
+DELETE
+FROM history_octane.deal non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal current_records
+    WHERE current_records.d_pid = non_current_records.d_pid
+      AND current_records.d_version > non_current_records.d_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_appraisal
+DELETE
+FROM history_octane.deal_appraisal non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_appraisal current_records
+    WHERE current_records.dappr_pid = non_current_records.dappr_pid
+      AND current_records.dappr_version > non_current_records.dappr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_change_updater_time
+DELETE
+FROM history_octane.deal_change_updater_time non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_change_updater_time current_records
+    WHERE current_records.dcut_pid = non_current_records.dcut_pid
+      AND current_records.dcut_version > non_current_records.dcut_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_contact
+DELETE
+FROM history_octane.deal_contact non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_contact current_records
+    WHERE current_records.dc_pid = non_current_records.dc_pid
+      AND current_records.dc_version > non_current_records.dc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_data_vendor_document_import
+DELETE
+FROM history_octane.deal_data_vendor_document_import non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_data_vendor_document_import current_records
+    WHERE current_records.ddvdi_pid = non_current_records.ddvdi_pid
+      AND current_records.ddvdi_version > non_current_records.ddvdi_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_disaster_declaration
+DELETE
+FROM history_octane.deal_disaster_declaration non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_disaster_declaration current_records
+    WHERE current_records.ddd_pid = non_current_records.ddd_pid
+      AND current_records.ddd_version > non_current_records.ddd_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_dropbox_file
+DELETE
+FROM history_octane.deal_dropbox_file non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_dropbox_file current_records
+    WHERE current_records.ddf_pid = non_current_records.ddf_pid
+      AND current_records.ddf_version > non_current_records.ddf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_du
+DELETE
+FROM history_octane.deal_du non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_du current_records
+    WHERE current_records.ddu_pid = non_current_records.ddu_pid
+      AND current_records.ddu_version > non_current_records.ddu_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_event
+DELETE
+FROM history_octane.deal_event non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_event current_records
+    WHERE current_records.de_pid = non_current_records.de_pid
+      AND current_records.de_version > non_current_records.de_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_file
+DELETE
+FROM history_octane.deal_file non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_file current_records
+    WHERE current_records.df_pid = non_current_records.df_pid
+      AND current_records.df_version > non_current_records.df_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_file_signature
+DELETE
+FROM history_octane.deal_file_signature non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_file_signature current_records
+    WHERE current_records.dfs_pid = non_current_records.dfs_pid
+      AND current_records.dfs_version > non_current_records.dfs_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_file_thumbnail
+DELETE
+FROM history_octane.deal_file_thumbnail non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_file_thumbnail current_records
+    WHERE current_records.dft_pid = non_current_records.dft_pid
+      AND current_records.dft_version > non_current_records.dft_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_fraud_risk
+DELETE
+FROM history_octane.deal_fraud_risk non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_fraud_risk current_records
+    WHERE current_records.dfr_pid = non_current_records.dfr_pid
+      AND current_records.dfr_version > non_current_records.dfr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_housing_counselors_request
+DELETE
+FROM history_octane.deal_housing_counselors_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_housing_counselors_request current_records
+    WHERE current_records.dhcr_pid = non_current_records.dhcr_pid
+      AND current_records.dhcr_version > non_current_records.dhcr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_housing_counselor_candidate
+DELETE
+FROM history_octane.deal_housing_counselor_candidate non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_housing_counselor_candidate current_records
+    WHERE current_records.dhcc_pid = non_current_records.dhcc_pid
+      AND current_records.dhcc_version > non_current_records.dhcc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_invoice
+DELETE
+FROM history_octane.deal_invoice non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_invoice current_records
+    WHERE current_records.di_pid = non_current_records.di_pid
+      AND current_records.di_version > non_current_records.di_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_invoice_file
+DELETE
+FROM history_octane.deal_invoice_file non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_invoice_file current_records
+    WHERE current_records.dif_pid = non_current_records.dif_pid
+      AND current_records.dif_version > non_current_records.dif_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_invoice_item
+DELETE
+FROM history_octane.deal_invoice_item non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_invoice_item current_records
+    WHERE current_records.dii_pid = non_current_records.dii_pid
+      AND current_records.dii_version > non_current_records.dii_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_invoice_payment_method
+DELETE
+FROM history_octane.deal_invoice_payment_method non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_invoice_payment_method current_records
+    WHERE current_records.dipm_pid = non_current_records.dipm_pid
+      AND current_records.dipm_version > non_current_records.dipm_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_key_roles
+DELETE
+FROM history_octane.deal_key_roles non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_key_roles current_records
+    WHERE current_records.dkrs_pid = non_current_records.dkrs_pid
+      AND current_records.dkrs_version > non_current_records.dkrs_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_lender_user
+DELETE
+FROM history_octane.deal_lender_user non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_lender_user current_records
+    WHERE current_records.dlu_pid = non_current_records.dlu_pid
+      AND current_records.dlu_version > non_current_records.dlu_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_lender_user_event
+DELETE
+FROM history_octane.deal_lender_user_event non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_lender_user_event current_records
+    WHERE current_records.dlue_pid = non_current_records.dlue_pid
+      AND current_records.dlue_version > non_current_records.dlue_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_lp
+DELETE
+FROM history_octane.deal_lp non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_lp current_records
+    WHERE current_records.dlp_pid = non_current_records.dlp_pid
+      AND current_records.dlp_version > non_current_records.dlp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_message_log
+DELETE
+FROM history_octane.deal_message_log non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_message_log current_records
+    WHERE current_records.dmlog_pid = non_current_records.dmlog_pid
+      AND current_records.dmlog_version > non_current_records.dmlog_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_message_log_attachment
+DELETE
+FROM history_octane.deal_message_log_attachment non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_message_log_attachment current_records
+    WHERE current_records.dmloga_pid = non_current_records.dmloga_pid
+      AND current_records.dmloga_version > non_current_records.dmloga_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_note
+DELETE
+FROM history_octane.deal_note non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_note current_records
+    WHERE current_records.dn_pid = non_current_records.dn_pid
+      AND current_records.dn_version > non_current_records.dn_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_note_comment
+DELETE
+FROM history_octane.deal_note_comment non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_note_comment current_records
+    WHERE current_records.dnc_pid = non_current_records.dnc_pid
+      AND current_records.dnc_version > non_current_records.dnc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_note_monitor
+DELETE
+FROM history_octane.deal_note_monitor non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_note_monitor current_records
+    WHERE current_records.dnm_pid = non_current_records.dnm_pid
+      AND current_records.dnm_version > non_current_records.dnm_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_note_role_tag
+DELETE
+FROM history_octane.deal_note_role_tag non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_note_role_tag current_records
+    WHERE current_records.dnrt_pid = non_current_records.dnrt_pid
+      AND current_records.dnrt_version > non_current_records.dnrt_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_pending_update
+DELETE
+FROM history_octane.deal_pending_update non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_pending_update current_records
+    WHERE current_records.dpu_pid = non_current_records.dpu_pid
+      AND current_records.dpu_version > non_current_records.dpu_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_performer_team
+DELETE
+FROM history_octane.deal_performer_team non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_performer_team current_records
+    WHERE current_records.dptm_pid = non_current_records.dptm_pid
+      AND current_records.dptm_version > non_current_records.dptm_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_performer_team_user
+DELETE
+FROM history_octane.deal_performer_team_user non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_performer_team_user current_records
+    WHERE current_records.dptu_pid = non_current_records.dptu_pid
+      AND current_records.dptu_version > non_current_records.dptu_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_real_estate_agent
+DELETE
+FROM history_octane.deal_real_estate_agent non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_real_estate_agent current_records
+    WHERE current_records.drea_pid = non_current_records.drea_pid
+      AND current_records.drea_version > non_current_records.drea_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_sap
+DELETE
+FROM history_octane.deal_sap non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_sap current_records
+    WHERE current_records.dsap_pid = non_current_records.dsap_pid
+      AND current_records.dsap_version > non_current_records.dsap_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_settlement
+DELETE
+FROM history_octane.deal_settlement non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_settlement current_records
+    WHERE current_records.dsmt_pid = non_current_records.dsmt_pid
+      AND current_records.dsmt_version > non_current_records.dsmt_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_signer
+DELETE
+FROM history_octane.deal_signer non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_signer current_records
+    WHERE current_records.dsi_pid = non_current_records.dsi_pid
+      AND current_records.dsi_version > non_current_records.dsi_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_snapshot
+DELETE
+FROM history_octane.deal_snapshot non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_snapshot current_records
+    WHERE current_records.desn_pid = non_current_records.desn_pid
+      AND current_records.desn_version > non_current_records.desn_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_stage
+DELETE
+FROM history_octane.deal_stage non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_stage current_records
+    WHERE current_records.dst_pid = non_current_records.dst_pid
+      AND current_records.dst_version > non_current_records.dst_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_summary
+DELETE
+FROM history_octane.deal_summary non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_summary current_records
+    WHERE current_records.ds_pid = non_current_records.ds_pid
+      AND current_records.ds_version > non_current_records.ds_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_system_file
+DELETE
+FROM history_octane.deal_system_file non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_system_file current_records
+    WHERE current_records.dsf_pid = non_current_records.dsf_pid
+      AND current_records.dsf_version > non_current_records.dsf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_tag
+DELETE
+FROM history_octane.deal_tag non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_tag current_records
+    WHERE current_records.dtg_pid = non_current_records.dtg_pid
+      AND current_records.dtg_version > non_current_records.dtg_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_tag_definition
+DELETE
+FROM history_octane.deal_tag_definition non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_tag_definition current_records
+    WHERE current_records.dtd_pid = non_current_records.dtd_pid
+      AND current_records.dtd_version > non_current_records.dtd_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--deal_task
+DELETE
+FROM history_octane.deal_task non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.deal_task current_records
+    WHERE current_records.dt_pid = non_current_records.dt_pid
+      AND current_records.dt_version > non_current_records.dt_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--disaster_declaration
+DELETE
+FROM history_octane.disaster_declaration non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.disaster_declaration current_records
+    WHERE current_records.dd_pid = non_current_records.dd_pid
+      AND current_records.dd_version > non_current_records.dd_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--docusign_package
+DELETE
+FROM history_octane.docusign_package non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.docusign_package current_records
+    WHERE current_records.dcsp_pid = non_current_records.dcsp_pid
+      AND current_records.dcsp_version > non_current_records.dcsp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--du_finding
+DELETE
+FROM history_octane.du_finding non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.du_finding current_records
+    WHERE current_records.duf_pid = non_current_records.duf_pid
+      AND current_records.duf_version > non_current_records.duf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--du_request
+DELETE
+FROM history_octane.du_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.du_request current_records
+    WHERE current_records.dur_pid = non_current_records.dur_pid
+      AND current_records.dur_version > non_current_records.dur_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--du_request_credit
+DELETE
+FROM history_octane.du_request_credit non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.du_request_credit current_records
+    WHERE current_records.durc_pid = non_current_records.durc_pid
+      AND current_records.durc_version > non_current_records.durc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--du_special_feature_code
+DELETE
+FROM history_octane.du_special_feature_code non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.du_special_feature_code current_records
+    WHERE current_records.dusfc_pid = non_current_records.dusfc_pid
+      AND current_records.dusfc_version > non_current_records.dusfc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--dw_export_request
+DELETE
+FROM history_octane.dw_export_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.dw_export_request current_records
+    WHERE current_records.dwer_pid = non_current_records.dwer_pid
+      AND current_records.dwer_version > non_current_records.dwer_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--ernst_request
+DELETE
+FROM history_octane.ernst_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.ernst_request current_records
+    WHERE current_records.enst_pid = non_current_records.enst_pid
+      AND current_records.enst_version > non_current_records.enst_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--ernst_request_question
+DELETE
+FROM history_octane.ernst_request_question non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.ernst_request_question current_records
+    WHERE current_records.enstq_pid = non_current_records.enstq_pid
+      AND current_records.enstq_version > non_current_records.enstq_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--exclusive_assignment
+DELETE
+FROM history_octane.exclusive_assignment non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.exclusive_assignment current_records
+    WHERE current_records.ea_pid = non_current_records.ea_pid
+      AND current_records.ea_version > non_current_records.ea_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--flood_cert
+DELETE
+FROM history_octane.flood_cert non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.flood_cert current_records
+    WHERE current_records.fc_pid = non_current_records.fc_pid
+      AND current_records.fc_version > non_current_records.fc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--formula_report_column
+DELETE
+FROM history_octane.formula_report_column non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.formula_report_column current_records
+    WHERE current_records.frc_pid = non_current_records.frc_pid
+      AND current_records.frc_version > non_current_records.frc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--google_sheet_export
+DELETE
+FROM history_octane.google_sheet_export non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.google_sheet_export current_records
+    WHERE current_records.gse_pid = non_current_records.gse_pid
+      AND current_records.gse_version > non_current_records.gse_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--hmda_report_request
+DELETE
+FROM history_octane.hmda_report_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.hmda_report_request current_records
+    WHERE current_records.hrr_pid = non_current_records.hrr_pid
+      AND current_records.hrr_version > non_current_records.hrr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--hoepa_thresholds
+DELETE
+FROM history_octane.hoepa_thresholds non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.hoepa_thresholds current_records
+    WHERE current_records.ht_pid = non_current_records.ht_pid
+      AND current_records.ht_version > non_current_records.ht_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--ignored_mortech_add_on
+DELETE
+FROM history_octane.ignored_mortech_add_on non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.ignored_mortech_add_on current_records
+    WHERE current_records.ima_pid = non_current_records.ima_pid
+      AND current_records.ima_version > non_current_records.ima_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--interim_funder
+DELETE
+FROM history_octane.interim_funder non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.interim_funder current_records
+    WHERE current_records.if_pid = non_current_records.if_pid
+      AND current_records.if_version > non_current_records.if_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--investor
+DELETE
+FROM history_octane.investor non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.investor current_records
+    WHERE current_records.i_pid = non_current_records.i_pid
+      AND current_records.i_version > non_current_records.i_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--investor_group
+DELETE
+FROM history_octane.investor_group non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.investor_group current_records
+    WHERE current_records.ig_pid = non_current_records.ig_pid
+      AND current_records.ig_version > non_current_records.ig_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--investor_lock
+DELETE
+FROM history_octane.investor_lock non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.investor_lock current_records
+    WHERE current_records.il_pid = non_current_records.il_pid
+      AND current_records.il_version > non_current_records.il_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--investor_lock_add_on
+DELETE
+FROM history_octane.investor_lock_add_on non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.investor_lock_add_on current_records
+    WHERE current_records.ila_pid = non_current_records.ila_pid
+      AND current_records.ila_version > non_current_records.ila_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--investor_lock_extension
+DELETE
+FROM history_octane.investor_lock_extension non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.investor_lock_extension current_records
+    WHERE current_records.ile_pid = non_current_records.ile_pid
+      AND current_records.ile_version > non_current_records.ile_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--investor_lock_extension_setting
+DELETE
+FROM history_octane.investor_lock_extension_setting non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.investor_lock_extension_setting current_records
+    WHERE current_records.iles_pid = non_current_records.iles_pid
+      AND current_records.iles_version > non_current_records.iles_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--job_income
+DELETE
+FROM history_octane.job_income non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.job_income current_records
+    WHERE current_records.ji_pid = non_current_records.ji_pid
+      AND current_records.ji_version > non_current_records.ji_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--key_package
+DELETE
+FROM history_octane.key_package non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.key_package current_records
+    WHERE current_records.kp_pid = non_current_records.kp_pid
+      AND current_records.kp_version > non_current_records.kp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--key_role
+DELETE
+FROM history_octane.key_role non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.key_role current_records
+    WHERE current_records.kr_pid = non_current_records.kr_pid
+      AND current_records.kr_version > non_current_records.kr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lead
+DELETE
+FROM history_octane.lead non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lead current_records
+    WHERE current_records.ld_pid = non_current_records.ld_pid
+      AND current_records.ld_version > non_current_records.ld_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lead_campaign
+DELETE
+FROM history_octane.lead_campaign non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lead_campaign current_records
+    WHERE current_records.ldc_pid = non_current_records.ldc_pid
+      AND current_records.ldc_version > non_current_records.ldc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lead_source
+DELETE
+FROM history_octane.lead_source non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lead_source current_records
+    WHERE current_records.lds_pid = non_current_records.lds_pid
+      AND current_records.lds_version > non_current_records.lds_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lead_supplemental_margin_row
+DELETE
+FROM history_octane.lead_supplemental_margin_row non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lead_supplemental_margin_row current_records
+    WHERE current_records.lsmr_pid = non_current_records.lsmr_pid
+      AND current_records.lsmr_version > non_current_records.lsmr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lead_supplemental_margin_table
+DELETE
+FROM history_octane.lead_supplemental_margin_table non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lead_supplemental_margin_table current_records
+    WHERE current_records.lsmt_pid = non_current_records.lsmt_pid
+      AND current_records.lsmt_version > non_current_records.lsmt_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--ledger_book
+DELETE
+FROM history_octane.ledger_book non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.ledger_book current_records
+    WHERE current_records.lbk_pid = non_current_records.lbk_pid
+      AND current_records.lbk_version > non_current_records.lbk_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--ledger_entry
+DELETE
+FROM history_octane.ledger_entry non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.ledger_entry current_records
+    WHERE current_records.le_pid = non_current_records.le_pid
+      AND current_records.le_version > non_current_records.le_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--ledger_entry_import_loan_status
+DELETE
+FROM history_octane.ledger_entry_import_loan_status non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.ledger_entry_import_loan_status current_records
+    WHERE current_records.leils_pid = non_current_records.leils_pid
+      AND current_records.leils_version > non_current_records.leils_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--ledger_entry_import_status
+DELETE
+FROM history_octane.ledger_entry_import_status non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.ledger_entry_import_status current_records
+    WHERE current_records.leis_pid = non_current_records.leis_pid
+      AND current_records.leis_version > non_current_records.leis_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--ledger_entry_review
+DELETE
+FROM history_octane.ledger_entry_review non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.ledger_entry_review current_records
+    WHERE current_records.ler_pid = non_current_records.ler_pid
+      AND current_records.ler_version > non_current_records.ler_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--ledger_entry_review_note
+DELETE
+FROM history_octane.ledger_entry_review_note non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.ledger_entry_review_note current_records
+    WHERE current_records.lern_pid = non_current_records.lern_pid
+      AND current_records.lern_version > non_current_records.lern_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--ledger_entry_review_note_comment
+DELETE
+FROM history_octane.ledger_entry_review_note_comment non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.ledger_entry_review_note_comment current_records
+    WHERE current_records.lerc_pid = non_current_records.lerc_pid
+      AND current_records.lerc_version > non_current_records.lerc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--ledger_entry_review_note_monitor
+DELETE
+FROM history_octane.ledger_entry_review_note_monitor non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.ledger_entry_review_note_monitor current_records
+    WHERE current_records.lerm_pid = non_current_records.lerm_pid
+      AND current_records.lerm_version > non_current_records.lerm_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_concession_item
+DELETE
+FROM history_octane.lender_concession_item non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_concession_item current_records
+    WHERE current_records.lci_pid = non_current_records.lci_pid
+      AND current_records.lci_version > non_current_records.lci_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_concession_request
+DELETE
+FROM history_octane.lender_concession_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_concession_request current_records
+    WHERE current_records.lcr_pid = non_current_records.lcr_pid
+      AND current_records.lcr_version > non_current_records.lcr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_concession_request_number_ticker
+DELETE
+FROM history_octane.lender_concession_request_number_ticker non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_concession_request_number_ticker current_records
+    WHERE current_records.lcrnt_pid = non_current_records.lcrnt_pid
+      AND current_records.lcrnt_version > non_current_records.lcrnt_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_lock_add_on
+DELETE
+FROM history_octane.lender_lock_add_on non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_lock_add_on current_records
+    WHERE current_records.lla_pid = non_current_records.lla_pid
+      AND current_records.lla_version > non_current_records.lla_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_lock_extension
+DELETE
+FROM history_octane.lender_lock_extension non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_lock_extension current_records
+    WHERE current_records.lle_pid = non_current_records.lle_pid
+      AND current_records.lle_version > non_current_records.lle_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_lock_id_ticker
+DELETE
+FROM history_octane.lender_lock_id_ticker non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_lock_id_ticker current_records
+    WHERE current_records.lltk_pid = non_current_records.lltk_pid
+      AND current_records.lltk_version > non_current_records.lltk_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_lock_major
+DELETE
+FROM history_octane.lender_lock_major non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_lock_major current_records
+    WHERE current_records.llmj_pid = non_current_records.llmj_pid
+      AND current_records.llmj_version > non_current_records.llmj_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_lock_minor
+DELETE
+FROM history_octane.lender_lock_minor non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_lock_minor current_records
+    WHERE current_records.llmn_pid = non_current_records.llmn_pid
+      AND current_records.llmn_version > non_current_records.llmn_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_settings
+DELETE
+FROM history_octane.lender_settings non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_settings current_records
+    WHERE current_records.lss_pid = non_current_records.lss_pid
+      AND current_records.lss_version > non_current_records.lss_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_trade_id_ticker
+DELETE
+FROM history_octane.lender_trade_id_ticker non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_trade_id_ticker current_records
+    WHERE current_records.lttk_pid = non_current_records.lttk_pid
+      AND current_records.lttk_version > non_current_records.lttk_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user
+DELETE
+FROM history_octane.lender_user non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user current_records
+    WHERE current_records.lu_pid = non_current_records.lu_pid
+      AND current_records.lu_version > non_current_records.lu_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user_allowed_ip
+DELETE
+FROM history_octane.lender_user_allowed_ip non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user_allowed_ip current_records
+    WHERE current_records.luip_pid = non_current_records.luip_pid
+      AND current_records.luip_version > non_current_records.luip_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user_deal_visit
+DELETE
+FROM history_octane.lender_user_deal_visit non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user_deal_visit current_records
+    WHERE current_records.ludv_pid = non_current_records.ludv_pid
+      AND current_records.ludv_version > non_current_records.ludv_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user_interest
+DELETE
+FROM history_octane.lender_user_interest non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user_interest current_records
+    WHERE current_records.lui_pid = non_current_records.lui_pid
+      AND current_records.lui_version > non_current_records.lui_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user_language
+DELETE
+FROM history_octane.lender_user_language non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user_language current_records
+    WHERE current_records.lul_pid = non_current_records.lul_pid
+      AND current_records.lul_version > non_current_records.lul_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user_lead_source
+DELETE
+FROM history_octane.lender_user_lead_source non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user_lead_source current_records
+    WHERE current_records.lulds_pid = non_current_records.lulds_pid
+      AND current_records.lulds_version > non_current_records.lulds_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user_license
+DELETE
+FROM history_octane.lender_user_license non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user_license current_records
+    WHERE current_records.luml_pid = non_current_records.luml_pid
+      AND current_records.luml_version > non_current_records.luml_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user_location
+DELETE
+FROM history_octane.lender_user_location non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user_location current_records
+    WHERE current_records.luloc_pid = non_current_records.luloc_pid
+      AND current_records.luloc_version > non_current_records.luloc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user_notice
+DELETE
+FROM history_octane.lender_user_notice non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user_notice current_records
+    WHERE current_records.lun_pid = non_current_records.lun_pid
+      AND current_records.lun_version > non_current_records.lun_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user_photo
+DELETE
+FROM history_octane.lender_user_photo non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user_photo current_records
+    WHERE current_records.lup_pid = non_current_records.lup_pid
+      AND current_records.lup_version > non_current_records.lup_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user_role
+DELETE
+FROM history_octane.lender_user_role non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user_role current_records
+    WHERE current_records.lur_pid = non_current_records.lur_pid
+      AND current_records.lur_version > non_current_records.lur_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user_role_addendum
+DELETE
+FROM history_octane.lender_user_role_addendum non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user_role_addendum current_records
+    WHERE current_records.lura_pid = non_current_records.lura_pid
+      AND current_records.lura_version > non_current_records.lura_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user_role_org_node
+DELETE
+FROM history_octane.lender_user_role_org_node non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user_role_org_node current_records
+    WHERE current_records.luron_pid = non_current_records.luron_pid
+      AND current_records.luron_version > non_current_records.luron_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user_sign_on
+DELETE
+FROM history_octane.lender_user_sign_on non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user_sign_on current_records
+    WHERE current_records.luso_pid = non_current_records.luso_pid
+      AND current_records.luso_version > non_current_records.luso_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lender_user_unavailable
+DELETE
+FROM history_octane.lender_user_unavailable non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lender_user_unavailable current_records
+    WHERE current_records.luu_pid = non_current_records.luu_pid
+      AND current_records.luu_version > non_current_records.luu_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--liability
+DELETE
+FROM history_octane.liability non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.liability current_records
+    WHERE current_records.lia_pid = non_current_records.lia_pid
+      AND current_records.lia_version > non_current_records.lia_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--liability_mortgage_payoff
+DELETE
+FROM history_octane.liability_mortgage_payoff non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.liability_mortgage_payoff current_records
+    WHERE current_records.lmp_pid = non_current_records.lmp_pid
+      AND current_records.lmp_version > non_current_records.lmp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--liability_place
+DELETE
+FROM history_octane.liability_place non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.liability_place current_records
+    WHERE current_records.lip_pid = non_current_records.lip_pid
+      AND current_records.lip_version > non_current_records.lip_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--license_req
+DELETE
+FROM history_octane.license_req non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.license_req current_records
+    WHERE current_records.mlr_pid = non_current_records.mlr_pid
+      AND current_records.mlr_version > non_current_records.mlr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan
+DELETE
+FROM history_octane.loan non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan current_records
+    WHERE current_records.l_pid = non_current_records.l_pid
+      AND current_records.l_version > non_current_records.l_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_beneficiary
+DELETE
+FROM history_octane.loan_beneficiary non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_beneficiary current_records
+    WHERE current_records.lb_pid = non_current_records.lb_pid
+      AND current_records.lb_version > non_current_records.lb_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_charge
+DELETE
+FROM history_octane.loan_charge non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_charge current_records
+    WHERE current_records.lc_pid = non_current_records.lc_pid
+      AND current_records.lc_version > non_current_records.lc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_charge_payer_item
+DELETE
+FROM history_octane.loan_charge_payer_item non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_charge_payer_item current_records
+    WHERE current_records.lcpi_pid = non_current_records.lcpi_pid
+      AND current_records.lcpi_version > non_current_records.lcpi_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_eligible_investor
+DELETE
+FROM history_octane.loan_eligible_investor non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_eligible_investor current_records
+    WHERE current_records.lei_pid = non_current_records.lei_pid
+      AND current_records.lei_version > non_current_records.lei_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_funding
+DELETE
+FROM history_octane.loan_funding non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_funding current_records
+    WHERE current_records.lf_pid = non_current_records.lf_pid
+      AND current_records.lf_version > non_current_records.lf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_hedge
+DELETE
+FROM history_octane.loan_hedge non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_hedge current_records
+    WHERE current_records.lh_pid = non_current_records.lh_pid
+      AND current_records.lh_version > non_current_records.lh_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_limit_row
+DELETE
+FROM history_octane.loan_limit_row non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_limit_row current_records
+    WHERE current_records.llr_pid = non_current_records.llr_pid
+      AND current_records.llr_version > non_current_records.llr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_limit_table
+DELETE
+FROM history_octane.loan_limit_table non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_limit_table current_records
+    WHERE current_records.llt_pid = non_current_records.llt_pid
+      AND current_records.llt_version > non_current_records.llt_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_mi_rate_adjustment
+DELETE
+FROM history_octane.loan_mi_rate_adjustment non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_mi_rate_adjustment current_records
+    WHERE current_records.lmra_pid = non_current_records.lmra_pid
+      AND current_records.lmra_version > non_current_records.lmra_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_mi_surcharge
+DELETE
+FROM history_octane.loan_mi_surcharge non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_mi_surcharge current_records
+    WHERE current_records.lms_pid = non_current_records.lms_pid
+      AND current_records.lms_version > non_current_records.lms_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_org_lineage
+DELETE
+FROM history_octane.loan_org_lineage non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_org_lineage current_records
+    WHERE current_records.lol_pid = non_current_records.lol_pid
+      AND current_records.lol_version > non_current_records.lol_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_org_lineage_update
+DELETE
+FROM history_octane.loan_org_lineage_update non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_org_lineage_update current_records
+    WHERE current_records.lolu_pid = non_current_records.lolu_pid
+      AND current_records.lolu_version > non_current_records.lolu_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_price_add_on
+DELETE
+FROM history_octane.loan_price_add_on non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_price_add_on current_records
+    WHERE current_records.lpa_pid = non_current_records.lpa_pid
+      AND current_records.lpa_version > non_current_records.lpa_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_recording
+DELETE
+FROM history_octane.loan_recording non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_recording current_records
+    WHERE current_records.lr_pid = non_current_records.lr_pid
+      AND current_records.lr_version > non_current_records.lr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--loan_servicer
+DELETE
+FROM history_octane.loan_servicer non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.loan_servicer current_records
+    WHERE current_records.lsv_pid = non_current_records.lsv_pid
+      AND current_records.lsv_version > non_current_records.lsv_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--location
+DELETE
+FROM history_octane.location non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.location current_records
+    WHERE current_records.loc_pid = non_current_records.loc_pid
+      AND current_records.loc_version > non_current_records.loc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--location_id_ticker
+DELETE
+FROM history_octane.location_id_ticker non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.location_id_ticker current_records
+    WHERE current_records.loctk_pid = non_current_records.loctk_pid
+      AND current_records.loctk_version > non_current_records.loctk_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--location_lease
+DELETE
+FROM history_octane.location_lease non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.location_lease current_records
+    WHERE current_records.locl_pid = non_current_records.locl_pid
+      AND current_records.locl_version > non_current_records.locl_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lock_series
+DELETE
+FROM history_octane.lock_series non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lock_series current_records
+    WHERE current_records.lsr_pid = non_current_records.lsr_pid
+      AND current_records.lsr_version > non_current_records.lsr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lock_term_setting
+DELETE
+FROM history_octane.lock_term_setting non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lock_term_setting current_records
+    WHERE current_records.lts_pid = non_current_records.lts_pid
+      AND current_records.lts_version > non_current_records.lts_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--los_loan_id_ticker
+DELETE
+FROM history_octane.los_loan_id_ticker non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.los_loan_id_ticker current_records
+    WHERE current_records.ltk_pid = non_current_records.ltk_pid
+      AND current_records.ltk_version > non_current_records.ltk_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lp_finding
+DELETE
+FROM history_octane.lp_finding non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lp_finding current_records
+    WHERE current_records.lpf_pid = non_current_records.lpf_pid
+      AND current_records.lpf_version > non_current_records.lpf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lp_request
+DELETE
+FROM history_octane.lp_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lp_request current_records
+    WHERE current_records.lpr_pid = non_current_records.lpr_pid
+      AND current_records.lpr_version > non_current_records.lpr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--lp_request_credit
+DELETE
+FROM history_octane.lp_request_credit non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.lp_request_credit current_records
+    WHERE current_records.lprc_pid = non_current_records.lprc_pid
+      AND current_records.lprc_version > non_current_records.lprc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--master_property_insurance
+DELETE
+FROM history_octane.master_property_insurance non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.master_property_insurance current_records
+    WHERE current_records.mpi_pid = non_current_records.mpi_pid
+      AND current_records.mpi_version > non_current_records.mpi_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--mcr_loan
+DELETE
+FROM history_octane.mcr_loan non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.mcr_loan current_records
+    WHERE current_records.mcrl_pid = non_current_records.mcrl_pid
+      AND current_records.mcrl_version > non_current_records.mcrl_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--mcr_request
+DELETE
+FROM history_octane.mcr_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.mcr_request current_records
+    WHERE current_records.mcrr_pid = non_current_records.mcrr_pid
+      AND current_records.mcrr_version > non_current_records.mcrr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--mcr_snapshot
+DELETE
+FROM history_octane.mcr_snapshot non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.mcr_snapshot current_records
+    WHERE current_records.mcrs_pid = non_current_records.mcrs_pid
+      AND current_records.mcrs_version > non_current_records.mcrs_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--mercury_client_group
+DELETE
+FROM history_octane.mercury_client_group non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.mercury_client_group current_records
+    WHERE current_records.mcg_pid = non_current_records.mcg_pid
+      AND current_records.mcg_version > non_current_records.mcg_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--mercury_network_status_request
+DELETE
+FROM history_octane.mercury_network_status_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.mercury_network_status_request current_records
+    WHERE current_records.mnsr_pid = non_current_records.mnsr_pid
+      AND current_records.mnsr_version > non_current_records.mnsr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--mers_daily_report
+DELETE
+FROM history_octane.mers_daily_report non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.mers_daily_report current_records
+    WHERE current_records.medr_pid = non_current_records.medr_pid
+      AND current_records.medr_version > non_current_records.medr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--mers_transfer_batch
+DELETE
+FROM history_octane.mers_transfer_batch non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.mers_transfer_batch current_records
+    WHERE current_records.metb_pid = non_current_records.metb_pid
+      AND current_records.metb_version > non_current_records.metb_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--military_service
+DELETE
+FROM history_octane.military_service non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.military_service current_records
+    WHERE current_records.ms_pid = non_current_records.ms_pid
+      AND current_records.ms_version > non_current_records.ms_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--minimum_required_residual_income_row
+DELETE
+FROM history_octane.minimum_required_residual_income_row non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.minimum_required_residual_income_row current_records
+    WHERE current_records.mrir_pid = non_current_records.mrir_pid
+      AND current_records.mrir_version > non_current_records.mrir_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--minimum_required_residual_income_table
+DELETE
+FROM history_octane.minimum_required_residual_income_table non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.minimum_required_residual_income_table current_records
+    WHERE current_records.mrit_pid = non_current_records.mrit_pid
+      AND current_records.mrit_version > non_current_records.mrit_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--mi_integration_vendor_request
+DELETE
+FROM history_octane.mi_integration_vendor_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.mi_integration_vendor_request current_records
+    WHERE current_records.mivr_pid = non_current_records.mivr_pid
+      AND current_records.mivr_version > non_current_records.mivr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--mortech_account
+DELETE
+FROM history_octane.mortech_account non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.mortech_account current_records
+    WHERE current_records.ma_pid = non_current_records.ma_pid
+      AND current_records.ma_version > non_current_records.ma_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--mortgage_credit_certificate_issuer
+DELETE
+FROM history_octane.mortgage_credit_certificate_issuer non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.mortgage_credit_certificate_issuer current_records
+    WHERE current_records.mcci_pid = non_current_records.mcci_pid
+      AND current_records.mcci_version > non_current_records.mcci_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--net_tangible_benefit
+DELETE
+FROM history_octane.net_tangible_benefit non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.net_tangible_benefit current_records
+    WHERE current_records.ntb_pid = non_current_records.ntb_pid
+      AND current_records.ntb_version > non_current_records.ntb_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--new_lock_only_add_on
+DELETE
+FROM history_octane.new_lock_only_add_on non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.new_lock_only_add_on current_records
+    WHERE current_records.nlo_pid = non_current_records.nlo_pid
+      AND current_records.nlo_version > non_current_records.nlo_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--obligation
+DELETE
+FROM history_octane.obligation non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.obligation current_records
+    WHERE current_records.ob_pid = non_current_records.ob_pid
+      AND current_records.ob_version > non_current_records.ob_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--offering
+DELETE
+FROM history_octane.offering non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.offering current_records
+    WHERE current_records.of_pid = non_current_records.of_pid
+      AND current_records.of_version > non_current_records.of_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--offering_group
+DELETE
+FROM history_octane.offering_group non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.offering_group current_records
+    WHERE current_records.ofg_pid = non_current_records.ofg_pid
+      AND current_records.ofg_version > non_current_records.ofg_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--offering_product
+DELETE
+FROM history_octane.offering_product non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.offering_product current_records
+    WHERE current_records.ofp_pid = non_current_records.ofp_pid
+      AND current_records.ofp_version > non_current_records.ofp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--org_lineage
+DELETE
+FROM history_octane.org_lineage non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.org_lineage current_records
+    WHERE current_records.ol_pid = non_current_records.ol_pid
+      AND current_records.ol_version > non_current_records.ol_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--org_lineage_node
+DELETE
+FROM history_octane.org_lineage_node non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.org_lineage_node current_records
+    WHERE current_records.oln_pid = non_current_records.oln_pid
+      AND current_records.oln_version > non_current_records.oln_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--org_lineage_tracker
+DELETE
+FROM history_octane.org_lineage_tracker non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.org_lineage_tracker current_records
+    WHERE current_records.olt_pid = non_current_records.olt_pid
+      AND current_records.olt_version > non_current_records.olt_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--org_lineage_tracker_custom_field_update
+DELETE
+FROM history_octane.org_lineage_tracker_custom_field_update non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.org_lineage_tracker_custom_field_update current_records
+    WHERE current_records.otcfu_pid = non_current_records.otcfu_pid
+      AND current_records.otcfu_version > non_current_records.otcfu_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--org_node
+DELETE
+FROM history_octane.org_node non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.org_node current_records
+    WHERE current_records.on_pid = non_current_records.on_pid
+      AND current_records.on_version > non_current_records.on_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--org_node_custom_field
+DELETE
+FROM history_octane.org_node_custom_field non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.org_node_custom_field current_records
+    WHERE current_records.oncf_pid = non_current_records.oncf_pid
+      AND current_records.oncf_version > non_current_records.oncf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--org_node_doc
+DELETE
+FROM history_octane.org_node_doc non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.org_node_doc current_records
+    WHERE current_records.ond_pid = non_current_records.ond_pid
+      AND current_records.ond_version > non_current_records.ond_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--org_node_lender_user
+DELETE
+FROM history_octane.org_node_lender_user non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.org_node_lender_user current_records
+    WHERE current_records.onlu_pid = non_current_records.onlu_pid
+      AND current_records.onlu_version > non_current_records.onlu_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--org_node_tree
+DELETE
+FROM history_octane.org_node_tree non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.org_node_tree current_records
+    WHERE current_records.ont_pid = non_current_records.ont_pid
+      AND current_records.ont_version > non_current_records.ont_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--org_node_version
+DELETE
+FROM history_octane.org_node_version non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.org_node_version current_records
+    WHERE current_records.onv_pid = non_current_records.onv_pid
+      AND current_records.onv_version > non_current_records.onv_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--other_income
+DELETE
+FROM history_octane.other_income non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.other_income current_records
+    WHERE current_records.oi_pid = non_current_records.oi_pid
+      AND current_records.oi_version > non_current_records.oi_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--password_settings
+DELETE
+FROM history_octane.password_settings non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.password_settings current_records
+    WHERE current_records.pws_pid = non_current_records.pws_pid
+      AND current_records.pws_version > non_current_records.pws_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--payroll_ledger_book_id_ticker
+DELETE
+FROM history_octane.payroll_ledger_book_id_ticker non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.payroll_ledger_book_id_ticker current_records
+    WHERE current_records.plbit_pid = non_current_records.plbit_pid
+      AND current_records.plbit_version > non_current_records.plbit_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--performer_assignment
+DELETE
+FROM history_octane.performer_assignment non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.performer_assignment current_records
+    WHERE current_records.pa_pid = non_current_records.pa_pid
+      AND current_records.pa_version > non_current_records.pa_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--performer_team
+DELETE
+FROM history_octane.performer_team non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.performer_team current_records
+    WHERE current_records.ptm_pid = non_current_records.ptm_pid
+      AND current_records.ptm_version > non_current_records.ptm_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--place
+DELETE
+FROM history_octane.place non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.place current_records
+    WHERE current_records.pl_pid = non_current_records.pl_pid
+      AND current_records.pl_version > non_current_records.pl_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--preferred_settlement
+DELETE
+FROM history_octane.preferred_settlement non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.preferred_settlement current_records
+    WHERE current_records.prs_pid = non_current_records.prs_pid
+      AND current_records.prs_version > non_current_records.prs_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--price_processing_time
+DELETE
+FROM history_octane.price_processing_time non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.price_processing_time current_records
+    WHERE current_records.ppt_pid = non_current_records.ppt_pid
+      AND current_records.ppt_version > non_current_records.ppt_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product
+DELETE
+FROM history_octane.product non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product current_records
+    WHERE current_records.p_pid = non_current_records.p_pid
+      AND current_records.p_version > non_current_records.p_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_add_on
+DELETE
+FROM history_octane.product_add_on non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_add_on current_records
+    WHERE current_records.pao_pid = non_current_records.pao_pid
+      AND current_records.pao_version > non_current_records.pao_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_add_on_rule
+DELETE
+FROM history_octane.product_add_on_rule non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_add_on_rule current_records
+    WHERE current_records.par_pid = non_current_records.par_pid
+      AND current_records.par_version > non_current_records.par_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_branch
+DELETE
+FROM history_octane.product_branch non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_branch current_records
+    WHERE current_records.pbr_pid = non_current_records.pbr_pid
+      AND current_records.pbr_version > non_current_records.pbr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_buydown
+DELETE
+FROM history_octane.product_buydown non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_buydown current_records
+    WHERE current_records.pbd_pid = non_current_records.pbd_pid
+      AND current_records.pbd_version > non_current_records.pbd_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_deal_check_exclusion
+DELETE
+FROM history_octane.product_deal_check_exclusion non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_deal_check_exclusion current_records
+    WHERE current_records.pdce_pid = non_current_records.pdce_pid
+      AND current_records.pdce_version > non_current_records.pdce_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_eligibility
+DELETE
+FROM history_octane.product_eligibility non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_eligibility current_records
+    WHERE current_records.pe_pid = non_current_records.pe_pid
+      AND current_records.pe_version > non_current_records.pe_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_eligibility_rule
+DELETE
+FROM history_octane.product_eligibility_rule non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_eligibility_rule current_records
+    WHERE current_records.per_pid = non_current_records.per_pid
+      AND current_records.per_version > non_current_records.per_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_interest_only
+DELETE
+FROM history_octane.product_interest_only non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_interest_only current_records
+    WHERE current_records.pio_pid = non_current_records.pio_pid
+      AND current_records.pio_version > non_current_records.pio_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_lock_term
+DELETE
+FROM history_octane.product_lock_term non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_lock_term current_records
+    WHERE current_records.plt_pid = non_current_records.plt_pid
+      AND current_records.plt_version > non_current_records.plt_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_maximum_investor_price
+DELETE
+FROM history_octane.product_maximum_investor_price non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_maximum_investor_price current_records
+    WHERE current_records.pmip_pid = non_current_records.pmip_pid
+      AND current_records.pmip_version > non_current_records.pmip_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_maximum_rebate
+DELETE
+FROM history_octane.product_maximum_rebate non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_maximum_rebate current_records
+    WHERE current_records.pmr_pid = non_current_records.pmr_pid
+      AND current_records.pmr_version > non_current_records.pmr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_minimum_investor_price
+DELETE
+FROM history_octane.product_minimum_investor_price non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_minimum_investor_price current_records
+    WHERE current_records.pminip_pid = non_current_records.pminip_pid
+      AND current_records.pminip_version > non_current_records.pminip_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_originator
+DELETE
+FROM history_octane.product_originator non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_originator current_records
+    WHERE current_records.po_pid = non_current_records.po_pid
+      AND current_records.po_version > non_current_records.po_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_prepay_penalty
+DELETE
+FROM history_octane.product_prepay_penalty non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_prepay_penalty current_records
+    WHERE current_records.ppp_pid = non_current_records.ppp_pid
+      AND current_records.ppp_version > non_current_records.ppp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_terms
+DELETE
+FROM history_octane.product_terms non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_terms current_records
+    WHERE current_records.pt_pid = non_current_records.pt_pid
+      AND current_records.pt_version > non_current_records.pt_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--product_third_party_community_second_program
+DELETE
+FROM history_octane.product_third_party_community_second_program non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.product_third_party_community_second_program current_records
+    WHERE current_records.ptpp_pid = non_current_records.ptpp_pid
+      AND current_records.ptpp_version > non_current_records.ptpp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--profit_margin_detail
+DELETE
+FROM history_octane.profit_margin_detail non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.profit_margin_detail current_records
+    WHERE current_records.pmd_pid = non_current_records.pmd_pid
+      AND current_records.pmd_version > non_current_records.pmd_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal
+DELETE
+FROM history_octane.proposal non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal current_records
+    WHERE current_records.prp_pid = non_current_records.prp_pid
+      AND current_records.prp_version > non_current_records.prp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_construction
+DELETE
+FROM history_octane.proposal_construction non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_construction current_records
+    WHERE current_records.prpc_pid = non_current_records.prpc_pid
+      AND current_records.prpc_version > non_current_records.prpc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_contractor
+DELETE
+FROM history_octane.proposal_contractor non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_contractor current_records
+    WHERE current_records.pctr_pid = non_current_records.pctr_pid
+      AND current_records.pctr_version > non_current_records.pctr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_doc
+DELETE
+FROM history_octane.proposal_doc non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_doc current_records
+    WHERE current_records.prpd_pid = non_current_records.prpd_pid
+      AND current_records.prpd_version > non_current_records.prpd_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_doc_borrower_access
+DELETE
+FROM history_octane.proposal_doc_borrower_access non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_doc_borrower_access current_records
+    WHERE current_records.pdba_pid = non_current_records.pdba_pid
+      AND current_records.pdba_version > non_current_records.pdba_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_doc_file
+DELETE
+FROM history_octane.proposal_doc_file non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_doc_file current_records
+    WHERE current_records.prpdf_pid = non_current_records.prpdf_pid
+      AND current_records.prpdf_version > non_current_records.prpdf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_doc_set
+DELETE
+FROM history_octane.proposal_doc_set non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_doc_set current_records
+    WHERE current_records.prpds_pid = non_current_records.prpds_pid
+      AND current_records.prpds_version > non_current_records.prpds_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_doc_set_id_ticker
+DELETE
+FROM history_octane.proposal_doc_set_id_ticker non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_doc_set_id_ticker current_records
+    WHERE current_records.pdstk_pid = non_current_records.pdstk_pid
+      AND current_records.pdstk_version > non_current_records.pdstk_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_doc_set_signer
+DELETE
+FROM history_octane.proposal_doc_set_signer non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_doc_set_signer current_records
+    WHERE current_records.prpdss_pid = non_current_records.prpdss_pid
+      AND current_records.prpdss_version > non_current_records.prpdss_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_doc_set_snapshot
+DELETE
+FROM history_octane.proposal_doc_set_snapshot non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_doc_set_snapshot current_records
+    WHERE current_records.prpdssn_pid = non_current_records.prpdssn_pid
+      AND current_records.prpdssn_version > non_current_records.prpdssn_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_doc_validity
+DELETE
+FROM history_octane.proposal_doc_validity non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_doc_validity current_records
+    WHERE current_records.prpdv_pid = non_current_records.prpdv_pid
+      AND current_records.prpdv_version > non_current_records.prpdv_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_engagement
+DELETE
+FROM history_octane.proposal_engagement non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_engagement current_records
+    WHERE current_records.prpe_pid = non_current_records.prpe_pid
+      AND current_records.prpe_version > non_current_records.prpe_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_grant_program
+DELETE
+FROM history_octane.proposal_grant_program non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_grant_program current_records
+    WHERE current_records.pgp_pid = non_current_records.pgp_pid
+      AND current_records.pgp_version > non_current_records.pgp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_hud_consultant
+DELETE
+FROM history_octane.proposal_hud_consultant non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_hud_consultant current_records
+    WHERE current_records.phc_pid = non_current_records.phc_pid
+      AND current_records.phc_version > non_current_records.phc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_req
+DELETE
+FROM history_octane.proposal_req non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_req current_records
+    WHERE current_records.prpr_pid = non_current_records.prpr_pid
+      AND current_records.prpr_version > non_current_records.prpr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_review
+DELETE
+FROM history_octane.proposal_review non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_review current_records
+    WHERE current_records.prpre_pid = non_current_records.prpre_pid
+      AND current_records.prpre_version > non_current_records.prpre_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_review_ticker
+DELETE
+FROM history_octane.proposal_review_ticker non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_review_ticker current_records
+    WHERE current_records.prpret_pid = non_current_records.prpret_pid
+      AND current_records.prpret_version > non_current_records.prpret_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--proposal_summary
+DELETE
+FROM history_octane.proposal_summary non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.proposal_summary current_records
+    WHERE current_records.ps_pid = non_current_records.ps_pid
+      AND current_records.ps_version > non_current_records.ps_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--pte_request
+DELETE
+FROM history_octane.pte_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.pte_request current_records
+    WHERE current_records.pter_pid = non_current_records.pter_pid
+      AND current_records.pter_version > non_current_records.pter_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--public_record
+DELETE
+FROM history_octane.public_record non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.public_record current_records
+    WHERE current_records.pr_pid = non_current_records.pr_pid
+      AND current_records.pr_version > non_current_records.pr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--qm_points_and_fees_thresholds
+DELETE
+FROM history_octane.qm_points_and_fees_thresholds non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.qm_points_and_fees_thresholds current_records
+    WHERE current_records.qmpaft_pid = non_current_records.qmpaft_pid
+      AND current_records.qmpaft_version > non_current_records.qmpaft_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--qm_rate_spread_thresholds
+DELETE
+FROM history_octane.qm_rate_spread_thresholds non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.qm_rate_spread_thresholds current_records
+    WHERE current_records.qmrst_pid = non_current_records.qmrst_pid
+      AND current_records.qmrst_version > non_current_records.qmrst_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--rate_sheet
+DELETE
+FROM history_octane.rate_sheet non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.rate_sheet current_records
+    WHERE current_records.rs_pid = non_current_records.rs_pid
+      AND current_records.rs_version > non_current_records.rs_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--rate_sheet_group
+DELETE
+FROM history_octane.rate_sheet_group non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.rate_sheet_group current_records
+    WHERE current_records.rsg_pid = non_current_records.rsg_pid
+      AND current_records.rsg_version > non_current_records.rsg_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--rate_sheet_group_member
+DELETE
+FROM history_octane.rate_sheet_group_member non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.rate_sheet_group_member current_records
+    WHERE current_records.rsgm_pid = non_current_records.rsgm_pid
+      AND current_records.rsgm_version > non_current_records.rsgm_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--rate_sheet_price
+DELETE
+FROM history_octane.rate_sheet_price non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.rate_sheet_price current_records
+    WHERE current_records.rsp_pid = non_current_records.rsp_pid
+      AND current_records.rsp_version > non_current_records.rsp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--rate_sheet_rate
+DELETE
+FROM history_octane.rate_sheet_rate non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.rate_sheet_rate current_records
+    WHERE current_records.rsr_pid = non_current_records.rsr_pid
+      AND current_records.rsr_version > non_current_records.rsr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--recording_city
+DELETE
+FROM history_octane.recording_city non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.recording_city current_records
+    WHERE current_records.rc_pid = non_current_records.rc_pid
+      AND current_records.rc_version > non_current_records.rc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--recording_district
+DELETE
+FROM history_octane.recording_district non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.recording_district current_records
+    WHERE current_records.rdi_pid = non_current_records.rdi_pid
+      AND current_records.rdi_version > non_current_records.rdi_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--region_ernst_page_rec
+DELETE
+FROM history_octane.region_ernst_page_rec non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.region_ernst_page_rec current_records
+    WHERE current_records.rerc_pid = non_current_records.rerc_pid
+      AND current_records.rerc_version > non_current_records.rerc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--relock_fee_setting
+DELETE
+FROM history_octane.relock_fee_setting non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.relock_fee_setting current_records
+    WHERE current_records.rfs_pid = non_current_records.rfs_pid
+      AND current_records.rfs_version > non_current_records.rfs_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--rental_income
+DELETE
+FROM history_octane.rental_income non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.rental_income current_records
+    WHERE current_records.ri_pid = non_current_records.ri_pid
+      AND current_records.ri_version > non_current_records.ri_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--report
+DELETE
+FROM history_octane.report non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.report current_records
+    WHERE current_records.rp_pid = non_current_records.rp_pid
+      AND current_records.rp_version > non_current_records.rp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--report_column
+DELETE
+FROM history_octane.report_column non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.report_column current_records
+    WHERE current_records.rpc_pid = non_current_records.rpc_pid
+      AND current_records.rpc_version > non_current_records.rpc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--report_row
+DELETE
+FROM history_octane.report_row non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.report_row current_records
+    WHERE current_records.rprw_pid = non_current_records.rprw_pid
+      AND current_records.rprw_version > non_current_records.rprw_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--repository_file
+DELETE
+FROM history_octane.repository_file non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.repository_file current_records
+    WHERE current_records.rf_pid = non_current_records.rf_pid
+      AND current_records.rf_version > non_current_records.rf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--role
+DELETE
+FROM history_octane.role non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.role current_records
+    WHERE current_records.r_pid = non_current_records.r_pid
+      AND current_records.r_version > non_current_records.r_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--role_charge_permissions
+DELETE
+FROM history_octane.role_charge_permissions non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.role_charge_permissions current_records
+    WHERE current_records.rcp_pid = non_current_records.rcp_pid
+      AND current_records.rcp_version > non_current_records.rcp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--role_config_export_permission
+DELETE
+FROM history_octane.role_config_export_permission non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.role_config_export_permission current_records
+    WHERE current_records.rcep_pid = non_current_records.rcep_pid
+      AND current_records.rcep_version > non_current_records.rcep_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--role_deal_context
+DELETE
+FROM history_octane.role_deal_context non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.role_deal_context current_records
+    WHERE current_records.rdc_pid = non_current_records.rdc_pid
+      AND current_records.rdc_version > non_current_records.rdc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--role_export_permission
+DELETE
+FROM history_octane.role_export_permission non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.role_export_permission current_records
+    WHERE current_records.rep_pid = non_current_records.rep_pid
+      AND current_records.rep_version > non_current_records.rep_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--role_lender_toolbox
+DELETE
+FROM history_octane.role_lender_toolbox non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.role_lender_toolbox current_records
+    WHERE current_records.rlet_pid = non_current_records.rlet_pid
+      AND current_records.rlet_version > non_current_records.rlet_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--role_loans_toolbox
+DELETE
+FROM history_octane.role_loans_toolbox non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.role_loans_toolbox current_records
+    WHERE current_records.rlot_pid = non_current_records.rlot_pid
+      AND current_records.rlot_version > non_current_records.rlot_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--role_performer_assign
+DELETE
+FROM history_octane.role_performer_assign non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.role_performer_assign current_records
+    WHERE current_records.rpa_pid = non_current_records.rpa_pid
+      AND current_records.rpa_version > non_current_records.rpa_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--role_report
+DELETE
+FROM history_octane.role_report non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.role_report current_records
+    WHERE current_records.rrp_pid = non_current_records.rrp_pid
+      AND current_records.rrp_version > non_current_records.rrp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--sap_deal_step
+DELETE
+FROM history_octane.sap_deal_step non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.sap_deal_step current_records
+    WHERE current_records.sds_pid = non_current_records.sds_pid
+      AND current_records.sds_version > non_current_records.sds_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--sap_quote_request
+DELETE
+FROM history_octane.sap_quote_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.sap_quote_request current_records
+    WHERE current_records.sqr_pid = non_current_records.sqr_pid
+      AND current_records.sqr_version > non_current_records.sqr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--secondary_admin_event
+DELETE
+FROM history_octane.secondary_admin_event non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.secondary_admin_event current_records
+    WHERE current_records.sae_pid = non_current_records.sae_pid
+      AND current_records.sae_version > non_current_records.sae_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--secondary_settings
+DELETE
+FROM history_octane.secondary_settings non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.secondary_settings current_records
+    WHERE current_records.sset_pid = non_current_records.sset_pid
+      AND current_records.sset_version > non_current_records.sset_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--servicer_loan_id_assignment
+DELETE
+FROM history_octane.servicer_loan_id_assignment non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.servicer_loan_id_assignment current_records
+    WHERE current_records.slia_pid = non_current_records.slia_pid
+      AND current_records.slia_version > non_current_records.slia_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--servicer_loan_id_import_request
+DELETE
+FROM history_octane.servicer_loan_id_import_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.servicer_loan_id_import_request current_records
+    WHERE current_records.slir_pid = non_current_records.slir_pid
+      AND current_records.slir_version > non_current_records.slir_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--settlement_agent
+DELETE
+FROM history_octane.settlement_agent non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.settlement_agent current_records
+    WHERE current_records.sa_pid = non_current_records.sa_pid
+      AND current_records.sa_version > non_current_records.sa_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--settlement_agent_office
+DELETE
+FROM history_octane.settlement_agent_office non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.settlement_agent_office current_records
+    WHERE current_records.sao_pid = non_current_records.sao_pid
+      AND current_records.sao_version > non_current_records.sao_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--settlement_agent_wire
+DELETE
+FROM history_octane.settlement_agent_wire non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.settlement_agent_wire current_records
+    WHERE current_records.saw_pid = non_current_records.saw_pid
+      AND current_records.saw_version > non_current_records.saw_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--site_allowed_ip
+DELETE
+FROM history_octane.site_allowed_ip non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.site_allowed_ip current_records
+    WHERE current_records.saip_pid = non_current_records.saip_pid
+      AND current_records.saip_version > non_current_records.saip_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_charge
+DELETE
+FROM history_octane.smart_charge non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_charge current_records
+    WHERE current_records.sc_pid = non_current_records.sc_pid
+      AND current_records.sc_version > non_current_records.sc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_charge_case
+DELETE
+FROM history_octane.smart_charge_case non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_charge_case current_records
+    WHERE current_records.scc_pid = non_current_records.scc_pid
+      AND current_records.scc_version > non_current_records.scc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_charge_group
+DELETE
+FROM history_octane.smart_charge_group non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_charge_group current_records
+    WHERE current_records.scg_pid = non_current_records.scg_pid
+      AND current_records.scg_version > non_current_records.scg_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_charge_group_case
+DELETE
+FROM history_octane.smart_charge_group_case non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_charge_group_case current_records
+    WHERE current_records.scgc_pid = non_current_records.scgc_pid
+      AND current_records.scgc_version > non_current_records.scgc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_doc
+DELETE
+FROM history_octane.smart_doc non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_doc current_records
+    WHERE current_records.sd_pid = non_current_records.sd_pid
+      AND current_records.sd_version > non_current_records.sd_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_doc_criteria
+DELETE
+FROM history_octane.smart_doc_criteria non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_doc_criteria current_records
+    WHERE current_records.sdc_pid = non_current_records.sdc_pid
+      AND current_records.sdc_version > non_current_records.sdc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_doc_prior_to_type_case
+DELETE
+FROM history_octane.smart_doc_prior_to_type_case non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_doc_prior_to_type_case current_records
+    WHERE current_records.sdpttc_pid = non_current_records.sdpttc_pid
+      AND current_records.sdpttc_version > non_current_records.sdpttc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_doc_provider_type_case
+DELETE
+FROM history_octane.smart_doc_provider_type_case non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_doc_provider_type_case current_records
+    WHERE current_records.sdptc_pid = non_current_records.sdptc_pid
+      AND current_records.sdptc_version > non_current_records.sdptc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_doc_role
+DELETE
+FROM history_octane.smart_doc_role non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_doc_role current_records
+    WHERE current_records.sdr_pid = non_current_records.sdr_pid
+      AND current_records.sdr_version > non_current_records.sdr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_doc_set
+DELETE
+FROM history_octane.smart_doc_set non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_doc_set current_records
+    WHERE current_records.sdst_pid = non_current_records.sdst_pid
+      AND current_records.sdst_version > non_current_records.sdst_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_doc_validity_date_case
+DELETE
+FROM history_octane.smart_doc_validity_date_case non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_doc_validity_date_case current_records
+    WHERE current_records.sdvdc_pid = non_current_records.sdvdc_pid
+      AND current_records.sdvdc_version > non_current_records.sdvdc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_ledger_plan
+DELETE
+FROM history_octane.smart_ledger_plan non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_ledger_plan current_records
+    WHERE current_records.slp_pid = non_current_records.slp_pid
+      AND current_records.slp_version > non_current_records.slp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_ledger_plan_case
+DELETE
+FROM history_octane.smart_ledger_plan_case non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_ledger_plan_case current_records
+    WHERE current_records.slpc_pid = non_current_records.slpc_pid
+      AND current_records.slpc_version > non_current_records.slpc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_ledger_plan_case_group
+DELETE
+FROM history_octane.smart_ledger_plan_case_group non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_ledger_plan_case_group current_records
+    WHERE current_records.slpcg_pid = non_current_records.slpcg_pid
+      AND current_records.slpcg_version > non_current_records.slpcg_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_ledger_plan_case_version
+DELETE
+FROM history_octane.smart_ledger_plan_case_version non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_ledger_plan_case_version current_records
+    WHERE current_records.slpcv_pid = non_current_records.slpcv_pid
+      AND current_records.slpcv_version > non_current_records.slpcv_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_message
+DELETE
+FROM history_octane.smart_message non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_message current_records
+    WHERE current_records.smsg_pid = non_current_records.smsg_pid
+      AND current_records.smsg_version > non_current_records.smsg_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_message_available_attachment
+DELETE
+FROM history_octane.smart_message_available_attachment non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_message_available_attachment current_records
+    WHERE current_records.smaa_pid = non_current_records.smaa_pid
+      AND current_records.smaa_version > non_current_records.smaa_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_message_permission
+DELETE
+FROM history_octane.smart_message_permission non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_message_permission current_records
+    WHERE current_records.smp_pid = non_current_records.smp_pid
+      AND current_records.smp_version > non_current_records.smp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_message_recipient
+DELETE
+FROM history_octane.smart_message_recipient non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_message_recipient current_records
+    WHERE current_records.smr_pid = non_current_records.smr_pid
+      AND current_records.smr_version > non_current_records.smr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_mi
+DELETE
+FROM history_octane.smart_mi non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_mi current_records
+    WHERE current_records.sm_pid = non_current_records.sm_pid
+      AND current_records.sm_version > non_current_records.sm_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_mi_eligibility_case
+DELETE
+FROM history_octane.smart_mi_eligibility_case non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_mi_eligibility_case current_records
+    WHERE current_records.smec_pid = non_current_records.smec_pid
+      AND current_records.smec_version > non_current_records.smec_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_mi_rate_adjustment_case
+DELETE
+FROM history_octane.smart_mi_rate_adjustment_case non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_mi_rate_adjustment_case current_records
+    WHERE current_records.smrac_pid = non_current_records.smrac_pid
+      AND current_records.smrac_version > non_current_records.smrac_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_mi_rate_card
+DELETE
+FROM history_octane.smart_mi_rate_card non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_mi_rate_card current_records
+    WHERE current_records.smrca_pid = non_current_records.smrca_pid
+      AND current_records.smrca_version > non_current_records.smrca_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_mi_rate_case
+DELETE
+FROM history_octane.smart_mi_rate_case non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_mi_rate_case current_records
+    WHERE current_records.smrc_pid = non_current_records.smrc_pid
+      AND current_records.smrc_version > non_current_records.smrc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_mi_surcharge
+DELETE
+FROM history_octane.smart_mi_surcharge non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_mi_surcharge current_records
+    WHERE current_records.sms_pid = non_current_records.sms_pid
+      AND current_records.sms_version > non_current_records.sms_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_mi_surcharge_case
+DELETE
+FROM history_octane.smart_mi_surcharge_case non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_mi_surcharge_case current_records
+    WHERE current_records.smsc_pid = non_current_records.smsc_pid
+      AND current_records.smsc_version > non_current_records.smsc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_req
+DELETE
+FROM history_octane.smart_req non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_req current_records
+    WHERE current_records.sr_pid = non_current_records.sr_pid
+      AND current_records.sr_version > non_current_records.sr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_separator
+DELETE
+FROM history_octane.smart_separator non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_separator current_records
+    WHERE current_records.ssp_pid = non_current_records.ssp_pid
+      AND current_records.ssp_version > non_current_records.ssp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_set_doc
+DELETE
+FROM history_octane.smart_set_doc non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_set_doc current_records
+    WHERE current_records.sstd_pid = non_current_records.sstd_pid
+      AND current_records.sstd_version > non_current_records.sstd_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_stack
+DELETE
+FROM history_octane.smart_stack non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_stack current_records
+    WHERE current_records.ss_pid = non_current_records.ss_pid
+      AND current_records.ss_version > non_current_records.ss_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_stack_doc
+DELETE
+FROM history_octane.smart_stack_doc non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_stack_doc current_records
+    WHERE current_records.ssd_pid = non_current_records.ssd_pid
+      AND current_records.ssd_version > non_current_records.ssd_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_task
+DELETE
+FROM history_octane.smart_task non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_task current_records
+    WHERE current_records.st_pid = non_current_records.st_pid
+      AND current_records.st_version > non_current_records.st_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--smart_task_tag_modifier
+DELETE
+FROM history_octane.smart_task_tag_modifier non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.smart_task_tag_modifier current_records
+    WHERE current_records.sttm_pid = non_current_records.sttm_pid
+      AND current_records.sttm_version > non_current_records.sttm_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--stack_export_file
+DELETE
+FROM history_octane.stack_export_file non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.stack_export_file current_records
+    WHERE current_records.sef_pid = non_current_records.sef_pid
+      AND current_records.sef_version > non_current_records.sef_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--stack_export_request
+DELETE
+FROM history_octane.stack_export_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.stack_export_request current_records
+    WHERE current_records.ser_pid = non_current_records.ser_pid
+      AND current_records.ser_version > non_current_records.ser_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--stripe_payment
+DELETE
+FROM history_octane.stripe_payment non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.stripe_payment current_records
+    WHERE current_records.stpm_pid = non_current_records.stpm_pid
+      AND current_records.stpm_version > non_current_records.stpm_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--tax_transcript_request
+DELETE
+FROM history_octane.tax_transcript_request non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.tax_transcript_request current_records
+    WHERE current_records.ttr_pid = non_current_records.ttr_pid
+      AND current_records.ttr_version > non_current_records.ttr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--third_party_community_second_program
+DELETE
+FROM history_octane.third_party_community_second_program non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.third_party_community_second_program current_records
+    WHERE current_records.tpcsp_pid = non_current_records.tpcsp_pid
+      AND current_records.tpcsp_version > non_current_records.tpcsp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--title_company
+DELETE
+FROM history_octane.title_company non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.title_company current_records
+    WHERE current_records.tc_pid = non_current_records.tc_pid
+      AND current_records.tc_version > non_current_records.tc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--title_company_office
+DELETE
+FROM history_octane.title_company_office non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.title_company_office current_records
+    WHERE current_records.tco_pid = non_current_records.tco_pid
+      AND current_records.tco_version > non_current_records.tco_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--trade
+DELETE
+FROM history_octane.trade non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.trade current_records
+    WHERE current_records.t_pid = non_current_records.t_pid
+      AND current_records.t_version > non_current_records.t_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--trade_audit
+DELETE
+FROM history_octane.trade_audit non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.trade_audit current_records
+    WHERE current_records.ta_pid = non_current_records.ta_pid
+      AND current_records.ta_version > non_current_records.ta_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--trade_fee
+DELETE
+FROM history_octane.trade_fee non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.trade_fee current_records
+    WHERE current_records.tfe_pid = non_current_records.tfe_pid
+      AND current_records.tfe_version > non_current_records.tfe_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--trade_file
+DELETE
+FROM history_octane.trade_file non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.trade_file current_records
+    WHERE current_records.tf_pid = non_current_records.tf_pid
+      AND current_records.tf_version > non_current_records.tf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--trade_lock_filter
+DELETE
+FROM history_octane.trade_lock_filter non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.trade_lock_filter current_records
+    WHERE current_records.tlf_pid = non_current_records.tlf_pid
+      AND current_records.tlf_version > non_current_records.tlf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--trade_note
+DELETE
+FROM history_octane.trade_note non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.trade_note current_records
+    WHERE current_records.tn_pid = non_current_records.tn_pid
+      AND current_records.tn_version > non_current_records.tn_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--trade_note_comment
+DELETE
+FROM history_octane.trade_note_comment non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.trade_note_comment current_records
+    WHERE current_records.tnc_pid = non_current_records.tnc_pid
+      AND current_records.tnc_version > non_current_records.tnc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--trade_note_monitor
+DELETE
+FROM history_octane.trade_note_monitor non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.trade_note_monitor current_records
+    WHERE current_records.tnm_pid = non_current_records.tnm_pid
+      AND current_records.tnm_version > non_current_records.tnm_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--trade_product
+DELETE
+FROM history_octane.trade_product non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.trade_product current_records
+    WHERE current_records.tp_pid = non_current_records.tp_pid
+      AND current_records.tp_version > non_current_records.tp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--trustee
+DELETE
+FROM history_octane.trustee non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.trustee current_records
+    WHERE current_records.tru_pid = non_current_records.tru_pid
+      AND current_records.tru_version > non_current_records.tru_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--unpaid_balance_adjustment
+DELETE
+FROM history_octane.unpaid_balance_adjustment non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.unpaid_balance_adjustment current_records
+    WHERE current_records.upba_pid = non_current_records.upba_pid
+      AND current_records.upba_version > non_current_records.upba_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--vendor_document_event
+DELETE
+FROM history_octane.vendor_document_event non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.vendor_document_event current_records
+    WHERE current_records.vde_pid = non_current_records.vde_pid
+      AND current_records.vde_version > non_current_records.vde_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--vendor_document_repository_file
+DELETE
+FROM history_octane.vendor_document_repository_file non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.vendor_document_repository_file current_records
+    WHERE current_records.vdrf_pid = non_current_records.vdrf_pid
+      AND current_records.vdrf_version > non_current_records.vdrf_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--view_wf_deal_step_started
+DELETE
+FROM history_octane.view_wf_deal_step_started non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.view_wf_deal_step_started current_records
+    WHERE current_records.wds_pid = non_current_records.wds_pid
+      AND current_records.wds_version > non_current_records.wds_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_deal_fork_process
+DELETE
+FROM history_octane.wf_deal_fork_process non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_deal_fork_process current_records
+    WHERE current_records.wdfp_pid = non_current_records.wdfp_pid
+      AND current_records.wdfp_version > non_current_records.wdfp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_deal_function_queue
+DELETE
+FROM history_octane.wf_deal_function_queue non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_deal_function_queue current_records
+    WHERE current_records.wdfq_pid = non_current_records.wdfq_pid
+      AND current_records.wdfq_version > non_current_records.wdfq_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_deal_outcome
+DELETE
+FROM history_octane.wf_deal_outcome non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_deal_outcome current_records
+    WHERE current_records.wdo_pid = non_current_records.wdo_pid
+      AND current_records.wdo_version > non_current_records.wdo_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_deal_process
+DELETE
+FROM history_octane.wf_deal_process non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_deal_process current_records
+    WHERE current_records.wdpr_pid = non_current_records.wdpr_pid
+      AND current_records.wdpr_version > non_current_records.wdpr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_deal_step
+DELETE
+FROM history_octane.wf_deal_step non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_deal_step current_records
+    WHERE current_records.wds_pid = non_current_records.wds_pid
+      AND current_records.wds_version > non_current_records.wds_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_deal_step_performer_unavailable
+DELETE
+FROM history_octane.wf_deal_step_performer_unavailable non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_deal_step_performer_unavailable current_records
+    WHERE current_records.wdspu_pid = non_current_records.wdspu_pid
+      AND current_records.wdspu_version > non_current_records.wdspu_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_deal_step_timeout
+DELETE
+FROM history_octane.wf_deal_step_timeout non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_deal_step_timeout current_records
+    WHERE current_records.wdst_pid = non_current_records.wdst_pid
+      AND current_records.wdst_version > non_current_records.wdst_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_fork_process
+DELETE
+FROM history_octane.wf_fork_process non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_fork_process current_records
+    WHERE current_records.wfp_pid = non_current_records.wfp_pid
+      AND current_records.wfp_version > non_current_records.wfp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_outcome
+DELETE
+FROM history_octane.wf_outcome non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_outcome current_records
+    WHERE current_records.wo_pid = non_current_records.wo_pid
+      AND current_records.wo_version > non_current_records.wo_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_phase
+DELETE
+FROM history_octane.wf_phase non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_phase current_records
+    WHERE current_records.wph_pid = non_current_records.wph_pid
+      AND current_records.wph_version > non_current_records.wph_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_polling_time_slice
+DELETE
+FROM history_octane.wf_polling_time_slice non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_polling_time_slice current_records
+    WHERE current_records.wts_pid = non_current_records.wts_pid
+      AND current_records.wts_version > non_current_records.wts_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_prereq
+DELETE
+FROM history_octane.wf_prereq non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_prereq current_records
+    WHERE current_records.wp_pid = non_current_records.wp_pid
+      AND current_records.wp_version > non_current_records.wp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_prereq_set
+DELETE
+FROM history_octane.wf_prereq_set non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_prereq_set current_records
+    WHERE current_records.wps_pid = non_current_records.wps_pid
+      AND current_records.wps_version > non_current_records.wps_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_process
+DELETE
+FROM history_octane.wf_process non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_process current_records
+    WHERE current_records.wpr_pid = non_current_records.wpr_pid
+      AND current_records.wpr_version > non_current_records.wpr_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_step
+DELETE
+FROM history_octane.wf_step non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_step current_records
+    WHERE current_records.ws_pid = non_current_records.ws_pid
+      AND current_records.ws_version > non_current_records.ws_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_step_deal_check
+DELETE
+FROM history_octane.wf_step_deal_check non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_step_deal_check current_records
+    WHERE current_records.wsdc_pid = non_current_records.wsdc_pid
+      AND current_records.wsdc_version > non_current_records.wsdc_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_step_deal_check_definition
+DELETE
+FROM history_octane.wf_step_deal_check_definition non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_step_deal_check_definition current_records
+    WHERE current_records.wsdd_pid = non_current_records.wsdd_pid
+      AND current_records.wsdd_version > non_current_records.wsdd_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_step_deal_check_dependency
+DELETE
+FROM history_octane.wf_step_deal_check_dependency non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_step_deal_check_dependency current_records
+    WHERE current_records.wsdp_pid = non_current_records.wsdp_pid
+      AND current_records.wsdp_version > non_current_records.wsdp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_step_deal_tag_modifier
+DELETE
+FROM history_octane.wf_step_deal_tag_modifier non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_step_deal_tag_modifier current_records
+    WHERE current_records.wsdt_pid = non_current_records.wsdt_pid
+      AND current_records.wsdt_version > non_current_records.wsdt_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--wf_step_function_parameters
+DELETE
+FROM history_octane.wf_step_function_parameters non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.wf_step_function_parameters current_records
+    WHERE current_records.wsfp_pid = non_current_records.wsfp_pid
+      AND current_records.wsfp_version > non_current_records.wsfp_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--zip_code_info
+DELETE
+FROM history_octane.zip_code_info non_current_records
+WHERE EXISTS(
+    SELECT *
+    FROM history_octane.zip_code_info current_records
+    WHERE current_records.zci_pid = non_current_records.zci_pid
+      AND current_records.zci_version > non_current_records.zci_version
+    )
+  AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--
+-- Main | EDW | Octane schema synchronization for v2022.4.2.0 (2022-04-08)
+-- https://app.asana.com/0/0/1202081116048248
+--
+
+DROP INDEX history_octane.fk_lender_settings_6;
+
+--staging_octane
+
+CREATE TABLE staging_octane.change_request_type (
+    code VARCHAR(128),
+    value VARCHAR(1024),
+    CONSTRAINT pk_change_request_type
+        PRIMARY KEY (code)
+);
+
+CREATE TABLE staging_octane.change_request_status_type (
+    code VARCHAR(128),
+    value VARCHAR(1024),
+    CONSTRAINT pk_change_request_status_type
+        PRIMARY KEY (code)
+);
+
+ALTER TABLE staging_octane.lender_settings
+    ADD COLUMN lss_default_change_request_rate_search_user_branch_pid BIGINT,
+    ADD COLUMN lss_default_change_request_rate_search_user_org_node_pid BIGINT;
+
+CREATE TABLE staging_octane.change_request (
+    chr_pid BIGINT,
+    chr_version INTEGER,
+    CONSTRAINT pk_change_request
+        PRIMARY KEY (chr_pid),
+    chr_request_by_lender_user_pid BIGINT,
+    chr_change_request_type VARCHAR(128),
+    chr_create_datetime TIMESTAMP,
+    chr_resolved_datetime TIMESTAMP,
+    chr_completing_user_pid BIGINT,
+    chr_change_request_status_type VARCHAR(128)
+);
+
+CREATE INDEX idx_change_request__chr_pid_chr_version ON staging_octane.change_request (chr_pid, chr_version);
+
+CREATE TABLE staging_octane.change_request_add_user_broker (
+    chraub_pid BIGINT,
+    chraub_version INTEGER,
+    CONSTRAINT pk_change_request_add_user_broker
+        PRIMARY KEY (chraub_pid),
+    chraub_change_request_pid BIGINT,
+    chraub_first_name VARCHAR(32),
+    chraub_last_name VARCHAR(32),
+    chraub_middle_name VARCHAR(32),
+    chraub_suffix VARCHAR(32),
+    chraub_email VARCHAR(256),
+    chraub_title VARCHAR(128),
+    chraub_branch_pid BIGINT,
+    chraub_performer_team_pid BIGINT,
+    chraub_nmls_id VARCHAR(16),
+    chraub_phone VARCHAR(32),
+    chraub_phone_extension VARCHAR(16),
+    chraub_lead_source_tier VARCHAR(32),
+    chraub_parent_org_node_id BIGINT
+);
+
+CREATE INDEX idx_change_request_add_user_broker__chraub_pid_chraub_version ON staging_octane.change_request_add_user_broker (chraub_pid, chraub_version);
+
+CREATE TABLE staging_octane.change_request_add_user_rate_search (
+    chraurs_pid BIGINT,
+    chraurs_version INTEGER,
+    CONSTRAINT pk_change_request_add_user_rate_search
+        PRIMARY KEY (chraurs_pid),
+    chraurs_change_request_pid BIGINT,
+    chraurs_first_name VARCHAR(32),
+    chraurs_last_name VARCHAR(32),
+    chraurs_middle_name VARCHAR(32),
+    chraurs_suffix VARCHAR(32),
+    chraurs_email VARCHAR(256),
+    chraurs_title VARCHAR(128),
+    chraurs_through_date DATE,
+    chraurs_branch_pid BIGINT,
+    chraurs_office_phone VARCHAR(32),
+    chraurs_office_phone_extension VARCHAR(16),
+    chraurs_parent_org_node_id BIGINT,
+    chraurs_channel_id VARCHAR(16)
+);
+
+CREATE INDEX idx_56ee9a5389e3d20805effff41e12f1ff ON staging_octane.change_request_add_user_rate_search (chraurs_pid, chraurs_version);
+
+ALTER TABLE staging_octane.config_note
+    ADD COLUMN cn_change_request_pid BIGINT;
+
+--history_octane
+
+CREATE TABLE history_octane.change_request_type (
+    code VARCHAR(128),
+    value VARCHAR(1024),
+    data_source_updated_datetime timestamptz,
+    data_source_deleted_flag BOOLEAN,
+    etl_batch_id TEXT
+);
+
+CREATE INDEX idx_change_request_type__code ON history_octane.change_request_type (code);
+
+CREATE INDEX idx_change_request_type__data_source_updated_datetime ON history_octane.change_request_type (data_source_updated_datetime);
+
+CREATE INDEX idx_change_request_type__data_source_deleted_flag ON history_octane.change_request_type (data_source_deleted_flag);
+
+CREATE INDEX idx_change_request_type__etl_batch_id ON history_octane.change_request_type (etl_batch_id);
+
+CREATE TABLE history_octane.change_request_status_type (
+    code VARCHAR(128),
+    value VARCHAR(1024),
+    data_source_updated_datetime timestamptz,
+    data_source_deleted_flag BOOLEAN,
+    etl_batch_id TEXT
+);
+
+CREATE INDEX idx_change_request_status_type__code ON history_octane.change_request_status_type (code);
+
+CREATE INDEX idx_change_request_status_type__data_source_updated_datetime ON history_octane.change_request_status_type (data_source_updated_datetime);
+
+CREATE INDEX idx_change_request_status_type__data_source_deleted_flag ON history_octane.change_request_status_type (data_source_deleted_flag);
+
+CREATE INDEX idx_change_request_status_type__etl_batch_id ON history_octane.change_request_status_type (etl_batch_id);
+
+ALTER TABLE history_octane.lender_settings
+    ADD COLUMN lss_default_change_request_rate_search_user_branch_pid BIGINT,
+    ADD COLUMN lss_default_change_request_rate_search_user_org_node_pid BIGINT;
+
+CREATE INDEX fk_lender_settings_6 ON history_octane.lender_settings (lss_default_change_request_rate_search_user_branch_pid);
+
+CREATE INDEX fk_lender_settings_7 ON history_octane.lender_settings (lss_default_change_request_rate_search_user_org_node_pid);
+
+CREATE TABLE history_octane.change_request (
+    chr_pid BIGINT,
+    chr_version INTEGER,
+    chr_request_by_lender_user_pid BIGINT,
+    chr_change_request_type VARCHAR(128),
+    chr_create_datetime TIMESTAMP,
+    chr_resolved_datetime TIMESTAMP,
+    chr_completing_user_pid BIGINT,
+    chr_change_request_status_type VARCHAR(128),
+    data_source_updated_datetime timestamptz,
+    data_source_deleted_flag BOOLEAN,
+    etl_batch_id TEXT
+);
+
+CREATE INDEX idx_change_request__chr_pid ON history_octane.change_request (chr_pid);
+
+CREATE INDEX idx_change_request__data_source_updated_datetime ON history_octane.change_request (data_source_updated_datetime);
+
+CREATE INDEX idx_change_request__data_source_deleted_flag ON history_octane.change_request (data_source_deleted_flag);
+
+CREATE INDEX idx_change_request__etl_batch_id ON history_octane.change_request (etl_batch_id);
+
+CREATE INDEX idx_change_request__chr_pid_chr_version ON history_octane.change_request (chr_pid, chr_version);
+
+CREATE INDEX fk_change_request_1 ON history_octane.change_request (chr_request_by_lender_user_pid);
+
+CREATE INDEX fk_change_request_2 ON history_octane.change_request (chr_completing_user_pid);
+
+CREATE INDEX fkt_chr_change_request_type ON history_octane.change_request (chr_change_request_type);
+
+CREATE INDEX fkt_chr_change_request_status_type ON history_octane.change_request (chr_change_request_status_type);
+
+CREATE TABLE history_octane.change_request_add_user_broker (
+    chraub_pid BIGINT,
+    chraub_version INTEGER,
+    chraub_change_request_pid BIGINT,
+    chraub_first_name VARCHAR(32),
+    chraub_last_name VARCHAR(32),
+    chraub_middle_name VARCHAR(32),
+    chraub_suffix VARCHAR(32),
+    chraub_email VARCHAR(256),
+    chraub_title VARCHAR(128),
+    chraub_branch_pid BIGINT,
+    chraub_performer_team_pid BIGINT,
+    chraub_nmls_id VARCHAR(16),
+    chraub_phone VARCHAR(32),
+    chraub_phone_extension VARCHAR(16),
+    chraub_lead_source_tier VARCHAR(32),
+    chraub_parent_org_node_id BIGINT,
+    data_source_updated_datetime timestamptz,
+    data_source_deleted_flag BOOLEAN,
+    etl_batch_id TEXT
+);
+
+CREATE INDEX idx_change_request_add_user_broker__chraub_pid ON history_octane.change_request_add_user_broker (chraub_pid);
+
+CREATE INDEX idx_fab3571ac9fbebee53c3034b96a2f422 ON history_octane.change_request_add_user_broker (data_source_updated_datetime);
+
+CREATE INDEX idx_change_request_add_user_broker__data_source_deleted_flag ON history_octane.change_request_add_user_broker (data_source_deleted_flag);
+
+CREATE INDEX idx_change_request_add_user_broker__etl_batch_id ON history_octane.change_request_add_user_broker (etl_batch_id);
+
+CREATE INDEX idx_change_request_add_user_broker__chraub_pid_chraub_version ON history_octane.change_request_add_user_broker (chraub_pid, chraub_version);
+
+CREATE INDEX fk_change_request_add_user_broker_1 ON history_octane.change_request_add_user_broker (chraub_change_request_pid);
+
+CREATE INDEX fk_change_request_add_user_broker_2 ON history_octane.change_request_add_user_broker (chraub_branch_pid);
+
+CREATE INDEX fk_change_request_add_user_broker_3 ON history_octane.change_request_add_user_broker (chraub_performer_team_pid);
+
+CREATE TABLE history_octane.change_request_add_user_rate_search (
+    chraurs_pid BIGINT,
+    chraurs_version INTEGER,
+    chraurs_change_request_pid BIGINT,
+    chraurs_first_name VARCHAR(32),
+    chraurs_last_name VARCHAR(32),
+    chraurs_middle_name VARCHAR(32),
+    chraurs_suffix VARCHAR(32),
+    chraurs_email VARCHAR(256),
+    chraurs_title VARCHAR(128),
+    chraurs_through_date DATE,
+    chraurs_branch_pid BIGINT,
+    chraurs_office_phone VARCHAR(32),
+    chraurs_office_phone_extension VARCHAR(16),
+    chraurs_parent_org_node_id BIGINT,
+    chraurs_channel_id VARCHAR(16),
+    data_source_updated_datetime timestamptz,
+    data_source_deleted_flag BOOLEAN,
+    etl_batch_id TEXT
+);
+
+CREATE INDEX idx_change_request_add_user_rate_search__chraurs_pid ON history_octane.change_request_add_user_rate_search (chraurs_pid);
+
+CREATE INDEX idx_386490daed3e538ca22fa6d140b96655 ON history_octane.change_request_add_user_rate_search (data_source_updated_datetime);
+
+CREATE INDEX idx_c13fbd18880574afa2115bfd967aab25 ON history_octane.change_request_add_user_rate_search (data_source_deleted_flag);
+
+CREATE INDEX idx_change_request_add_user_rate_search__etl_batch_id ON history_octane.change_request_add_user_rate_search (etl_batch_id);
+
+CREATE INDEX idx_56ee9a5389e3d20805effff41e12f1ff ON history_octane.change_request_add_user_rate_search (chraurs_pid, chraurs_version);
+
+CREATE INDEX fk_change_request_add_user_rate_search_1 ON history_octane.change_request_add_user_rate_search (chraurs_change_request_pid);
+
+CREATE INDEX fk_change_request_add_user_rate_search_2 ON history_octane.change_request_add_user_rate_search (chraurs_branch_pid);
+
+ALTER TABLE history_octane.config_note
+    ADD COLUMN cn_change_request_pid BIGINT;
+
+CREATE INDEX fk_config_note_8 ON history_octane.config_note (cn_change_request_pid);

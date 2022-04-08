@@ -95,13 +95,15 @@ step_functions:
                , history_table.sqr_due_in_term_months_string_list
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.sap_quote_request history_table
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.sap_quote_request AS current_records
+              LEFT JOIN history_octane.sap_quote_request AS history_records
+                        ON current_records.sqr_pid = history_records.sqr_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.sap_quote_request staging_table
                     ON staging_table.sqr_pid = history_table.sqr_pid
-          WHERE staging_table.sqr_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.sap_quote_request deleted_records
-              WHERE deleted_records.sqr_pid = history_table.sqr_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.sqr_pid IS NULL;

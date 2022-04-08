@@ -1,0 +1,53 @@
+name: change_request
+primary_key:
+- chr_pid
+foreign_keys:
+  fk_change_request_1:
+    columns:
+    - chr_request_by_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_change_request_2:
+    columns:
+    - chr_completing_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fkt_chr_change_request_status_type:
+    columns:
+    - chr_change_request_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: change_request_status_type
+  fkt_chr_change_request_type:
+    columns:
+    - chr_change_request_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: change_request_type
+columns:
+  chr_change_request_status_type:
+    data_type: VARCHAR(128)
+  chr_change_request_type:
+    data_type: VARCHAR(128)
+  chr_completing_user_pid:
+    data_type: BIGINT
+  chr_create_datetime:
+    data_type: TIMESTAMP
+  chr_pid:
+    data_type: BIGINT
+  chr_request_by_lender_user_pid:
+    data_type: BIGINT
+  chr_resolved_datetime:
+    data_type: TIMESTAMP
+  chr_version:
+    data_type: INTEGER

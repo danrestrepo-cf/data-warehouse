@@ -413,16 +413,13 @@ def generate_history_octane_table_input_sql(table: TableMetadata) -> str:
                            f'SELECT {history_select_columns}\n' + \
                            f'     , TRUE AS data_source_deleted_flag\n' + \
                            f'     , NOW( ) AS data_source_updated_datetime\n' + \
-                           f'FROM history_octane.{table.name} history_table\n' + \
+                           f'FROM (\n' + \
+                           generate_most_recent_history_octane_table_record_subquery(table) + '\n' + \
+                           f'      AND current_records.data_source_deleted_flag = FALSE\n' + \
+                           f') AS history_table\n' + \
                            f'LEFT JOIN staging_octane.{table.name} staging_table\n' + \
                            generate_staging_to_history_join_columns_string([primary_key_column]) + '\n' + \
-                           f'WHERE staging_table.{primary_key_column} IS NULL\n' + \
-                           f'  AND NOT EXISTS(\n' + \
-                           f'    SELECT 1\n' + \
-                           f'    FROM history_octane.{table.name} deleted_records\n' + \
-                           f'    WHERE deleted_records.{primary_key_column} = history_table.{primary_key_column}\n' + \
-                           f'      AND deleted_records.data_source_deleted_flag = TRUE\n' + \
-                           f'    )'
+                           f'WHERE staging_table.{primary_key_column} IS NULL'
     # add Postgres-required final semicolon
     table_input_sql += ';'
     return table_input_sql
@@ -462,6 +459,25 @@ def generate_staging_to_history_join_columns_string(columns: List[str], base_ind
     join_columns_str += ''.join([f'\n{base_indent_str}    AND {generate_staging_to_history_join_column_string(column)}'
                                  for column in columns[1:]])
     return join_columns_str
+
+
+def generate_most_recent_history_octane_table_record_subquery(table: TableMetadata, base_indent: int = 4) -> str:
+    """Generate a full SQL subquery string to show the most recently updated record for each primary key in a history_octane table.
+
+    The base_indent defaults to 4 because this is a subquery which will generally
+    be following 'FROM (' which is exactly 4 characters (aligned under the space before "(")
+    """
+    base_indent_str = base_indent * ' '
+
+    current_history_octane_record_subquery = \
+        f'{base_indent_str}SELECT current_records.*\n' + \
+        f'{base_indent_str}FROM history_octane.{table.name} AS current_records\n' + \
+        f'{base_indent_str}LEFT JOIN history_octane.{table.name} AS history_records\n' + \
+        f'{base_indent_str}          ON current_records.{table.primary_key[0]} = history_records.{table.primary_key[0]}\n' + \
+        f'{base_indent_str}              AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime\n' + \
+        f'{base_indent_str}WHERE history_records.data_source_updated_datetime IS NULL'
+
+    return current_history_octane_record_subquery
 
 
 def generate_staging_to_history_join_column_string(column: str) -> str:

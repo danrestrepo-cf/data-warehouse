@@ -91,13 +91,15 @@ step_functions:
                , history_table.lerc_author_unparsed_name
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.ledger_entry_review_note_comment history_table
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.ledger_entry_review_note_comment AS current_records
+              LEFT JOIN history_octane.ledger_entry_review_note_comment AS history_records
+                        ON current_records.lerc_pid = history_records.lerc_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.ledger_entry_review_note_comment staging_table
                     ON staging_table.lerc_pid = history_table.lerc_pid
-          WHERE staging_table.lerc_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.ledger_entry_review_note_comment deleted_records
-              WHERE deleted_records.lerc_pid = history_table.lerc_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.lerc_pid IS NULL;
