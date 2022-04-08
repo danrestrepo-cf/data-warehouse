@@ -5345,6 +5345,8 @@ WHERE EXISTS(
 -- https://app.asana.com/0/0/1202081116048248
 --
 
+DROP INDEX history_octane.fk_lender_settings_6;
+
 --staging_octane
 
 CREATE TABLE staging_octane.change_request_type (
