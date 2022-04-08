@@ -88,21 +88,14 @@ step_functions:
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (
-                SELECT current_records.*
-                FROM history_octane.license_req AS current_records
-                LEFT JOIN history_octane.license_req AS history_records
-                  ON current_records.mlr_pid =
-                      history_records.mlr_pid
-                    AND current_records.data_source_updated_datetime <
-                        history_records.data_source_updated_datetime
-                WHERE history_records.data_source_updated_datetime IS NULL
-               ) AS history_table
+              SELECT current_records.*
+              FROM history_octane.license_req AS current_records
+              LEFT JOIN history_octane.license_req AS history_records
+                        ON current_records.mlr_pid = history_records.mlr_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.license_req staging_table
                     ON staging_table.mlr_pid = history_table.mlr_pid
-          WHERE staging_table.mlr_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.license_req deleted_records
-              WHERE deleted_records.mlr_pid = history_table.mlr_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.mlr_pid IS NULL;

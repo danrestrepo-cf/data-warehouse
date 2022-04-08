@@ -274,21 +274,14 @@ step_functions:
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (
-                SELECT current_records.*
-                FROM history_octane.credit_request_liability AS current_records
-                LEFT JOIN history_octane.credit_request_liability AS history_records
-                  ON current_records.crl_pid =
-                      history_records.crl_pid
-                    AND current_records.data_source_updated_datetime <
-                        history_records.data_source_updated_datetime
-                WHERE history_records.data_source_updated_datetime IS NULL
-               ) AS history_table
+              SELECT current_records.*
+              FROM history_octane.credit_request_liability AS current_records
+              LEFT JOIN history_octane.credit_request_liability AS history_records
+                        ON current_records.crl_pid = history_records.crl_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.credit_request_liability staging_table
                     ON staging_table.crl_pid = history_table.crl_pid
-          WHERE staging_table.crl_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.credit_request_liability deleted_records
-              WHERE deleted_records.crl_pid = history_table.crl_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.crl_pid IS NULL;

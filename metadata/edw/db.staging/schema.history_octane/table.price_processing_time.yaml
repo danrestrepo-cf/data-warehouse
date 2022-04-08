@@ -246,21 +246,14 @@ step_functions:
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (
-                SELECT current_records.*
-                FROM history_octane.price_processing_time AS current_records
-                LEFT JOIN history_octane.price_processing_time AS history_records
-                  ON current_records.ppt_pid =
-                      history_records.ppt_pid
-                    AND current_records.data_source_updated_datetime <
-                        history_records.data_source_updated_datetime
-                WHERE history_records.data_source_updated_datetime IS NULL
-               ) AS history_table
+              SELECT current_records.*
+              FROM history_octane.price_processing_time AS current_records
+              LEFT JOIN history_octane.price_processing_time AS history_records
+                        ON current_records.ppt_pid = history_records.ppt_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.price_processing_time staging_table
                     ON staging_table.ppt_pid = history_table.ppt_pid
-          WHERE staging_table.ppt_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.price_processing_time deleted_records
-              WHERE deleted_records.ppt_pid = history_table.ppt_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.ppt_pid IS NULL;

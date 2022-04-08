@@ -74,21 +74,14 @@ step_functions:
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (
-                SELECT current_records.*
-                FROM history_octane.lender_user_language AS current_records
-                LEFT JOIN history_octane.lender_user_language AS history_records
-                  ON current_records.lul_pid =
-                      history_records.lul_pid
-                    AND current_records.data_source_updated_datetime <
-                        history_records.data_source_updated_datetime
-                WHERE history_records.data_source_updated_datetime IS NULL
-               ) AS history_table
+              SELECT current_records.*
+              FROM history_octane.lender_user_language AS current_records
+              LEFT JOIN history_octane.lender_user_language AS history_records
+                        ON current_records.lul_pid = history_records.lul_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.lender_user_language staging_table
                     ON staging_table.lul_pid = history_table.lul_pid
-          WHERE staging_table.lul_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.lender_user_language deleted_records
-              WHERE deleted_records.lul_pid = history_table.lul_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.lul_pid IS NULL;

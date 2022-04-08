@@ -88,21 +88,14 @@ step_functions:
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (
-                SELECT current_records.*
-                FROM history_octane.appraisal_form AS current_records
-                LEFT JOIN history_octane.appraisal_form AS history_records
-                  ON current_records.aprfm_pid =
-                      history_records.aprfm_pid
-                    AND current_records.data_source_updated_datetime <
-                        history_records.data_source_updated_datetime
-                WHERE history_records.data_source_updated_datetime IS NULL
-               ) AS history_table
+              SELECT current_records.*
+              FROM history_octane.appraisal_form AS current_records
+              LEFT JOIN history_octane.appraisal_form AS history_records
+                        ON current_records.aprfm_pid = history_records.aprfm_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.appraisal_form staging_table
                     ON staging_table.aprfm_pid = history_table.aprfm_pid
-          WHERE staging_table.aprfm_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.appraisal_form deleted_records
-              WHERE deleted_records.aprfm_pid = history_table.aprfm_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.aprfm_pid IS NULL;

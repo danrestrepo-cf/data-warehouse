@@ -74,21 +74,14 @@ step_functions:
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (
-                SELECT current_records.*
-                FROM history_octane.role_lender_toolbox AS current_records
-                LEFT JOIN history_octane.role_lender_toolbox AS history_records
-                  ON current_records.rlet_pid =
-                      history_records.rlet_pid
-                    AND current_records.data_source_updated_datetime <
-                        history_records.data_source_updated_datetime
-                WHERE history_records.data_source_updated_datetime IS NULL
-               ) AS history_table
+              SELECT current_records.*
+              FROM history_octane.role_lender_toolbox AS current_records
+              LEFT JOIN history_octane.role_lender_toolbox AS history_records
+                        ON current_records.rlet_pid = history_records.rlet_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.role_lender_toolbox staging_table
                     ON staging_table.rlet_pid = history_table.rlet_pid
-          WHERE staging_table.rlet_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.role_lender_toolbox deleted_records
-              WHERE deleted_records.rlet_pid = history_table.rlet_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.rlet_pid IS NULL;

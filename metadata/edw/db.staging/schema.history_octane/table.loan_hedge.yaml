@@ -1848,21 +1848,14 @@ step_functions:
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (
-                SELECT current_records.*
-                FROM history_octane.loan_hedge AS current_records
-                LEFT JOIN history_octane.loan_hedge AS history_records
-                  ON current_records.lh_pid =
-                      history_records.lh_pid
-                    AND current_records.data_source_updated_datetime <
-                        history_records.data_source_updated_datetime
-                WHERE history_records.data_source_updated_datetime IS NULL
-               ) AS history_table
+              SELECT current_records.*
+              FROM history_octane.loan_hedge AS current_records
+              LEFT JOIN history_octane.loan_hedge AS history_records
+                        ON current_records.lh_pid = history_records.lh_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.loan_hedge staging_table
                     ON staging_table.lh_pid = history_table.lh_pid
-          WHERE staging_table.lh_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.loan_hedge deleted_records
-              WHERE deleted_records.lh_pid = history_table.lh_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.lh_pid IS NULL;

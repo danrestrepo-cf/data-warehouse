@@ -94,21 +94,14 @@ step_functions:
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (
-                SELECT current_records.*
-                FROM history_octane.deal_tag_definition AS current_records
-                LEFT JOIN history_octane.deal_tag_definition AS history_records
-                  ON current_records.dtd_pid =
-                      history_records.dtd_pid
-                    AND current_records.data_source_updated_datetime <
-                        history_records.data_source_updated_datetime
-                WHERE history_records.data_source_updated_datetime IS NULL
-               ) AS history_table
+              SELECT current_records.*
+              FROM history_octane.deal_tag_definition AS current_records
+              LEFT JOIN history_octane.deal_tag_definition AS history_records
+                        ON current_records.dtd_pid = history_records.dtd_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.deal_tag_definition staging_table
                     ON staging_table.dtd_pid = history_table.dtd_pid
-          WHERE staging_table.dtd_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.deal_tag_definition deleted_records
-              WHERE deleted_records.dtd_pid = history_table.dtd_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.dtd_pid IS NULL;
