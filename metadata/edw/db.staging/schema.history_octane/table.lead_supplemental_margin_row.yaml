@@ -77,13 +77,15 @@ step_functions:
                , history_table.lsmr_branch_supplemental_margin_percent
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.lead_supplemental_margin_row history_table
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.lead_supplemental_margin_row AS current_records
+              LEFT JOIN history_octane.lead_supplemental_margin_row AS history_records
+                        ON current_records.lsmr_pid = history_records.lsmr_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.lead_supplemental_margin_row staging_table
                     ON staging_table.lsmr_pid = history_table.lsmr_pid
-          WHERE staging_table.lsmr_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.lead_supplemental_margin_row deleted_records
-              WHERE deleted_records.lsmr_pid = history_table.lsmr_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.lsmr_pid IS NULL;

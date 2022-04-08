@@ -105,13 +105,15 @@ step_functions:
                , history_table.lun_source_unparsed_name
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.lender_user_notice history_table
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.lender_user_notice AS current_records
+              LEFT JOIN history_octane.lender_user_notice AS history_records
+                        ON current_records.lun_pid = history_records.lun_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.lender_user_notice staging_table
                     ON staging_table.lun_pid = history_table.lun_pid
-          WHERE staging_table.lun_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.lender_user_notice deleted_records
-              WHERE deleted_records.lun_pid = history_table.lun_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.lun_pid IS NULL;

@@ -85,13 +85,15 @@ step_functions:
                , history_table.ea_name
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.exclusive_assignment history_table
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.exclusive_assignment AS current_records
+              LEFT JOIN history_octane.exclusive_assignment AS history_records
+                        ON current_records.ea_pid = history_records.ea_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.exclusive_assignment staging_table
                     ON staging_table.ea_pid = history_table.ea_pid
-          WHERE staging_table.ea_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.exclusive_assignment deleted_records
-              WHERE deleted_records.ea_pid = history_table.ea_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.ea_pid IS NULL;

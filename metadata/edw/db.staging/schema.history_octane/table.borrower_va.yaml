@@ -601,13 +601,15 @@ step_functions:
                , history_table.bva_medal_of_honor_recipient
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.borrower_va history_table
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.borrower_va AS current_records
+              LEFT JOIN history_octane.borrower_va AS history_records
+                        ON current_records.bva_pid = history_records.bva_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.borrower_va staging_table
                     ON staging_table.bva_pid = history_table.bva_pid
-          WHERE staging_table.bva_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.borrower_va deleted_records
-              WHERE deleted_records.bva_pid = history_table.bva_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.bva_pid IS NULL;

@@ -93,13 +93,15 @@ step_functions:
                , history_table.lol_source_date
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.loan_org_lineage history_table
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.loan_org_lineage AS current_records
+              LEFT JOIN history_octane.loan_org_lineage AS history_records
+                        ON current_records.lol_pid = history_records.lol_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.loan_org_lineage staging_table
                     ON staging_table.lol_pid = history_table.lol_pid
-          WHERE staging_table.lol_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.loan_org_lineage deleted_records
-              WHERE deleted_records.lol_pid = history_table.lol_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.lol_pid IS NULL;

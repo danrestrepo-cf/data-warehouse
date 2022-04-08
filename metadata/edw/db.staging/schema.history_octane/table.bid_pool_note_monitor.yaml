@@ -73,13 +73,15 @@ step_functions:
                , history_table.bpnm_lender_user_pid
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.bid_pool_note_monitor history_table
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.bid_pool_note_monitor AS current_records
+              LEFT JOIN history_octane.bid_pool_note_monitor AS history_records
+                        ON current_records.bpnm_pid = history_records.bpnm_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.bid_pool_note_monitor staging_table
                     ON staging_table.bpnm_pid = history_table.bpnm_pid
-          WHERE staging_table.bpnm_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.bid_pool_note_monitor deleted_records
-              WHERE deleted_records.bpnm_pid = history_table.bpnm_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.bpnm_pid IS NULL;

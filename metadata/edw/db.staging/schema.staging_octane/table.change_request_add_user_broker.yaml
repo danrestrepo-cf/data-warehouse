@@ -1,0 +1,61 @@
+name: change_request_add_user_broker
+primary_key:
+- chraub_pid
+foreign_keys:
+  fk_change_request_add_user_broker_1:
+    columns:
+    - chraub_change_request_pid
+    references:
+      columns:
+      - chr_pid
+      schema: staging_octane
+      table: change_request
+  fk_change_request_add_user_broker_2:
+    columns:
+    - chraub_branch_pid
+    references:
+      columns:
+      - br_pid
+      schema: staging_octane
+      table: branch
+  fk_change_request_add_user_broker_3:
+    columns:
+    - chraub_performer_team_pid
+    references:
+      columns:
+      - ptm_pid
+      schema: staging_octane
+      table: performer_team
+columns:
+  chraub_branch_pid:
+    data_type: BIGINT
+  chraub_change_request_pid:
+    data_type: BIGINT
+  chraub_email:
+    data_type: VARCHAR(256)
+  chraub_first_name:
+    data_type: VARCHAR(32)
+  chraub_last_name:
+    data_type: VARCHAR(32)
+  chraub_lead_source_tier:
+    data_type: VARCHAR(32)
+  chraub_middle_name:
+    data_type: VARCHAR(32)
+  chraub_nmls_id:
+    data_type: VARCHAR(16)
+  chraub_parent_org_node_id:
+    data_type: BIGINT
+  chraub_performer_team_pid:
+    data_type: BIGINT
+  chraub_phone:
+    data_type: VARCHAR(32)
+  chraub_phone_extension:
+    data_type: VARCHAR(16)
+  chraub_pid:
+    data_type: BIGINT
+  chraub_suffix:
+    data_type: VARCHAR(32)
+  chraub_title:
+    data_type: VARCHAR(128)
+  chraub_version:
+    data_type: INTEGER

@@ -1291,13 +1291,15 @@ step_functions:
                , history_table.bui_borrower_title_other_description
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.business_income history_table
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.business_income AS current_records
+              LEFT JOIN history_octane.business_income AS history_records
+                        ON current_records.bui_pid = history_records.bui_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.business_income staging_table
                     ON staging_table.bui_pid = history_table.bui_pid
-          WHERE staging_table.bui_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.business_income deleted_records
-              WHERE deleted_records.bui_pid = history_table.bui_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.bui_pid IS NULL;

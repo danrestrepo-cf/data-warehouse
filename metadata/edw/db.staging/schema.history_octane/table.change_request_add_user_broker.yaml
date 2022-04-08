@@ -1,0 +1,167 @@
+name: change_request_add_user_broker
+primary_source_table: staging.staging_octane.change_request_add_user_broker
+primary_key:
+- chraub_pid
+- chraub_version
+foreign_keys:
+  fk_change_request_add_user_broker_1:
+    columns:
+    - chraub_change_request_pid
+    references:
+      columns:
+      - chr_pid
+      schema: history_octane
+      table: change_request
+  fk_change_request_add_user_broker_2:
+    columns:
+    - chraub_branch_pid
+    references:
+      columns:
+      - br_pid
+      schema: history_octane
+      table: branch
+  fk_change_request_add_user_broker_3:
+    columns:
+    - chraub_performer_team_pid
+    references:
+      columns:
+      - ptm_pid
+      schema: history_octane
+      table: performer_team
+columns:
+  chraub_branch_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.chraub_branch_pid
+  chraub_change_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.chraub_change_request_pid
+  chraub_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.chraub_email
+  chraub_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.chraub_first_name
+  chraub_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.chraub_last_name
+  chraub_lead_source_tier:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.chraub_lead_source_tier
+  chraub_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.chraub_middle_name
+  chraub_nmls_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.chraub_nmls_id
+  chraub_parent_org_node_id:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.chraub_parent_org_node_id
+  chraub_performer_team_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.chraub_performer_team_pid
+  chraub_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.chraub_phone
+  chraub_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.chraub_phone_extension
+  chraub_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.chraub_pid
+  chraub_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.chraub_suffix
+  chraub_title:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.chraub_title
+  chraub_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.chraub_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+step_functions:
+  SP-100910:
+    etls:
+      ETL-100910:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.change_request_add_user_broker
+        json_output_field: chraub_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.change_request_add_user_broker
+          SELECT staging_table.chraub_pid
+               , staging_table.chraub_version
+               , staging_table.chraub_change_request_pid
+               , staging_table.chraub_first_name
+               , staging_table.chraub_last_name
+               , staging_table.chraub_middle_name
+               , staging_table.chraub_suffix
+               , staging_table.chraub_email
+               , staging_table.chraub_title
+               , staging_table.chraub_branch_pid
+               , staging_table.chraub_performer_team_pid
+               , staging_table.chraub_nmls_id
+               , staging_table.chraub_phone
+               , staging_table.chraub_phone_extension
+               , staging_table.chraub_lead_source_tier
+               , staging_table.chraub_parent_org_node_id
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.change_request_add_user_broker staging_table
+          LEFT JOIN history_octane.change_request_add_user_broker history_table
+                    ON staging_table.chraub_pid = history_table.chraub_pid
+                        AND staging_table.chraub_version = history_table.chraub_version
+          WHERE history_table.chraub_pid IS NULL
+          UNION ALL
+          SELECT history_table.chraub_pid
+               , history_table.chraub_version + 1
+               , history_table.chraub_change_request_pid
+               , history_table.chraub_first_name
+               , history_table.chraub_last_name
+               , history_table.chraub_middle_name
+               , history_table.chraub_suffix
+               , history_table.chraub_email
+               , history_table.chraub_title
+               , history_table.chraub_branch_pid
+               , history_table.chraub_performer_team_pid
+               , history_table.chraub_nmls_id
+               , history_table.chraub_phone
+               , history_table.chraub_phone_extension
+               , history_table.chraub_lead_source_tier
+               , history_table.chraub_parent_org_node_id
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.change_request_add_user_broker AS current_records
+              LEFT JOIN history_octane.change_request_add_user_broker AS history_records
+                        ON current_records.chraub_pid = history_records.chraub_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
+          LEFT JOIN staging_octane.change_request_add_user_broker staging_table
+                    ON staging_table.chraub_pid = history_table.chraub_pid
+          WHERE staging_table.chraub_pid IS NULL;
