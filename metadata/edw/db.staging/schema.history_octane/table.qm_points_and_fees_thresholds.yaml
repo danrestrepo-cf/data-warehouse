@@ -104,13 +104,15 @@ step_functions:
                , history_table.qmpaft_ceiling_points_and_fees_threshold_percent
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.qm_points_and_fees_thresholds history_table
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.qm_points_and_fees_thresholds AS current_records
+              LEFT JOIN history_octane.qm_points_and_fees_thresholds AS history_records
+                        ON current_records.qmpaft_pid = history_records.qmpaft_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.qm_points_and_fees_thresholds staging_table
                     ON staging_table.qmpaft_pid = history_table.qmpaft_pid
-          WHERE staging_table.qmpaft_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.qm_points_and_fees_thresholds deleted_records
-              WHERE deleted_records.qmpaft_pid = history_table.qmpaft_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.qmpaft_pid IS NULL;

@@ -127,13 +127,15 @@ step_functions:
                , history_table.rcp_payer_other_editable
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.role_charge_permissions history_table
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.role_charge_permissions AS current_records
+              LEFT JOIN history_octane.role_charge_permissions AS history_records
+                        ON current_records.rcp_pid = history_records.rcp_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.role_charge_permissions staging_table
                     ON staging_table.rcp_pid = history_table.rcp_pid
-          WHERE staging_table.rcp_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.role_charge_permissions deleted_records
-              WHERE deleted_records.rcp_pid = history_table.rcp_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.rcp_pid IS NULL;

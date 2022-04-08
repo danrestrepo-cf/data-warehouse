@@ -87,13 +87,15 @@ step_functions:
                , history_table.sdc_deal_child_type
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.smart_doc_criteria history_table
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.smart_doc_criteria AS current_records
+              LEFT JOIN history_octane.smart_doc_criteria AS history_records
+                        ON current_records.sdc_pid = history_records.sdc_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
           LEFT JOIN staging_octane.smart_doc_criteria staging_table
                     ON staging_table.sdc_pid = history_table.sdc_pid
-          WHERE staging_table.sdc_pid IS NULL
-            AND NOT EXISTS(
-              SELECT 1
-              FROM history_octane.smart_doc_criteria deleted_records
-              WHERE deleted_records.sdc_pid = history_table.sdc_pid
-                AND deleted_records.data_source_deleted_flag = TRUE
-              );
+          WHERE staging_table.sdc_pid IS NULL;
