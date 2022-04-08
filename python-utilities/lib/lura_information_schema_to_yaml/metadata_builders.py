@@ -475,7 +475,7 @@ def generate_most_recent_history_octane_table_record_subquery(table: TableMetada
     base_indent_str = base_indent * ' '
 
     current_history_octane_record_subquery = \
-        f'{base_indent_str}SELECT history_octane.{table.name}.*\n' + \
+        f'{base_indent_str}SELECT current_records.*\n' + \
         f'{base_indent_str}FROM history_octane.{table.name} AS current_records\n' + \
         f'{base_indent_str}LEFT JOIN history_octane.{table.name} AS history_records\n' + \
         f'{base_indent_str}  ON current_records.{table.primary_key[0]} =\n' + \

@@ -440,7 +440,7 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                                                  "     , TRUE AS data_source_deleted_flag\n" +
                                                  "     , NOW( ) AS data_source_updated_datetime\n" +
                                                  "FROM (\n" +
-                                                 "      SELECT history_octane.account.*\n" +
+                                                 "      SELECT current_records.*\n" +
                                                  "      FROM history_octane.account AS current_records\n" +
                                                  "      LEFT JOIN history_octane.account AS history_records\n" +
                                                  "        ON current_records.a_pid =\n"
@@ -852,7 +852,7 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                                                  "     , TRUE AS data_source_deleted_flag\n" +
                                                  "     , NOW( ) AS data_source_updated_datetime\n" +
                                                  "FROM (\n" +
-                                                 "      SELECT history_octane.wide_table.*\n" +
+                                                 "      SELECT current_records.*\n" +
                                                  "      FROM history_octane.wide_table AS current_records\n" +
                                                  "      LEFT JOIN history_octane.wide_table AS history_records\n" +
                                                  "        ON current_records.wt_pid =\n" +
