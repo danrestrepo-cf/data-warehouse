@@ -50,6 +50,14 @@ foreign_keys:
       - ws_pid
       schema: staging_octane
       table: wf_step
+  fk_config_note_8:
+    columns:
+    - cn_change_request_pid
+    references:
+      columns:
+      - chr_pid
+      schema: staging_octane
+      table: change_request
   fkt_cn_config_note_scope_type:
     columns:
     - cn_config_note_scope_type
@@ -65,6 +73,8 @@ columns:
     data_type: BIGINT
   cn_author_unparsed_name:
     data_type: VARCHAR(128)
+  cn_change_request_pid:
+    data_type: BIGINT
   cn_config_note_scope_type:
     data_type: VARCHAR(128)
   cn_content:

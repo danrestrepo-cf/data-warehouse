@@ -34,6 +34,22 @@ foreign_keys:
       - lts_pid
       schema: staging_octane
       table: lock_term_setting
+  fk_lender_settings_6:
+    columns:
+    - lss_default_change_request_rate_search_user_branch_pid
+    references:
+      columns:
+      - br_pid
+      schema: staging_octane
+      table: branch
+  fk_lender_settings_7:
+    columns:
+    - lss_default_change_request_rate_search_user_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: staging_octane
+      table: org_node
   fkt_lss_borrower_quote_filter_pivot_type:
     columns:
     - lss_borrower_quote_filter_pivot_type
@@ -93,6 +109,10 @@ columns:
     data_type: VARCHAR(128)
   lss_company_time_zone_type:
     data_type: VARCHAR(128)
+  lss_default_change_request_rate_search_user_branch_pid:
+    data_type: BIGINT
+  lss_default_change_request_rate_search_user_org_node_pid:
+    data_type: BIGINT
   lss_default_combo_lock_term_setting_pid:
     data_type: BIGINT
   lss_default_credit_bureau_type:

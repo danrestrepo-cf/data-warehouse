@@ -36,6 +36,22 @@ foreign_keys:
       - lts_pid
       schema: history_octane
       table: lock_term_setting
+  fk_lender_settings_6:
+    columns:
+    - lss_default_change_request_rate_search_user_branch_pid
+    references:
+      columns:
+      - br_pid
+      schema: history_octane
+      table: branch
+  fk_lender_settings_7:
+    columns:
+    - lss_default_change_request_rate_search_user_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: history_octane
+      table: org_node
   fkt_lss_borrower_quote_filter_pivot_type:
     columns:
     - lss_borrower_quote_filter_pivot_type
@@ -111,6 +127,14 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lss_company_time_zone_type
+  lss_default_change_request_rate_search_user_branch_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lss_default_change_request_rate_search_user_branch_pid
+  lss_default_change_request_rate_search_user_org_node_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lss_default_change_request_rate_search_user_org_node_pid
   lss_default_combo_lock_term_setting_pid:
     data_type: BIGINT
     source:
@@ -314,6 +338,8 @@ step_functions:
                , staging_table.lss_factual_data_submitting_party_name
                , staging_table.lss_factual_data_submitting_party_id
                , staging_table.lss_meridian_link_submitting_party_id
+               , staging_table.lss_default_change_request_rate_search_user_branch_pid
+               , staging_table.lss_default_change_request_rate_search_user_org_node_pid
                , FALSE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM staging_octane.lender_settings staging_table
@@ -359,6 +385,8 @@ step_functions:
                , history_table.lss_factual_data_submitting_party_name
                , history_table.lss_factual_data_submitting_party_id
                , history_table.lss_meridian_link_submitting_party_id
+               , history_table.lss_default_change_request_rate_search_user_branch_pid
+               , history_table.lss_default_change_request_rate_search_user_org_node_pid
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (
