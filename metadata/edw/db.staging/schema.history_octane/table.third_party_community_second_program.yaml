@@ -171,7 +171,16 @@ step_functions:
                , history_table.tpcsp_investor_pid
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.third_party_community_second_program history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.third_party_community_second_program AS current_records
+                LEFT JOIN history_octane.third_party_community_second_program AS history_records
+                  ON current_records.tpcsp_pid =
+                      history_records.tpcsp_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.third_party_community_second_program staging_table
                     ON staging_table.tpcsp_pid = history_table.tpcsp_pid
           WHERE staging_table.tpcsp_pid IS NULL

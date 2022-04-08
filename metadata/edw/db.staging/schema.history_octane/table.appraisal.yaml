@@ -781,7 +781,16 @@ step_functions:
                , history_table.apr_second_decision_appraisal
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.appraisal history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.appraisal AS current_records
+                LEFT JOIN history_octane.appraisal AS history_records
+                  ON current_records.apr_pid =
+                      history_records.apr_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.appraisal staging_table
                     ON staging_table.apr_pid = history_table.apr_pid
           WHERE staging_table.apr_pid IS NULL

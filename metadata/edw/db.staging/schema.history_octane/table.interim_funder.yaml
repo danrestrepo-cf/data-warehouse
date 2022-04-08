@@ -253,7 +253,16 @@ step_functions:
                , history_table.if_funder_id
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.interim_funder history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.interim_funder AS current_records
+                LEFT JOIN history_octane.interim_funder AS history_records
+                  ON current_records.if_pid =
+                      history_records.if_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.interim_funder staging_table
                     ON staging_table.if_pid = history_table.if_pid
           WHERE staging_table.if_pid IS NULL

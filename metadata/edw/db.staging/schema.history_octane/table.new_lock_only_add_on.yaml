@@ -71,7 +71,16 @@ step_functions:
                , history_table.nlo_add_on_description
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.new_lock_only_add_on history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.new_lock_only_add_on AS current_records
+                LEFT JOIN history_octane.new_lock_only_add_on AS history_records
+                  ON current_records.nlo_pid =
+                      history_records.nlo_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.new_lock_only_add_on staging_table
                     ON staging_table.nlo_pid = history_table.nlo_pid
           WHERE staging_table.nlo_pid IS NULL

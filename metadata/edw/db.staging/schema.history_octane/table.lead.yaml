@@ -449,7 +449,16 @@ step_functions:
                , history_table.ld_borrower_residence_through_date
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.lead history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.lead AS current_records
+                LEFT JOIN history_octane.lead AS history_records
+                  ON current_records.ld_pid =
+                      history_records.ld_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.lead staging_table
                     ON staging_table.ld_pid = history_table.ld_pid
           WHERE staging_table.ld_pid IS NULL

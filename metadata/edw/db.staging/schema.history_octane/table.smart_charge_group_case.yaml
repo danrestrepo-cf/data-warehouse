@@ -71,7 +71,16 @@ step_functions:
                , history_table.scgc_through_date
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.smart_charge_group_case history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.smart_charge_group_case AS current_records
+                LEFT JOIN history_octane.smart_charge_group_case AS history_records
+                  ON current_records.scgc_pid =
+                      history_records.scgc_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.smart_charge_group_case staging_table
                     ON staging_table.scgc_pid = history_table.scgc_pid
           WHERE staging_table.scgc_pid IS NULL

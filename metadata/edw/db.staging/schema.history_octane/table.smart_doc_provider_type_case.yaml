@@ -59,7 +59,16 @@ step_functions:
                , history_table.sdptc_smart_doc_pid
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.smart_doc_provider_type_case history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.smart_doc_provider_type_case AS current_records
+                LEFT JOIN history_octane.smart_doc_provider_type_case AS history_records
+                  ON current_records.sdptc_pid =
+                      history_records.sdptc_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.smart_doc_provider_type_case staging_table
                     ON staging_table.sdptc_pid = history_table.sdptc_pid
           WHERE staging_table.sdptc_pid IS NULL

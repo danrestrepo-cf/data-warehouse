@@ -109,7 +109,16 @@ step_functions:
                , history_table.ae_event_date
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.account_event history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.account_event AS current_records
+                LEFT JOIN history_octane.account_event AS history_records
+                  ON current_records.ae_pid =
+                      history_records.ae_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.account_event staging_table
                     ON staging_table.ae_pid = history_table.ae_pid
           WHERE staging_table.ae_pid IS NULL

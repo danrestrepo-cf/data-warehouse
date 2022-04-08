@@ -469,7 +469,16 @@ step_functions:
                , history_table.lc_configured_financed
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.loan_charge history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.loan_charge AS current_records
+                LEFT JOIN history_octane.loan_charge AS history_records
+                  ON current_records.lc_pid =
+                      history_records.lc_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.loan_charge staging_table
                     ON staging_table.lc_pid = history_table.lc_pid
           WHERE staging_table.lc_pid IS NULL

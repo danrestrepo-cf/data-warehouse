@@ -143,7 +143,16 @@ step_functions:
                , history_table.lds_compensation_type
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.lead_source history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.lead_source AS current_records
+                LEFT JOIN history_octane.lead_source AS history_records
+                  ON current_records.lds_pid =
+                      history_records.lds_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.lead_source staging_table
                     ON staging_table.lds_pid = history_table.lds_pid
           WHERE staging_table.lds_pid IS NULL

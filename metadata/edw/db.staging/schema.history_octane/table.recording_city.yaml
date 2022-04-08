@@ -71,7 +71,16 @@ step_functions:
                , history_table.rc_recording_city_name
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.recording_city history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.recording_city AS current_records
+                LEFT JOIN history_octane.recording_city AS history_records
+                  ON current_records.rc_pid =
+                      history_records.rc_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.recording_city staging_table
                     ON staging_table.rc_pid = history_table.rc_pid
           WHERE staging_table.rc_pid IS NULL

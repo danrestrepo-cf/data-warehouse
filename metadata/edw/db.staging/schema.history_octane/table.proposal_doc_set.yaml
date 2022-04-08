@@ -325,7 +325,16 @@ step_functions:
                , history_table.prpds_docs_last_updated_datetime
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.proposal_doc_set history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.proposal_doc_set AS current_records
+                LEFT JOIN history_octane.proposal_doc_set AS history_records
+                  ON current_records.prpds_pid =
+                      history_records.prpds_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.proposal_doc_set staging_table
                     ON staging_table.prpds_pid = history_table.prpds_pid
           WHERE staging_table.prpds_pid IS NULL

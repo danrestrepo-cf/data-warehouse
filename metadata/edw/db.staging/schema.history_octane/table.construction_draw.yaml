@@ -159,7 +159,16 @@ step_functions:
                , history_table.cd_construction_draw_disbursed_at_closing
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.construction_draw history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.construction_draw AS current_records
+                LEFT JOIN history_octane.construction_draw AS history_records
+                  ON current_records.cd_pid =
+                      history_records.cd_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.construction_draw staging_table
                     ON staging_table.cd_pid = history_table.cd_pid
           WHERE staging_table.cd_pid IS NULL

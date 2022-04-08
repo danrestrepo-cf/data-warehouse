@@ -144,7 +144,16 @@ step_functions:
                , history_table.on_amb_codes
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.org_node history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.org_node AS current_records
+                LEFT JOIN history_octane.org_node AS history_records
+                  ON current_records.on_pid =
+                      history_records.on_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.org_node staging_table
                     ON staging_table.on_pid = history_table.on_pid
           WHERE staging_table.on_pid IS NULL

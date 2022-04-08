@@ -1668,7 +1668,16 @@ step_functions:
                , history_table.pl_verified_geocode
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.place history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.place AS current_records
+                LEFT JOIN history_octane.place AS history_records
+                  ON current_records.pl_pid =
+                      history_records.pl_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.place staging_table
                     ON staging_table.pl_pid = history_table.pl_pid
           WHERE staging_table.pl_pid IS NULL

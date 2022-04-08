@@ -427,7 +427,16 @@ step_functions:
                , history_table.ob_insurance_transferred
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.obligation history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.obligation AS current_records
+                LEFT JOIN history_octane.obligation AS history_records
+                  ON current_records.ob_pid =
+                      history_records.ob_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.obligation staging_table
                     ON staging_table.ob_pid = history_table.ob_pid
           WHERE staging_table.ob_pid IS NULL

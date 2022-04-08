@@ -77,7 +77,16 @@ step_functions:
                , history_table.wdfq_retry_count
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.wf_deal_function_queue history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.wf_deal_function_queue AS current_records
+                LEFT JOIN history_octane.wf_deal_function_queue AS history_records
+                  ON current_records.wdfq_pid =
+                      history_records.wdfq_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.wf_deal_function_queue staging_table
                     ON staging_table.wdfq_pid = history_table.wdfq_pid
           WHERE staging_table.wdfq_pid IS NULL

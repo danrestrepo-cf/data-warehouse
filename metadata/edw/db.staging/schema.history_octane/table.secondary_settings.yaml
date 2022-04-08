@@ -253,7 +253,16 @@ step_functions:
                , history_table.sset_day_ami_uses_subsequent_year
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.secondary_settings history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.secondary_settings AS current_records
+                LEFT JOIN history_octane.secondary_settings AS history_records
+                  ON current_records.sset_pid =
+                      history_records.sset_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.secondary_settings staging_table
                     ON staging_table.sset_pid = history_table.sset_pid
           WHERE staging_table.sset_pid IS NULL

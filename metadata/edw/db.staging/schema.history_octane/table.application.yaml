@@ -225,7 +225,16 @@ step_functions:
                , history_table.apl_fha_va_bor_cert_sales_price_exceeds_type
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.application history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.application AS current_records
+                LEFT JOIN history_octane.application AS history_records
+                  ON current_records.apl_pid =
+                      history_records.apl_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.application staging_table
                     ON staging_table.apl_pid = history_table.apl_pid
           WHERE staging_table.apl_pid IS NULL

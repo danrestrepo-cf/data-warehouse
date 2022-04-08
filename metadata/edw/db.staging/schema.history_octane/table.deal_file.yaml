@@ -85,7 +85,16 @@ step_functions:
                , history_table.df_borrower_uploaded
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.deal_file history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.deal_file AS current_records
+                LEFT JOIN history_octane.deal_file AS history_records
+                  ON current_records.df_pid =
+                      history_records.df_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.deal_file staging_table
                     ON staging_table.df_pid = history_table.df_pid
           WHERE staging_table.df_pid IS NULL

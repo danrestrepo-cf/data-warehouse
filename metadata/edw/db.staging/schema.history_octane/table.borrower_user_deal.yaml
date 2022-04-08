@@ -133,7 +133,16 @@ step_functions:
                , history_table.bud_uuid
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.borrower_user_deal history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.borrower_user_deal AS current_records
+                LEFT JOIN history_octane.borrower_user_deal AS history_records
+                  ON current_records.bud_pid =
+                      history_records.bud_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.borrower_user_deal staging_table
                     ON staging_table.bud_pid = history_table.bud_pid
           WHERE staging_table.bud_pid IS NULL

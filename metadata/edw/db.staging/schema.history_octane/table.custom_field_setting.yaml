@@ -99,7 +99,16 @@ step_functions:
                , history_table.cfs_custom_field_setting_description
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.custom_field_setting history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.custom_field_setting AS current_records
+                LEFT JOIN history_octane.custom_field_setting AS history_records
+                  ON current_records.cfs_pid =
+                      history_records.cfs_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.custom_field_setting staging_table
                     ON staging_table.cfs_pid = history_table.cfs_pid
           WHERE staging_table.cfs_pid IS NULL

@@ -203,7 +203,16 @@ step_functions:
                , history_table.ctr_validation_status_type
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.contractor history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.contractor AS current_records
+                LEFT JOIN history_octane.contractor AS history_records
+                  ON current_records.ctr_pid =
+                      history_records.ctr_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.contractor staging_table
                     ON staging_table.ctr_pid = history_table.ctr_pid
           WHERE staging_table.ctr_pid IS NULL

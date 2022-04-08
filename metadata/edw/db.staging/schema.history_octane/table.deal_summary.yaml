@@ -257,7 +257,16 @@ step_functions:
                , history_table.ds_proposal_review_requested_count
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.deal_summary history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.deal_summary AS current_records
+                LEFT JOIN history_octane.deal_summary AS history_records
+                  ON current_records.ds_pid =
+                      history_records.ds_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.deal_summary staging_table
                     ON staging_table.ds_pid = history_table.ds_pid
           WHERE staging_table.ds_pid IS NULL

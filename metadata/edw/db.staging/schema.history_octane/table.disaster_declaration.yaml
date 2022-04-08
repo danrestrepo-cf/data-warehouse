@@ -105,7 +105,16 @@ step_functions:
                , history_table.dd_last_processed_datetime
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.disaster_declaration history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.disaster_declaration AS current_records
+                LEFT JOIN history_octane.disaster_declaration AS history_records
+                  ON current_records.dd_pid =
+                      history_records.dd_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.disaster_declaration staging_table
                     ON staging_table.dd_pid = history_table.dd_pid
           WHERE staging_table.dd_pid IS NULL

@@ -273,7 +273,16 @@ step_functions:
                , history_table.crl_trans_union_included
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.credit_request_liability history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.credit_request_liability AS current_records
+                LEFT JOIN history_octane.credit_request_liability AS history_records
+                  ON current_records.crl_pid =
+                      history_records.crl_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.credit_request_liability staging_table
                     ON staging_table.crl_pid = history_table.crl_pid
           WHERE staging_table.crl_pid IS NULL

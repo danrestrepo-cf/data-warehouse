@@ -109,7 +109,16 @@ step_functions:
                , history_table.of_adverse_action_offering
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.offering history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.offering AS current_records
+                LEFT JOIN history_octane.offering AS history_records
+                  ON current_records.of_pid =
+                      history_records.of_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.offering staging_table
                     ON staging_table.of_pid = history_table.of_pid
           WHERE staging_table.of_pid IS NULL

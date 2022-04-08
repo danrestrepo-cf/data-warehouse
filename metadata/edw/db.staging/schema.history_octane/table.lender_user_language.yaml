@@ -73,7 +73,16 @@ step_functions:
                , history_table.lul_lender_user_language_type
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.lender_user_language history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.lender_user_language AS current_records
+                LEFT JOIN history_octane.lender_user_language AS history_records
+                  ON current_records.lul_pid =
+                      history_records.lul_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.lender_user_language staging_table
                     ON staging_table.lul_pid = history_table.lul_pid
           WHERE staging_table.lul_pid IS NULL

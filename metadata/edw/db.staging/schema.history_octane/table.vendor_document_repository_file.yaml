@@ -139,7 +139,16 @@ step_functions:
                , history_table.vdrf_processed_datetime
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.vendor_document_repository_file history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.vendor_document_repository_file AS current_records
+                LEFT JOIN history_octane.vendor_document_repository_file AS history_records
+                  ON current_records.vdrf_pid =
+                      history_records.vdrf_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.vendor_document_repository_file staging_table
                     ON staging_table.vdrf_pid = history_table.vdrf_pid
           WHERE staging_table.vdrf_pid IS NULL

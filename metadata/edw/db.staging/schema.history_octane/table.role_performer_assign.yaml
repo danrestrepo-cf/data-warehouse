@@ -73,7 +73,16 @@ step_functions:
                , history_table.rpa_assignee_role_pid
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
-          FROM history_octane.role_performer_assign history_table
+          FROM (
+                SELECT current_records.*
+                FROM history_octane.role_performer_assign AS current_records
+                LEFT JOIN history_octane.role_performer_assign AS history_records
+                  ON current_records.rpa_pid =
+                      history_records.rpa_pid
+                    AND current_records.data_source_updated_datetime <
+                        history_records.data_source_updated_datetime
+                WHERE history_records.data_source_updated_datetime IS NULL
+               ) AS history_table
           LEFT JOIN staging_octane.role_performer_assign staging_table
                     ON staging_table.rpa_pid = history_table.rpa_pid
           WHERE staging_table.rpa_pid IS NULL
