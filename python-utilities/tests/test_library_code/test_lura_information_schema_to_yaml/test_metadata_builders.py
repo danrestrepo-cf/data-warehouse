@@ -448,16 +448,11 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                                                  "          AND current_records.data_source_updated_datetime <\n" +
                                                  "              history_records.data_source_updated_datetime\n" +
                                                  "      WHERE history_records.data_source_updated_datetime IS NULL\n" +
+                                                 "      AND current_records.data_source_deleted_flag = FALSE\n" +
                                                  "     ) AS history_table\n" +
                                                  "LEFT JOIN staging_octane.account staging_table\n" +
                                                  "          ON staging_table.a_pid = history_table.a_pid\n" +
-                                                 "WHERE staging_table.a_pid IS NULL\n" +
-                                                 "  AND NOT EXISTS(\n" +
-                                                 "    SELECT 1\n" +
-                                                 "    FROM history_octane.account deleted_records\n" +
-                                                 "    WHERE deleted_records.a_pid = history_table.a_pid\n" +
-                                                 "      AND deleted_records.data_source_deleted_flag = TRUE\n" +
-                                                 "    );"
+                                                 "WHERE staging_table.a_pid IS NULL;"
                                 }
                             }
                         }
@@ -859,17 +854,12 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                                                  "            history_records.wt_pid\n" +
                                                  "          AND current_records.data_source_updated_datetime <\n" +
                                                  "              history_records.data_source_updated_datetime\n" +
-                                                 "      WHERE history_records.data_source_updated_datetime IS NULL\n" +
+                                                 "      WHERE history_records.data_source_updated_datetime IS NULL\n"
+                                                 "      AND current_records.data_source_deleted_flag = FALSE\n" +
                                                  "     ) AS history_table\n" +
                                                  "LEFT JOIN staging_octane.wide_table staging_table\n" +
                                                  "          ON staging_table.wt_pid = history_table.wt_pid\n" +
-                                                 "WHERE staging_table.wt_pid IS NULL\n" +
-                                                 "  AND NOT EXISTS(\n" +
-                                                 "    SELECT 1\n" +
-                                                 "    FROM history_octane.wide_table deleted_records\n" +
-                                                 "    WHERE deleted_records.wt_pid = history_table.wt_pid\n" +
-                                                 "      AND deleted_records.data_source_deleted_flag = TRUE\n" +
-                                                 "    );"
+                                                 "WHERE staging_table.wt_pid IS NULL;"
                                 }
                             }
                         }

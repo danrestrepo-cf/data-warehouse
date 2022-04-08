@@ -415,16 +415,11 @@ def generate_history_octane_table_input_sql(table: TableMetadata) -> str:
                            f'     , NOW( ) AS data_source_updated_datetime\n' + \
                            f'FROM (\n' + \
                            generate_most_recent_history_octane_table_record_subquery(table) + '\n' + \
+                           f'      AND current_records.data_source_deleted_flag = FALSE\n' + \
                            f'     ) AS history_table\n' + \
                            f'LEFT JOIN staging_octane.{table.name} staging_table\n' + \
                            generate_staging_to_history_join_columns_string([primary_key_column]) + '\n' + \
-                           f'WHERE staging_table.{primary_key_column} IS NULL\n' + \
-                           f'  AND NOT EXISTS(\n' + \
-                           f'    SELECT 1\n' + \
-                           f'    FROM history_octane.{table.name} deleted_records\n' + \
-                           f'    WHERE deleted_records.{primary_key_column} = history_table.{primary_key_column}\n' + \
-                           f'      AND deleted_records.data_source_deleted_flag = TRUE\n' + \
-                           f'    )'
+                           f'WHERE staging_table.{primary_key_column} IS NULL'
     # add Postgres-required final semicolon
     table_input_sql += ';'
     return table_input_sql
