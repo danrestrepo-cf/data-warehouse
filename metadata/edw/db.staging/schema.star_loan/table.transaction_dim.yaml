@@ -106,6 +106,1066 @@ columns:
   subject_property_neighborhood_location:
     data_type: VARCHAR(1024)
     update_flag: true
+  borrower_esign_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_borrower_esign
+    update_flag: true
+  deed_taxes_applicable_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_deed_taxes_applicable
+    update_flag: true
+  deed_taxes_auto_compute_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_deed_taxes_auto_compute
+    update_flag: true
+  delayed_financing_exception_guidelines_applicable_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_delayed_financing_exception_guidelines_applicable
+    update_flag: true
+  delayed_financing_exception_verified_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_delayed_financing_exception_verified
+    update_flag: true
+  down_payment_percent_mode_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_down_payment_percent_mode
+    update_flag: true
+  early_wire_request_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_early_wire_request
+    update_flag: true
+  enable_electronic_transaction_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_enable_electronic_transaction
+    update_flag: true
+  escrow_cushion_months_auto_compute_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_escrow_cushion_months_auto_compute
+    update_flag: true
+  first_payment_date_auto_compute_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_first_payment_date_auto_compute
+    update_flag: true
+  household_income_exclusive_edit_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_household_income_exclusive_edit
+    update_flag: true
+  intent_to_proceed_provided_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_intent_to_proceed_provided
+    update_flag: true
+  invoices_enabled_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_invoices_enabled
+    update_flag: true
+  ipc_auto_compute_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_ipc_auto_compute
+    update_flag: true
+  minimum_residual_income_auto_compute_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_minimum_residual_income_auto_compute
+    update_flag: true
+  other_lender_requires_appraisal_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_other_lender_requires_appraisal
+    update_flag: true
+  owner_occupancy_not_required_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_owner_occupancy_not_required
+    update_flag: true
+  property_taxes_request_input_error_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_property_taxes_request_input_error
+    update_flag: true
+  publish_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_publish
+    update_flag: true
+  recording_fees_request_input_error_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_recording_fees_request_input_error
+    update_flag: true
+  request_property_taxes_required_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_request_property_taxes_required
+    update_flag: true
+  request_recording_fees_required_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_request_recording_fees_required
+    update_flag: true
+  rescission_applicable_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_rescission_applicable
+    update_flag: true
+  reserves_auto_compute_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_reserves_auto_compute
+    update_flag: true
+  sap_deal_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_sap_deal
+    update_flag: true
+  sar_significant_adjustments_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_sar_significant_adjustments
+    update_flag: true
+  smart_charges_enabled_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_smart_charges_enabled
+    update_flag: true
+  smart_docs_enabled_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prp_smart_docs_enabled
+    update_flag: true
+  training_loan_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_training_loan
+    update_flag: true
+  active_proposal_publish_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_publish_date
+    update_flag: true
+  calculated_earliest_allowed_consummation_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_calculated_earliest_allowed_consummation_date
+    update_flag: true
+  charges_updated_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.prp_charges_updated_datetime
+    update_flag: true
+  closing_document_sign_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.prp_closing_document_sign_datetime
+    update_flag: true
+  docs_enabled_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.prp_docs_enabled_datetime
+    update_flag: true
+  ecoa_decision_due_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_ecoa_decision_due_date
+    update_flag: true
+  ecoa_notice_of_incomplete_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_ecoa_notice_of_incomplete_date
+    update_flag: true
+  ecoa_notice_of_incomplete_due_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_ecoa_notice_of_incomplete_due_date
+    update_flag: true
+  effective_earliest_allowed_consummation_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_effective_earliest_allowed_consummation_date
+    update_flag: true
+  first_payment_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_first_payment_date
+    update_flag: true
+  fre_ctp_first_payment_due_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_fre_ctp_first_payment_due_date
+    update_flag: true
+  gfe_interest_rate_expiration_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_gfe_interest_rate_expiration_date
+    update_flag: true
+  initial_uw_disposition_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.prp_initial_uw_disposition_datetime
+    update_flag: true
+  initial_uw_submit_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.prp_initial_uw_submit_datetime
+    update_flag: true
+  invoices_enabled_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_invoices_enabled_date
+    update_flag: true
+  land_acquisition_transaction_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_land_acquisition_transaction_date
+    update_flag: true
+  last_corrective_disclosure_processed_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.prp_last_corrective_disclosure_processed_datetime
+    update_flag: true
+  last_requested_disclosure_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_last_requested_disclosure_date
+    update_flag: true
+  lender_escrow_loan_due_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_lender_escrow_loan_due_date
+    update_flag: true
+  overridden_earliest_allowed_consummation_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_overridden_earliest_allowed_consummation_date
+    update_flag: true
+  preapproval_uw_disposition_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.prp_preapproval_uw_disposition_datetime
+    update_flag: true
+  preapproval_uw_submit_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.prp_preapproval_uw_submit_datetime
+    update_flag: true
+  proposal_expiration_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_proposal_expiration_date
+    update_flag: true
+  purchase_contract_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_purchase_contract_date
+    update_flag: true
+  purchase_contract_financing_contingency_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_purchase_contract_financing_contingency_date
+    update_flag: true
+  purchase_contract_funding_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_purchase_contract_funding_date
+    update_flag: true
+  purchase_contract_received_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_purchase_contract_received_date
+    update_flag: true
+  rescission_effective_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_rescission_effective_date
+    update_flag: true
+  rescission_notification_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_rescission_notification_date
+    update_flag: true
+  rescission_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_rescission_through_date
+    update_flag: true
+  scheduled_closing_document_sign_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.prp_scheduled_closing_document_sign_datetime
+    update_flag: true
+  signed_closing_doc_received_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.prp_signed_closing_doc_received_datetime
+    update_flag: true
+  transaction_deal_create_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_deal_create_date_time
+    update_flag: true
+  transaction_orphan_earliest_check_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_deal_orphan_earliest_check_date
+    update_flag: true
+  transaction_proposal_create_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.prp_create_datetime
+    update_flag: true
+  transaction_status_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_deal_status_date
+    update_flag: true
+  transaction_welcome_call_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_welcome_call_datetime
+    update_flag: true
+  underwrite_expiration_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_underwrite_expiration_date
+    update_flag: true
+  user_entered_note_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_user_entered_note_date
+    update_flag: true
+  anti_steering_lowest_cost_option_fee_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.prp_anti_steering_lowest_cost_option_fee_amount
+    update_flag: true
+  anti_steering_lowest_cost_option_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.prp_anti_steering_lowest_cost_option_rate_percent
+    update_flag: true
+  anti_steering_lowest_rate_option_fee_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.prp_anti_steering_lowest_rate_option_fee_amount
+    update_flag: true
+  anti_steering_lowest_rate_option_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.prp_anti_steering_lowest_rate_option_rate_percent
+    update_flag: true
+  anti_steering_lowest_rate_wo_neg_option_fee_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.prp_anti_steering_lowest_rate_wo_neg_option_fee_amount
+    update_flag: true
+  anti_steering_lowest_rate_wo_neg_option_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.prp_anti_steering_lowest_rate_wo_neg_option_rate_percent
+    update_flag: true
+  area_median_income:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.prp_area_median_income
+    update_flag: true
+  decision_appraised_value_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.prp_decision_appraised_value_amount
+    update_flag: true
+  decision_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prp_decision_credit_score
+    update_flag: true
+  down_payment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.prp_down_payment_percent
+    update_flag: true
+  effective_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prp_effective_credit_score
+    update_flag: true
+  effective_property_value_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.prp_effective_property_value_amount
+    update_flag: true
+  escrow_cushion_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prp_escrow_cushion_months
+    update_flag: true
+  estimated_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prp_estimated_credit_score
+    update_flag: true
+  estimated_property_value_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.prp_estimated_property_value_amount
+    update_flag: true
+  gfe_lock_before_settlement_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prp_gfe_lock_before_settlement_days
+    update_flag: true
+  gfe_lock_duration_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prp_gfe_lock_duration_days
+    update_flag: true
+  household_size_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prp_household_size_count
+    update_flag: true
+  ipc_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.prp_ipc_amount
+    update_flag: true
+  ipc_financing_concession_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.prp_ipc_financing_concession_amount
+    update_flag: true
+  ipc_limit_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.prp_ipc_limit_percent
+    update_flag: true
+  ipc_maximum_amount_allowed:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.prp_ipc_maximum_amount_allowed
+    update_flag: true
+  ipc_non_cash_concession_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.prp_ipc_non_cash_concession_amount
+    update_flag: true
+  ipc_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.prp_ipc_percent
+    update_flag: true
+  land_acquisition_price:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.prp_land_acquisition_price
+    update_flag: true
+  lender_escrow_loan_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.prp_lender_escrow_loan_amount
+    update_flag: true
+  minimum_household_income_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.prp_minimum_household_income_amount
+    update_flag: true
+  minimum_residual_income_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.prp_minimum_residual_income_amount
+    update_flag: true
+  proposed_additional_monthly_payment:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.prp_proposed_additional_monthly_payment
+    update_flag: true
+  reserves_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.prp_reserves_amount
+    update_flag: true
+  reserves_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prp_reserves_months
+    update_flag: true
+  sale_price_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.prp_sale_price_amount
+    update_flag: true
+  term_borrower_intends_to_retain_property:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prp_term_borrower_intends_to_retain_property
+    update_flag: true
+  total_income_to_ami_ratio:
+    data_type: NUMERIC(14,9)
+    source:
+      field: primary_source_table.columns.prp_total_income_to_ami_ratio
+    update_flag: true
+  active_proposal_description:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.prp_description
+    update_flag: true
+  active_proposal_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_name
+    update_flag: true
+  calyx_loan_guid:
+    data_type: NUMERIC(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_calyx_loan_guid
+    update_flag: true
+  cash_out_reason_other_text:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_cash_out_reason_other_text
+    update_flag: true
+  copy_source_los_loan_id_main:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_copy_source_los_loan_id_main
+    update_flag: true
+  copy_source_los_loan_id_piggyback:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_copy_source_los_loan_id_piggyback
+    update_flag: true
+  deed_taxes_applicable_explanation:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.prp_deed_taxes_applicable_explanation
+    update_flag: true
+  deed_taxes_auto_compute_override_reason:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.prp_deed_taxes_auto_compute_override_reason
+    update_flag: true
+  earliest_allowed_consummation_date_override_reason:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.prp_earliest_allowed_consummation_date_override_reason
+    update_flag: true
+  effective_signing_location_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_effective_signing_location_city
+    update_flag: true
+  external_loan_id_main:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_external_loan_id_main
+    update_flag: true
+  external_loan_id_piggyback:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_external_loan_id_piggyback
+    update_flag: true
+  hmda_denial_reason_other_description:
+    data_type: VARCHAR(255)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_hmda_denial_reason_other_description
+    update_flag: true
+  hmda_universal_loan_id_main:
+    data_type: VARCHAR(45)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_hmda_universal_loan_id_main
+    update_flag: true
+  hmda_universal_loan_id_piggyback:
+    data_type: VARCHAR(45)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_hmda_universal_loan_id_piggyback
+    update_flag: true
+  intent_to_proceed_obtainer_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_intent_to_proceed_obtainer_unparsed_name
+    update_flag: true
+  intent_to_proceed_provider_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_intent_to_proceed_provider_unparsed_name
+    update_flag: true
+  lead_reference_id:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_lead_reference_id
+    update_flag: true
+  lead_tracking_id:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_lead_tracking_id
+    update_flag: true
+  lead_zillow_zq:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_lead_zillow_zq
+    update_flag: true
+  los_loan_number_main:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_los_loan_id_main
+    update_flag: true
+  los_loan_number_piggyback:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_los_loan_id_piggyback
+    update_flag: true
+  mers_min_main:
+    data_type: VARCHAR(20)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_mers_min_main
+    update_flag: true
+  mers_min_piggyback:
+    data_type: VARCHAR(20)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_mers_min_piggyback
+    update_flag: true
+  other_lender_requires_appraisal_reason:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.prp_other_lender_requires_appraisal_reason
+    update_flag: true
+  property_tax_request_error_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.prp_property_tax_request_error_messages
+    update_flag: true
+  recsission_notication_by:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.prp_rescission_notification_by
+    update_flag: true
+  referred_by_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_referred_by_name
+    update_flag: true
+  trustee_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_trustee_address_city
+    update_flag: true
+  trustee_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_trustee_address_country
+    update_flag: true
+  trustee_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_trustee_address_postal_code
+    update_flag: true
+  trustee_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_trustee_address_state
+    update_flag: true
+  trustee_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_trustee_address_street1
+    update_flag: true
+  trustee_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_trustee_address_street2
+    update_flag: true
+  trustee_mers_org_id:
+    data_type: VARCHAR(7)
+    source:
+      field: primary_source_table.columns.prp_trustee_mers_org_id
+    update_flag: true
+  trustee_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_trustee_name
+    update_flag: true
+  trustee_phone_number:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.prp_trustee_phone_number
+    update_flag: true
+  underwrite_disposition_note:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.prp_underwrite_disposition_note
+    update_flag: true
+  underwriting_comments:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.prp_underwriting_comments
+    update_flag: true
+  uuts_master_contact_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_uuts_master_contact_name
+    update_flag: true
+  uuts_master_contact_title:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_uuts_master_contact_title
+    update_flag: true
+  uuts_master_office_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.prp_uuts_master_office_phone
+    update_flag: true
+  uuts_master_office_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.prp_uuts_master_office_phone_extension
+    update_flag: true
+  velocify_lead_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_velocify_lead_id
+    update_flag: true
+  active_proposal_type:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_proposal_type.columns.value
+    update_flag: true
+  active_proposal_type_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_proposal_type
+    update_flag: true
+  application_type:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.foreign_keys.fkt_d_application_type.columns.value
+    update_flag: true
+  application_type_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_application_type
+    update_flag: true
+  credit_bureau:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.foreign_keys.fkt_d_credit_bureau_type.columns.value
+    update_flag: true
+  credit_bureau_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_credit_bureau_type
+    update_flag: true
+  disclosure_action:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_disclosure_action_type.columns.value
+    update_flag: true
+  disclosure_action_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_disclosure_action_type
+    update_flag: true
+  doc_level:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_doc_level_type.columns.value
+    update_flag: true
+  doc_level_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_doc_level_type
+    update_flag: true
+  effective_property_value_explanation:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_effective_property_value_explanation_type.columns.value
+    update_flag: true
+  effective_property_value_explanation_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_effective_property_value_explanation_type
+    update_flag: true
+  effective_property_value_type:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_effective_property_value_type.columns.value
+    update_flag: true
+  effective_property_value_type_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_effective_property_value_type
+    update_flag: true
+  effective_signing_location_state:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_effective_signing_location_state.columns.value
+    update_flag: true
+  effective_signing_location_state_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_effective_signing_location_state
+    update_flag: true
+  fre_ctp_closing_feature:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_fre_ctp_closing_feature_type.columns.value
+    update_flag: true
+  fre_ctp_closing_feature_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_fre_ctp_closing_feature_type
+    update_flag: true
+  gse_version:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_gse_version_type.columns.value
+    update_flag: true
+  gse_version_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_gse_version_type
+    update_flag: true
+  intent_to_proceed:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_intent_to_proceed_type.columns.value
+    update_flag: true
+  intent_to_proceed_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_intent_to_proceed_type
+    update_flag: true
+  orphan_status:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.foreign_keys.fkt_d_deal_orphan_status_type.columns.value
+    update_flag: true
+  orphan_status_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_deal_orphan_status_type
+    update_flag: true
+  realty_agent_scenario:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.foreign_keys.fkt_d_realty_agent_scenario_type.columns.value
+    update_flag: true
+  realty_agent_scenario_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_realty_agent_scenario_type
+    update_flag: true
+  rescission_notification:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_rescission_notification_type.columns.value
+    update_flag: true
+  rescission_notification_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_rescission_notification_type
+    update_flag: true
+  security_instrument:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_security_instrument_type.columns.value
+    update_flag: true
+  security_instrument_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_security_instrument_type
+    update_flag: true
+  transaction_create_type:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.foreign_keys.fkt_d_deal_create_type.columns.value
+    update_flag: true
+  transaction_create_type_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_deal_create_type
+    update_flag: true
+  transaction_status:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.foreign_keys.fkt_d_deal_status_type.columns.value
+    update_flag: true
+  transaction_status_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_deal_status_type
+    update_flag: true
+  any_vesting_changes:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_any_vesting_changes.columns.value
+    update_flag: true
+  any_vesting_changes_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_any_vesting_changes
+    update_flag: true
+  arms_length:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_arms_length.columns.value
+    update_flag: true
+  arms_length_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_arms_length
+    update_flag: true
+  early_first_payment:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_early_first_payment.columns.value
+    update_flag: true
+  early_first_payment_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_early_first_payment
+    update_flag: true
+  earthquake_insurance_applicable:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_earthquake_insurance_applicable.columns.value
+    update_flag: true
+  earthquake_insurance_applicable_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_earthquake_insurance_applicable
+    update_flag: true
+  flood_insurance_applicable:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_flood_insurance_applicable.columns.value
+    update_flag: true
+  flood_insurance_applicable_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_flood_insurance_applicable
+    update_flag: true
+  hazard_insurance_applicable:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_hazard_insurance_applicable.columns.value
+    update_flag: true
+  hazard_insurance_applicable_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_hazard_insurance_applicable
+    update_flag: true
+  hud_consultant:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_hud_consultant.columns.value
+    update_flag: true
+  hud_consultant_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_hud_consultant
+    update_flag: true
+  mortgagee_builder_seller_relationship:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_mortgagee_builder_seller_relationship.columns.value
+    update_flag: true
+  mortgagee_builder_seller_relationship_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_mortgagee_builder_seller_relationship
+    update_flag: true
+  property_acquired_through_ancillary_relief:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_property_acquired_through_ancillary_relief.columns.value
+    update_flag: true
+  property_acquired_through_ancillary_relief_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_property_acquired_through_ancillary_relief
+    update_flag: true
+  property_acquired_through_inheritance:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_property_acquired_through_inheritance.columns.value
+    update_flag: true
+  property_acquired_through_inheritance_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_property_acquired_through_inheritance
+    update_flag: true
+  separate_transaction_for_land_acquisition:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_separate_transaction_for_land_acquisition.columns.value
+    update_flag: true
+  separate_transaction_for_land_acquisition_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_separate_transaction_for_land_acquisition
+    update_flag: true
+  taxes_escrowed:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_taxes_escrowed.columns.value
+    update_flag: true
+  taxes_escrowed_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_taxes_escrowed
+    update_flag: true
+  vesting_change_titleholder_added:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_vesting_change_titleholder_added.columns.value
+    update_flag: true
+  vesting_change_titleholder_added_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_vesting_change_titleholder_added
+    update_flag: true
+  vesting_change_titleholder_name_change:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_vesting_change_titleholder_name_change.columns.value
+    update_flag: true
+  vesting_change_titleholder_name_change_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_vesting_change_titleholder_name_change
+    update_flag: true
+  vesting_change_titleholder_removed:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_vesting_change_titleholder_removed.columns.value
+    update_flag: true
+  vesting_change_titleholder_removed_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_vesting_change_titleholder_removed
+    update_flag: true
+  windstorm_insurance_applicable:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_windstorm_insurance_applicable.columns.value
+    update_flag: true
+  windstorm_insurance_applicable_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_windstorm_insurance_applicable
+    update_flag: true
 step_functions:
   SP-200019:
     etls:
@@ -117,223 +1177,1009 @@ step_functions:
         json_output_field: data_source_integration_id
         insert_update_keys:
         - data_source_integration_id
-        container_memory: 2048
+        container_memory: 4096
         next_step_functions:
         - SP-300001-insert-update
         input_sql: |-
           WITH transaction_dim_incl_new_records AS (
-              SELECT 'deal_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
-                  , COALESCE( CAST( t1441.d_pid AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
-                  , NOW( ) AS edw_created_datetime
-                  , NOW( ) AS edw_modified_datetime
-                  , primary_table.data_source_updated_datetime AS data_source_modified_datetime
-                  , t1441.d_pid AS deal_pid
-                  , primary_table.prp_pid AS active_proposal_pid
-                  , current_deal_stage_records.dst_deal_stage_type as current_transaction_stage_code
-                  , current_deal_stage_type_records.value as current_transaction_stage
-                  , subject_property.pl_street1 AS subject_property_street1
-                  , subject_property.pl_street2 AS subject_property_street2
-                  , subject_property.pl_city subject_property_city
-                  , subject_property.pl_property_tax_id AS subject_property_tax_id
-                  , subject_property.pl_postal_code AS subject_property_postal_code
-                  , county.c_name AS subject_property_county_name
-                  , subject_property.pl_county_fips AS subject_property_county_fips
-                  , subject_property.pl_state AS subject_property_state
-                  , subject_property.pl_state_fips subject_property_state_fips
-                  , subject_property.pl_country AS subject_property_country_code
-                  , country_type.value AS subject_property_country
-                  , subject_property.pl_structure_built_year AS subject_property_year_built
-                  , subject_property.pl_property_category_type AS subject_property_category_code
-                  , property_category_type.value AS subject_property_category
-                  , subject_property.pl_building_status_type AS subject_property_building_status_code
-                  , building_status_type.value AS subject_property_building_status
-                  , subject_property.pl_rental AS subject_property_rental_flag
-                  , subject_property.pl_property_rights_type AS subject_property_rights_code
-                  , property_rights_type.value AS subject_property_rights
-                  , subject_property.pl_neighborhood_location_type AS subject_property_neighborhood_location_code
-                  , neighborhood_location_type.value AS subject_property_neighborhood_location
-                  , GREATEST( primary_table.etl_end_date_time, t1441.etl_end_date_time, current_deal_stage_records.etl_end_date_time,
-                      current_deal_stage_type_records.etl_end_date_time, subject_property.etl_end_date_time, county.etl_end_date_time,
-                      country_type.etl_end_date_time, property_category_type.etl_end_date_time, building_status_type.etl_end_date_time,
-                      property_rights_type.etl_end_date_time, neighborhood_location_type.etl_end_date_time) AS max_source_etl_end_date_time
-              FROM (
-                  SELECT <<proposal_partial_load_condition>> AS include_record
-                      , proposal.*
-                      , etl_log.etl_end_date_time
-                  FROM history_octane.proposal
-                      LEFT JOIN history_octane.proposal AS history_records
-                          ON proposal.prp_pid = history_records.prp_pid
-                              AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
-                      JOIN star_common.etl_log
-                          ON proposal.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.prp_pid IS NULL
-              ) AS primary_table
-                  INNER JOIN (
-                      SELECT *
-                      FROM (
-                          SELECT <<deal_partial_load_condition>> AS include_record
-                              , deal.*
-                              , etl_log.etl_end_date_time
-                          FROM history_octane.deal
-                              LEFT JOIN history_octane.deal AS history_records
-                                  ON deal.d_pid = history_records.d_pid
-                                      AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
-                              JOIN star_common.etl_log
-                                  ON deal.etl_batch_id = etl_log.etl_batch_id
-                          WHERE history_records.d_pid IS NULL
-                      ) AS primary_table
-                  ) AS t1441
-                      ON primary_table.prp_pid = t1441.d_active_proposal_pid
-                  INNER JOIN (
-                      SELECT <<deal_stage_partial_load_condition>> AS include_record
-                          , deal_stage.*
-                          , etl_log.etl_end_date_time as etl_end_date_time
-                      FROM history_octane.deal_stage
-                          LEFT JOIN history_octane.deal_stage AS history_records
-                              ON deal_stage.dst_pid = history_records.dst_pid
-                                  AND deal_stage.data_source_updated_datetime < history_records.data_source_updated_datetime
-                          JOIN star_common.etl_log
-                              ON deal_stage.etl_batch_id = etl_log.etl_batch_id
-                      WHERE history_records.dst_pid IS NULL
-                          AND deal_stage.dst_through_date IS NULL
-                  ) as current_deal_stage_records ON t1441.d_pid = current_deal_stage_records.dst_deal_pid
-                  INNER JOIN (
-                          SELECT <<deal_stage_type_partial_load_condition>> AS include_record
-                            , deal_stage_type.code
-                            , deal_stage_type.value
-                            , etl_log.etl_end_date_time as etl_end_date_time
-                          FROM history_octane.deal_stage_type
-                            LEFT JOIN history_octane.deal_stage_type AS history_records
-                                ON deal_stage_type.code = history_records.code
-                                    AND deal_stage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                            JOIN star_common.etl_log ON deal_stage_type.etl_batch_id = etl_log.etl_batch_id
-                          WHERE history_records.code IS NULL
-                      ) AS current_deal_stage_type_records ON current_deal_stage_records.dst_deal_stage_type = current_deal_stage_type_records.code
-                    INNER JOIN (
-                        SELECT *
-                        FROM (
-                             SELECT <<place_partial_load_condition>> AS include_record
-                                    , place.*
-                                    , etl_log.etl_end_date_time
-                             FROM history_octane.place
-                             LEFT JOIN history_octane.place AS history_records
-                                    ON place.pl_pid = history_records.pl_pid
-                                        AND place.data_source_updated_datetime < history_records.data_source_updated_datetime
-                             JOIN star_common.etl_log
-                                    ON place.etl_batch_id = etl_log.etl_batch_id
-                             WHERE history_records.pl_pid IS NULL
-                      ) AS primary_table
-                  ) AS subject_property ON primary_table.prp_pid = subject_property.pl_proposal_pid
-                              AND subject_property.pl_subject_property IS TRUE
-                    LEFT JOIN (
-                      SELECT *
-                      FROM (
-                           SELECT <<county_partial_load_condition>> AS include_record
-                                , county.*
-                                , etl_log.etl_end_date_time
-                           FROM history_octane.county
-                           LEFT JOIN history_octane.county AS history_records
-                                ON county.c_pid = history_records.c_pid
-                                    AND county.data_source_updated_datetime < history_records.data_source_updated_datetime
-                           JOIN star_common.etl_log
-                                ON county.etl_batch_id = etl_log.etl_batch_id
-                           WHERE history_records.c_pid IS NULL
-                      ) AS primary_table
-                    ) AS county ON subject_property.pl_county_pid = county.c_pid
-                  INNER JOIN (
-                      SELECT *
-                      FROM (
-                           SELECT <<country_type_partial_load_condition>> AS include_record
-                                , country_type.*
-                                , etl_log.etl_end_date_time
-                           FROM history_octane.country_type
-                           LEFT JOIN history_octane.country_type AS history_records
-                                ON country_type.code = history_records.code
-                                    AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                           JOIN star_common.etl_log
-                                ON country_type.etl_batch_id = etl_log.etl_batch_id
-                           WHERE history_records.code IS NULL
-                      ) AS primary_table
-                  ) AS country_type ON subject_property.pl_country = country_type.code
-                   INNER JOIN (
-                       SELECT *
-                       FROM (
-                            SELECT <<property_category_type_partial_load_condition>> AS include_record
-                                 , property_category_type.*
-                                  , etl_log.etl_end_date_time
-                            FROM history_octane.property_category_type
-                            LEFT JOIN history_octane.property_category_type AS history_records
-                                   ON property_category_type.code = history_records.code
-                                       AND property_category_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                            JOIN star_common.etl_log
-                                   ON property_category_type.etl_batch_id = etl_log.etl_batch_id
-                            WHERE history_records.code IS NULL
-                     ) AS primary_table
-                 ) AS property_category_type ON subject_property.pl_property_category_type = property_category_type.code
-                  INNER JOIN (
-                      SELECT *
-                      FROM (
-                           SELECT <<building_status_type_partial_load_condition>> AS include_record
-                                  , building_status_type.*
-                                 , etl_log.etl_end_date_time
-                           FROM history_octane.building_status_type
-                           LEFT JOIN history_octane.building_status_type AS history_records
-                                  ON building_status_type.code = history_records.code
-                                      AND building_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                           JOIN star_common.etl_log
-                                  ON building_status_type.etl_batch_id = etl_log.etl_batch_id
-                           WHERE history_records.code IS NULL
-                    ) AS primary_table
-                ) AS building_status_type ON subject_property.pl_building_status_type = building_status_type.code
-                  INNER JOIN (
-                      SELECT *
-                      FROM (
-                           SELECT <<property_rights_type_partial_load_condition>> AS include_record
-                                 , property_rights_type.*
-                                 , etl_log.etl_end_date_time
-                           FROM history_octane.property_rights_type
-                           LEFT JOIN history_octane.property_rights_type AS history_records
-                                  ON property_rights_type.code = history_records.code
-                                      AND property_rights_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                           JOIN star_common.etl_log
-                                  ON property_rights_type.etl_batch_id = etl_log.etl_batch_id
-                           WHERE history_records.code IS NULL
-                    ) AS primary_table
-                ) AS property_rights_type ON subject_property.pl_property_rights_type = property_rights_type.code
-               INNER JOIN (
-                   SELECT *
-                   FROM (
-                        SELECT <<neighborhood_location_type_partial_load_condition>> AS include_record
-                                 , neighborhood_location_type.*
-                                 , etl_log.etl_end_date_time
-                        FROM history_octane.neighborhood_location_type
-                        LEFT JOIN history_octane.neighborhood_location_type AS history_records
-                               ON neighborhood_location_type.code = history_records.code
-                                   AND neighborhood_location_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                        JOIN star_common.etl_log ON neighborhood_location_type.etl_batch_id = etl_log.etl_batch_id
-                        WHERE history_records.code IS NULL
-                   ) AS primary_table
-               ) AS neighborhood_location_type ON subject_property.pl_neighborhood_location_type = neighborhood_location_type.code
-          WHERE GREATEST( primary_table.include_record, t1441.include_record, current_deal_stage_records.include_record,
-              current_deal_stage_type_records.include_record, subject_property.include_record, county.include_record,
-              country_type.include_record, property_category_type.include_record, building_status_type.include_record,
-              property_rights_type.include_record, neighborhood_location_type.include_record ) IS TRUE
+          	SELECT 'deal_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
+          		, COALESCE( CAST( t1441.d_pid AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
+          		, NOW( ) AS edw_created_datetime
+          		, NOW( ) AS edw_modified_datetime
+          		, primary_table.data_source_updated_datetime AS data_source_modified_datetime
+          		, t1441.d_pid AS deal_pid
+          		, primary_table.prp_pid AS active_proposal_pid
+          		, current_deal_stage_records.dst_deal_stage_type as current_transaction_stage_code
+          		, current_deal_stage_type_records.value as current_transaction_stage
+          		, subject_property.pl_street1 AS subject_property_street1
+          		, subject_property.pl_street2 AS subject_property_street2
+          		, subject_property.pl_city subject_property_city
+          		, subject_property.pl_property_tax_id AS subject_property_tax_id
+          		, subject_property.pl_postal_code AS subject_property_postal_code
+          		, county.c_name AS subject_property_county_name
+          		, subject_property.pl_county_fips AS subject_property_county_fips
+          		, subject_property.pl_state AS subject_property_state
+          		, subject_property.pl_state_fips subject_property_state_fips
+          		, subject_property.pl_country AS subject_property_country_code
+          		, country_type.value AS subject_property_country
+          		, subject_property.pl_structure_built_year AS subject_property_year_built
+          		, subject_property.pl_property_category_type AS subject_property_category_code
+          		, property_category_type.value AS subject_property_category
+          		, subject_property.pl_building_status_type AS subject_property_building_status_code
+          		, building_status_type.value AS subject_property_building_status
+          		, subject_property.pl_rental AS subject_property_rental_flag
+          		, subject_property.pl_property_rights_type AS subject_property_rights_code
+          		, property_rights_type.value AS subject_property_rights
+          		, subject_property.pl_neighborhood_location_type AS subject_property_neighborhood_location_code
+          		, neighborhood_location_type.value AS subject_property_neighborhood_location
+          		, t1441.d_borrower_esign
+          		, primary_table.prp_deed_taxes_applicable
+          		, primary_table.prp_deed_taxes_auto_compute
+          		, primary_table.prp_delayed_financing_exception_guidelines_applicable
+          		, primary_table.prp_delayed_financing_exception_verified
+          		, primary_table.prp_down_payment_percent_mode
+          		, t1441.d_early_wire_request
+          		, t1441.d_enable_electronic_transaction
+          		, primary_table.prp_escrow_cushion_months_auto_compute
+          		, primary_table.prp_first_payment_date_auto_compute
+          		, primary_table.prp_household_income_exclusive_edit
+          		, primary_table.prp_intent_to_proceed_provided
+          		, t1441.d_invoices_enabled
+          		, primary_table.prp_ipc_auto_compute
+          		, primary_table.prp_minimum_residual_income_auto_compute
+          		, primary_table.prp_other_lender_requires_appraisal
+          		, primary_table.prp_owner_occupancy_not_required
+          		, primary_table.prp_property_taxes_request_input_error
+          		, primary_table.prp_publish
+          		, primary_table.prp_recording_fees_request_input_error
+          		, primary_table.prp_request_property_taxes_required
+          		, primary_table.prp_request_recording_fees_required
+          		, primary_table.prp_rescission_applicable
+          		, primary_table.prp_reserves_auto_compute
+          		, t1441.d_sap_deal
+          		, primary_table.prp_sar_significant_adjustments
+          		, primary_table.prp_smart_charges_enabled
+          		, primary_table.prp_smart_docs_enabled
+          		, t1441.d_training_loan
+          		, primary_table.prp_publish_date
+          		, primary_table.prp_calculated_earliest_allowed_consummation_date
+          		, primary_table.prp_charges_updated_datetime
+          		, primary_table.prp_closing_document_sign_datetime
+          		, primary_table.prp_docs_enabled_datetime
+          		, t1441.d_ecoa_decision_due_date
+          		, t1441.d_ecoa_notice_of_incomplete_date
+          		, t1441.d_ecoa_notice_of_incomplete_due_date
+          		, primary_table.prp_effective_earliest_allowed_consummation_date
+          		, primary_table.prp_first_payment_date
+          		, primary_table.prp_fre_ctp_first_payment_due_date
+          		, primary_table.prp_gfe_interest_rate_expiration_date
+          		, primary_table.prp_initial_uw_disposition_datetime
+          		, primary_table.prp_initial_uw_submit_datetime
+          		, t1441.d_invoices_enabled_date
+          		, primary_table.prp_land_acquisition_transaction_date
+          		, primary_table.prp_last_corrective_disclosure_processed_datetime
+          		, primary_table.prp_last_requested_disclosure_date
+          		, primary_table.prp_lender_escrow_loan_due_date
+          		, primary_table.prp_overridden_earliest_allowed_consummation_date
+          		, primary_table.prp_preapproval_uw_disposition_datetime
+          		, primary_table.prp_preapproval_uw_submit_datetime
+          		, primary_table.prp_proposal_expiration_date
+          		, primary_table.prp_purchase_contract_date
+          		, primary_table.prp_purchase_contract_financing_contingency_date
+          		, primary_table.prp_purchase_contract_funding_date
+          		, primary_table.prp_purchase_contract_received_date
+          		, primary_table.prp_rescission_effective_date
+          		, primary_table.prp_rescission_notification_date
+          		, primary_table.prp_rescission_through_date
+          		, primary_table.prp_scheduled_closing_document_sign_datetime
+          		, primary_table.prp_signed_closing_doc_received_datetime
+          		, t1441.d_deal_create_date_time
+          		, t1441.d_deal_orphan_earliest_check_date
+          		, primary_table.prp_create_datetime
+          		, t1441.d_deal_status_date
+          		, t1441.d_welcome_call_datetime
+          		, primary_table.prp_underwrite_expiration_date
+          		, primary_table.prp_user_entered_note_date
+          		, primary_table.prp_anti_steering_lowest_cost_option_fee_amount
+          		, primary_table.prp_anti_steering_lowest_cost_option_rate_percent
+          		, primary_table.prp_anti_steering_lowest_rate_option_fee_amount
+          		, primary_table.prp_anti_steering_lowest_rate_option_rate_percent
+          		, primary_table.prp_anti_steering_lowest_rate_wo_neg_option_fee_amount
+          		, primary_table.prp_anti_steering_lowest_rate_wo_neg_option_rate_percent
+          		, primary_table.prp_area_median_income
+          		, primary_table.prp_decision_appraised_value_amount
+          		, primary_table.prp_decision_credit_score
+          		, primary_table.prp_down_payment_percent
+          		, primary_table.prp_effective_credit_score
+          		, primary_table.prp_effective_property_value_amount
+          		, primary_table.prp_escrow_cushion_months
+          		, primary_table.prp_estimated_credit_score
+          		, primary_table.prp_estimated_property_value_amount
+          		, primary_table.prp_gfe_lock_before_settlement_days
+          		, primary_table.prp_gfe_lock_duration_days
+          		, primary_table.prp_household_size_count
+          		, primary_table.prp_ipc_amount
+          		, primary_table.prp_ipc_financing_concession_amount
+          		, primary_table.prp_ipc_limit_percent
+          		, primary_table.prp_ipc_maximum_amount_allowed
+          		, primary_table.prp_ipc_non_cash_concession_amount
+          		, primary_table.prp_ipc_percent
+          		, primary_table.prp_land_acquisition_price
+          		, primary_table.prp_lender_escrow_loan_amount
+          		, primary_table.prp_minimum_household_income_amount
+          		, primary_table.prp_minimum_residual_income_amount
+          		, primary_table.prp_proposed_additional_monthly_payment
+          		, primary_table.prp_reserves_amount
+          		, primary_table.prp_reserves_months
+          		, primary_table.prp_sale_price_amount
+          		, primary_table.prp_term_borrower_intends_to_retain_property
+          		, primary_table.prp_total_income_to_ami_ratio
+          		, primary_table.prp_description
+          		, primary_table.prp_name
+          		, t1441.d_calyx_loan_guid
+          		, primary_table.prp_cash_out_reason_other_text
+          		, t1441.d_copy_source_los_loan_id_main
+          		, t1441.d_copy_source_los_loan_id_piggyback
+          		, primary_table.prp_deed_taxes_applicable_explanation
+          		, primary_table.prp_deed_taxes_auto_compute_override_reason
+          		, primary_table.prp_earliest_allowed_consummation_date_override_reason
+          		, primary_table.prp_effective_signing_location_city
+          		, t1441.d_external_loan_id_main
+          		, t1441.d_external_loan_id_piggyback
+          		, t1441.d_hmda_denial_reason_other_description
+          		, t1441.d_hmda_universal_loan_id_main
+          		, t1441.d_hmda_universal_loan_id_piggyback
+          		, primary_table.prp_intent_to_proceed_obtainer_unparsed_name
+          		, primary_table.prp_intent_to_proceed_provider_unparsed_name
+          		, t1441.d_lead_reference_id
+          		, t1441.d_lead_tracking_id
+          		, t1441.d_lead_zillow_zq
+          		, t1441.d_los_loan_id_main
+          		, t1441.d_los_loan_id_piggyback
+          		, t1441.d_mers_min_main
+          		, t1441.d_mers_min_piggyback
+          		, primary_table.prp_other_lender_requires_appraisal_reason
+          		, primary_table.prp_property_tax_request_error_messages
+          		, primary_table.prp_rescission_notification_by
+          		, t1441.d_referred_by_name
+          		, primary_table.prp_trustee_address_city
+          		, primary_table.prp_trustee_address_country
+          		, primary_table.prp_trustee_address_postal_code
+          		, primary_table.prp_trustee_address_state
+          		, primary_table.prp_trustee_address_street1
+          		, primary_table.prp_trustee_address_street2
+          		, primary_table.prp_trustee_mers_org_id
+          		, primary_table.prp_trustee_name
+          		, primary_table.prp_trustee_phone_number
+          		, primary_table.prp_underwrite_disposition_note
+          		, primary_table.prp_underwriting_comments
+          		, primary_table.prp_uuts_master_contact_name
+          		, primary_table.prp_uuts_master_contact_title
+          		, primary_table.prp_uuts_master_office_phone
+          		, primary_table.prp_uuts_master_office_phone_extension
+          		, t1441.d_velocify_lead_id
+          		, proposal_type.value
+          		, primary_table.prp_proposal_type
+          		, application_type.value
+          		, t1441.d_application_type
+          		, credit_bureau_type.value
+          		, t1441.d_credit_bureau_type
+          		, disclosure_action_type.value
+          		, primary_table.prp_disclosure_action_type
+          		, doc_level_type.value
+          		, primary_table.prp_doc_level_type
+          		, effective_property_value_explanation_type.value
+          		, primary_table.prp_effective_property_value_explanation_type
+          		, effective_property_value_type.value
+          		, primary_table.prp_effective_property_value_type
+          		, state_type.value
+          		, primary_table.prp_effective_signing_location_state
+          		, fre_ctp_closing_feature_type.value
+          		, primary_table.prp_fre_ctp_closing_feature_type
+          		, gse_version_type.value
+          		, primary_table.prp_gse_version_type
+          		, intent_to_proceed_type.value
+          		, primary_table.prp_intent_to_proceed_type
+          		, deal_orphan_status_type.value
+          		, t1441.d_deal_orphan_status_type
+          		, realty_agent_scenario_type.value
+          		, t1441.d_realty_agent_scenario_type
+          		, rescission_notification_type.value
+          		, primary_table.prp_rescission_notification_type
+          		, security_instrument_type.value
+          		, primary_table.prp_security_instrument_type
+          		, deal_create_type.value
+          		, t1441.d_deal_create_type
+          		, deal_status_type.value
+          		, t1441.d_deal_status_type
+          		, any_vesting_changes_ynu_type.value
+          		, primary_table.prp_any_vesting_changes
+          		, arms_length_ynu_type.value
+          		, primary_table.prp_arms_length
+          		, early_first_payment_ynu_type.value
+          		, primary_table.prp_early_first_payment
+          		, earthquake_insurance_applicable_ynu_type.value
+          		, primary_table.prp_earthquake_insurance_applicable
+          		, flood_insurance_applicable_ynu_type.value
+          		, primary_table.prp_flood_insurance_applicable
+          		, hazard_insurance_applicable_ynu_type.value
+          		, primary_table.prp_hazard_insurance_applicable
+          		, hud_consultant_ynu_type.value
+          		, primary_table.prp_hud_consultant
+          		, mortgagee_builder_seller_relationship_ynu_type.value
+          		, primary_table.prp_mortgagee_builder_seller_relationship
+          		, property_acquired_through_ancillary_relief_ynu_type.value
+          		, primary_table.prp_property_acquired_through_ancillary_relief
+          		, property_acquired_through_inheritance_ynu_type.value
+          		, primary_table.prp_property_acquired_through_inheritance
+          		, separate_transaction_for_land_acquisition_ynu_type.value
+          		, primary_table.prp_separate_transaction_for_land_acquisition
+          		, taxes_escrowed_ynu_type.value
+          		, primary_table.prp_taxes_escrowed
+          		, vesting_change_titleholder_added_ynu_type.value
+          		, primary_table.prp_vesting_change_titleholder_added
+          		, vesting_change_titleholder_name_change_ynu_type.value
+          		, primary_table.prp_vesting_change_titleholder_name_change
+          		, vesting_change_titleholder_removed_ynu_type.value
+          		, primary_table.prp_vesting_change_titleholder_removed
+          		, windstorm_insurance_applicable_ynu_type.value
+          		, primary_table.prp_windstorm_insurance_applicable
+          		, GREATEST( primary_table.etl_end_date_time, t1441.etl_end_date_time, current_deal_stage_records.etl_end_date_time,
+          					current_deal_stage_type_records.etl_end_date_time, subject_property.etl_end_date_time, county.etl_end_date_time,
+          					country_type.etl_end_date_time, property_category_type.etl_end_date_time, building_status_type.etl_end_date_time,
+          					property_rights_type.etl_end_date_time, neighborhood_location_type.etl_end_date_time, proposal_type.etl_end_date_time,
+          					application_type.etl_end_date_time, credit_bureau_type.etl_end_date_time, disclosure_action_type.etl_end_date_time,
+          					doc_level_type.etl_end_date_time, effective_property_value_explanation_type.etl_end_date_time,
+          					effective_property_value_type.etl_end_date_time, state_type.etl_end_date_time,
+          					fre_ctp_closing_feature_type.etl_end_date_time, gse_version_type.etl_end_date_time,
+          					intent_to_proceed_type.etl_end_date_time, deal_orphan_status_type.etl_end_date_time,
+          					realty_agent_scenario_type.etl_end_date_time, rescission_notification_type.etl_end_date_time,
+          					security_instrument_type.etl_end_date_time, deal_create_type.etl_end_date_time, deal_status_type.etl_end_date_time,
+          					any_vesting_changes_ynu_type.etl_end_date_time,
+          					arms_length_ynu_type.etl_end_date_time,
+          					early_first_payment_ynu_type.etl_end_date_time,
+          					earthquake_insurance_applicable_ynu_type.etl_end_date_time,
+          					flood_insurance_applicable_ynu_type.etl_end_date_time,
+          					hazard_insurance_applicable_ynu_type.etl_end_date_time,
+          					hud_consultant_ynu_type.etl_end_date_time,
+          					mortgagee_builder_seller_relationship_ynu_type.etl_end_date_time,
+          					property_acquired_through_ancillary_relief_ynu_type.etl_end_date_time,
+          					property_acquired_through_inheritance_ynu_type.etl_end_date_time,
+          					separate_transaction_for_land_acquisition_ynu_type.etl_end_date_time,
+          					taxes_escrowed_ynu_type.etl_end_date_time,
+          					vesting_change_titleholder_added_ynu_type.etl_end_date_time,
+          					vesting_change_titleholder_name_change_ynu_type.etl_end_date_time,
+          					vesting_change_titleholder_removed_ynu_type.etl_end_date_time,
+          					windstorm_insurance_applicable_ynu_type.etl_end_date_time) AS max_source_etl_end_date_time
+          	FROM (
+          		SELECT <<proposal_partial_load_condition>> AS include_record
+          			, proposal.*
+          			, etl_log.etl_end_date_time
+          		FROM history_octane.proposal
+          			LEFT JOIN history_octane.proposal AS history_records
+          				ON proposal.prp_pid = history_records.prp_pid
+          					AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+          			JOIN star_common.etl_log
+          				ON proposal.etl_batch_id = etl_log.etl_batch_id
+          		WHERE history_records.prp_pid IS NULL
+          	) AS primary_table
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<deal_partial_load_condition>> AS include_record
+          					, deal.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.deal
+          					LEFT JOIN history_octane.deal AS history_records
+          						ON deal.d_pid = history_records.d_pid
+          							AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON deal.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.d_pid IS NULL
+          			) AS primary_table
+          		) AS t1441
+          			ON primary_table.prp_pid = t1441.d_active_proposal_pid
+          		INNER JOIN (
+          			SELECT <<deal_stage_partial_load_condition>> AS include_record
+          				, deal_stage.*
+          				, etl_log.etl_end_date_time as etl_end_date_time
+          			FROM history_octane.deal_stage
+          				LEFT JOIN history_octane.deal_stage AS history_records
+          					ON deal_stage.dst_pid = history_records.dst_pid
+          						AND deal_stage.data_source_updated_datetime < history_records.data_source_updated_datetime
+          				JOIN star_common.etl_log
+          					ON deal_stage.etl_batch_id = etl_log.etl_batch_id
+          			WHERE history_records.dst_pid IS NULL
+          				AND deal_stage.dst_through_date IS NULL
+          		) as current_deal_stage_records ON t1441.d_pid = current_deal_stage_records.dst_deal_pid
+          		INNER JOIN (
+          			SELECT <<deal_stage_type_partial_load_condition>> AS include_record
+          				, deal_stage_type.code
+          				, deal_stage_type.value
+          				, etl_log.etl_end_date_time as etl_end_date_time
+          			FROM history_octane.deal_stage_type
+          				LEFT JOIN history_octane.deal_stage_type AS history_records
+          					ON deal_stage_type.code = history_records.code
+          						AND deal_stage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          				JOIN star_common.etl_log ON deal_stage_type.etl_batch_id = etl_log.etl_batch_id
+          			WHERE history_records.code IS NULL
+          		) AS current_deal_stage_type_records ON current_deal_stage_records.dst_deal_stage_type = current_deal_stage_type_records.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<place_partial_load_condition>> AS include_record
+          					, place.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.place
+          					LEFT JOIN history_octane.place AS history_records
+          						ON place.pl_pid = history_records.pl_pid
+          							AND place.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON place.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.pl_pid IS NULL
+          			) AS primary_table
+          		) AS subject_property ON primary_table.prp_pid = subject_property.pl_proposal_pid
+          			AND subject_property.pl_subject_property IS TRUE
+          		LEFT JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<county_partial_load_condition>> AS include_record
+          					, county.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.county
+          					LEFT JOIN history_octane.county AS history_records
+          						ON county.c_pid = history_records.c_pid
+          							AND county.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON county.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.c_pid IS NULL
+          			) AS primary_table
+          		) AS county ON subject_property.pl_county_pid = county.c_pid
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<country_type_partial_load_condition>> AS include_record
+          					, country_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.country_type
+          					LEFT JOIN history_octane.country_type AS history_records
+          						ON country_type.code = history_records.code
+          							AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON country_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS country_type ON subject_property.pl_country = country_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<property_category_type_partial_load_condition>> AS include_record
+          					, property_category_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.property_category_type
+          					LEFT JOIN history_octane.property_category_type AS history_records
+          						ON property_category_type.code = history_records.code
+          							AND property_category_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON property_category_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS property_category_type ON subject_property.pl_property_category_type = property_category_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<building_status_type_partial_load_condition>> AS include_record
+          					, building_status_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.building_status_type
+          					LEFT JOIN history_octane.building_status_type AS history_records
+          						ON building_status_type.code = history_records.code
+          							AND building_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON building_status_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS building_status_type ON subject_property.pl_building_status_type = building_status_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<property_rights_type_partial_load_condition>> AS include_record
+          					, property_rights_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.property_rights_type
+          					LEFT JOIN history_octane.property_rights_type AS history_records
+          						ON property_rights_type.code = history_records.code
+          							AND property_rights_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON property_rights_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS property_rights_type ON subject_property.pl_property_rights_type = property_rights_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<neighborhood_location_type_partial_load_condition>> AS include_record
+          					, neighborhood_location_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.neighborhood_location_type
+          					LEFT JOIN history_octane.neighborhood_location_type AS history_records
+          						ON neighborhood_location_type.code = history_records.code
+          							AND neighborhood_location_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log ON neighborhood_location_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS neighborhood_location_type ON subject_property.pl_neighborhood_location_type = neighborhood_location_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<proposal_type_partial_load_condition>> AS include_record
+          		        	, proposal_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.proposal_type
+          		        	LEFT JOIN history_octane.proposal_type AS history_records
+          		        		ON proposal_type.code = history_records.code
+          		        			AND proposal_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON proposal_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS proposal_type
+          			ON primary_table.prp_proposal_type = proposal_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<application_type_partial_load_condition>> AS include_record
+          		        	, application_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.application_type
+          		        	LEFT JOIN history_octane.application_type AS history_records
+          		        		ON application_type.code = history_records.code
+          		        			AND application_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON application_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS application_type
+          			ON t1441.d_application_type = application_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<credit_bureau_type_partial_load_condition>> AS include_record
+          		        	, credit_bureau_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.credit_bureau_type
+          		        	LEFT JOIN history_octane.credit_bureau_type AS history_records
+          		        		ON credit_bureau_type.code = history_records.code
+          		        			AND credit_bureau_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON credit_bureau_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS credit_bureau_type
+          				ON t1441.d_credit_bureau_type = credit_bureau_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<disclosure_action_type_partial_load_condition>> AS include_record
+          		        	, disclosure_action_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.disclosure_action_type
+          		        	LEFT JOIN history_octane.disclosure_action_type AS history_records
+          		        		ON disclosure_action_type.code = history_records.code
+          		        			AND disclosure_action_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON disclosure_action_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS disclosure_action_type
+          				ON primary_table.prp_disclosure_action_type = disclosure_action_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<doc_level_type_partial_load_condition>> AS include_record
+          		        	, doc_level_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.doc_level_type
+          		        	LEFT JOIN history_octane.doc_level_type AS history_records
+          		        		ON doc_level_type.code = history_records.code
+          		        			AND doc_level_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON doc_level_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS doc_level_type
+          				ON primary_table.prp_doc_level_type = doc_level_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<effective_property_value_explanation_type_partial_load_condition>> AS include_record
+          		        	, effective_property_value_explanation_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.effective_property_value_explanation_type
+          		        	LEFT JOIN history_octane.effective_property_value_explanation_type AS history_records
+          		        		ON effective_property_value_explanation_type.code = history_records.code
+          		        			AND effective_property_value_explanation_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON effective_property_value_explanation_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS effective_property_value_explanation_type
+          				ON primary_table.prp_effective_property_value_explanation_type = effective_property_value_explanation_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<effective_property_value_type_partial_load_condition>> AS include_record
+          		        	, effective_property_value_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.effective_property_value_type
+          		        	LEFT JOIN history_octane.effective_property_value_type AS history_records
+          		        		ON effective_property_value_type.code = history_records.code
+          		        			AND effective_property_value_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON effective_property_value_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          				) AS primary_table
+          			) AS effective_property_value_type
+          				ON primary_table.prp_effective_property_value_type = effective_property_value_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<state_type_partial_load_condition>> AS include_record
+          		        	, state_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.state_type
+          		        	LEFT JOIN history_octane.state_type AS history_records
+          		        		ON state_type.code = history_records.code
+          		        			AND state_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON state_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS state_type
+          			ON primary_table.prp_effective_signing_location_state = state_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<fre_ctp_closing_feature_type_partial_load_condition>> AS include_record
+          		        	, fre_ctp_closing_feature_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.fre_ctp_closing_feature_type
+          		        	LEFT JOIN history_octane.fre_ctp_closing_feature_type AS history_records
+          		        		ON fre_ctp_closing_feature_type.code = history_records.code
+          		        			AND fre_ctp_closing_feature_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON fre_ctp_closing_feature_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS fre_ctp_closing_feature_type
+          			ON primary_table.prp_fre_ctp_closing_feature_type = fre_ctp_closing_feature_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<gse_version_type_partial_load_condition>> AS include_record
+          		        	, gse_version_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.gse_version_type
+          		        	LEFT JOIN history_octane.gse_version_type AS history_records
+          		        		ON gse_version_type.code = history_records.code
+          		        			AND gse_version_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON gse_version_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS gse_version_type
+          			ON primary_table.prp_gse_version_type = gse_version_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<intent_to_proceed_type_partial_load_condition>> AS include_record
+          		        	, intent_to_proceed_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.intent_to_proceed_type
+          		        	LEFT JOIN history_octane.intent_to_proceed_type AS history_records
+          		        		ON intent_to_proceed_type.code = history_records.code
+          		        			AND intent_to_proceed_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON intent_to_proceed_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS intent_to_proceed_type
+          			ON primary_table.prp_intent_to_proceed_type = intent_to_proceed_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<deal_orphan_status_type_partial_load_condition>> AS include_record
+          					, deal_orphan_status_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.deal_orphan_status_type
+          		        	LEFT JOIN history_octane.deal_orphan_status_type AS history_records
+          		        		ON deal_orphan_status_type.code = history_records.code
+          		        			AND deal_orphan_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON deal_orphan_status_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS deal_orphan_status_type
+          			ON t1441.d_deal_orphan_status_type = deal_orphan_status_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<realty_agent_scenario_type_partial_load_condition>> AS include_record
+          		        	, realty_agent_scenario_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.realty_agent_scenario_type
+          		        	LEFT JOIN history_octane.realty_agent_scenario_type AS history_records
+          		        		ON realty_agent_scenario_type.code = history_records.code
+          		        			AND realty_agent_scenario_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON realty_agent_scenario_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS realty_agent_scenario_type
+          			ON t1441.d_realty_agent_scenario_type = realty_agent_scenario_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<rescission_notification_type_partial_load_condition>> AS include_record
+          		        	, rescission_notification_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.rescission_notification_type
+          		        	LEFT JOIN history_octane.rescission_notification_type AS history_records
+          		        		ON rescission_notification_type.code = history_records.code
+          		        			AND rescission_notification_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON rescission_notification_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS rescission_notification_type
+          			ON primary_table.prp_rescission_notification_type = rescission_notification_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<security_instrument_type_partial_load_condition>> AS include_record
+          		        	, security_instrument_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.security_instrument_type
+          		        	LEFT JOIN history_octane.security_instrument_type AS history_records
+          		        		ON security_instrument_type.code = history_records.code
+          		        			AND security_instrument_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON security_instrument_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS security_instrument_type
+          			ON primary_table.prp_security_instrument_type = security_instrument_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<deal_create_type_partial_load_condition>> AS include_record
+          		        	, deal_create_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.deal_create_type
+          		        	LEFT JOIN history_octane.deal_create_type AS history_records
+          		        		ON deal_create_type.code = history_records.code
+          		        			AND deal_create_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON deal_create_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS deal_create_type
+          			ON t1441.d_deal_create_type = deal_create_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<deal_status_type_partial_load_condition>> AS include_record
+          		        	, deal_status_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.deal_status_type
+          		        	LEFT JOIN history_octane.deal_status_type AS history_records
+          		        		ON deal_status_type.code = history_records.code
+          		        			AND deal_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON deal_status_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS deal_status_type
+          			ON t1441.d_deal_status_type = deal_status_type.code
+          		INNER JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          		        	, yes_no_unknown_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.yes_no_unknown_type
+          		        	LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          		        		ON yes_no_unknown_type.code = history_records.code
+          		        			AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS any_vesting_changes_ynu_type
+          			ON primary_table.prp_any_vesting_changes = any_vesting_changes_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS arms_length_ynu_type
+          			ON primary_table.prp_arms_length = arms_length_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS early_first_payment_ynu_type
+          			ON primary_table.prp_early_first_payment = early_first_payment_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS earthquake_insurance_applicable_ynu_type
+          			ON primary_table.prp_earthquake_insurance_applicable = earthquake_insurance_applicable_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS flood_insurance_applicable_ynu_type
+          			ON primary_table.prp_flood_insurance_applicable = flood_insurance_applicable_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS hazard_insurance_applicable_ynu_type
+          			ON primary_table.prp_hazard_insurance_applicable = hazard_insurance_applicable_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS hud_consultant_ynu_type
+          			ON primary_table.prp_hud_consultant = hud_consultant_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS mortgagee_builder_seller_relationship_ynu_type
+          			ON primary_table.prp_mortgagee_builder_seller_relationship = mortgagee_builder_seller_relationship_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS property_acquired_through_ancillary_relief_ynu_type
+          			ON primary_table.prp_property_acquired_through_ancillary_relief = property_acquired_through_ancillary_relief_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS property_acquired_through_inheritance_ynu_type
+          			ON primary_table.prp_property_acquired_through_inheritance = property_acquired_through_inheritance_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS separate_transaction_for_land_acquisition_ynu_type
+          			ON primary_table.prp_separate_transaction_for_land_acquisition = separate_transaction_for_land_acquisition_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS taxes_escrowed_ynu_type
+          			ON primary_table.prp_taxes_escrowed = taxes_escrowed_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS vesting_change_titleholder_added_ynu_type
+          			ON primary_table.prp_vesting_change_titleholder_added = vesting_change_titleholder_added_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS vesting_change_titleholder_name_change_ynu_type
+          			ON primary_table.prp_vesting_change_titleholder_name_change = vesting_change_titleholder_name_change_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS vesting_change_titleholder_removed_ynu_type
+          			ON primary_table.prp_vesting_change_titleholder_removed = vesting_change_titleholder_removed_ynu_type.code
+          		INNER JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS windstorm_insurance_applicable_ynu_type
+          			ON primary_table.prp_windstorm_insurance_applicable = windstorm_insurance_applicable_ynu_type.code
+          	WHERE GREATEST( primary_table.include_record, t1441.include_record, current_deal_stage_records.include_record,
+          					current_deal_stage_type_records.include_record, subject_property.include_record, county.include_record,
+          					country_type.include_record, property_category_type.include_record, building_status_type.include_record,
+          					property_rights_type.include_record, neighborhood_location_type.include_record, proposal_type.include_record,
+          	    			application_type.include_record, credit_bureau_type.include_record, disclosure_action_type.include_record,
+          	    			doc_level_type.include_record, effective_property_value_explanation_type.include_record,
+          	    			effective_property_value_type.include_record, state_type.include_record,
+          	    			fre_ctp_closing_feature_type.include_record, gse_version_type.include_record,
+          	    			intent_to_proceed_type.include_record, deal_orphan_status_type.include_record,
+          	    			realty_agent_scenario_type.include_record, rescission_notification_type.include_record,
+          	    			security_instrument_type.include_record, deal_create_type.include_record, deal_status_type.include_record,
+          					any_vesting_changes_ynu_type.include_record,
+          					arms_length_ynu_type.include_record,
+          					early_first_payment_ynu_type.include_record,
+          					earthquake_insurance_applicable_ynu_type.include_record,
+          					flood_insurance_applicable_ynu_type.include_record,
+          					hazard_insurance_applicable_ynu_type.include_record,
+          					hud_consultant_ynu_type.include_record,
+          					mortgagee_builder_seller_relationship_ynu_type.include_record,
+          					property_acquired_through_ancillary_relief_ynu_type.include_record,
+          					property_acquired_through_inheritance_ynu_type.include_record,
+          					separate_transaction_for_land_acquisition_ynu_type.include_record,
+          					taxes_escrowed_ynu_type.include_record,
+          					vesting_change_titleholder_added_ynu_type.include_record,
+          					vesting_change_titleholder_name_change_ynu_type.include_record,
+          					vesting_change_titleholder_removed_ynu_type.include_record,
+          					windstorm_insurance_applicable_ynu_type.include_record) IS TRUE
           )
-          --new records that should be inserted
+          	--new records that should be inserted
           SELECT transaction_dim_incl_new_records.*
           FROM transaction_dim_incl_new_records
-              LEFT JOIN star_loan.transaction_dim
-                  ON transaction_dim_incl_new_records.data_source_integration_id = transaction_dim.data_source_integration_id
+          	LEFT JOIN star_loan.transaction_dim
+          		ON transaction_dim_incl_new_records.data_source_integration_id = transaction_dim.data_source_integration_id
           WHERE transaction_dim.dwid IS NULL
           UNION ALL
           --existing records that need to be updated
           SELECT transaction_dim_incl_new_records.*
           FROM transaction_dim_incl_new_records
-              JOIN (
-                  SELECT transaction_dim.data_source_integration_id, etl_log.etl_start_date_time
-                  FROM star_loan.transaction_dim
-                      JOIN star_common.etl_log
-                          ON transaction_dim.etl_batch_id = etl_log.etl_batch_id
-              ) AS transaction_dim_etl_start_times
-                  ON transaction_dim_incl_new_records.data_source_integration_id = transaction_dim_etl_start_times.data_source_integration_id
-                      AND transaction_dim_incl_new_records.max_source_etl_end_date_time >= transaction_dim_etl_start_times.etl_start_date_time;
+          	JOIN (
+          		SELECT transaction_dim.data_source_integration_id, etl_log.etl_start_date_time
+          		FROM star_loan.transaction_dim
+          			JOIN star_common.etl_log
+          				ON transaction_dim.etl_batch_id = etl_log.etl_batch_id
+          	) AS transaction_dim_etl_start_times
+          		ON transaction_dim_incl_new_records.data_source_integration_id = transaction_dim_etl_start_times.data_source_integration_id
+          			AND transaction_dim_incl_new_records.max_source_etl_end_date_time >= transaction_dim_etl_start_times.etl_start_date_time;
