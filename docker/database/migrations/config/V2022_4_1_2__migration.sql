@@ -105,24 +105,17 @@ SELECT history_table.a_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.account AS current_records
-      LEFT JOIN history_octane.account AS history_records
-        ON current_records.a_pid =
-            history_records.a_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.account AS current_records
+    LEFT JOIN history_octane.account AS history_records
+              ON current_records.a_pid = history_records.a_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.account staging_table
           ON staging_table.a_pid = history_table.a_pid
-WHERE staging_table.a_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.account deleted_records
-    WHERE deleted_records.a_pid = history_table.a_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.a_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100023', 0, '--finding records to insert into history_octane.account_contact
 SELECT staging_table.ac_pid
      , staging_table.ac_version
@@ -193,24 +186,17 @@ SELECT history_table.ac_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.account_contact AS current_records
-      LEFT JOIN history_octane.account_contact AS history_records
-        ON current_records.ac_pid =
-            history_records.ac_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.account_contact AS current_records
+    LEFT JOIN history_octane.account_contact AS history_records
+              ON current_records.ac_pid = history_records.ac_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.account_contact staging_table
           ON staging_table.ac_pid = history_table.ac_pid
-WHERE staging_table.ac_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.account_contact deleted_records
-    WHERE deleted_records.ac_pid = history_table.ac_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ac_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100002', 0, '--finding records to insert into history_octane.account_event
 SELECT staging_table.ae_pid
      , staging_table.ae_version
@@ -243,24 +229,17 @@ SELECT history_table.ae_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.account_event AS current_records
-      LEFT JOIN history_octane.account_event AS history_records
-        ON current_records.ae_pid =
-            history_records.ae_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.account_event AS current_records
+    LEFT JOIN history_octane.account_event AS history_records
+              ON current_records.ae_pid = history_records.ae_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.account_event staging_table
           ON staging_table.ae_pid = history_table.ae_pid
-WHERE staging_table.ae_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.account_event deleted_records
-    WHERE deleted_records.ae_pid = history_table.ae_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ae_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100028', 0, '--finding records to insert into history_octane.account_grant_program
 SELECT staging_table.agp_pid
      , staging_table.agp_version
@@ -311,24 +290,17 @@ SELECT history_table.agp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.account_grant_program AS current_records
-      LEFT JOIN history_octane.account_grant_program AS history_records
-        ON current_records.agp_pid =
-            history_records.agp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.account_grant_program AS current_records
+    LEFT JOIN history_octane.account_grant_program AS history_records
+              ON current_records.agp_pid = history_records.agp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.account_grant_program staging_table
           ON staging_table.agp_pid = history_table.agp_pid
-WHERE staging_table.agp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.account_grant_program deleted_records
-    WHERE deleted_records.agp_pid = history_table.agp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.agp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100064', 0, '--finding records to insert into history_octane.admin_user
 SELECT staging_table.au_pid
      , staging_table.au_version
@@ -383,24 +355,17 @@ SELECT history_table.au_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.admin_user AS current_records
-      LEFT JOIN history_octane.admin_user AS history_records
-        ON current_records.au_pid =
-            history_records.au_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.admin_user AS current_records
+    LEFT JOIN history_octane.admin_user AS history_records
+              ON current_records.au_pid = history_records.au_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.admin_user staging_table
           ON staging_table.au_pid = history_table.au_pid
-WHERE staging_table.au_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.admin_user deleted_records
-    WHERE deleted_records.au_pid = history_table.au_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.au_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100020', 0, '--finding records to insert into history_octane.admin_user_event
 SELECT staging_table.aue_pid
      , staging_table.aue_version
@@ -429,24 +394,17 @@ SELECT history_table.aue_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.admin_user_event AS current_records
-      LEFT JOIN history_octane.admin_user_event AS history_records
-        ON current_records.aue_pid =
-            history_records.aue_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.admin_user_event AS current_records
+    LEFT JOIN history_octane.admin_user_event AS history_records
+              ON current_records.aue_pid = history_records.aue_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.admin_user_event staging_table
           ON staging_table.aue_pid = history_table.aue_pid
-WHERE staging_table.aue_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.admin_user_event deleted_records
-    WHERE deleted_records.aue_pid = history_table.aue_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.aue_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100018', 0, '--finding records to insert into history_octane.announcement
 SELECT staging_table.ann_pid
      , staging_table.ann_version
@@ -471,24 +429,17 @@ SELECT history_table.ann_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.announcement AS current_records
-      LEFT JOIN history_octane.announcement AS history_records
-        ON current_records.ann_pid =
-            history_records.ann_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.announcement AS current_records
+    LEFT JOIN history_octane.announcement AS history_records
+              ON current_records.ann_pid = history_records.ann_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.announcement staging_table
           ON staging_table.ann_pid = history_table.ann_pid
-WHERE staging_table.ann_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.announcement deleted_records
-    WHERE deleted_records.ann_pid = history_table.ann_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ann_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100035', 0, '--finding records to insert into history_octane.apor
 SELECT staging_table.ap_pid
      , staging_table.ap_version
@@ -513,24 +464,17 @@ SELECT history_table.ap_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.apor AS current_records
-      LEFT JOIN history_octane.apor AS history_records
-        ON current_records.ap_pid =
-            history_records.ap_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.apor AS current_records
+    LEFT JOIN history_octane.apor AS history_records
+              ON current_records.ap_pid = history_records.ap_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.apor staging_table
           ON staging_table.ap_pid = history_table.ap_pid
-WHERE staging_table.ap_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.apor deleted_records
-    WHERE deleted_records.ap_pid = history_table.ap_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ap_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100265', 0, '--finding records to insert into history_octane.application
 SELECT staging_table.apl_pid
      , staging_table.apl_version
@@ -585,24 +529,17 @@ SELECT history_table.apl_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.application AS current_records
-      LEFT JOIN history_octane.application AS history_records
-        ON current_records.apl_pid =
-            history_records.apl_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.application AS current_records
+    LEFT JOIN history_octane.application AS history_records
+              ON current_records.apl_pid = history_records.apl_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.application staging_table
           ON staging_table.apl_pid = history_table.apl_pid
-WHERE staging_table.apl_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.application deleted_records
-    WHERE deleted_records.apl_pid = history_table.apl_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.apl_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100005', 0, '--finding records to insert into history_octane.appraisal
 SELECT staging_table.apr_pid
      , staging_table.apr_version
@@ -819,24 +756,17 @@ SELECT history_table.apr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.appraisal AS current_records
-      LEFT JOIN history_octane.appraisal AS history_records
-        ON current_records.apr_pid =
-            history_records.apr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.appraisal AS current_records
+    LEFT JOIN history_octane.appraisal AS history_records
+              ON current_records.apr_pid = history_records.apr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.appraisal staging_table
           ON staging_table.apr_pid = history_table.apr_pid
-WHERE staging_table.apr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.appraisal deleted_records
-    WHERE deleted_records.apr_pid = history_table.apr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.apr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100295', 0, '--finding records to insert into history_octane.appraisal_file
 SELECT staging_table.aprf_pid
      , staging_table.aprf_version
@@ -859,24 +789,17 @@ SELECT history_table.aprf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.appraisal_file AS current_records
-      LEFT JOIN history_octane.appraisal_file AS history_records
-        ON current_records.aprf_pid =
-            history_records.aprf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.appraisal_file AS current_records
+    LEFT JOIN history_octane.appraisal_file AS history_records
+              ON current_records.aprf_pid = history_records.aprf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.appraisal_file staging_table
           ON staging_table.aprf_pid = history_table.aprf_pid
-WHERE staging_table.aprf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.appraisal_file deleted_records
-    WHERE deleted_records.aprf_pid = history_table.aprf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.aprf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100006', 0, '--finding records to insert into history_octane.appraisal_form
 SELECT staging_table.aprfm_pid
      , staging_table.aprfm_version
@@ -899,24 +822,17 @@ SELECT history_table.aprfm_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.appraisal_form AS current_records
-      LEFT JOIN history_octane.appraisal_form AS history_records
-        ON current_records.aprfm_pid =
-            history_records.aprfm_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.appraisal_form AS current_records
+    LEFT JOIN history_octane.appraisal_form AS history_records
+              ON current_records.aprfm_pid = history_records.aprfm_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.appraisal_form staging_table
           ON staging_table.aprfm_pid = history_table.aprfm_pid
-WHERE staging_table.aprfm_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.appraisal_form deleted_records
-    WHERE deleted_records.aprfm_pid = history_table.aprfm_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.aprfm_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100007', 0, '--finding records to insert into history_octane.appraisal_id_ticker
 SELECT staging_table.aprtk_pid
      , staging_table.aprtk_version
@@ -937,24 +853,17 @@ SELECT history_table.aprtk_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.appraisal_id_ticker AS current_records
-      LEFT JOIN history_octane.appraisal_id_ticker AS history_records
-        ON current_records.aprtk_pid =
-            history_records.aprtk_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.appraisal_id_ticker AS current_records
+    LEFT JOIN history_octane.appraisal_id_ticker AS history_records
+              ON current_records.aprtk_pid = history_records.aprtk_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.appraisal_id_ticker staging_table
           ON staging_table.aprtk_pid = history_table.aprtk_pid
-WHERE staging_table.aprtk_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.appraisal_id_ticker deleted_records
-    WHERE deleted_records.aprtk_pid = history_table.aprtk_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.aprtk_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100302', 0, '--finding records to insert into history_octane.appraisal_order_request
 SELECT staging_table.aprq_pid
      , staging_table.aprq_version
@@ -1015,24 +924,17 @@ SELECT history_table.aprq_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.appraisal_order_request AS current_records
-      LEFT JOIN history_octane.appraisal_order_request AS history_records
-        ON current_records.aprq_pid =
-            history_records.aprq_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.appraisal_order_request AS current_records
+    LEFT JOIN history_octane.appraisal_order_request AS history_records
+              ON current_records.aprq_pid = history_records.aprq_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.appraisal_order_request staging_table
           ON staging_table.aprq_pid = history_table.aprq_pid
-WHERE staging_table.aprq_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.appraisal_order_request deleted_records
-    WHERE deleted_records.aprq_pid = history_table.aprq_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.aprq_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100303', 0, '--finding records to insert into history_octane.appraisal_order_request_file
 SELECT staging_table.aorf_pid
      , staging_table.aorf_version
@@ -1059,24 +961,17 @@ SELECT history_table.aorf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.appraisal_order_request_file AS current_records
-      LEFT JOIN history_octane.appraisal_order_request_file AS history_records
-        ON current_records.aorf_pid =
-            history_records.aorf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.appraisal_order_request_file AS current_records
+    LEFT JOIN history_octane.appraisal_order_request_file AS history_records
+              ON current_records.aorf_pid = history_records.aorf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.appraisal_order_request_file staging_table
           ON staging_table.aorf_pid = history_table.aorf_pid
-WHERE staging_table.aorf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.appraisal_order_request_file deleted_records
-    WHERE deleted_records.aorf_pid = history_table.aorf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.aorf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100059', 0, '--finding records to insert into history_octane.area_median_income_row
 SELECT staging_table.amir_pid
      , staging_table.amir_version
@@ -1103,24 +998,17 @@ SELECT history_table.amir_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.area_median_income_row AS current_records
-      LEFT JOIN history_octane.area_median_income_row AS history_records
-        ON current_records.amir_pid =
-            history_records.amir_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.area_median_income_row AS current_records
+    LEFT JOIN history_octane.area_median_income_row AS history_records
+              ON current_records.amir_pid = history_records.amir_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.area_median_income_row staging_table
           ON staging_table.amir_pid = history_table.amir_pid
-WHERE staging_table.amir_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.area_median_income_row deleted_records
-    WHERE deleted_records.amir_pid = history_table.amir_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.amir_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100021', 0, '--finding records to insert into history_octane.area_median_income_table
 SELECT staging_table.amit_pid
      , staging_table.amit_version
@@ -1145,24 +1033,17 @@ SELECT history_table.amit_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.area_median_income_table AS current_records
-      LEFT JOIN history_octane.area_median_income_table AS history_records
-        ON current_records.amit_pid =
-            history_records.amit_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.area_median_income_table AS current_records
+    LEFT JOIN history_octane.area_median_income_table AS history_records
+              ON current_records.amit_pid = history_records.amit_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.area_median_income_table staging_table
           ON staging_table.amit_pid = history_table.amit_pid
-WHERE staging_table.amit_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.area_median_income_table deleted_records
-    WHERE deleted_records.amit_pid = history_table.amit_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.amit_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100218', 0, '--finding records to insert into history_octane.arm_index_rate
 SELECT staging_table.air_pid
      , staging_table.air_version
@@ -1185,24 +1066,17 @@ SELECT history_table.air_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.arm_index_rate AS current_records
-      LEFT JOIN history_octane.arm_index_rate AS history_records
-        ON current_records.air_pid =
-            history_records.air_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.arm_index_rate AS current_records
+    LEFT JOIN history_octane.arm_index_rate AS history_records
+              ON current_records.air_pid = history_records.air_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.arm_index_rate staging_table
           ON staging_table.air_pid = history_table.air_pid
-WHERE staging_table.air_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.arm_index_rate deleted_records
-    WHERE deleted_records.air_pid = history_table.air_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.air_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100070', 0, '--finding records to insert into history_octane.asset
 SELECT staging_table.as_pid
      , staging_table.as_version
@@ -1307,24 +1181,17 @@ SELECT history_table.as_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.asset AS current_records
-      LEFT JOIN history_octane.asset AS history_records
-        ON current_records.as_pid =
-            history_records.as_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.asset AS current_records
+    LEFT JOIN history_octane.asset AS history_records
+              ON current_records.as_pid = history_records.as_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.asset staging_table
           ON staging_table.as_pid = history_table.as_pid
-WHERE staging_table.as_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.asset deleted_records
-    WHERE deleted_records.as_pid = history_table.as_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.as_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100071', 0, '--finding records to insert into history_octane.asset_large_deposit
 SELECT staging_table.ald_pid
      , staging_table.ald_version
@@ -1349,24 +1216,17 @@ SELECT history_table.ald_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.asset_large_deposit AS current_records
-      LEFT JOIN history_octane.asset_large_deposit AS history_records
-        ON current_records.ald_pid =
-            history_records.ald_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.asset_large_deposit AS current_records
+    LEFT JOIN history_octane.asset_large_deposit AS history_records
+              ON current_records.ald_pid = history_records.ald_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.asset_large_deposit staging_table
           ON staging_table.ald_pid = history_table.ald_pid
-WHERE staging_table.ald_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.asset_large_deposit deleted_records
-    WHERE deleted_records.ald_pid = history_table.ald_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ald_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100135', 0, '--finding records to insert into history_octane.aus_request_number_ticker
 SELECT staging_table.arnt_pid
      , staging_table.arnt_version
@@ -1387,24 +1247,17 @@ SELECT history_table.arnt_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.aus_request_number_ticker AS current_records
-      LEFT JOIN history_octane.aus_request_number_ticker AS history_records
-        ON current_records.arnt_pid =
-            history_records.arnt_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.aus_request_number_ticker AS current_records
+    LEFT JOIN history_octane.aus_request_number_ticker AS history_records
+              ON current_records.arnt_pid = history_records.arnt_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.aus_request_number_ticker staging_table
           ON staging_table.arnt_pid = history_table.arnt_pid
-WHERE staging_table.arnt_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.aus_request_number_ticker deleted_records
-    WHERE deleted_records.arnt_pid = history_table.arnt_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.arnt_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100272', 0, '--finding records to insert into history_octane.backfill_loan_status
 SELECT staging_table.bfls_pid
      , staging_table.bfls_version
@@ -1437,24 +1290,17 @@ SELECT history_table.bfls_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.backfill_loan_status AS current_records
-      LEFT JOIN history_octane.backfill_loan_status AS history_records
-        ON current_records.bfls_pid =
-            history_records.bfls_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.backfill_loan_status AS current_records
+    LEFT JOIN history_octane.backfill_loan_status AS history_records
+              ON current_records.bfls_pid = history_records.bfls_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.backfill_loan_status staging_table
           ON staging_table.bfls_pid = history_table.bfls_pid
-WHERE staging_table.bfls_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.backfill_loan_status deleted_records
-    WHERE deleted_records.bfls_pid = history_table.bfls_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bfls_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100091', 0, '--finding records to insert into history_octane.backfill_status
 SELECT staging_table.bfs_pid
      , staging_table.bfs_version
@@ -1491,24 +1337,17 @@ SELECT history_table.bfs_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.backfill_status AS current_records
-      LEFT JOIN history_octane.backfill_status AS history_records
-        ON current_records.bfs_pid =
-            history_records.bfs_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.backfill_status AS current_records
+    LEFT JOIN history_octane.backfill_status AS history_records
+              ON current_records.bfs_pid = history_records.bfs_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.backfill_status staging_table
           ON staging_table.bfs_pid = history_table.bfs_pid
-WHERE staging_table.bfs_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.backfill_status deleted_records
-    WHERE deleted_records.bfs_pid = history_table.bfs_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bfs_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100219', 0, '--finding records to insert into history_octane.bid_pool
 SELECT staging_table.bp_pid
      , staging_table.bp_version
@@ -1533,24 +1372,17 @@ SELECT history_table.bp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.bid_pool AS current_records
-      LEFT JOIN history_octane.bid_pool AS history_records
-        ON current_records.bp_pid =
-            history_records.bp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.bid_pool AS current_records
+    LEFT JOIN history_octane.bid_pool AS history_records
+              ON current_records.bp_pid = history_records.bp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.bid_pool staging_table
           ON staging_table.bp_pid = history_table.bp_pid
-WHERE staging_table.bp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.bid_pool deleted_records
-    WHERE deleted_records.bp_pid = history_table.bp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100292', 0, '--finding records to insert into history_octane.bid_pool_file
 SELECT staging_table.bpf_pid
      , staging_table.bpf_version
@@ -1571,24 +1403,17 @@ SELECT history_table.bpf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.bid_pool_file AS current_records
-      LEFT JOIN history_octane.bid_pool_file AS history_records
-        ON current_records.bpf_pid =
-            history_records.bpf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.bid_pool_file AS current_records
+    LEFT JOIN history_octane.bid_pool_file AS history_records
+              ON current_records.bpf_pid = history_records.bpf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.bid_pool_file staging_table
           ON staging_table.bpf_pid = history_table.bpf_pid
-WHERE staging_table.bpf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.bid_pool_file deleted_records
-    WHERE deleted_records.bpf_pid = history_table.bpf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bpf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100321', 0, '--finding records to insert into history_octane.bid_pool_lender_lock
 SELECT staging_table.bpll_pid
      , staging_table.bpll_version
@@ -1609,24 +1434,17 @@ SELECT history_table.bpll_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.bid_pool_lender_lock AS current_records
-      LEFT JOIN history_octane.bid_pool_lender_lock AS history_records
-        ON current_records.bpll_pid =
-            history_records.bpll_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.bid_pool_lender_lock AS current_records
+    LEFT JOIN history_octane.bid_pool_lender_lock AS history_records
+              ON current_records.bpll_pid = history_records.bpll_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.bid_pool_lender_lock staging_table
           ON staging_table.bpll_pid = history_table.bpll_pid
-WHERE staging_table.bpll_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.bid_pool_lender_lock deleted_records
-    WHERE deleted_records.bpll_pid = history_table.bpll_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bpll_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100273', 0, '--finding records to insert into history_octane.bid_pool_note
 SELECT staging_table.bpn_pid
      , staging_table.bpn_version
@@ -1653,24 +1471,17 @@ SELECT history_table.bpn_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.bid_pool_note AS current_records
-      LEFT JOIN history_octane.bid_pool_note AS history_records
-        ON current_records.bpn_pid =
-            history_records.bpn_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.bid_pool_note AS current_records
+    LEFT JOIN history_octane.bid_pool_note AS history_records
+              ON current_records.bpn_pid = history_records.bpn_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.bid_pool_note staging_table
           ON staging_table.bpn_pid = history_table.bpn_pid
-WHERE staging_table.bpn_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.bid_pool_note deleted_records
-    WHERE deleted_records.bpn_pid = history_table.bpn_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bpn_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100274', 0, '--finding records to insert into history_octane.bid_pool_note_comment
 SELECT staging_table.bpnc_pid
      , staging_table.bpnc_version
@@ -1697,24 +1508,17 @@ SELECT history_table.bpnc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.bid_pool_note_comment AS current_records
-      LEFT JOIN history_octane.bid_pool_note_comment AS history_records
-        ON current_records.bpnc_pid =
-            history_records.bpnc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.bid_pool_note_comment AS current_records
+    LEFT JOIN history_octane.bid_pool_note_comment AS history_records
+              ON current_records.bpnc_pid = history_records.bpnc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.bid_pool_note_comment staging_table
           ON staging_table.bpnc_pid = history_table.bpnc_pid
-WHERE staging_table.bpnc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.bid_pool_note_comment deleted_records
-    WHERE deleted_records.bpnc_pid = history_table.bpnc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bpnc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100275', 0, '--finding records to insert into history_octane.bid_pool_note_monitor
 SELECT staging_table.bpnm_pid
      , staging_table.bpnm_version
@@ -1735,24 +1539,17 @@ SELECT history_table.bpnm_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.bid_pool_note_monitor AS current_records
-      LEFT JOIN history_octane.bid_pool_note_monitor AS history_records
-        ON current_records.bpnm_pid =
-            history_records.bpnm_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.bid_pool_note_monitor AS current_records
+    LEFT JOIN history_octane.bid_pool_note_monitor AS history_records
+              ON current_records.bpnm_pid = history_records.bpnm_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.bid_pool_note_monitor staging_table
           ON staging_table.bpnm_pid = history_table.bpnm_pid
-WHERE staging_table.bpnm_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.bid_pool_note_monitor deleted_records
-    WHERE deleted_records.bpnm_pid = history_table.bpnm_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bpnm_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100308', 0, '--finding records to insert into history_octane.borrower
 SELECT staging_table.b_pid
      , staging_table.b_version
@@ -2105,24 +1902,17 @@ SELECT history_table.b_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower AS current_records
-      LEFT JOIN history_octane.borrower AS history_records
-        ON current_records.b_pid =
-            history_records.b_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower AS current_records
+    LEFT JOIN history_octane.borrower AS history_records
+              ON current_records.b_pid = history_records.b_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower staging_table
           ON staging_table.b_pid = history_table.b_pid
-WHERE staging_table.b_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower deleted_records
-    WHERE deleted_records.b_pid = history_table.b_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.b_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100307', 0, '--finding records to insert into history_octane.borrower_alias
 SELECT staging_table.ba_pid
      , staging_table.ba_version
@@ -2157,24 +1947,17 @@ SELECT history_table.ba_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_alias AS current_records
-      LEFT JOIN history_octane.borrower_alias AS history_records
-        ON current_records.ba_pid =
-            history_records.ba_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_alias AS current_records
+    LEFT JOIN history_octane.borrower_alias AS history_records
+              ON current_records.ba_pid = history_records.ba_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_alias staging_table
           ON staging_table.ba_pid = history_table.ba_pid
-WHERE staging_table.ba_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_alias deleted_records
-    WHERE deleted_records.ba_pid = history_table.ba_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ba_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100126', 0, '--finding records to insert into history_octane.borrower_asset
 SELECT staging_table.bas_pid
      , staging_table.bas_version
@@ -2195,24 +1978,17 @@ SELECT history_table.bas_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_asset AS current_records
-      LEFT JOIN history_octane.borrower_asset AS history_records
-        ON current_records.bas_pid =
-            history_records.bas_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_asset AS current_records
+    LEFT JOIN history_octane.borrower_asset AS history_records
+              ON current_records.bas_pid = history_records.bas_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_asset staging_table
           ON staging_table.bas_pid = history_table.bas_pid
-WHERE staging_table.bas_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_asset deleted_records
-    WHERE deleted_records.bas_pid = history_table.bas_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bas_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100127', 0, '--finding records to insert into history_octane.borrower_associated_address
 SELECT staging_table.baa_pid
      , staging_table.baa_version
@@ -2283,24 +2059,17 @@ SELECT history_table.baa_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_associated_address AS current_records
-      LEFT JOIN history_octane.borrower_associated_address AS history_records
-        ON current_records.baa_pid =
-            history_records.baa_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_associated_address AS current_records
+    LEFT JOIN history_octane.borrower_associated_address AS history_records
+              ON current_records.baa_pid = history_records.baa_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_associated_address staging_table
           ON staging_table.baa_pid = history_table.baa_pid
-WHERE staging_table.baa_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_associated_address deleted_records
-    WHERE deleted_records.baa_pid = history_table.baa_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.baa_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100314', 0, '--finding records to insert into history_octane.borrower_credit_inquiry
 SELECT staging_table.bci_pid
      , staging_table.bci_version
@@ -2321,24 +2090,17 @@ SELECT history_table.bci_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_credit_inquiry AS current_records
-      LEFT JOIN history_octane.borrower_credit_inquiry AS history_records
-        ON current_records.bci_pid =
-            history_records.bci_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_credit_inquiry AS current_records
+    LEFT JOIN history_octane.borrower_credit_inquiry AS history_records
+              ON current_records.bci_pid = history_records.bci_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_credit_inquiry staging_table
           ON staging_table.bci_pid = history_table.bci_pid
-WHERE staging_table.bci_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_credit_inquiry deleted_records
-    WHERE deleted_records.bci_pid = history_table.bci_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bci_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100013', 0, '--finding records to insert into history_octane.borrower_declarations
 SELECT staging_table.bdec_pid
      , staging_table.bdec_version
@@ -2393,24 +2155,17 @@ SELECT history_table.bdec_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_declarations AS current_records
-      LEFT JOIN history_octane.borrower_declarations AS history_records
-        ON current_records.bdec_pid =
-            history_records.bdec_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_declarations AS current_records
+    LEFT JOIN history_octane.borrower_declarations AS history_records
+              ON current_records.bdec_pid = history_records.bdec_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_declarations staging_table
           ON staging_table.bdec_pid = history_table.bdec_pid
-WHERE staging_table.bdec_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_declarations deleted_records
-    WHERE deleted_records.bdec_pid = history_table.bdec_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bdec_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100128', 0, '--finding records to insert into history_octane.borrower_dependent
 SELECT staging_table.bd_pid
      , staging_table.bd_version
@@ -2445,24 +2200,17 @@ SELECT history_table.bd_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_dependent AS current_records
-      LEFT JOIN history_octane.borrower_dependent AS history_records
-        ON current_records.bd_pid =
-            history_records.bd_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_dependent AS current_records
+    LEFT JOIN history_octane.borrower_dependent AS history_records
+              ON current_records.bd_pid = history_records.bd_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_dependent staging_table
           ON staging_table.bd_pid = history_table.bd_pid
-WHERE staging_table.bd_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_dependent deleted_records
-    WHERE deleted_records.bd_pid = history_table.bd_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bd_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100133', 0, '--finding records to insert into history_octane.borrower_income
 SELECT staging_table.bi_pid
      , staging_table.bi_version
@@ -2519,24 +2267,17 @@ SELECT history_table.bi_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_income AS current_records
-      LEFT JOIN history_octane.borrower_income AS history_records
-        ON current_records.bi_pid =
-            history_records.bi_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_income AS current_records
+    LEFT JOIN history_octane.borrower_income AS history_records
+              ON current_records.bi_pid = history_records.bi_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_income staging_table
           ON staging_table.bi_pid = history_table.bi_pid
-WHERE staging_table.bi_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_income deleted_records
-    WHERE deleted_records.bi_pid = history_table.bi_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bi_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100001', 0, '--finding records to insert into history_octane.borrower_job_gap
 SELECT staging_table.bjg_pid
      , staging_table.bjg_version
@@ -2561,24 +2302,17 @@ SELECT history_table.bjg_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_job_gap AS current_records
-      LEFT JOIN history_octane.borrower_job_gap AS history_records
-        ON current_records.bjg_pid =
-            history_records.bjg_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_job_gap AS current_records
+    LEFT JOIN history_octane.borrower_job_gap AS history_records
+              ON current_records.bjg_pid = history_records.bjg_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_job_gap staging_table
           ON staging_table.bjg_pid = history_table.bjg_pid
-WHERE staging_table.bjg_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_job_gap deleted_records
-    WHERE deleted_records.bjg_pid = history_table.bjg_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bjg_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100183', 0, '--finding records to insert into history_octane.borrower_liability
 SELECT staging_table.bl_pid
      , staging_table.bl_version
@@ -2599,24 +2333,17 @@ SELECT history_table.bl_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_liability AS current_records
-      LEFT JOIN history_octane.borrower_liability AS history_records
-        ON current_records.bl_pid =
-            history_records.bl_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_liability AS current_records
+    LEFT JOIN history_octane.borrower_liability AS history_records
+              ON current_records.bl_pid = history_records.bl_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_liability staging_table
           ON staging_table.bl_pid = history_table.bl_pid
-WHERE staging_table.bl_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_liability deleted_records
-    WHERE deleted_records.bl_pid = history_table.bl_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bl_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100172', 0, '--finding records to insert into history_octane.borrower_public_record
 SELECT staging_table.bpr_pid
      , staging_table.bpr_version
@@ -2637,24 +2364,17 @@ SELECT history_table.bpr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_public_record AS current_records
-      LEFT JOIN history_octane.borrower_public_record AS history_records
-        ON current_records.bpr_pid =
-            history_records.bpr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_public_record AS current_records
+    LEFT JOIN history_octane.borrower_public_record AS history_records
+              ON current_records.bpr_pid = history_records.bpr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_public_record staging_table
           ON staging_table.bpr_pid = history_table.bpr_pid
-WHERE staging_table.bpr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_public_record deleted_records
-    WHERE deleted_records.bpr_pid = history_table.bpr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bpr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100157', 0, '--finding records to insert into history_octane.borrower_reo
 SELECT staging_table.breo_pid
      , staging_table.breo_version
@@ -2677,24 +2397,17 @@ SELECT history_table.breo_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_reo AS current_records
-      LEFT JOIN history_octane.borrower_reo AS history_records
-        ON current_records.breo_pid =
-            history_records.breo_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_reo AS current_records
+    LEFT JOIN history_octane.borrower_reo AS history_records
+              ON current_records.breo_pid = history_records.breo_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_reo staging_table
           ON staging_table.breo_pid = history_table.breo_pid
-WHERE staging_table.breo_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_reo deleted_records
-    WHERE deleted_records.breo_pid = history_table.breo_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.breo_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100158', 0, '--finding records to insert into history_octane.borrower_residence
 SELECT staging_table.bres_pid
      , staging_table.bres_version
@@ -2725,24 +2438,17 @@ SELECT history_table.bres_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_residence AS current_records
-      LEFT JOIN history_octane.borrower_residence AS history_records
-        ON current_records.bres_pid =
-            history_records.bres_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_residence AS current_records
+    LEFT JOIN history_octane.borrower_residence AS history_records
+              ON current_records.bres_pid = history_records.bres_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_residence staging_table
           ON staging_table.bres_pid = history_table.bres_pid
-WHERE staging_table.bres_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_residence deleted_records
-    WHERE deleted_records.bres_pid = history_table.bres_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bres_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100159', 0, '--finding records to insert into history_octane.borrower_tax_filing
 SELECT staging_table.btf_pid
      , staging_table.btf_version
@@ -2777,24 +2483,17 @@ SELECT history_table.btf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_tax_filing AS current_records
-      LEFT JOIN history_octane.borrower_tax_filing AS history_records
-        ON current_records.btf_pid =
-            history_records.btf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_tax_filing AS current_records
+    LEFT JOIN history_octane.borrower_tax_filing AS history_records
+              ON current_records.btf_pid = history_records.btf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_tax_filing staging_table
           ON staging_table.btf_pid = history_table.btf_pid
-WHERE staging_table.btf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_tax_filing deleted_records
-    WHERE deleted_records.btf_pid = history_table.btf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.btf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100065', 0, '--finding records to insert into history_octane.borrower_user
 SELECT staging_table.bu_pid
      , staging_table.bu_version
@@ -2851,24 +2550,17 @@ SELECT history_table.bu_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_user AS current_records
-      LEFT JOIN history_octane.borrower_user AS history_records
-        ON current_records.bu_pid =
-            history_records.bu_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_user AS current_records
+    LEFT JOIN history_octane.borrower_user AS history_records
+              ON current_records.bu_pid = history_records.bu_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_user staging_table
           ON staging_table.bu_pid = history_table.bu_pid
-WHERE staging_table.bu_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_user deleted_records
-    WHERE deleted_records.bu_pid = history_table.bu_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bu_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100129', 0, '--finding records to insert into history_octane.borrower_user_change_email
 SELECT staging_table.buce_pid
      , staging_table.buce_version
@@ -2895,24 +2587,17 @@ SELECT history_table.buce_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_user_change_email AS current_records
-      LEFT JOIN history_octane.borrower_user_change_email AS history_records
-        ON current_records.buce_pid =
-            history_records.buce_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_user_change_email AS current_records
+    LEFT JOIN history_octane.borrower_user_change_email AS history_records
+              ON current_records.buce_pid = history_records.buce_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_user_change_email staging_table
           ON staging_table.buce_pid = history_table.buce_pid
-WHERE staging_table.buce_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_user_change_email deleted_records
-    WHERE deleted_records.buce_pid = history_table.buce_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.buce_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100313', 0, '--finding records to insert into history_octane.borrower_user_deal
 SELECT staging_table.bud_pid
      , staging_table.bud_version
@@ -2947,24 +2632,17 @@ SELECT history_table.bud_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_user_deal AS current_records
-      LEFT JOIN history_octane.borrower_user_deal AS history_records
-        ON current_records.bud_pid =
-            history_records.bud_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_user_deal AS current_records
+    LEFT JOIN history_octane.borrower_user_deal AS history_records
+              ON current_records.bud_pid = history_records.bud_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_user_deal staging_table
           ON staging_table.bud_pid = history_table.bud_pid
-WHERE staging_table.bud_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_user_deal deleted_records
-    WHERE deleted_records.bud_pid = history_table.bud_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bud_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100011', 0, '--finding records to insert into history_octane.borrower_va
 SELECT staging_table.bva_pid
      , staging_table.bva_version
@@ -3113,24 +2791,17 @@ SELECT history_table.bva_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.borrower_va AS current_records
-      LEFT JOIN history_octane.borrower_va AS history_records
-        ON current_records.bva_pid =
-            history_records.bva_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.borrower_va AS current_records
+    LEFT JOIN history_octane.borrower_va AS history_records
+              ON current_records.bva_pid = history_records.bva_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.borrower_va staging_table
           ON staging_table.bva_pid = history_table.bva_pid
-WHERE staging_table.bva_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.borrower_va deleted_records
-    WHERE deleted_records.bva_pid = history_table.bva_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bva_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100075', 0, '--finding records to insert into history_octane.branch
 SELECT staging_table.br_pid
      , staging_table.br_version
@@ -3193,24 +2864,17 @@ SELECT history_table.br_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.branch AS current_records
-      LEFT JOIN history_octane.branch AS history_records
-        ON current_records.br_pid =
-            history_records.br_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.branch AS current_records
+    LEFT JOIN history_octane.branch AS history_records
+              ON current_records.br_pid = history_records.br_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.branch staging_table
           ON staging_table.br_pid = history_table.br_pid
-WHERE staging_table.br_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.branch deleted_records
-    WHERE deleted_records.br_pid = history_table.br_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.br_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100276', 0, '--finding records to insert into history_octane.branch_account_executive
 SELECT staging_table.brae_pid
      , staging_table.brae_version
@@ -3233,24 +2897,17 @@ SELECT history_table.brae_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.branch_account_executive AS current_records
-      LEFT JOIN history_octane.branch_account_executive AS history_records
-        ON current_records.brae_pid =
-            history_records.brae_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.branch_account_executive AS current_records
+    LEFT JOIN history_octane.branch_account_executive AS history_records
+              ON current_records.brae_pid = history_records.brae_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.branch_account_executive staging_table
           ON staging_table.brae_pid = history_table.brae_pid
-WHERE staging_table.brae_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.branch_account_executive deleted_records
-    WHERE deleted_records.brae_pid = history_table.brae_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.brae_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100076', 0, '--finding records to insert into history_octane.branch_license
 SELECT staging_table.brml_pid
      , staging_table.brml_version
@@ -3285,24 +2942,17 @@ SELECT history_table.brml_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.branch_license AS current_records
-      LEFT JOIN history_octane.branch_license AS history_records
-        ON current_records.brml_pid =
-            history_records.brml_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.branch_license AS current_records
+    LEFT JOIN history_octane.branch_license AS history_records
+              ON current_records.brml_pid = history_records.brml_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.branch_license staging_table
           ON staging_table.brml_pid = history_table.brml_pid
-WHERE staging_table.brml_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.branch_license deleted_records
-    WHERE deleted_records.brml_pid = history_table.brml_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.brml_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100883', 0, '--finding records to insert into history_octane.branch_license_contact
 SELECT staging_table.brlc_pid
      , staging_table.brlc_version
@@ -3327,24 +2977,17 @@ SELECT history_table.brlc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.branch_license_contact AS current_records
-      LEFT JOIN history_octane.branch_license_contact AS history_records
-        ON current_records.brlc_pid =
-            history_records.brlc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.branch_license_contact AS current_records
+    LEFT JOIN history_octane.branch_license_contact AS history_records
+              ON current_records.brlc_pid = history_records.brlc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.branch_license_contact staging_table
           ON staging_table.brlc_pid = history_table.brlc_pid
-WHERE staging_table.brlc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.branch_license_contact deleted_records
-    WHERE deleted_records.brlc_pid = history_table.brlc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.brlc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100130', 0, '--finding records to insert into history_octane.business_income
 SELECT staging_table.bui_pid
      , staging_table.bui_version
@@ -3763,24 +3406,17 @@ SELECT history_table.bui_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.business_income AS current_records
-      LEFT JOIN history_octane.business_income AS history_records
-        ON current_records.bui_pid =
-            history_records.bui_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.business_income AS current_records
+    LEFT JOIN history_octane.business_income AS history_records
+              ON current_records.bui_pid = history_records.bui_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.business_income staging_table
           ON staging_table.bui_pid = history_table.bui_pid
-WHERE staging_table.bui_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.business_income deleted_records
-    WHERE deleted_records.bui_pid = history_table.bui_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.bui_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100220', 0, '--finding records to insert into history_octane.channel
 SELECT staging_table.ch_pid
      , staging_table.ch_version
@@ -3805,24 +3441,17 @@ SELECT history_table.ch_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.channel AS current_records
-      LEFT JOIN history_octane.channel AS history_records
-        ON current_records.ch_pid =
-            history_records.ch_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.channel AS current_records
+    LEFT JOIN history_octane.channel AS history_records
+              ON current_records.ch_pid = history_records.ch_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.channel staging_table
           ON staging_table.ch_pid = history_table.ch_pid
-WHERE staging_table.ch_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.channel deleted_records
-    WHERE deleted_records.ch_pid = history_table.ch_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ch_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100142', 0, '--finding records to insert into history_octane.circumstance_change
 SELECT staging_table.cc_pid
      , staging_table.cc_version
@@ -3857,24 +3486,17 @@ SELECT history_table.cc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.circumstance_change AS current_records
-      LEFT JOIN history_octane.circumstance_change AS history_records
-        ON current_records.cc_pid =
-            history_records.cc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.circumstance_change AS current_records
+    LEFT JOIN history_octane.circumstance_change AS history_records
+              ON current_records.cc_pid = history_records.cc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.circumstance_change staging_table
           ON staging_table.cc_pid = history_table.cc_pid
-WHERE staging_table.cc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.circumstance_change deleted_records
-    WHERE deleted_records.cc_pid = history_table.cc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100074', 0, '--finding records to insert into history_octane.company
 SELECT staging_table.cm_pid
      , staging_table.cm_version
@@ -3957,24 +3579,17 @@ SELECT history_table.cm_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.company AS current_records
-      LEFT JOIN history_octane.company AS history_records
-        ON current_records.cm_pid =
-            history_records.cm_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.company AS current_records
+    LEFT JOIN history_octane.company AS history_records
+              ON current_records.cm_pid = history_records.cm_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.company staging_table
           ON staging_table.cm_pid = history_table.cm_pid
-WHERE staging_table.cm_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.company deleted_records
-    WHERE deleted_records.cm_pid = history_table.cm_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cm_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100022', 0, '--finding records to insert into history_octane.company_admin_event
 SELECT staging_table.cae_pid
      , staging_table.cae_version
@@ -4007,24 +3622,17 @@ SELECT history_table.cae_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.company_admin_event AS current_records
-      LEFT JOIN history_octane.company_admin_event AS history_records
-        ON current_records.cae_pid =
-            history_records.cae_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.company_admin_event AS current_records
+    LEFT JOIN history_octane.company_admin_event AS history_records
+              ON current_records.cae_pid = history_records.cae_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.company_admin_event staging_table
           ON staging_table.cae_pid = history_table.cae_pid
-WHERE staging_table.cae_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.company_admin_event deleted_records
-    WHERE deleted_records.cae_pid = history_table.cae_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cae_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100266', 0, '--finding records to insert into history_octane.company_license
 SELECT staging_table.cml_pid
      , staging_table.cml_version
@@ -4061,24 +3669,17 @@ SELECT history_table.cml_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.company_license AS current_records
-      LEFT JOIN history_octane.company_license AS history_records
-        ON current_records.cml_pid =
-            history_records.cml_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.company_license AS current_records
+    LEFT JOIN history_octane.company_license AS history_records
+              ON current_records.cml_pid = history_records.cml_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.company_license staging_table
           ON staging_table.cml_pid = history_table.cml_pid
-WHERE staging_table.cml_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.company_license deleted_records
-    WHERE deleted_records.cml_pid = history_table.cml_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cml_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100870', 0, '--finding records to insert into history_octane.company_license_contact
 SELECT staging_table.cmlc_pid
      , staging_table.cmlc_version
@@ -4103,24 +3704,17 @@ SELECT history_table.cmlc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.company_license_contact AS current_records
-      LEFT JOIN history_octane.company_license_contact AS history_records
-        ON current_records.cmlc_pid =
-            history_records.cmlc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.company_license_contact AS current_records
+    LEFT JOIN history_octane.company_license_contact AS history_records
+              ON current_records.cmlc_pid = history_records.cmlc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.company_license_contact staging_table
           ON staging_table.cmlc_pid = history_table.cmlc_pid
-WHERE staging_table.cmlc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.company_license_contact deleted_records
-    WHERE deleted_records.cmlc_pid = history_table.cmlc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cmlc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100852', 0, '--finding records to insert into history_octane.company_location
 SELECT staging_table.cmloc_pid
      , staging_table.cmloc_version
@@ -4159,24 +3753,17 @@ SELECT history_table.cmloc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.company_location AS current_records
-      LEFT JOIN history_octane.company_location AS history_records
-        ON current_records.cmloc_pid =
-            history_records.cmloc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.company_location AS current_records
+    LEFT JOIN history_octane.company_location AS history_records
+              ON current_records.cmloc_pid = history_records.cmloc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.company_location staging_table
           ON staging_table.cmloc_pid = history_table.cmloc_pid
-WHERE staging_table.cmloc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.company_location deleted_records
-    WHERE deleted_records.cmloc_pid = history_table.cmloc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cmloc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100884', 0, '--finding records to insert into history_octane.company_settings
 SELECT staging_table.cs_pid
      , staging_table.cs_version
@@ -4235,24 +3822,17 @@ SELECT history_table.cs_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.company_settings AS current_records
-      LEFT JOIN history_octane.company_settings AS history_records
-        ON current_records.cs_pid =
-            history_records.cs_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.company_settings AS current_records
+    LEFT JOIN history_octane.company_settings AS history_records
+              ON current_records.cs_pid = history_records.cs_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.company_settings staging_table
           ON staging_table.cs_pid = history_table.cs_pid
-WHERE staging_table.cs_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.company_settings deleted_records
-    WHERE deleted_records.cs_pid = history_table.cs_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cs_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100293', 0, '--finding records to insert into history_octane.compass_analytics_report_request
 SELECT staging_table.carr_pid
      , staging_table.carr_version
@@ -4301,24 +3881,17 @@ SELECT history_table.carr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.compass_analytics_report_request AS current_records
-      LEFT JOIN history_octane.compass_analytics_report_request AS history_records
-        ON current_records.carr_pid =
-            history_records.carr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.compass_analytics_report_request AS current_records
+    LEFT JOIN history_octane.compass_analytics_report_request AS history_records
+              ON current_records.carr_pid = history_records.carr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.compass_analytics_report_request staging_table
           ON staging_table.carr_pid = history_table.carr_pid
-WHERE staging_table.carr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.compass_analytics_report_request deleted_records
-    WHERE deleted_records.carr_pid = history_table.carr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.carr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100901', 0, '--finding records to insert into history_octane.config_note
 SELECT staging_table.cn_pid
      , staging_table.cn_version
@@ -4357,24 +3930,17 @@ SELECT history_table.cn_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.config_note AS current_records
-      LEFT JOIN history_octane.config_note AS history_records
-        ON current_records.cn_pid =
-            history_records.cn_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.config_note AS current_records
+    LEFT JOIN history_octane.config_note AS history_records
+              ON current_records.cn_pid = history_records.cn_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.config_note staging_table
           ON staging_table.cn_pid = history_table.cn_pid
-WHERE staging_table.cn_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.config_note deleted_records
-    WHERE deleted_records.cn_pid = history_table.cn_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cn_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100902', 0, '--finding records to insert into history_octane.config_note_comment
 SELECT staging_table.cnc_pid
      , staging_table.cnc_version
@@ -4401,24 +3967,17 @@ SELECT history_table.cnc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.config_note_comment AS current_records
-      LEFT JOIN history_octane.config_note_comment AS history_records
-        ON current_records.cnc_pid =
-            history_records.cnc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.config_note_comment AS current_records
+    LEFT JOIN history_octane.config_note_comment AS history_records
+              ON current_records.cnc_pid = history_records.cnc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.config_note_comment staging_table
           ON staging_table.cnc_pid = history_table.cnc_pid
-WHERE staging_table.cnc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.config_note_comment deleted_records
-    WHERE deleted_records.cnc_pid = history_table.cnc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cnc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100903', 0, '--finding records to insert into history_octane.config_note_monitor
 SELECT staging_table.cnm_pid
      , staging_table.cnm_version
@@ -4439,24 +3998,17 @@ SELECT history_table.cnm_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.config_note_monitor AS current_records
-      LEFT JOIN history_octane.config_note_monitor AS history_records
-        ON current_records.cnm_pid =
-            history_records.cnm_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.config_note_monitor AS current_records
+    LEFT JOIN history_octane.config_note_monitor AS history_records
+              ON current_records.cnm_pid = history_records.cnm_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.config_note_monitor staging_table
           ON staging_table.cnm_pid = history_table.cnm_pid
-WHERE staging_table.cnm_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.config_note_monitor deleted_records
-    WHERE deleted_records.cnm_pid = history_table.cnm_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cnm_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100161', 0, '--finding records to insert into history_octane.construction_cost
 SELECT staging_table.coc_pid
      , staging_table.coc_version
@@ -4529,24 +4081,17 @@ SELECT history_table.coc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.construction_cost AS current_records
-      LEFT JOIN history_octane.construction_cost AS history_records
-        ON current_records.coc_pid =
-            history_records.coc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.construction_cost AS current_records
+    LEFT JOIN history_octane.construction_cost AS history_records
+              ON current_records.coc_pid = history_records.coc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.construction_cost staging_table
           ON staging_table.coc_pid = history_table.coc_pid
-WHERE staging_table.coc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.construction_cost deleted_records
-    WHERE deleted_records.coc_pid = history_table.coc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.coc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100136', 0, '--finding records to insert into history_octane.construction_draw
 SELECT staging_table.cd_pid
      , staging_table.cd_version
@@ -4593,24 +4138,17 @@ SELECT history_table.cd_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.construction_draw AS current_records
-      LEFT JOIN history_octane.construction_draw AS history_records
-        ON current_records.cd_pid =
-            history_records.cd_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.construction_draw AS current_records
+    LEFT JOIN history_octane.construction_draw AS history_records
+              ON current_records.cd_pid = history_records.cd_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.construction_draw staging_table
           ON staging_table.cd_pid = history_table.cd_pid
-WHERE staging_table.cd_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.construction_draw deleted_records
-    WHERE deleted_records.cd_pid = history_table.cd_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cd_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100162', 0, '--finding records to insert into history_octane.construction_draw_item
 SELECT staging_table.cdi_pid
      , staging_table.cdi_version
@@ -4639,24 +4177,17 @@ SELECT history_table.cdi_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.construction_draw_item AS current_records
-      LEFT JOIN history_octane.construction_draw_item AS history_records
-        ON current_records.cdi_pid =
-            history_records.cdi_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.construction_draw_item AS current_records
+    LEFT JOIN history_octane.construction_draw_item AS history_records
+              ON current_records.cdi_pid = history_records.cdi_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.construction_draw_item staging_table
           ON staging_table.cdi_pid = history_table.cdi_pid
-WHERE staging_table.cdi_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.construction_draw_item deleted_records
-    WHERE deleted_records.cdi_pid = history_table.cdi_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cdi_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100137', 0, '--finding records to insert into history_octane.construction_draw_number_ticker
 SELECT staging_table.cdnt_pid
      , staging_table.cdnt_version
@@ -4677,24 +4208,17 @@ SELECT history_table.cdnt_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.construction_draw_number_ticker AS current_records
-      LEFT JOIN history_octane.construction_draw_number_ticker AS history_records
-        ON current_records.cdnt_pid =
-            history_records.cdnt_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.construction_draw_number_ticker AS current_records
+    LEFT JOIN history_octane.construction_draw_number_ticker AS history_records
+              ON current_records.cdnt_pid = history_records.cdnt_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.construction_draw_number_ticker staging_table
           ON staging_table.cdnt_pid = history_table.cdnt_pid
-WHERE staging_table.cdnt_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.construction_draw_number_ticker deleted_records
-    WHERE deleted_records.cdnt_pid = history_table.cdnt_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cdnt_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100378', 0, '--finding records to insert into history_octane.construction_permit
 SELECT staging_table.cop_pid
      , staging_table.cop_version
@@ -4761,24 +4285,17 @@ SELECT history_table.cop_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.construction_permit AS current_records
-      LEFT JOIN history_octane.construction_permit AS history_records
-        ON current_records.cop_pid =
-            history_records.cop_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.construction_permit AS current_records
+    LEFT JOIN history_octane.construction_permit AS history_records
+              ON current_records.cop_pid = history_records.cop_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.construction_permit staging_table
           ON staging_table.cop_pid = history_table.cop_pid
-WHERE staging_table.cop_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.construction_permit deleted_records
-    WHERE deleted_records.cop_pid = history_table.cop_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cop_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100309', 0, '--finding records to insert into history_octane.consumer_privacy_affected_borrower
 SELECT staging_table.cpab_pid
      , staging_table.cpab_version
@@ -4801,24 +4318,17 @@ SELECT history_table.cpab_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.consumer_privacy_affected_borrower AS current_records
-      LEFT JOIN history_octane.consumer_privacy_affected_borrower AS history_records
-        ON current_records.cpab_pid =
-            history_records.cpab_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.consumer_privacy_affected_borrower AS current_records
+    LEFT JOIN history_octane.consumer_privacy_affected_borrower AS history_records
+              ON current_records.cpab_pid = history_records.cpab_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.consumer_privacy_affected_borrower staging_table
           ON staging_table.cpab_pid = history_table.cpab_pid
-WHERE staging_table.cpab_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.consumer_privacy_affected_borrower deleted_records
-    WHERE deleted_records.cpab_pid = history_table.cpab_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cpab_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100114', 0, '--finding records to insert into history_octane.consumer_privacy_request
 SELECT staging_table.cpr_pid
      , staging_table.cpr_version
@@ -4869,24 +4379,17 @@ SELECT history_table.cpr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.consumer_privacy_request AS current_records
-      LEFT JOIN history_octane.consumer_privacy_request AS history_records
-        ON current_records.cpr_pid =
-            history_records.cpr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.consumer_privacy_request AS current_records
+    LEFT JOIN history_octane.consumer_privacy_request AS history_records
+              ON current_records.cpr_pid = history_records.cpr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.consumer_privacy_request staging_table
           ON staging_table.cpr_pid = history_table.cpr_pid
-WHERE staging_table.cpr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.consumer_privacy_request deleted_records
-    WHERE deleted_records.cpr_pid = history_table.cpr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cpr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100062', 0, '--finding records to insert into history_octane.contractor
 SELECT staging_table.ctr_pid
      , staging_table.ctr_version
@@ -4945,24 +4448,17 @@ SELECT history_table.ctr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.contractor AS current_records
-      LEFT JOIN history_octane.contractor AS history_records
-        ON current_records.ctr_pid =
-            history_records.ctr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.contractor AS current_records
+    LEFT JOIN history_octane.contractor AS history_records
+              ON current_records.ctr_pid = history_records.ctr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.contractor staging_table
           ON staging_table.ctr_pid = history_table.ctr_pid
-WHERE staging_table.ctr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.contractor deleted_records
-    WHERE deleted_records.ctr_pid = history_table.ctr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ctr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100063', 0, '--finding records to insert into history_octane.contractor_license
 SELECT staging_table.ctrl_pid
      , staging_table.ctrl_version
@@ -4991,24 +4487,17 @@ SELECT history_table.ctrl_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.contractor_license AS current_records
-      LEFT JOIN history_octane.contractor_license AS history_records
-        ON current_records.ctrl_pid =
-            history_records.ctrl_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.contractor_license AS current_records
+    LEFT JOIN history_octane.contractor_license AS history_records
+              ON current_records.ctrl_pid = history_records.ctrl_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.contractor_license staging_table
           ON staging_table.ctrl_pid = history_table.ctrl_pid
-WHERE staging_table.ctrl_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.contractor_license deleted_records
-    WHERE deleted_records.ctrl_pid = history_table.ctrl_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ctrl_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100058', 0, '--finding records to insert into history_octane.county
 SELECT staging_table.c_pid
      , staging_table.c_version
@@ -5039,24 +4528,17 @@ SELECT history_table.c_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.county AS current_records
-      LEFT JOIN history_octane.county AS history_records
-        ON current_records.c_pid =
-            history_records.c_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.county AS current_records
+    LEFT JOIN history_octane.county AS history_records
+              ON current_records.c_pid = history_records.c_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.county staging_table
           ON staging_table.c_pid = history_table.c_pid
-WHERE staging_table.c_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.county deleted_records
-    WHERE deleted_records.c_pid = history_table.c_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.c_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100060', 0, '--finding records to insert into history_octane.county_city
 SELECT staging_table.cci_pid
      , staging_table.cci_version
@@ -5077,24 +4559,17 @@ SELECT history_table.cci_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.county_city AS current_records
-      LEFT JOIN history_octane.county_city AS history_records
-        ON current_records.cci_pid =
-            history_records.cci_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.county_city AS current_records
+    LEFT JOIN history_octane.county_city AS history_records
+              ON current_records.cci_pid = history_records.cci_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.county_city staging_table
           ON staging_table.cci_pid = history_table.cci_pid
-WHERE staging_table.cci_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.county_city deleted_records
-    WHERE deleted_records.cci_pid = history_table.cci_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cci_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100258', 0, '--finding records to insert into history_octane.county_recording_district
 SELECT staging_table.crdi_pid
      , staging_table.crdi_version
@@ -5115,24 +4590,17 @@ SELECT history_table.crdi_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.county_recording_district AS current_records
-      LEFT JOIN history_octane.county_recording_district AS history_records
-        ON current_records.crdi_pid =
-            history_records.crdi_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.county_recording_district AS current_records
+    LEFT JOIN history_octane.county_recording_district AS history_records
+              ON current_records.crdi_pid = history_records.crdi_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.county_recording_district staging_table
           ON staging_table.crdi_pid = history_table.crdi_pid
-WHERE staging_table.crdi_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.county_recording_district deleted_records
-    WHERE deleted_records.crdi_pid = history_table.crdi_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.crdi_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100061', 0, '--finding records to insert into history_octane.county_sub_jurisdiction
 SELECT staging_table.csju_pid
      , staging_table.csju_version
@@ -5153,24 +4621,17 @@ SELECT history_table.csju_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.county_sub_jurisdiction AS current_records
-      LEFT JOIN history_octane.county_sub_jurisdiction AS history_records
-        ON current_records.csju_pid =
-            history_records.csju_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.county_sub_jurisdiction AS current_records
+    LEFT JOIN history_octane.county_sub_jurisdiction AS history_records
+              ON current_records.csju_pid = history_records.csju_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.county_sub_jurisdiction staging_table
           ON staging_table.csju_pid = history_table.csju_pid
-WHERE staging_table.csju_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.county_sub_jurisdiction deleted_records
-    WHERE deleted_records.csju_pid = history_table.csju_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.csju_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100206', 0, '--finding records to insert into history_octane.county_zip_code
 SELECT staging_table.czc_pid
      , staging_table.czc_version
@@ -5191,24 +4652,17 @@ SELECT history_table.czc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.county_zip_code AS current_records
-      LEFT JOIN history_octane.county_zip_code AS history_records
-        ON current_records.czc_pid =
-            history_records.czc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.county_zip_code AS current_records
+    LEFT JOIN history_octane.county_zip_code AS history_records
+              ON current_records.czc_pid = history_records.czc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.county_zip_code staging_table
           ON staging_table.czc_pid = history_table.czc_pid
-WHERE staging_table.czc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.county_zip_code deleted_records
-    WHERE deleted_records.czc_pid = history_table.czc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.czc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100072', 0, '--finding records to insert into history_octane.creditor
 SELECT staging_table.crd_pid
      , staging_table.crd_version
@@ -5265,24 +4719,17 @@ SELECT history_table.crd_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.creditor AS current_records
-      LEFT JOIN history_octane.creditor AS history_records
-        ON current_records.crd_pid =
-            history_records.crd_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.creditor AS current_records
+    LEFT JOIN history_octane.creditor AS history_records
+              ON current_records.crd_pid = history_records.crd_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.creditor staging_table
           ON staging_table.crd_pid = history_table.crd_pid
-WHERE staging_table.crd_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.creditor deleted_records
-    WHERE deleted_records.crd_pid = history_table.crd_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.crd_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100073', 0, '--finding records to insert into history_octane.creditor_lookup_name
 SELECT staging_table.cln_pid
      , staging_table.cln_version
@@ -5305,24 +4752,17 @@ SELECT history_table.cln_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.creditor_lookup_name AS current_records
-      LEFT JOIN history_octane.creditor_lookup_name AS history_records
-        ON current_records.cln_pid =
-            history_records.cln_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.creditor_lookup_name AS current_records
+    LEFT JOIN history_octane.creditor_lookup_name AS history_records
+              ON current_records.cln_pid = history_records.cln_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.creditor_lookup_name staging_table
           ON staging_table.cln_pid = history_table.cln_pid
-WHERE staging_table.cln_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.creditor_lookup_name deleted_records
-    WHERE deleted_records.cln_pid = history_table.cln_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cln_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100138', 0, '--finding records to insert into history_octane.credit_inquiry
 SELECT staging_table.ci_pid
      , staging_table.ci_version
@@ -5381,24 +4821,17 @@ SELECT history_table.ci_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.credit_inquiry AS current_records
-      LEFT JOIN history_octane.credit_inquiry AS history_records
-        ON current_records.ci_pid =
-            history_records.ci_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.credit_inquiry AS current_records
+    LEFT JOIN history_octane.credit_inquiry AS history_records
+              ON current_records.ci_pid = history_records.ci_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.credit_inquiry staging_table
           ON staging_table.ci_pid = history_table.ci_pid
-WHERE staging_table.ci_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.credit_inquiry deleted_records
-    WHERE deleted_records.ci_pid = history_table.ci_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ci_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100031', 0, '--finding records to insert into history_octane.credit_limit
 SELECT staging_table.cl_pid
      , staging_table.cl_version
@@ -5427,24 +4860,17 @@ SELECT history_table.cl_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.credit_limit AS current_records
-      LEFT JOIN history_octane.credit_limit AS history_records
-        ON current_records.cl_pid =
-            history_records.cl_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.credit_limit AS current_records
+    LEFT JOIN history_octane.credit_limit AS history_records
+              ON current_records.cl_pid = history_records.cl_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.credit_limit staging_table
           ON staging_table.cl_pid = history_table.cl_pid
-WHERE staging_table.cl_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.credit_limit deleted_records
-    WHERE deleted_records.cl_pid = history_table.cl_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cl_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100306', 0, '--finding records to insert into history_octane.credit_request
 SELECT staging_table.crdr_pid
      , staging_table.crdr_version
@@ -5587,24 +5013,17 @@ SELECT history_table.crdr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.credit_request AS current_records
-      LEFT JOIN history_octane.credit_request AS history_records
-        ON current_records.crdr_pid =
-            history_records.crdr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.credit_request AS current_records
+    LEFT JOIN history_octane.credit_request AS history_records
+              ON current_records.crdr_pid = history_records.crdr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.credit_request staging_table
           ON staging_table.crdr_pid = history_table.crdr_pid
-WHERE staging_table.crdr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.credit_request deleted_records
-    WHERE deleted_records.crdr_pid = history_table.crdr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.crdr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100821', 0, '--finding records to insert into history_octane.credit_request_liability
 SELECT staging_table.crl_pid
      , staging_table.crl_version
@@ -5675,24 +5094,17 @@ SELECT history_table.crl_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.credit_request_liability AS current_records
-      LEFT JOIN history_octane.credit_request_liability AS history_records
-        ON current_records.crl_pid =
-            history_records.crl_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.credit_request_liability AS current_records
+    LEFT JOIN history_octane.credit_request_liability AS history_records
+              ON current_records.crl_pid = history_records.crl_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.credit_request_liability staging_table
           ON staging_table.crl_pid = history_table.crl_pid
-WHERE staging_table.crl_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.credit_request_liability deleted_records
-    WHERE deleted_records.crl_pid = history_table.crl_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.crl_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100024', 0, '--finding records to insert into history_octane.criteria
 SELECT staging_table.cr_pid
      , staging_table.cr_version
@@ -5721,24 +5133,17 @@ SELECT history_table.cr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.criteria AS current_records
-      LEFT JOIN history_octane.criteria AS history_records
-        ON current_records.cr_pid =
-            history_records.cr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.criteria AS current_records
+    LEFT JOIN history_octane.criteria AS history_records
+              ON current_records.cr_pid = history_records.cr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.criteria staging_table
           ON staging_table.cr_pid = history_table.cr_pid
-WHERE staging_table.cr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.criteria deleted_records
-    WHERE deleted_records.cr_pid = history_table.cr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100365', 0, '--finding records to insert into history_octane.criteria_pid_operand
 SELECT staging_table.crpo_pid
      , staging_table.crpo_version
@@ -5807,24 +5212,17 @@ SELECT history_table.crpo_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.criteria_pid_operand AS current_records
-      LEFT JOIN history_octane.criteria_pid_operand AS history_records
-        ON current_records.crpo_pid =
-            history_records.crpo_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.criteria_pid_operand AS current_records
+    LEFT JOIN history_octane.criteria_pid_operand AS history_records
+              ON current_records.crpo_pid = history_records.crpo_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.criteria_pid_operand staging_table
           ON staging_table.crpo_pid = history_table.crpo_pid
-WHERE staging_table.crpo_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.criteria_pid_operand deleted_records
-    WHERE deleted_records.crpo_pid = history_table.crpo_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.crpo_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100026', 0, '--finding records to insert into history_octane.criteria_snippet
 SELECT staging_table.crs_pid
      , staging_table.crs_version
@@ -5873,24 +5271,17 @@ SELECT history_table.crs_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.criteria_snippet AS current_records
-      LEFT JOIN history_octane.criteria_snippet AS history_records
-        ON current_records.crs_pid =
-            history_records.crs_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.criteria_snippet AS current_records
+    LEFT JOIN history_octane.criteria_snippet AS history_records
+              ON current_records.crs_pid = history_records.crs_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.criteria_snippet staging_table
           ON staging_table.crs_pid = history_table.crs_pid
-WHERE staging_table.crs_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.criteria_snippet deleted_records
-    WHERE deleted_records.crs_pid = history_table.crs_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.crs_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100221', 0, '--finding records to insert into history_octane.custodian
 SELECT staging_table.cu_pid
      , staging_table.cu_version
@@ -5935,24 +5326,17 @@ SELECT history_table.cu_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.custodian AS current_records
-      LEFT JOIN history_octane.custodian AS history_records
-        ON current_records.cu_pid =
-            history_records.cu_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.custodian AS current_records
+    LEFT JOIN history_octane.custodian AS history_records
+              ON current_records.cu_pid = history_records.cu_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.custodian staging_table
           ON staging_table.cu_pid = history_table.cu_pid
-WHERE staging_table.cu_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.custodian deleted_records
-    WHERE deleted_records.cu_pid = history_table.cu_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cu_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100874', 0, '--finding records to insert into history_octane.custom_field_choice
 SELECT staging_table.cfc_pid
      , staging_table.cfc_version
@@ -5975,24 +5359,17 @@ SELECT history_table.cfc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.custom_field_choice AS current_records
-      LEFT JOIN history_octane.custom_field_choice AS history_records
-        ON current_records.cfc_pid =
-            history_records.cfc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.custom_field_choice AS current_records
+    LEFT JOIN history_octane.custom_field_choice AS history_records
+              ON current_records.cfc_pid = history_records.cfc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.custom_field_choice staging_table
           ON staging_table.cfc_pid = history_table.cfc_pid
-WHERE staging_table.cfc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.custom_field_choice deleted_records
-    WHERE deleted_records.cfc_pid = history_table.cfc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cfc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100876', 0, '--finding records to insert into history_octane.custom_field_setting
 SELECT staging_table.cfs_pid
      , staging_table.cfs_version
@@ -6019,24 +5396,17 @@ SELECT history_table.cfs_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.custom_field_setting AS current_records
-      LEFT JOIN history_octane.custom_field_setting AS history_records
-        ON current_records.cfs_pid =
-            history_records.cfs_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.custom_field_setting AS current_records
+    LEFT JOIN history_octane.custom_field_setting AS history_records
+              ON current_records.cfs_pid = history_records.cfs_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.custom_field_setting staging_table
           ON staging_table.cfs_pid = history_table.cfs_pid
-WHERE staging_table.cfs_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.custom_field_setting deleted_records
-    WHERE deleted_records.cfs_pid = history_table.cfs_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cfs_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100115', 0, '--finding records to insert into history_octane.custom_form
 SELECT staging_table.cf_pid
      , staging_table.cf_version
@@ -6059,24 +5429,17 @@ SELECT history_table.cf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.custom_form AS current_records
-      LEFT JOIN history_octane.custom_form AS history_records
-        ON current_records.cf_pid =
-            history_records.cf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.custom_form AS current_records
+    LEFT JOIN history_octane.custom_form AS history_records
+              ON current_records.cf_pid = history_records.cf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.custom_form staging_table
           ON staging_table.cf_pid = history_table.cf_pid
-WHERE staging_table.cf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.custom_form deleted_records
-    WHERE deleted_records.cf_pid = history_table.cf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100116', 0, '--finding records to insert into history_octane.custom_form_merge_field
 SELECT staging_table.cfmf_pid
      , staging_table.cfmf_version
@@ -6097,24 +5460,17 @@ SELECT history_table.cfmf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.custom_form_merge_field AS current_records
-      LEFT JOIN history_octane.custom_form_merge_field AS history_records
-        ON current_records.cfmf_pid =
-            history_records.cfmf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.custom_form_merge_field AS current_records
+    LEFT JOIN history_octane.custom_form_merge_field AS history_records
+              ON current_records.cfmf_pid = history_records.cfmf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.custom_form_merge_field staging_table
           ON staging_table.cfmf_pid = history_table.cfmf_pid
-WHERE staging_table.cfmf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.custom_form_merge_field deleted_records
-    WHERE deleted_records.cfmf_pid = history_table.cfmf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.cfmf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100267', 0, '--finding records to insert into history_octane.deal
 SELECT staging_table.d_pid
      , staging_table.d_version
@@ -6245,24 +5601,17 @@ SELECT history_table.d_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal AS current_records
-      LEFT JOIN history_octane.deal AS history_records
-        ON current_records.d_pid =
-            history_records.d_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal AS current_records
+    LEFT JOIN history_octane.deal AS history_records
+              ON current_records.d_pid = history_records.d_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal staging_table
           ON staging_table.d_pid = history_table.d_pid
-WHERE staging_table.d_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal deleted_records
-    WHERE deleted_records.d_pid = history_table.d_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.d_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100008', 0, '--finding records to insert into history_octane.deal_appraisal
 SELECT staging_table.dappr_pid
      , staging_table.dappr_version
@@ -6309,24 +5658,17 @@ SELECT history_table.dappr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_appraisal AS current_records
-      LEFT JOIN history_octane.deal_appraisal AS history_records
-        ON current_records.dappr_pid =
-            history_records.dappr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_appraisal AS current_records
+    LEFT JOIN history_octane.deal_appraisal AS history_records
+              ON current_records.dappr_pid = history_records.dappr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_appraisal staging_table
           ON staging_table.dappr_pid = history_table.dappr_pid
-WHERE staging_table.dappr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_appraisal deleted_records
-    WHERE deleted_records.dappr_pid = history_table.dappr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dappr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100025', 0, '--finding records to insert into history_octane.deal_change_updater_time
 SELECT staging_table.dcut_pid
      , staging_table.dcut_version
@@ -6407,24 +5749,17 @@ SELECT history_table.dcut_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_change_updater_time AS current_records
-      LEFT JOIN history_octane.deal_change_updater_time AS history_records
-        ON current_records.dcut_pid =
-            history_records.dcut_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_change_updater_time AS current_records
+    LEFT JOIN history_octane.deal_change_updater_time AS history_records
+              ON current_records.dcut_pid = history_records.dcut_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_change_updater_time staging_table
           ON staging_table.dcut_pid = history_table.dcut_pid
-WHERE staging_table.dcut_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_change_updater_time deleted_records
-    WHERE deleted_records.dcut_pid = history_table.dcut_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dcut_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100078', 0, '--finding records to insert into history_octane.deal_contact
 SELECT staging_table.dc_pid
      , staging_table.dc_version
@@ -6481,24 +5816,17 @@ SELECT history_table.dc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_contact AS current_records
-      LEFT JOIN history_octane.deal_contact AS history_records
-        ON current_records.dc_pid =
-            history_records.dc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_contact AS current_records
+    LEFT JOIN history_octane.deal_contact AS history_records
+              ON current_records.dc_pid = history_records.dc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_contact staging_table
           ON staging_table.dc_pid = history_table.dc_pid
-WHERE staging_table.dc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_contact deleted_records
-    WHERE deleted_records.dc_pid = history_table.dc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100357', 0, '--finding records to insert into history_octane.deal_data_vendor_document_import
 SELECT staging_table.ddvdi_pid
      , staging_table.ddvdi_version
@@ -6531,24 +5859,17 @@ SELECT history_table.ddvdi_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_data_vendor_document_import AS current_records
-      LEFT JOIN history_octane.deal_data_vendor_document_import AS history_records
-        ON current_records.ddvdi_pid =
-            history_records.ddvdi_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_data_vendor_document_import AS current_records
+    LEFT JOIN history_octane.deal_data_vendor_document_import AS history_records
+              ON current_records.ddvdi_pid = history_records.ddvdi_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_data_vendor_document_import staging_table
           ON staging_table.ddvdi_pid = history_table.ddvdi_pid
-WHERE staging_table.ddvdi_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_data_vendor_document_import deleted_records
-    WHERE deleted_records.ddvdi_pid = history_table.ddvdi_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ddvdi_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100009', 0, '--finding records to insert into history_octane.deal_disaster_declaration
 SELECT staging_table.ddd_pid
      , staging_table.ddd_version
@@ -6569,24 +5890,17 @@ SELECT history_table.ddd_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_disaster_declaration AS current_records
-      LEFT JOIN history_octane.deal_disaster_declaration AS history_records
-        ON current_records.ddd_pid =
-            history_records.ddd_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_disaster_declaration AS current_records
+    LEFT JOIN history_octane.deal_disaster_declaration AS history_records
+              ON current_records.ddd_pid = history_records.ddd_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_disaster_declaration staging_table
           ON staging_table.ddd_pid = history_table.ddd_pid
-WHERE staging_table.ddd_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_disaster_declaration deleted_records
-    WHERE deleted_records.ddd_pid = history_table.ddd_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ddd_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100296', 0, '--finding records to insert into history_octane.deal_dropbox_file
 SELECT staging_table.ddf_pid
      , staging_table.ddf_version
@@ -6605,24 +5919,17 @@ SELECT history_table.ddf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_dropbox_file AS current_records
-      LEFT JOIN history_octane.deal_dropbox_file AS history_records
-        ON current_records.ddf_pid =
-            history_records.ddf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_dropbox_file AS current_records
+    LEFT JOIN history_octane.deal_dropbox_file AS history_records
+              ON current_records.ddf_pid = history_records.ddf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_dropbox_file staging_table
           ON staging_table.ddf_pid = history_table.ddf_pid
-WHERE staging_table.ddf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_dropbox_file deleted_records
-    WHERE deleted_records.ddf_pid = history_table.ddf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ddf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100010', 0, '--finding records to insert into history_octane.deal_du
 SELECT staging_table.ddu_pid
      , staging_table.ddu_version
@@ -6645,24 +5952,17 @@ SELECT history_table.ddu_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_du AS current_records
-      LEFT JOIN history_octane.deal_du AS history_records
-        ON current_records.ddu_pid =
-            history_records.ddu_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_du AS current_records
+    LEFT JOIN history_octane.deal_du AS history_records
+              ON current_records.ddu_pid = history_records.ddu_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_du staging_table
           ON staging_table.ddu_pid = history_table.ddu_pid
-WHERE staging_table.ddu_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_du deleted_records
-    WHERE deleted_records.ddu_pid = history_table.ddu_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ddu_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100077', 0, '--finding records to insert into history_octane.deal_event
 SELECT staging_table.de_pid
      , staging_table.de_version
@@ -6709,24 +6009,17 @@ SELECT history_table.de_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_event AS current_records
-      LEFT JOIN history_octane.deal_event AS history_records
-        ON current_records.de_pid =
-            history_records.de_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_event AS current_records
+    LEFT JOIN history_octane.deal_event AS history_records
+              ON current_records.de_pid = history_records.de_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_event staging_table
           ON staging_table.de_pid = history_table.de_pid
-WHERE staging_table.de_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_event deleted_records
-    WHERE deleted_records.de_pid = history_table.de_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.de_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100117', 0, '--finding records to insert into history_octane.deal_file
 SELECT staging_table.df_pid
      , staging_table.df_version
@@ -6751,24 +6044,17 @@ SELECT history_table.df_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_file AS current_records
-      LEFT JOIN history_octane.deal_file AS history_records
-        ON current_records.df_pid =
-            history_records.df_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_file AS current_records
+    LEFT JOIN history_octane.deal_file AS history_records
+              ON current_records.df_pid = history_records.df_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_file staging_table
           ON staging_table.df_pid = history_table.df_pid
-WHERE staging_table.df_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_file deleted_records
-    WHERE deleted_records.df_pid = history_table.df_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.df_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100297', 0, '--finding records to insert into history_octane.deal_file_signature
 SELECT staging_table.dfs_pid
      , staging_table.dfs_version
@@ -6803,24 +6089,17 @@ SELECT history_table.dfs_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_file_signature AS current_records
-      LEFT JOIN history_octane.deal_file_signature AS history_records
-        ON current_records.dfs_pid =
-            history_records.dfs_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_file_signature AS current_records
+    LEFT JOIN history_octane.deal_file_signature AS history_records
+              ON current_records.dfs_pid = history_records.dfs_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_file_signature staging_table
           ON staging_table.dfs_pid = history_table.dfs_pid
-WHERE staging_table.dfs_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_file_signature deleted_records
-    WHERE deleted_records.dfs_pid = history_table.dfs_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dfs_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100304', 0, '--finding records to insert into history_octane.deal_file_thumbnail
 SELECT staging_table.dft_pid
      , staging_table.dft_version
@@ -6843,24 +6122,17 @@ SELECT history_table.dft_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_file_thumbnail AS current_records
-      LEFT JOIN history_octane.deal_file_thumbnail AS history_records
-        ON current_records.dft_pid =
-            history_records.dft_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_file_thumbnail AS current_records
+    LEFT JOIN history_octane.deal_file_thumbnail AS history_records
+              ON current_records.dft_pid = history_records.dft_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_file_thumbnail staging_table
           ON staging_table.dft_pid = history_table.dft_pid
-WHERE staging_table.dft_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_file_thumbnail deleted_records
-    WHERE deleted_records.dft_pid = history_table.dft_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dft_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100298', 0, '--finding records to insert into history_octane.deal_fraud_risk
 SELECT staging_table.dfr_pid
      , staging_table.dfr_version
@@ -6893,24 +6165,17 @@ SELECT history_table.dfr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_fraud_risk AS current_records
-      LEFT JOIN history_octane.deal_fraud_risk AS history_records
-        ON current_records.dfr_pid =
-            history_records.dfr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_fraud_risk AS current_records
+    LEFT JOIN history_octane.deal_fraud_risk AS history_records
+              ON current_records.dfr_pid = history_records.dfr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_fraud_risk staging_table
           ON staging_table.dfr_pid = history_table.dfr_pid
-WHERE staging_table.dfr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_fraud_risk deleted_records
-    WHERE deleted_records.dfr_pid = history_table.dfr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dfr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100079', 0, '--finding records to insert into history_octane.deal_housing_counselors_request
 SELECT staging_table.dhcr_pid
      , staging_table.dhcr_version
@@ -6943,24 +6208,17 @@ SELECT history_table.dhcr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_housing_counselors_request AS current_records
-      LEFT JOIN history_octane.deal_housing_counselors_request AS history_records
-        ON current_records.dhcr_pid =
-            history_records.dhcr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_housing_counselors_request AS current_records
+    LEFT JOIN history_octane.deal_housing_counselors_request AS history_records
+              ON current_records.dhcr_pid = history_records.dhcr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_housing_counselors_request staging_table
           ON staging_table.dhcr_pid = history_table.dhcr_pid
-WHERE staging_table.dhcr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_housing_counselors_request deleted_records
-    WHERE deleted_records.dhcr_pid = history_table.dhcr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dhcr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100080', 0, '--finding records to insert into history_octane.deal_housing_counselor_candidate
 SELECT staging_table.dhcc_pid
      , staging_table.dhcc_version
@@ -7039,24 +6297,17 @@ SELECT history_table.dhcc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_housing_counselor_candidate AS current_records
-      LEFT JOIN history_octane.deal_housing_counselor_candidate AS history_records
-        ON current_records.dhcc_pid =
-            history_records.dhcc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_housing_counselor_candidate AS current_records
+    LEFT JOIN history_octane.deal_housing_counselor_candidate AS history_records
+              ON current_records.dhcc_pid = history_records.dhcc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_housing_counselor_candidate staging_table
           ON staging_table.dhcc_pid = history_table.dhcc_pid
-WHERE staging_table.dhcc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_housing_counselor_candidate deleted_records
-    WHERE deleted_records.dhcc_pid = history_table.dhcc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dhcc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100081', 0, '--finding records to insert into history_octane.deal_invoice
 SELECT staging_table.di_pid
      , staging_table.di_version
@@ -7089,24 +6340,17 @@ SELECT history_table.di_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_invoice AS current_records
-      LEFT JOIN history_octane.deal_invoice AS history_records
-        ON current_records.di_pid =
-            history_records.di_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_invoice AS current_records
+    LEFT JOIN history_octane.deal_invoice AS history_records
+              ON current_records.di_pid = history_records.di_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_invoice staging_table
           ON staging_table.di_pid = history_table.di_pid
-WHERE staging_table.di_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_invoice deleted_records
-    WHERE deleted_records.di_pid = history_table.di_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.di_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100299', 0, '--finding records to insert into history_octane.deal_invoice_file
 SELECT staging_table.dif_pid
      , staging_table.dif_version
@@ -7131,24 +6375,17 @@ SELECT history_table.dif_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_invoice_file AS current_records
-      LEFT JOIN history_octane.deal_invoice_file AS history_records
-        ON current_records.dif_pid =
-            history_records.dif_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_invoice_file AS current_records
+    LEFT JOIN history_octane.deal_invoice_file AS history_records
+              ON current_records.dif_pid = history_records.dif_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_invoice_file staging_table
           ON staging_table.dif_pid = history_table.dif_pid
-WHERE staging_table.dif_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_invoice_file deleted_records
-    WHERE deleted_records.dif_pid = history_table.dif_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dif_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100082', 0, '--finding records to insert into history_octane.deal_invoice_item
 SELECT staging_table.dii_pid
      , staging_table.dii_version
@@ -7175,24 +6412,17 @@ SELECT history_table.dii_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_invoice_item AS current_records
-      LEFT JOIN history_octane.deal_invoice_item AS history_records
-        ON current_records.dii_pid =
-            history_records.dii_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_invoice_item AS current_records
+    LEFT JOIN history_octane.deal_invoice_item AS history_records
+              ON current_records.dii_pid = history_records.dii_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_invoice_item staging_table
           ON staging_table.dii_pid = history_table.dii_pid
-WHERE staging_table.dii_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_invoice_item deleted_records
-    WHERE deleted_records.dii_pid = history_table.dii_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dii_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100277', 0, '--finding records to insert into history_octane.deal_invoice_payment_method
 SELECT staging_table.dipm_pid
      , staging_table.dipm_version
@@ -7237,24 +6467,17 @@ SELECT history_table.dipm_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_invoice_payment_method AS current_records
-      LEFT JOIN history_octane.deal_invoice_payment_method AS history_records
-        ON current_records.dipm_pid =
-            history_records.dipm_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_invoice_payment_method AS current_records
+    LEFT JOIN history_octane.deal_invoice_payment_method AS history_records
+              ON current_records.dipm_pid = history_records.dipm_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_invoice_payment_method staging_table
           ON staging_table.dipm_pid = history_table.dipm_pid
-WHERE staging_table.dipm_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_invoice_payment_method deleted_records
-    WHERE deleted_records.dipm_pid = history_table.dipm_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dipm_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100017', 0, '--finding records to insert into history_octane.deal_key_roles
 SELECT staging_table.dkrs_pid
      , staging_table.dkrs_version
@@ -7449,24 +6672,17 @@ SELECT history_table.dkrs_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_key_roles AS current_records
-      LEFT JOIN history_octane.deal_key_roles AS history_records
-        ON current_records.dkrs_pid =
-            history_records.dkrs_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_key_roles AS current_records
+    LEFT JOIN history_octane.deal_key_roles AS history_records
+              ON current_records.dkrs_pid = history_records.dkrs_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_key_roles staging_table
           ON staging_table.dkrs_pid = history_table.dkrs_pid
-WHERE staging_table.dkrs_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_key_roles deleted_records
-    WHERE deleted_records.dkrs_pid = history_table.dkrs_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dkrs_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100092', 0, '--finding records to insert into history_octane.deal_lender_user
 SELECT staging_table.dlu_pid
      , staging_table.dlu_version
@@ -7497,24 +6713,17 @@ SELECT history_table.dlu_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_lender_user AS current_records
-      LEFT JOIN history_octane.deal_lender_user AS history_records
-        ON current_records.dlu_pid =
-            history_records.dlu_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_lender_user AS current_records
+    LEFT JOIN history_octane.deal_lender_user AS history_records
+              ON current_records.dlu_pid = history_records.dlu_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_lender_user staging_table
           ON staging_table.dlu_pid = history_table.dlu_pid
-WHERE staging_table.dlu_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_lender_user deleted_records
-    WHERE deleted_records.dlu_pid = history_table.dlu_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dlu_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100083', 0, '--finding records to insert into history_octane.deal_lender_user_event
 SELECT staging_table.dlue_pid
      , staging_table.dlue_version
@@ -7541,24 +6750,17 @@ SELECT history_table.dlue_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_lender_user_event AS current_records
-      LEFT JOIN history_octane.deal_lender_user_event AS history_records
-        ON current_records.dlue_pid =
-            history_records.dlue_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_lender_user_event AS current_records
+    LEFT JOIN history_octane.deal_lender_user_event AS history_records
+              ON current_records.dlue_pid = history_records.dlue_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_lender_user_event staging_table
           ON staging_table.dlue_pid = history_table.dlue_pid
-WHERE staging_table.dlue_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_lender_user_event deleted_records
-    WHERE deleted_records.dlue_pid = history_table.dlue_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dlue_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100084', 0, '--finding records to insert into history_octane.deal_lp
 SELECT staging_table.dlp_pid
      , staging_table.dlp_version
@@ -7581,24 +6783,17 @@ SELECT history_table.dlp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_lp AS current_records
-      LEFT JOIN history_octane.deal_lp AS history_records
-        ON current_records.dlp_pid =
-            history_records.dlp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_lp AS current_records
+    LEFT JOIN history_octane.deal_lp AS history_records
+              ON current_records.dlp_pid = history_records.dlp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_lp staging_table
           ON staging_table.dlp_pid = history_table.dlp_pid
-WHERE staging_table.dlp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_lp deleted_records
-    WHERE deleted_records.dlp_pid = history_table.dlp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dlp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100300', 0, '--finding records to insert into history_octane.deal_message_log
 SELECT staging_table.dmlog_pid
      , staging_table.dmlog_version
@@ -7641,24 +6836,17 @@ SELECT history_table.dmlog_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_message_log AS current_records
-      LEFT JOIN history_octane.deal_message_log AS history_records
-        ON current_records.dmlog_pid =
-            history_records.dmlog_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_message_log AS current_records
+    LEFT JOIN history_octane.deal_message_log AS history_records
+              ON current_records.dmlog_pid = history_records.dmlog_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_message_log staging_table
           ON staging_table.dmlog_pid = history_table.dmlog_pid
-WHERE staging_table.dmlog_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_message_log deleted_records
-    WHERE deleted_records.dmlog_pid = history_table.dmlog_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dmlog_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100872', 0, '--finding records to insert into history_octane.deal_message_log_attachment
 SELECT staging_table.dmloga_pid
      , staging_table.dmloga_version
@@ -7679,24 +6867,17 @@ SELECT history_table.dmloga_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_message_log_attachment AS current_records
-      LEFT JOIN history_octane.deal_message_log_attachment AS history_records
-        ON current_records.dmloga_pid =
-            history_records.dmloga_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_message_log_attachment AS current_records
+    LEFT JOIN history_octane.deal_message_log_attachment AS history_records
+              ON current_records.dmloga_pid = history_records.dmloga_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_message_log_attachment staging_table
           ON staging_table.dmloga_pid = history_table.dmloga_pid
-WHERE staging_table.dmloga_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_message_log_attachment deleted_records
-    WHERE deleted_records.dmloga_pid = history_table.dmloga_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dmloga_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100360', 0, '--finding records to insert into history_octane.deal_note
 SELECT staging_table.dn_pid
      , staging_table.dn_version
@@ -7735,24 +6916,17 @@ SELECT history_table.dn_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_note AS current_records
-      LEFT JOIN history_octane.deal_note AS history_records
-        ON current_records.dn_pid =
-            history_records.dn_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_note AS current_records
+    LEFT JOIN history_octane.deal_note AS history_records
+              ON current_records.dn_pid = history_records.dn_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_note staging_table
           ON staging_table.dn_pid = history_table.dn_pid
-WHERE staging_table.dn_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_note deleted_records
-    WHERE deleted_records.dn_pid = history_table.dn_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dn_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100361', 0, '--finding records to insert into history_octane.deal_note_comment
 SELECT staging_table.dnc_pid
      , staging_table.dnc_version
@@ -7779,24 +6953,17 @@ SELECT history_table.dnc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_note_comment AS current_records
-      LEFT JOIN history_octane.deal_note_comment AS history_records
-        ON current_records.dnc_pid =
-            history_records.dnc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_note_comment AS current_records
+    LEFT JOIN history_octane.deal_note_comment AS history_records
+              ON current_records.dnc_pid = history_records.dnc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_note_comment staging_table
           ON staging_table.dnc_pid = history_table.dnc_pid
-WHERE staging_table.dnc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_note_comment deleted_records
-    WHERE deleted_records.dnc_pid = history_table.dnc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dnc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100362', 0, '--finding records to insert into history_octane.deal_note_monitor
 SELECT staging_table.dnm_pid
      , staging_table.dnm_version
@@ -7817,24 +6984,17 @@ SELECT history_table.dnm_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_note_monitor AS current_records
-      LEFT JOIN history_octane.deal_note_monitor AS history_records
-        ON current_records.dnm_pid =
-            history_records.dnm_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_note_monitor AS current_records
+    LEFT JOIN history_octane.deal_note_monitor AS history_records
+              ON current_records.dnm_pid = history_records.dnm_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_note_monitor staging_table
           ON staging_table.dnm_pid = history_table.dnm_pid
-WHERE staging_table.dnm_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_note_monitor deleted_records
-    WHERE deleted_records.dnm_pid = history_table.dnm_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dnm_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100363', 0, '--finding records to insert into history_octane.deal_note_role_tag
 SELECT staging_table.dnrt_pid
      , staging_table.dnrt_version
@@ -7855,24 +7015,17 @@ SELECT history_table.dnrt_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_note_role_tag AS current_records
-      LEFT JOIN history_octane.deal_note_role_tag AS history_records
-        ON current_records.dnrt_pid =
-            history_records.dnrt_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_note_role_tag AS current_records
+    LEFT JOIN history_octane.deal_note_role_tag AS history_records
+              ON current_records.dnrt_pid = history_records.dnrt_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_note_role_tag staging_table
           ON staging_table.dnrt_pid = history_table.dnrt_pid
-WHERE staging_table.dnrt_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_note_role_tag deleted_records
-    WHERE deleted_records.dnrt_pid = history_table.dnrt_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dnrt_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100897', 0, '--finding records to insert into history_octane.deal_pending_update
 SELECT staging_table.dpu_pid
      , staging_table.dpu_version
@@ -7905,24 +7058,17 @@ SELECT history_table.dpu_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_pending_update AS current_records
-      LEFT JOIN history_octane.deal_pending_update AS history_records
-        ON current_records.dpu_pid =
-            history_records.dpu_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_pending_update AS current_records
+    LEFT JOIN history_octane.deal_pending_update AS history_records
+              ON current_records.dpu_pid = history_records.dpu_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_pending_update staging_table
           ON staging_table.dpu_pid = history_table.dpu_pid
-WHERE staging_table.dpu_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_pending_update deleted_records
-    WHERE deleted_records.dpu_pid = history_table.dpu_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dpu_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100085', 0, '--finding records to insert into history_octane.deal_performer_team
 SELECT staging_table.dptm_pid
      , staging_table.dptm_version
@@ -7943,24 +7089,17 @@ SELECT history_table.dptm_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_performer_team AS current_records
-      LEFT JOIN history_octane.deal_performer_team AS history_records
-        ON current_records.dptm_pid =
-            history_records.dptm_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_performer_team AS current_records
+    LEFT JOIN history_octane.deal_performer_team AS history_records
+              ON current_records.dptm_pid = history_records.dptm_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_performer_team staging_table
           ON staging_table.dptm_pid = history_table.dptm_pid
-WHERE staging_table.dptm_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_performer_team deleted_records
-    WHERE deleted_records.dptm_pid = history_table.dptm_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dptm_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100093', 0, '--finding records to insert into history_octane.deal_performer_team_user
 SELECT staging_table.dptu_pid
      , staging_table.dptu_version
@@ -7983,24 +7122,17 @@ SELECT history_table.dptu_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_performer_team_user AS current_records
-      LEFT JOIN history_octane.deal_performer_team_user AS history_records
-        ON current_records.dptu_pid =
-            history_records.dptu_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_performer_team_user AS current_records
+    LEFT JOIN history_octane.deal_performer_team_user AS history_records
+              ON current_records.dptu_pid = history_records.dptu_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_performer_team_user staging_table
           ON staging_table.dptu_pid = history_table.dptu_pid
-WHERE staging_table.dptu_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_performer_team_user deleted_records
-    WHERE deleted_records.dptu_pid = history_table.dptu_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dptu_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100086', 0, '--finding records to insert into history_octane.deal_real_estate_agent
 SELECT staging_table.drea_pid
      , staging_table.drea_version
@@ -8059,24 +7191,17 @@ SELECT history_table.drea_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_real_estate_agent AS current_records
-      LEFT JOIN history_octane.deal_real_estate_agent AS history_records
-        ON current_records.drea_pid =
-            history_records.drea_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_real_estate_agent AS current_records
+    LEFT JOIN history_octane.deal_real_estate_agent AS history_records
+              ON current_records.drea_pid = history_records.drea_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_real_estate_agent staging_table
           ON staging_table.drea_pid = history_table.drea_pid
-WHERE staging_table.drea_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_real_estate_agent deleted_records
-    WHERE deleted_records.drea_pid = history_table.drea_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.drea_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100346', 0, '--finding records to insert into history_octane.deal_sap
 SELECT staging_table.dsap_pid
      , staging_table.dsap_version
@@ -8107,24 +7232,17 @@ SELECT history_table.dsap_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_sap AS current_records
-      LEFT JOIN history_octane.deal_sap AS history_records
-        ON current_records.dsap_pid =
-            history_records.dsap_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_sap AS current_records
+    LEFT JOIN history_octane.deal_sap AS history_records
+              ON current_records.dsap_pid = history_records.dsap_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_sap staging_table
           ON staging_table.dsap_pid = history_table.dsap_pid
-WHERE staging_table.dsap_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_sap deleted_records
-    WHERE deleted_records.dsap_pid = history_table.dsap_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dsap_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100269', 0, '--finding records to insert into history_octane.deal_settlement
 SELECT staging_table.dsmt_pid
      , staging_table.dsmt_version
@@ -8205,24 +7323,17 @@ SELECT history_table.dsmt_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_settlement AS current_records
-      LEFT JOIN history_octane.deal_settlement AS history_records
-        ON current_records.dsmt_pid =
-            history_records.dsmt_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_settlement AS current_records
+    LEFT JOIN history_octane.deal_settlement AS history_records
+              ON current_records.dsmt_pid = history_records.dsmt_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_settlement staging_table
           ON staging_table.dsmt_pid = history_table.dsmt_pid
-WHERE staging_table.dsmt_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_settlement deleted_records
-    WHERE deleted_records.dsmt_pid = history_table.dsmt_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dsmt_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100270', 0, '--finding records to insert into history_octane.deal_signer
 SELECT staging_table.dsi_pid
      , staging_table.dsi_version
@@ -8253,24 +7364,17 @@ SELECT history_table.dsi_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_signer AS current_records
-      LEFT JOIN history_octane.deal_signer AS history_records
-        ON current_records.dsi_pid =
-            history_records.dsi_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_signer AS current_records
+    LEFT JOIN history_octane.deal_signer AS history_records
+              ON current_records.dsi_pid = history_records.dsi_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_signer staging_table
           ON staging_table.dsi_pid = history_table.dsi_pid
-WHERE staging_table.dsi_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_signer deleted_records
-    WHERE deleted_records.dsi_pid = history_table.dsi_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dsi_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100315', 0, '--finding records to insert into history_octane.deal_snapshot
 SELECT staging_table.desn_pid
      , staging_table.desn_version
@@ -8367,24 +7471,17 @@ SELECT history_table.desn_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_snapshot AS current_records
-      LEFT JOIN history_octane.deal_snapshot AS history_records
-        ON current_records.desn_pid =
-            history_records.desn_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_snapshot AS current_records
+    LEFT JOIN history_octane.deal_snapshot AS history_records
+              ON current_records.desn_pid = history_records.desn_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_snapshot staging_table
           ON staging_table.desn_pid = history_table.desn_pid
-WHERE staging_table.desn_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_snapshot deleted_records
-    WHERE deleted_records.desn_pid = history_table.desn_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.desn_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100271', 0, '--finding records to insert into history_octane.deal_stage
 SELECT staging_table.dst_pid
      , staging_table.dst_version
@@ -8417,24 +7514,17 @@ SELECT history_table.dst_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_stage AS current_records
-      LEFT JOIN history_octane.deal_stage AS history_records
-        ON current_records.dst_pid =
-            history_records.dst_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_stage AS current_records
+    LEFT JOIN history_octane.deal_stage AS history_records
+              ON current_records.dst_pid = history_records.dst_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_stage staging_table
           ON staging_table.dst_pid = history_table.dst_pid
-WHERE staging_table.dst_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_stage deleted_records
-    WHERE deleted_records.dst_pid = history_table.dst_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dst_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100087', 0, '--finding records to insert into history_octane.deal_summary
 SELECT staging_table.ds_pid
      , staging_table.ds_version
@@ -8503,24 +7593,17 @@ SELECT history_table.ds_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_summary AS current_records
-      LEFT JOIN history_octane.deal_summary AS history_records
-        ON current_records.ds_pid =
-            history_records.ds_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_summary AS current_records
+    LEFT JOIN history_octane.deal_summary AS history_records
+              ON current_records.ds_pid = history_records.ds_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_summary staging_table
           ON staging_table.ds_pid = history_table.ds_pid
-WHERE staging_table.ds_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_summary deleted_records
-    WHERE deleted_records.ds_pid = history_table.ds_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ds_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100301', 0, '--finding records to insert into history_octane.deal_system_file
 SELECT staging_table.dsf_pid
      , staging_table.dsf_version
@@ -8541,24 +7624,17 @@ SELECT history_table.dsf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_system_file AS current_records
-      LEFT JOIN history_octane.deal_system_file AS history_records
-        ON current_records.dsf_pid =
-            history_records.dsf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_system_file AS current_records
+    LEFT JOIN history_octane.deal_system_file AS history_records
+              ON current_records.dsf_pid = history_records.dsf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_system_file staging_table
           ON staging_table.dsf_pid = history_table.dsf_pid
-WHERE staging_table.dsf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_system_file deleted_records
-    WHERE deleted_records.dsf_pid = history_table.dsf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dsf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100184', 0, '--finding records to insert into history_octane.deal_tag
 SELECT staging_table.dtg_pid
      , staging_table.dtg_version
@@ -8605,24 +7681,17 @@ SELECT history_table.dtg_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_tag AS current_records
-      LEFT JOIN history_octane.deal_tag AS history_records
-        ON current_records.dtg_pid =
-            history_records.dtg_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_tag AS current_records
+    LEFT JOIN history_octane.deal_tag AS history_records
+              ON current_records.dtg_pid = history_records.dtg_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_tag staging_table
           ON staging_table.dtg_pid = history_table.dtg_pid
-WHERE staging_table.dtg_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_tag deleted_records
-    WHERE deleted_records.dtg_pid = history_table.dtg_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dtg_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100027', 0, '--finding records to insert into history_octane.deal_tag_definition
 SELECT staging_table.dtd_pid
      , staging_table.dtd_version
@@ -8647,24 +7716,17 @@ SELECT history_table.dtd_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_tag_definition AS current_records
-      LEFT JOIN history_octane.deal_tag_definition AS history_records
-        ON current_records.dtd_pid =
-            history_records.dtd_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_tag_definition AS current_records
+    LEFT JOIN history_octane.deal_tag_definition AS history_records
+              ON current_records.dtd_pid = history_records.dtd_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_tag_definition staging_table
           ON staging_table.dtd_pid = history_table.dtd_pid
-WHERE staging_table.dtd_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_tag_definition deleted_records
-    WHERE deleted_records.dtd_pid = history_table.dtd_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dtd_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100364', 0, '--finding records to insert into history_octane.deal_task
 SELECT staging_table.dt_pid
      , staging_table.dt_version
@@ -8695,24 +7757,17 @@ SELECT history_table.dt_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.deal_task AS current_records
-      LEFT JOIN history_octane.deal_task AS history_records
-        ON current_records.dt_pid =
-            history_records.dt_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.deal_task AS current_records
+    LEFT JOIN history_octane.deal_task AS history_records
+              ON current_records.dt_pid = history_records.dt_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.deal_task staging_table
           ON staging_table.dt_pid = history_table.dt_pid
-WHERE staging_table.dt_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_task deleted_records
-    WHERE deleted_records.dt_pid = history_table.dt_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dt_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100253', 0, '--finding records to insert into history_octane.disaster_declaration
 SELECT staging_table.dd_pid
      , staging_table.dd_version
@@ -8741,24 +7796,17 @@ SELECT history_table.dd_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.disaster_declaration AS current_records
-      LEFT JOIN history_octane.disaster_declaration AS history_records
-        ON current_records.dd_pid =
-            history_records.dd_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.disaster_declaration AS current_records
+    LEFT JOIN history_octane.disaster_declaration AS history_records
+              ON current_records.dd_pid = history_records.dd_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.disaster_declaration staging_table
           ON staging_table.dd_pid = history_table.dd_pid
-WHERE staging_table.dd_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.disaster_declaration deleted_records
-    WHERE deleted_records.dd_pid = history_table.dd_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dd_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100316', 0, '--finding records to insert into history_octane.docusign_package
 SELECT staging_table.dcsp_pid
      , staging_table.dcsp_version
@@ -8783,24 +7831,17 @@ SELECT history_table.dcsp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.docusign_package AS current_records
-      LEFT JOIN history_octane.docusign_package AS history_records
-        ON current_records.dcsp_pid =
-            history_records.dcsp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.docusign_package AS current_records
+    LEFT JOIN history_octane.docusign_package AS history_records
+              ON current_records.dcsp_pid = history_records.dcsp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.docusign_package staging_table
           ON staging_table.dcsp_pid = history_table.dcsp_pid
-WHERE staging_table.dcsp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.docusign_package deleted_records
-    WHERE deleted_records.dcsp_pid = history_table.dcsp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dcsp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100840', 0, '--finding records to insert into history_octane.du_finding
 SELECT staging_table.duf_pid
      , staging_table.duf_version
@@ -8825,24 +7866,17 @@ SELECT history_table.duf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.du_finding AS current_records
-      LEFT JOIN history_octane.du_finding AS history_records
-        ON current_records.duf_pid =
-            history_records.duf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.du_finding AS current_records
+    LEFT JOIN history_octane.du_finding AS history_records
+              ON current_records.duf_pid = history_records.duf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.du_finding staging_table
           ON staging_table.duf_pid = history_table.duf_pid
-WHERE staging_table.duf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.du_finding deleted_records
-    WHERE deleted_records.duf_pid = history_table.duf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.duf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100305', 0, '--finding records to insert into history_octane.du_request
 SELECT staging_table.dur_pid
      , staging_table.dur_version
@@ -8933,24 +7967,17 @@ SELECT history_table.dur_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.du_request AS current_records
-      LEFT JOIN history_octane.du_request AS history_records
-        ON current_records.dur_pid =
-            history_records.dur_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.du_request AS current_records
+    LEFT JOIN history_octane.du_request AS history_records
+              ON current_records.dur_pid = history_records.dur_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.du_request staging_table
           ON staging_table.dur_pid = history_table.dur_pid
-WHERE staging_table.dur_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.du_request deleted_records
-    WHERE deleted_records.dur_pid = history_table.dur_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dur_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100120', 0, '--finding records to insert into history_octane.du_request_credit
 SELECT staging_table.durc_pid
      , staging_table.durc_version
@@ -8987,24 +8014,17 @@ SELECT history_table.durc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.du_request_credit AS current_records
-      LEFT JOIN history_octane.du_request_credit AS history_records
-        ON current_records.durc_pid =
-            history_records.durc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.du_request_credit AS current_records
+    LEFT JOIN history_octane.du_request_credit AS history_records
+              ON current_records.durc_pid = history_records.durc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.du_request_credit staging_table
           ON staging_table.durc_pid = history_table.durc_pid
-WHERE staging_table.durc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.du_request_credit deleted_records
-    WHERE deleted_records.durc_pid = history_table.durc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.durc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100121', 0, '--finding records to insert into history_octane.du_special_feature_code
 SELECT staging_table.dusfc_pid
      , staging_table.dusfc_version
@@ -9027,24 +8047,17 @@ SELECT history_table.dusfc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.du_special_feature_code AS current_records
-      LEFT JOIN history_octane.du_special_feature_code AS history_records
-        ON current_records.dusfc_pid =
-            history_records.dusfc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.du_special_feature_code AS current_records
+    LEFT JOIN history_octane.du_special_feature_code AS history_records
+              ON current_records.dusfc_pid = history_records.dusfc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.du_special_feature_code staging_table
           ON staging_table.dusfc_pid = history_table.dusfc_pid
-WHERE staging_table.dusfc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.du_special_feature_code deleted_records
-    WHERE deleted_records.dusfc_pid = history_table.dusfc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dusfc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100094', 0, '--finding records to insert into history_octane.dw_export_request
 SELECT staging_table.dwer_pid
      , staging_table.dwer_version
@@ -9081,24 +8094,17 @@ SELECT history_table.dwer_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.dw_export_request AS current_records
-      LEFT JOIN history_octane.dw_export_request AS history_records
-        ON current_records.dwer_pid =
-            history_records.dwer_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.dw_export_request AS current_records
+    LEFT JOIN history_octane.dw_export_request AS history_records
+              ON current_records.dwer_pid = history_records.dwer_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.dw_export_request staging_table
           ON staging_table.dwer_pid = history_table.dwer_pid
-WHERE staging_table.dwer_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.dw_export_request deleted_records
-    WHERE deleted_records.dwer_pid = history_table.dwer_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.dwer_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100139', 0, '--finding records to insert into history_octane.ernst_request
 SELECT staging_table.enst_pid
      , staging_table.enst_version
@@ -9217,24 +8223,17 @@ SELECT history_table.enst_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.ernst_request AS current_records
-      LEFT JOIN history_octane.ernst_request AS history_records
-        ON current_records.enst_pid =
-            history_records.enst_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.ernst_request AS current_records
+    LEFT JOIN history_octane.ernst_request AS history_records
+              ON current_records.enst_pid = history_records.enst_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.ernst_request staging_table
           ON staging_table.enst_pid = history_table.enst_pid
-WHERE staging_table.enst_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.ernst_request deleted_records
-    WHERE deleted_records.enst_pid = history_table.enst_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.enst_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100143', 0, '--finding records to insert into history_octane.ernst_request_question
 SELECT staging_table.enstq_pid
      , staging_table.enstq_version
@@ -9261,24 +8260,17 @@ SELECT history_table.enstq_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.ernst_request_question AS current_records
-      LEFT JOIN history_octane.ernst_request_question AS history_records
-        ON current_records.enstq_pid =
-            history_records.enstq_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.ernst_request_question AS current_records
+    LEFT JOIN history_octane.ernst_request_question AS history_records
+              ON current_records.enstq_pid = history_records.enstq_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.ernst_request_question staging_table
           ON staging_table.enstq_pid = history_table.enstq_pid
-WHERE staging_table.enstq_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.ernst_request_question deleted_records
-    WHERE deleted_records.enstq_pid = history_table.enstq_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.enstq_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100280', 0, '--finding records to insert into history_octane.exclusive_assignment
 SELECT staging_table.ea_pid
      , staging_table.ea_version
@@ -9303,24 +8295,17 @@ SELECT history_table.ea_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.exclusive_assignment AS current_records
-      LEFT JOIN history_octane.exclusive_assignment AS history_records
-        ON current_records.ea_pid =
-            history_records.ea_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.exclusive_assignment AS current_records
+    LEFT JOIN history_octane.exclusive_assignment AS history_records
+              ON current_records.ea_pid = history_records.ea_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.exclusive_assignment staging_table
           ON staging_table.ea_pid = history_table.ea_pid
-WHERE staging_table.ea_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.exclusive_assignment deleted_records
-    WHERE deleted_records.ea_pid = history_table.ea_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ea_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100838', 0, '--finding records to insert into history_octane.fault_tolerant_event_registration
 SELECT staging_table.fter_message_id
      , staging_table.fter_queue_name
@@ -9342,24 +8327,17 @@ SELECT history_table.fter_message_id
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.fault_tolerant_event_registration AS current_records
-      LEFT JOIN history_octane.fault_tolerant_event_registration AS history_records
-        ON current_records.fter_message_id =
-            history_records.fter_message_id
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.fault_tolerant_event_registration AS current_records
+    LEFT JOIN history_octane.fault_tolerant_event_registration AS history_records
+              ON current_records.fter_message_id = history_records.fter_message_id
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.fault_tolerant_event_registration staging_table
           ON staging_table.fter_message_id = history_table.fter_message_id
-WHERE staging_table.fter_message_id IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.fault_tolerant_event_registration deleted_records
-    WHERE deleted_records.fter_message_id = history_table.fter_message_id
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.fter_message_id IS NULL;', 'Staging DB Connection')
          , ('ETL-100122', 0, '--finding records to insert into history_octane.flood_cert
 SELECT staging_table.fc_pid
      , staging_table.fc_version
@@ -9456,24 +8434,17 @@ SELECT history_table.fc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.flood_cert AS current_records
-      LEFT JOIN history_octane.flood_cert AS history_records
-        ON current_records.fc_pid =
-            history_records.fc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.flood_cert AS current_records
+    LEFT JOIN history_octane.flood_cert AS history_records
+              ON current_records.fc_pid = history_records.fc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.flood_cert staging_table
           ON staging_table.fc_pid = history_table.fc_pid
-WHERE staging_table.fc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.flood_cert deleted_records
-    WHERE deleted_records.fc_pid = history_table.fc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.fc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100045', 0, '--finding records to insert into history_octane.formula_report_column
 SELECT staging_table.frc_pid
      , staging_table.frc_version
@@ -9510,24 +8481,17 @@ SELECT history_table.frc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.formula_report_column AS current_records
-      LEFT JOIN history_octane.formula_report_column AS history_records
-        ON current_records.frc_pid =
-            history_records.frc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.formula_report_column AS current_records
+    LEFT JOIN history_octane.formula_report_column AS history_records
+              ON current_records.frc_pid = history_records.frc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.formula_report_column staging_table
           ON staging_table.frc_pid = history_table.frc_pid
-WHERE staging_table.frc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.formula_report_column deleted_records
-    WHERE deleted_records.frc_pid = history_table.frc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.frc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100052', 0, '--finding records to insert into history_octane.google_sheet_export
 SELECT staging_table.gse_pid
      , staging_table.gse_version
@@ -9562,24 +8526,17 @@ SELECT history_table.gse_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.google_sheet_export AS current_records
-      LEFT JOIN history_octane.google_sheet_export AS history_records
-        ON current_records.gse_pid =
-            history_records.gse_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.google_sheet_export AS current_records
+    LEFT JOIN history_octane.google_sheet_export AS history_records
+              ON current_records.gse_pid = history_records.gse_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.google_sheet_export staging_table
           ON staging_table.gse_pid = history_table.gse_pid
-WHERE staging_table.gse_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.google_sheet_export deleted_records
-    WHERE deleted_records.gse_pid = history_table.gse_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.gse_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100123', 0, '--finding records to insert into history_octane.hmda_report_request
 SELECT staging_table.hrr_pid
      , staging_table.hrr_version
@@ -9622,24 +8579,17 @@ SELECT history_table.hrr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.hmda_report_request AS current_records
-      LEFT JOIN history_octane.hmda_report_request AS history_records
-        ON current_records.hrr_pid =
-            history_records.hrr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.hmda_report_request AS current_records
+    LEFT JOIN history_octane.hmda_report_request AS history_records
+              ON current_records.hrr_pid = history_records.hrr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.hmda_report_request staging_table
           ON staging_table.hrr_pid = history_table.hrr_pid
-WHERE staging_table.hrr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.hmda_report_request deleted_records
-    WHERE deleted_records.hrr_pid = history_table.hrr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.hrr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100029', 0, '--finding records to insert into history_octane.hoepa_thresholds
 SELECT staging_table.ht_pid
      , staging_table.ht_version
@@ -9670,24 +8620,17 @@ SELECT history_table.ht_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.hoepa_thresholds AS current_records
-      LEFT JOIN history_octane.hoepa_thresholds AS history_records
-        ON current_records.ht_pid =
-            history_records.ht_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.hoepa_thresholds AS current_records
+    LEFT JOIN history_octane.hoepa_thresholds AS history_records
+              ON current_records.ht_pid = history_records.ht_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.hoepa_thresholds staging_table
           ON staging_table.ht_pid = history_table.ht_pid
-WHERE staging_table.ht_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.hoepa_thresholds deleted_records
-    WHERE deleted_records.ht_pid = history_table.ht_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ht_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100887', 0, '--finding records to insert into history_octane.ignored_mortech_add_on
 SELECT staging_table.ima_pid
      , staging_table.ima_version
@@ -9710,24 +8653,17 @@ SELECT history_table.ima_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.ignored_mortech_add_on AS current_records
-      LEFT JOIN history_octane.ignored_mortech_add_on AS history_records
-        ON current_records.ima_pid =
-            history_records.ima_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.ignored_mortech_add_on AS current_records
+    LEFT JOIN history_octane.ignored_mortech_add_on AS history_records
+              ON current_records.ima_pid = history_records.ima_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.ignored_mortech_add_on staging_table
           ON staging_table.ima_pid = history_table.ima_pid
-WHERE staging_table.ima_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.ignored_mortech_add_on deleted_records
-    WHERE deleted_records.ima_pid = history_table.ima_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ima_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100030', 0, '--finding records to insert into history_octane.interim_funder
 SELECT staging_table.if_pid
      , staging_table.if_version
@@ -9802,24 +8738,17 @@ SELECT history_table.if_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.interim_funder AS current_records
-      LEFT JOIN history_octane.interim_funder AS history_records
-        ON current_records.if_pid =
-            history_records.if_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.interim_funder AS current_records
+    LEFT JOIN history_octane.interim_funder AS history_records
+              ON current_records.if_pid = history_records.if_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.interim_funder staging_table
           ON staging_table.if_pid = history_table.if_pid
-WHERE staging_table.if_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.interim_funder deleted_records
-    WHERE deleted_records.if_pid = history_table.if_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.if_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100268', 0, '--finding records to insert into history_octane.investor
 SELECT staging_table.i_pid
      , staging_table.i_version
@@ -10008,24 +8937,17 @@ SELECT history_table.i_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.investor AS current_records
-      LEFT JOIN history_octane.investor AS history_records
-        ON current_records.i_pid =
-            history_records.i_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.investor AS current_records
+    LEFT JOIN history_octane.investor AS history_records
+              ON current_records.i_pid = history_records.i_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.investor staging_table
           ON staging_table.i_pid = history_table.i_pid
-WHERE staging_table.i_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.investor deleted_records
-    WHERE deleted_records.i_pid = history_table.i_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.i_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100222', 0, '--finding records to insert into history_octane.investor_group
 SELECT staging_table.ig_pid
      , staging_table.ig_version
@@ -10048,24 +8970,17 @@ SELECT history_table.ig_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.investor_group AS current_records
-      LEFT JOIN history_octane.investor_group AS history_records
-        ON current_records.ig_pid =
-            history_records.ig_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.investor_group AS current_records
+    LEFT JOIN history_octane.investor_group AS history_records
+              ON current_records.ig_pid = history_records.ig_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.investor_group staging_table
           ON staging_table.ig_pid = history_table.ig_pid
-WHERE staging_table.ig_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.investor_group deleted_records
-    WHERE deleted_records.ig_pid = history_table.ig_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ig_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100348', 0, '--finding records to insert into history_octane.investor_lock
 SELECT staging_table.il_pid
      , staging_table.il_version
@@ -10156,24 +9071,17 @@ SELECT history_table.il_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.investor_lock AS current_records
-      LEFT JOIN history_octane.investor_lock AS history_records
-        ON current_records.il_pid =
-            history_records.il_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.investor_lock AS current_records
+    LEFT JOIN history_octane.investor_lock AS history_records
+              ON current_records.il_pid = history_records.il_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.investor_lock staging_table
           ON staging_table.il_pid = history_table.il_pid
-WHERE staging_table.il_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.investor_lock deleted_records
-    WHERE deleted_records.il_pid = history_table.il_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.il_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100349', 0, '--finding records to insert into history_octane.investor_lock_add_on
 SELECT staging_table.ila_pid
      , staging_table.ila_version
@@ -10206,24 +9114,17 @@ SELECT history_table.ila_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.investor_lock_add_on AS current_records
-      LEFT JOIN history_octane.investor_lock_add_on AS history_records
-        ON current_records.ila_pid =
-            history_records.ila_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.investor_lock_add_on AS current_records
+    LEFT JOIN history_octane.investor_lock_add_on AS history_records
+              ON current_records.ila_pid = history_records.ila_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.investor_lock_add_on staging_table
           ON staging_table.ila_pid = history_table.ila_pid
-WHERE staging_table.ila_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.investor_lock_add_on deleted_records
-    WHERE deleted_records.ila_pid = history_table.ila_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ila_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100185', 0, '--finding records to insert into history_octane.investor_lock_extension
 SELECT staging_table.ile_pid
      , staging_table.ile_version
@@ -10270,24 +9171,17 @@ SELECT history_table.ile_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.investor_lock_extension AS current_records
-      LEFT JOIN history_octane.investor_lock_extension AS history_records
-        ON current_records.ile_pid =
-            history_records.ile_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.investor_lock_extension AS current_records
+    LEFT JOIN history_octane.investor_lock_extension AS history_records
+              ON current_records.ile_pid = history_records.ile_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.investor_lock_extension staging_table
           ON staging_table.ile_pid = history_table.ile_pid
-WHERE staging_table.ile_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.investor_lock_extension deleted_records
-    WHERE deleted_records.ile_pid = history_table.ile_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ile_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100088', 0, '--finding records to insert into history_octane.investor_lock_extension_setting
 SELECT staging_table.iles_pid
      , staging_table.iles_version
@@ -10316,24 +9210,17 @@ SELECT history_table.iles_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.investor_lock_extension_setting AS current_records
-      LEFT JOIN history_octane.investor_lock_extension_setting AS history_records
-        ON current_records.iles_pid =
-            history_records.iles_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.investor_lock_extension_setting AS current_records
+    LEFT JOIN history_octane.investor_lock_extension_setting AS history_records
+              ON current_records.iles_pid = history_records.iles_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.investor_lock_extension_setting staging_table
           ON staging_table.iles_pid = history_table.iles_pid
-WHERE staging_table.iles_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.investor_lock_extension_setting deleted_records
-    WHERE deleted_records.iles_pid = history_table.iles_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.iles_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100312', 0, '--finding records to insert into history_octane.job_income
 SELECT staging_table.ji_pid
      , staging_table.ji_version
@@ -10654,24 +9541,17 @@ SELECT history_table.ji_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.job_income AS current_records
-      LEFT JOIN history_octane.job_income AS history_records
-        ON current_records.ji_pid =
-            history_records.ji_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.job_income AS current_records
+    LEFT JOIN history_octane.job_income AS history_records
+              ON current_records.ji_pid = history_records.ji_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.job_income staging_table
           ON staging_table.ji_pid = history_table.ji_pid
-WHERE staging_table.ji_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.job_income deleted_records
-    WHERE deleted_records.ji_pid = history_table.ji_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ji_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100252', 0, '--finding records to insert into history_octane.key_package
 SELECT staging_table.kp_pid
      , staging_table.kp_version
@@ -10694,24 +9574,17 @@ SELECT history_table.kp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.key_package AS current_records
-      LEFT JOIN history_octane.key_package AS history_records
-        ON current_records.kp_pid =
-            history_records.kp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.key_package AS current_records
+    LEFT JOIN history_octane.key_package AS history_records
+              ON current_records.kp_pid = history_records.kp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.key_package staging_table
           ON staging_table.kp_pid = history_table.kp_pid
-WHERE staging_table.kp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.key_package deleted_records
-    WHERE deleted_records.kp_pid = history_table.kp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.kp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100048', 0, '--finding records to insert into history_octane.key_role
 SELECT staging_table.kr_pid
      , staging_table.kr_version
@@ -10734,24 +9607,17 @@ SELECT history_table.kr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.key_role AS current_records
-      LEFT JOIN history_octane.key_role AS history_records
-        ON current_records.kr_pid =
-            history_records.kr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.key_role AS current_records
+    LEFT JOIN history_octane.key_role AS history_records
+              ON current_records.kr_pid = history_records.kr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.key_role staging_table
           ON staging_table.kr_pid = history_table.kr_pid
-WHERE staging_table.kr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.key_role deleted_records
-    WHERE deleted_records.kr_pid = history_table.kr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.kr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100089', 0, '--finding records to insert into history_octane.lead
 SELECT staging_table.ld_pid
      , staging_table.ld_version
@@ -10900,24 +9766,17 @@ SELECT history_table.ld_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lead AS current_records
-      LEFT JOIN history_octane.lead AS history_records
-        ON current_records.ld_pid =
-            history_records.ld_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lead AS current_records
+    LEFT JOIN history_octane.lead AS history_records
+              ON current_records.ld_pid = history_records.ld_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lead staging_table
           ON staging_table.ld_pid = history_table.ld_pid
-WHERE staging_table.ld_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lead deleted_records
-    WHERE deleted_records.ld_pid = history_table.ld_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ld_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100039', 0, '--finding records to insert into history_octane.lead_campaign
 SELECT staging_table.ldc_pid
      , staging_table.ldc_version
@@ -10944,24 +9803,17 @@ SELECT history_table.ldc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lead_campaign AS current_records
-      LEFT JOIN history_octane.lead_campaign AS history_records
-        ON current_records.ldc_pid =
-            history_records.ldc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lead_campaign AS current_records
+    LEFT JOIN history_octane.lead_campaign AS history_records
+              ON current_records.ldc_pid = history_records.ldc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lead_campaign staging_table
           ON staging_table.ldc_pid = history_table.ldc_pid
-WHERE staging_table.ldc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lead_campaign deleted_records
-    WHERE deleted_records.ldc_pid = history_table.ldc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ldc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100038', 0, '--finding records to insert into history_octane.lead_source
 SELECT staging_table.lds_pid
      , staging_table.lds_version
@@ -11000,24 +9852,17 @@ SELECT history_table.lds_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lead_source AS current_records
-      LEFT JOIN history_octane.lead_source AS history_records
-        ON current_records.lds_pid =
-            history_records.lds_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lead_source AS current_records
+    LEFT JOIN history_octane.lead_source AS history_records
+              ON current_records.lds_pid = history_records.lds_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lead_source staging_table
           ON staging_table.lds_pid = history_table.lds_pid
-WHERE staging_table.lds_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lead_source deleted_records
-    WHERE deleted_records.lds_pid = history_table.lds_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lds_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100228', 0, '--finding records to insert into history_octane.lead_supplemental_margin_row
 SELECT staging_table.lsmr_pid
      , staging_table.lsmr_version
@@ -11042,24 +9887,17 @@ SELECT history_table.lsmr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lead_supplemental_margin_row AS current_records
-      LEFT JOIN history_octane.lead_supplemental_margin_row AS history_records
-        ON current_records.lsmr_pid =
-            history_records.lsmr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lead_supplemental_margin_row AS current_records
+    LEFT JOIN history_octane.lead_supplemental_margin_row AS history_records
+              ON current_records.lsmr_pid = history_records.lsmr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lead_supplemental_margin_row staging_table
           ON staging_table.lsmr_pid = history_table.lsmr_pid
-WHERE staging_table.lsmr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lead_supplemental_margin_row deleted_records
-    WHERE deleted_records.lsmr_pid = history_table.lsmr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lsmr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100040', 0, '--finding records to insert into history_octane.lead_supplemental_margin_table
 SELECT staging_table.lsmt_pid
      , staging_table.lsmt_version
@@ -11080,24 +9918,17 @@ SELECT history_table.lsmt_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lead_supplemental_margin_table AS current_records
-      LEFT JOIN history_octane.lead_supplemental_margin_table AS history_records
-        ON current_records.lsmt_pid =
-            history_records.lsmt_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lead_supplemental_margin_table AS current_records
+    LEFT JOIN history_octane.lead_supplemental_margin_table AS history_records
+              ON current_records.lsmt_pid = history_records.lsmt_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lead_supplemental_margin_table staging_table
           ON staging_table.lsmt_pid = history_table.lsmt_pid
-WHERE staging_table.lsmt_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lead_supplemental_margin_table deleted_records
-    WHERE deleted_records.lsmt_pid = history_table.lsmt_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lsmt_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100207', 0, '--finding records to insert into history_octane.ledger_book
 SELECT staging_table.lbk_pid
      , staging_table.lbk_version
@@ -11136,24 +9967,17 @@ SELECT history_table.lbk_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.ledger_book AS current_records
-      LEFT JOIN history_octane.ledger_book AS history_records
-        ON current_records.lbk_pid =
-            history_records.lbk_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.ledger_book AS current_records
+    LEFT JOIN history_octane.ledger_book AS history_records
+              ON current_records.lbk_pid = history_records.lbk_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.ledger_book staging_table
           ON staging_table.lbk_pid = history_table.lbk_pid
-WHERE staging_table.lbk_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.ledger_book deleted_records
-    WHERE deleted_records.lbk_pid = history_table.lbk_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lbk_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100214', 0, '--finding records to insert into history_octane.ledger_entry
 SELECT staging_table.le_pid
      , staging_table.le_version
@@ -11220,24 +10044,17 @@ SELECT history_table.le_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.ledger_entry AS current_records
-      LEFT JOIN history_octane.ledger_entry AS history_records
-        ON current_records.le_pid =
-            history_records.le_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.ledger_entry AS current_records
+    LEFT JOIN history_octane.ledger_entry AS history_records
+              ON current_records.le_pid = history_records.le_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.ledger_entry staging_table
           ON staging_table.le_pid = history_table.le_pid
-WHERE staging_table.le_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.ledger_entry deleted_records
-    WHERE deleted_records.le_pid = history_table.le_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.le_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100216', 0, '--finding records to insert into history_octane.ledger_entry_import_loan_status
 SELECT staging_table.leils_pid
      , staging_table.leils_version
@@ -11278,24 +10095,17 @@ SELECT history_table.leils_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.ledger_entry_import_loan_status AS current_records
-      LEFT JOIN history_octane.ledger_entry_import_loan_status AS history_records
-        ON current_records.leils_pid =
-            history_records.leils_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.ledger_entry_import_loan_status AS current_records
+    LEFT JOIN history_octane.ledger_entry_import_loan_status AS history_records
+              ON current_records.leils_pid = history_records.leils_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.ledger_entry_import_loan_status staging_table
           ON staging_table.leils_pid = history_table.leils_pid
-WHERE staging_table.leils_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.ledger_entry_import_loan_status deleted_records
-    WHERE deleted_records.leils_pid = history_table.leils_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.leils_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100215', 0, '--finding records to insert into history_octane.ledger_entry_import_status
 SELECT staging_table.leis_pid
      , staging_table.leis_version
@@ -11332,24 +10142,17 @@ SELECT history_table.leis_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.ledger_entry_import_status AS current_records
-      LEFT JOIN history_octane.ledger_entry_import_status AS history_records
-        ON current_records.leis_pid =
-            history_records.leis_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.ledger_entry_import_status AS current_records
+    LEFT JOIN history_octane.ledger_entry_import_status AS history_records
+              ON current_records.leis_pid = history_records.leis_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.ledger_entry_import_status staging_table
           ON staging_table.leis_pid = history_table.leis_pid
-WHERE staging_table.leis_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.ledger_entry_import_status deleted_records
-    WHERE deleted_records.leis_pid = history_table.leis_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.leis_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100373', 0, '--finding records to insert into history_octane.ledger_entry_review
 SELECT staging_table.ler_pid
      , staging_table.ler_version
@@ -11392,24 +10195,17 @@ SELECT history_table.ler_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.ledger_entry_review AS current_records
-      LEFT JOIN history_octane.ledger_entry_review AS history_records
-        ON current_records.ler_pid =
-            history_records.ler_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.ledger_entry_review AS current_records
+    LEFT JOIN history_octane.ledger_entry_review AS history_records
+              ON current_records.ler_pid = history_records.ler_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.ledger_entry_review staging_table
           ON staging_table.ler_pid = history_table.ler_pid
-WHERE staging_table.ler_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.ledger_entry_review deleted_records
-    WHERE deleted_records.ler_pid = history_table.ler_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ler_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100374', 0, '--finding records to insert into history_octane.ledger_entry_review_note
 SELECT staging_table.lern_pid
      , staging_table.lern_version
@@ -11436,24 +10232,17 @@ SELECT history_table.lern_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.ledger_entry_review_note AS current_records
-      LEFT JOIN history_octane.ledger_entry_review_note AS history_records
-        ON current_records.lern_pid =
-            history_records.lern_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.ledger_entry_review_note AS current_records
+    LEFT JOIN history_octane.ledger_entry_review_note AS history_records
+              ON current_records.lern_pid = history_records.lern_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.ledger_entry_review_note staging_table
           ON staging_table.lern_pid = history_table.lern_pid
-WHERE staging_table.lern_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.ledger_entry_review_note deleted_records
-    WHERE deleted_records.lern_pid = history_table.lern_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lern_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100375', 0, '--finding records to insert into history_octane.ledger_entry_review_note_comment
 SELECT staging_table.lerc_pid
      , staging_table.lerc_version
@@ -11480,24 +10269,17 @@ SELECT history_table.lerc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.ledger_entry_review_note_comment AS current_records
-      LEFT JOIN history_octane.ledger_entry_review_note_comment AS history_records
-        ON current_records.lerc_pid =
-            history_records.lerc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.ledger_entry_review_note_comment AS current_records
+    LEFT JOIN history_octane.ledger_entry_review_note_comment AS history_records
+              ON current_records.lerc_pid = history_records.lerc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.ledger_entry_review_note_comment staging_table
           ON staging_table.lerc_pid = history_table.lerc_pid
-WHERE staging_table.lerc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.ledger_entry_review_note_comment deleted_records
-    WHERE deleted_records.lerc_pid = history_table.lerc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lerc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100376', 0, '--finding records to insert into history_octane.ledger_entry_review_note_monitor
 SELECT staging_table.lerm_pid
      , staging_table.lerm_version
@@ -11518,24 +10300,17 @@ SELECT history_table.lerm_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.ledger_entry_review_note_monitor AS current_records
-      LEFT JOIN history_octane.ledger_entry_review_note_monitor AS history_records
-        ON current_records.lerm_pid =
-            history_records.lerm_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.ledger_entry_review_note_monitor AS current_records
+    LEFT JOIN history_octane.ledger_entry_review_note_monitor AS history_records
+              ON current_records.lerm_pid = history_records.lerm_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.ledger_entry_review_note_monitor staging_table
           ON staging_table.lerm_pid = history_table.lerm_pid
-WHERE staging_table.lerm_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.ledger_entry_review_note_monitor deleted_records
-    WHERE deleted_records.lerm_pid = history_table.lerm_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lerm_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100844', 0, '--finding records to insert into history_octane.lender_concession_item
 SELECT staging_table.lci_pid
      , staging_table.lci_version
@@ -11560,24 +10335,17 @@ SELECT history_table.lci_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_concession_item AS current_records
-      LEFT JOIN history_octane.lender_concession_item AS history_records
-        ON current_records.lci_pid =
-            history_records.lci_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_concession_item AS current_records
+    LEFT JOIN history_octane.lender_concession_item AS history_records
+              ON current_records.lci_pid = history_records.lci_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_concession_item staging_table
           ON staging_table.lci_pid = history_table.lci_pid
-WHERE staging_table.lci_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_concession_item deleted_records
-    WHERE deleted_records.lci_pid = history_table.lci_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lci_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100322', 0, '--finding records to insert into history_octane.lender_concession_request
 SELECT staging_table.lcr_pid
      , staging_table.lcr_version
@@ -11630,24 +10398,17 @@ SELECT history_table.lcr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_concession_request AS current_records
-      LEFT JOIN history_octane.lender_concession_request AS history_records
-        ON current_records.lcr_pid =
-            history_records.lcr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_concession_request AS current_records
+    LEFT JOIN history_octane.lender_concession_request AS history_records
+              ON current_records.lcr_pid = history_records.lcr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_concession_request staging_table
           ON staging_table.lcr_pid = history_table.lcr_pid
-WHERE staging_table.lcr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_concession_request deleted_records
-    WHERE deleted_records.lcr_pid = history_table.lcr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lcr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100845', 0, '--finding records to insert into history_octane.lender_concession_request_number_ticker
 SELECT staging_table.lcrnt_pid
      , staging_table.lcrnt_version
@@ -11668,24 +10429,17 @@ SELECT history_table.lcrnt_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_concession_request_number_ticker AS current_records
-      LEFT JOIN history_octane.lender_concession_request_number_ticker AS history_records
-        ON current_records.lcrnt_pid =
-            history_records.lcrnt_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_concession_request_number_ticker AS current_records
+    LEFT JOIN history_octane.lender_concession_request_number_ticker AS history_records
+              ON current_records.lcrnt_pid = history_records.lcrnt_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_concession_request_number_ticker staging_table
           ON staging_table.lcrnt_pid = history_table.lcrnt_pid
-WHERE staging_table.lcrnt_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_concession_request_number_ticker deleted_records
-    WHERE deleted_records.lcrnt_pid = history_table.lcrnt_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lcrnt_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100153', 0, '--finding records to insert into history_octane.lender_lock_add_on
 SELECT staging_table.lla_pid
      , staging_table.lla_version
@@ -11724,24 +10478,17 @@ SELECT history_table.lla_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_lock_add_on AS current_records
-      LEFT JOIN history_octane.lender_lock_add_on AS history_records
-        ON current_records.lla_pid =
-            history_records.lla_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_lock_add_on AS current_records
+    LEFT JOIN history_octane.lender_lock_add_on AS history_records
+              ON current_records.lla_pid = history_records.lla_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_lock_add_on staging_table
           ON staging_table.lla_pid = history_table.lla_pid
-WHERE staging_table.lla_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_lock_add_on deleted_records
-    WHERE deleted_records.lla_pid = history_table.lla_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lla_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100323', 0, '--finding records to insert into history_octane.lender_lock_extension
 SELECT staging_table.lle_pid
      , staging_table.lle_version
@@ -11792,24 +10539,17 @@ SELECT history_table.lle_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_lock_extension AS current_records
-      LEFT JOIN history_octane.lender_lock_extension AS history_records
-        ON current_records.lle_pid =
-            history_records.lle_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_lock_extension AS current_records
+    LEFT JOIN history_octane.lender_lock_extension AS history_records
+              ON current_records.lle_pid = history_records.lle_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_lock_extension staging_table
           ON staging_table.lle_pid = history_table.lle_pid
-WHERE staging_table.lle_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_lock_extension deleted_records
-    WHERE deleted_records.lle_pid = history_table.lle_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lle_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100223', 0, '--finding records to insert into history_octane.lender_lock_id_ticker
 SELECT staging_table.lltk_pid
      , staging_table.lltk_version
@@ -11830,24 +10570,17 @@ SELECT history_table.lltk_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_lock_id_ticker AS current_records
-      LEFT JOIN history_octane.lender_lock_id_ticker AS history_records
-        ON current_records.lltk_pid =
-            history_records.lltk_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_lock_id_ticker AS current_records
+    LEFT JOIN history_octane.lender_lock_id_ticker AS history_records
+              ON current_records.lltk_pid = history_records.lltk_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_lock_id_ticker staging_table
           ON staging_table.lltk_pid = history_table.lltk_pid
-WHERE staging_table.lltk_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_lock_id_ticker deleted_records
-    WHERE deleted_records.lltk_pid = history_table.lltk_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lltk_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100151', 0, '--finding records to insert into history_octane.lender_lock_major
 SELECT staging_table.llmj_pid
      , staging_table.llmj_version
@@ -11932,24 +10665,17 @@ SELECT history_table.llmj_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_lock_major AS current_records
-      LEFT JOIN history_octane.lender_lock_major AS history_records
-        ON current_records.llmj_pid =
-            history_records.llmj_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_lock_major AS current_records
+    LEFT JOIN history_octane.lender_lock_major AS history_records
+              ON current_records.llmj_pid = history_records.llmj_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_lock_major staging_table
           ON staging_table.llmj_pid = history_table.llmj_pid
-WHERE staging_table.llmj_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_lock_major deleted_records
-    WHERE deleted_records.llmj_pid = history_table.llmj_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.llmj_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100152', 0, '--finding records to insert into history_octane.lender_lock_minor
 SELECT staging_table.llmn_pid
      , staging_table.llmn_version
@@ -12054,24 +10780,17 @@ SELECT history_table.llmn_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_lock_minor AS current_records
-      LEFT JOIN history_octane.lender_lock_minor AS history_records
-        ON current_records.llmn_pid =
-            history_records.llmn_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_lock_minor AS current_records
+    LEFT JOIN history_octane.lender_lock_minor AS history_records
+              ON current_records.llmn_pid = history_records.llmn_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_lock_minor staging_table
           ON staging_table.llmn_pid = history_table.llmn_pid
-WHERE staging_table.llmn_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_lock_minor deleted_records
-    WHERE deleted_records.llmn_pid = history_table.llmn_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.llmn_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100095', 0, '--finding records to insert into history_octane.lender_settings
 SELECT staging_table.lss_pid
      , staging_table.lss_version
@@ -12158,24 +10877,17 @@ SELECT history_table.lss_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_settings AS current_records
-      LEFT JOIN history_octane.lender_settings AS history_records
-        ON current_records.lss_pid =
-            history_records.lss_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_settings AS current_records
+    LEFT JOIN history_octane.lender_settings AS history_records
+              ON current_records.lss_pid = history_records.lss_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_settings staging_table
           ON staging_table.lss_pid = history_table.lss_pid
-WHERE staging_table.lss_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_settings deleted_records
-    WHERE deleted_records.lss_pid = history_table.lss_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lss_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100032', 0, '--finding records to insert into history_octane.lender_trade_id_ticker
 SELECT staging_table.lttk_pid
      , staging_table.lttk_version
@@ -12196,24 +10908,17 @@ SELECT history_table.lttk_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_trade_id_ticker AS current_records
-      LEFT JOIN history_octane.lender_trade_id_ticker AS history_records
-        ON current_records.lttk_pid =
-            history_records.lttk_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_trade_id_ticker AS current_records
+    LEFT JOIN history_octane.lender_trade_id_ticker AS history_records
+              ON current_records.lttk_pid = history_records.lttk_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_trade_id_ticker staging_table
           ON staging_table.lttk_pid = history_table.lttk_pid
-WHERE staging_table.lttk_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_trade_id_ticker deleted_records
-    WHERE deleted_records.lttk_pid = history_table.lttk_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lttk_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100090', 0, '--finding records to insert into history_octane.lender_user
 SELECT staging_table.lu_pid
      , staging_table.lu_version
@@ -12356,24 +11061,17 @@ SELECT history_table.lu_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user AS current_records
-      LEFT JOIN history_octane.lender_user AS history_records
-        ON current_records.lu_pid =
-            history_records.lu_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user AS current_records
+    LEFT JOIN history_octane.lender_user AS history_records
+              ON current_records.lu_pid = history_records.lu_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user staging_table
           ON staging_table.lu_pid = history_table.lu_pid
-WHERE staging_table.lu_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user deleted_records
-    WHERE deleted_records.lu_pid = history_table.lu_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lu_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100096', 0, '--finding records to insert into history_octane.lender_user_allowed_ip
 SELECT staging_table.luip_pid
      , staging_table.luip_version
@@ -12404,24 +11102,17 @@ SELECT history_table.luip_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user_allowed_ip AS current_records
-      LEFT JOIN history_octane.lender_user_allowed_ip AS history_records
-        ON current_records.luip_pid =
-            history_records.luip_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user_allowed_ip AS current_records
+    LEFT JOIN history_octane.lender_user_allowed_ip AS history_records
+              ON current_records.luip_pid = history_records.luip_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user_allowed_ip staging_table
           ON staging_table.luip_pid = history_table.luip_pid
-WHERE staging_table.luip_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_allowed_ip deleted_records
-    WHERE deleted_records.luip_pid = history_table.luip_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.luip_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100097', 0, '--finding records to insert into history_octane.lender_user_deal_visit
 SELECT staging_table.ludv_pid
      , staging_table.ludv_version
@@ -12444,24 +11135,17 @@ SELECT history_table.ludv_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user_deal_visit AS current_records
-      LEFT JOIN history_octane.lender_user_deal_visit AS history_records
-        ON current_records.ludv_pid =
-            history_records.ludv_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user_deal_visit AS current_records
+    LEFT JOIN history_octane.lender_user_deal_visit AS history_records
+              ON current_records.ludv_pid = history_records.ludv_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user_deal_visit staging_table
           ON staging_table.ludv_pid = history_table.ludv_pid
-WHERE staging_table.ludv_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_deal_visit deleted_records
-    WHERE deleted_records.ludv_pid = history_table.ludv_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ludv_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100033', 0, '--finding records to insert into history_octane.lender_user_interest
 SELECT staging_table.lui_pid
      , staging_table.lui_version
@@ -12482,24 +11166,17 @@ SELECT history_table.lui_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user_interest AS current_records
-      LEFT JOIN history_octane.lender_user_interest AS history_records
-        ON current_records.lui_pid =
-            history_records.lui_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user_interest AS current_records
+    LEFT JOIN history_octane.lender_user_interest AS history_records
+              ON current_records.lui_pid = history_records.lui_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user_interest staging_table
           ON staging_table.lui_pid = history_table.lui_pid
-WHERE staging_table.lui_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_interest deleted_records
-    WHERE deleted_records.lui_pid = history_table.lui_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lui_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100034', 0, '--finding records to insert into history_octane.lender_user_language
 SELECT staging_table.lul_pid
      , staging_table.lul_version
@@ -12520,24 +11197,17 @@ SELECT history_table.lul_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user_language AS current_records
-      LEFT JOIN history_octane.lender_user_language AS history_records
-        ON current_records.lul_pid =
-            history_records.lul_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user_language AS current_records
+    LEFT JOIN history_octane.lender_user_language AS history_records
+              ON current_records.lul_pid = history_records.lul_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user_language staging_table
           ON staging_table.lul_pid = history_table.lul_pid
-WHERE staging_table.lul_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_language deleted_records
-    WHERE deleted_records.lul_pid = history_table.lul_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lul_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100098', 0, '--finding records to insert into history_octane.lender_user_lead_source
 SELECT staging_table.lulds_pid
      , staging_table.lulds_version
@@ -12558,24 +11228,17 @@ SELECT history_table.lulds_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user_lead_source AS current_records
-      LEFT JOIN history_octane.lender_user_lead_source AS history_records
-        ON current_records.lulds_pid =
-            history_records.lulds_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user_lead_source AS current_records
+    LEFT JOIN history_octane.lender_user_lead_source AS history_records
+              ON current_records.lulds_pid = history_records.lulds_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user_lead_source staging_table
           ON staging_table.lulds_pid = history_table.lulds_pid
-WHERE staging_table.lulds_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_lead_source deleted_records
-    WHERE deleted_records.lulds_pid = history_table.lulds_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lulds_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100099', 0, '--finding records to insert into history_octane.lender_user_license
 SELECT staging_table.luml_pid
      , staging_table.luml_version
@@ -12606,24 +11269,17 @@ SELECT history_table.luml_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user_license AS current_records
-      LEFT JOIN history_octane.lender_user_license AS history_records
-        ON current_records.luml_pid =
-            history_records.luml_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user_license AS current_records
+    LEFT JOIN history_octane.lender_user_license AS history_records
+              ON current_records.luml_pid = history_records.luml_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user_license staging_table
           ON staging_table.luml_pid = history_table.luml_pid
-WHERE staging_table.luml_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_license deleted_records
-    WHERE deleted_records.luml_pid = history_table.luml_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.luml_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100855', 0, '--finding records to insert into history_octane.lender_user_location
 SELECT staging_table.luloc_pid
      , staging_table.luloc_version
@@ -12662,24 +11318,17 @@ SELECT history_table.luloc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user_location AS current_records
-      LEFT JOIN history_octane.lender_user_location AS history_records
-        ON current_records.luloc_pid =
-            history_records.luloc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user_location AS current_records
+    LEFT JOIN history_octane.lender_user_location AS history_records
+              ON current_records.luloc_pid = history_records.luloc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user_location staging_table
           ON staging_table.luloc_pid = history_table.luloc_pid
-WHERE staging_table.luloc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_location deleted_records
-    WHERE deleted_records.luloc_pid = history_table.luloc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.luloc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100278', 0, '--finding records to insert into history_octane.lender_user_notice
 SELECT staging_table.lun_pid
      , staging_table.lun_version
@@ -12708,24 +11357,17 @@ SELECT history_table.lun_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user_notice AS current_records
-      LEFT JOIN history_octane.lender_user_notice AS history_records
-        ON current_records.lun_pid =
-            history_records.lun_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user_notice AS current_records
+    LEFT JOIN history_octane.lender_user_notice AS history_records
+              ON current_records.lun_pid = history_records.lun_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user_notice staging_table
           ON staging_table.lun_pid = history_table.lun_pid
-WHERE staging_table.lun_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_notice deleted_records
-    WHERE deleted_records.lun_pid = history_table.lun_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lun_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100124', 0, '--finding records to insert into history_octane.lender_user_photo
 SELECT staging_table.lup_pid
      , staging_table.lup_version
@@ -12746,24 +11388,17 @@ SELECT history_table.lup_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user_photo AS current_records
-      LEFT JOIN history_octane.lender_user_photo AS history_records
-        ON current_records.lup_pid =
-            history_records.lup_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user_photo AS current_records
+    LEFT JOIN history_octane.lender_user_photo AS history_records
+              ON current_records.lup_pid = history_records.lup_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user_photo staging_table
           ON staging_table.lup_pid = history_table.lup_pid
-WHERE staging_table.lup_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_photo deleted_records
-    WHERE deleted_records.lup_pid = history_table.lup_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lup_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100279', 0, '--finding records to insert into history_octane.lender_user_role
 SELECT staging_table.lur_pid
      , staging_table.lur_version
@@ -12804,24 +11439,17 @@ SELECT history_table.lur_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user_role AS current_records
-      LEFT JOIN history_octane.lender_user_role AS history_records
-        ON current_records.lur_pid =
-            history_records.lur_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user_role AS current_records
+    LEFT JOIN history_octane.lender_user_role AS history_records
+              ON current_records.lur_pid = history_records.lur_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user_role staging_table
           ON staging_table.lur_pid = history_table.lur_pid
-WHERE staging_table.lur_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_role deleted_records
-    WHERE deleted_records.lur_pid = history_table.lur_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lur_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100100', 0, '--finding records to insert into history_octane.lender_user_role_addendum
 SELECT staging_table.lura_pid
      , staging_table.lura_version
@@ -12844,24 +11472,17 @@ SELECT history_table.lura_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user_role_addendum AS current_records
-      LEFT JOIN history_octane.lender_user_role_addendum AS history_records
-        ON current_records.lura_pid =
-            history_records.lura_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user_role_addendum AS current_records
+    LEFT JOIN history_octane.lender_user_role_addendum AS history_records
+              ON current_records.lura_pid = history_records.lura_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user_role_addendum staging_table
           ON staging_table.lura_pid = history_table.lura_pid
-WHERE staging_table.lura_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_role_addendum deleted_records
-    WHERE deleted_records.lura_pid = history_table.lura_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lura_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100907', 0, '--finding records to insert into history_octane.lender_user_role_org_node
 SELECT staging_table.luron_pid
      , staging_table.luron_version
@@ -12882,24 +11503,17 @@ SELECT history_table.luron_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user_role_org_node AS current_records
-      LEFT JOIN history_octane.lender_user_role_org_node AS history_records
-        ON current_records.luron_pid =
-            history_records.luron_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user_role_org_node AS current_records
+    LEFT JOIN history_octane.lender_user_role_org_node AS history_records
+              ON current_records.luron_pid = history_records.luron_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user_role_org_node staging_table
           ON staging_table.luron_pid = history_table.luron_pid
-WHERE staging_table.luron_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_role_org_node deleted_records
-    WHERE deleted_records.luron_pid = history_table.luron_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.luron_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100101', 0, '--finding records to insert into history_octane.lender_user_sign_on
 SELECT staging_table.luso_pid
      , staging_table.luso_version
@@ -12920,24 +11534,17 @@ SELECT history_table.luso_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user_sign_on AS current_records
-      LEFT JOIN history_octane.lender_user_sign_on AS history_records
-        ON current_records.luso_pid =
-            history_records.luso_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user_sign_on AS current_records
+    LEFT JOIN history_octane.lender_user_sign_on AS history_records
+              ON current_records.luso_pid = history_records.luso_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user_sign_on staging_table
           ON staging_table.luso_pid = history_table.luso_pid
-WHERE staging_table.luso_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_sign_on deleted_records
-    WHERE deleted_records.luso_pid = history_table.luso_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.luso_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100102', 0, '--finding records to insert into history_octane.lender_user_unavailable
 SELECT staging_table.luu_pid
      , staging_table.luu_version
@@ -12960,24 +11567,17 @@ SELECT history_table.luu_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lender_user_unavailable AS current_records
-      LEFT JOIN history_octane.lender_user_unavailable AS history_records
-        ON current_records.luu_pid =
-            history_records.luu_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lender_user_unavailable AS current_records
+    LEFT JOIN history_octane.lender_user_unavailable AS history_records
+              ON current_records.luu_pid = history_records.luu_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lender_user_unavailable staging_table
           ON staging_table.luu_pid = history_table.luu_pid
-WHERE staging_table.luu_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_unavailable deleted_records
-    WHERE deleted_records.luu_pid = history_table.luu_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.luu_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100182', 0, '--finding records to insert into history_octane.liability
 SELECT staging_table.lia_pid
      , staging_table.lia_version
@@ -13056,24 +11656,17 @@ SELECT history_table.lia_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.liability AS current_records
-      LEFT JOIN history_octane.liability AS history_records
-        ON current_records.lia_pid =
-            history_records.lia_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.liability AS current_records
+    LEFT JOIN history_octane.liability AS history_records
+              ON current_records.lia_pid = history_records.lia_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.liability staging_table
           ON staging_table.lia_pid = history_table.lia_pid
-WHERE staging_table.lia_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.liability deleted_records
-    WHERE deleted_records.lia_pid = history_table.lia_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lia_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100824', 0, '--finding records to insert into history_octane.liability_mortgage_payoff
 SELECT staging_table.lmp_pid
      , staging_table.lmp_version
@@ -13144,24 +11737,17 @@ SELECT history_table.lmp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.liability_mortgage_payoff AS current_records
-      LEFT JOIN history_octane.liability_mortgage_payoff AS history_records
-        ON current_records.lmp_pid =
-            history_records.lmp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.liability_mortgage_payoff AS current_records
+    LEFT JOIN history_octane.liability_mortgage_payoff AS history_records
+              ON current_records.lmp_pid = history_records.lmp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.liability_mortgage_payoff staging_table
           ON staging_table.lmp_pid = history_table.lmp_pid
-WHERE staging_table.lmp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.liability_mortgage_payoff deleted_records
-    WHERE deleted_records.lmp_pid = history_table.lmp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lmp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100823', 0, '--finding records to insert into history_octane.liability_place
 SELECT staging_table.lip_pid
      , staging_table.lip_version
@@ -13212,24 +11798,17 @@ SELECT history_table.lip_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.liability_place AS current_records
-      LEFT JOIN history_octane.liability_place AS history_records
-        ON current_records.lip_pid =
-            history_records.lip_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.liability_place AS current_records
+    LEFT JOIN history_octane.liability_place AS history_records
+              ON current_records.lip_pid = history_records.lip_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.liability_place staging_table
           ON staging_table.lip_pid = history_table.lip_pid
-WHERE staging_table.lip_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.liability_place deleted_records
-    WHERE deleted_records.lip_pid = history_table.lip_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lip_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100254', 0, '--finding records to insert into history_octane.license_req
 SELECT staging_table.mlr_pid
      , staging_table.mlr_version
@@ -13252,24 +11831,17 @@ SELECT history_table.mlr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.license_req AS current_records
-      LEFT JOIN history_octane.license_req AS history_records
-        ON current_records.mlr_pid =
-            history_records.mlr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.license_req AS current_records
+    LEFT JOIN history_octane.license_req AS history_records
+              ON current_records.mlr_pid = history_records.mlr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.license_req staging_table
           ON staging_table.mlr_pid = history_table.mlr_pid
-WHERE staging_table.mlr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.license_req deleted_records
-    WHERE deleted_records.mlr_pid = history_table.mlr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.mlr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100320', 0, '--finding records to insert into history_octane.loan
 SELECT staging_table.l_pid
      , staging_table.l_version
@@ -13524,24 +12096,17 @@ SELECT history_table.l_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan AS current_records
-      LEFT JOIN history_octane.loan AS history_records
-        ON current_records.l_pid =
-            history_records.l_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan AS current_records
+    LEFT JOIN history_octane.loan AS history_records
+              ON current_records.l_pid = history_records.l_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan staging_table
           ON staging_table.l_pid = history_table.l_pid
-WHERE staging_table.l_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan deleted_records
-    WHERE deleted_records.l_pid = history_table.l_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.l_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100144', 0, '--finding records to insert into history_octane.loan_beneficiary
 SELECT staging_table.lb_pid
      , staging_table.lb_version
@@ -13618,24 +12183,17 @@ SELECT history_table.lb_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_beneficiary AS current_records
-      LEFT JOIN history_octane.loan_beneficiary AS history_records
-        ON current_records.lb_pid =
-            history_records.lb_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_beneficiary AS current_records
+    LEFT JOIN history_octane.loan_beneficiary AS history_records
+              ON current_records.lb_pid = history_records.lb_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_beneficiary staging_table
           ON staging_table.lb_pid = history_table.lb_pid
-WHERE staging_table.lb_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_beneficiary deleted_records
-    WHERE deleted_records.lb_pid = history_table.lb_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lb_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100156', 0, '--finding records to insert into history_octane.loan_charge
 SELECT staging_table.lc_pid
      , staging_table.lc_version
@@ -13758,24 +12316,17 @@ SELECT history_table.lc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_charge AS current_records
-      LEFT JOIN history_octane.loan_charge AS history_records
-        ON current_records.lc_pid =
-            history_records.lc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_charge AS current_records
+    LEFT JOIN history_octane.loan_charge AS history_records
+              ON current_records.lc_pid = history_records.lc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_charge staging_table
           ON staging_table.lc_pid = history_table.lc_pid
-WHERE staging_table.lc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_charge deleted_records
-    WHERE deleted_records.lc_pid = history_table.lc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100830', 0, '--finding records to insert into history_octane.loan_charge_payer_item
 SELECT staging_table.lcpi_pid
      , staging_table.lcpi_version
@@ -13808,24 +12359,17 @@ SELECT history_table.lcpi_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_charge_payer_item AS current_records
-      LEFT JOIN history_octane.loan_charge_payer_item AS history_records
-        ON current_records.lcpi_pid =
-            history_records.lcpi_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_charge_payer_item AS current_records
+    LEFT JOIN history_octane.loan_charge_payer_item AS history_records
+              ON current_records.lcpi_pid = history_records.lcpi_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_charge_payer_item staging_table
           ON staging_table.lcpi_pid = history_table.lcpi_pid
-WHERE staging_table.lcpi_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_charge_payer_item deleted_records
-    WHERE deleted_records.lcpi_pid = history_table.lcpi_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lcpi_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100318', 0, '--finding records to insert into history_octane.loan_eligible_investor
 SELECT staging_table.lei_pid
      , staging_table.lei_version
@@ -13846,24 +12390,17 @@ SELECT history_table.lei_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_eligible_investor AS current_records
-      LEFT JOIN history_octane.loan_eligible_investor AS history_records
-        ON current_records.lei_pid =
-            history_records.lei_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_eligible_investor AS current_records
+    LEFT JOIN history_octane.loan_eligible_investor AS history_records
+              ON current_records.lei_pid = history_records.lei_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_eligible_investor staging_table
           ON staging_table.lei_pid = history_table.lei_pid
-WHERE staging_table.lei_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_eligible_investor deleted_records
-    WHERE deleted_records.lei_pid = history_table.lei_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lei_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100319', 0, '--finding records to insert into history_octane.loan_funding
 SELECT staging_table.lf_pid
      , staging_table.lf_version
@@ -13936,24 +12473,17 @@ SELECT history_table.lf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_funding AS current_records
-      LEFT JOIN history_octane.loan_funding AS history_records
-        ON current_records.lf_pid =
-            history_records.lf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_funding AS current_records
+    LEFT JOIN history_octane.loan_funding AS history_records
+              ON current_records.lf_pid = history_records.lf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_funding staging_table
           ON staging_table.lf_pid = history_table.lf_pid
-WHERE staging_table.lf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_funding deleted_records
-    WHERE deleted_records.lf_pid = history_table.lf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100325', 0, '--finding records to insert into history_octane.loan_hedge
 SELECT staging_table.lh_pid
      , staging_table.lh_version
@@ -14568,24 +13098,17 @@ SELECT history_table.lh_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_hedge AS current_records
-      LEFT JOIN history_octane.loan_hedge AS history_records
-        ON current_records.lh_pid =
-            history_records.lh_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_hedge AS current_records
+    LEFT JOIN history_octane.loan_hedge AS history_records
+              ON current_records.lh_pid = history_records.lh_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_hedge staging_table
           ON staging_table.lh_pid = history_table.lh_pid
-WHERE staging_table.lh_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_hedge deleted_records
-    WHERE deleted_records.lh_pid = history_table.lh_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lh_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100255', 0, '--finding records to insert into history_octane.loan_limit_row
 SELECT staging_table.llr_pid
      , staging_table.llr_version
@@ -14618,24 +13141,17 @@ SELECT history_table.llr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_limit_row AS current_records
-      LEFT JOIN history_octane.loan_limit_row AS history_records
-        ON current_records.llr_pid =
-            history_records.llr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_limit_row AS current_records
+    LEFT JOIN history_octane.loan_limit_row AS history_records
+              ON current_records.llr_pid = history_records.llr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_limit_row staging_table
           ON staging_table.llr_pid = history_table.llr_pid
-WHERE staging_table.llr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_limit_row deleted_records
-    WHERE deleted_records.llr_pid = history_table.llr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.llr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100224', 0, '--finding records to insert into history_octane.loan_limit_table
 SELECT staging_table.llt_pid
      , staging_table.llt_version
@@ -14662,24 +13178,17 @@ SELECT history_table.llt_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_limit_table AS current_records
-      LEFT JOIN history_octane.loan_limit_table AS history_records
-        ON current_records.llt_pid =
-            history_records.llt_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_limit_table AS current_records
+    LEFT JOIN history_octane.loan_limit_table AS history_records
+              ON current_records.llt_pid = history_records.llt_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_limit_table staging_table
           ON staging_table.llt_pid = history_table.llt_pid
-WHERE staging_table.llt_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_limit_table deleted_records
-    WHERE deleted_records.llt_pid = history_table.llt_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.llt_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100146', 0, '--finding records to insert into history_octane.loan_mi_rate_adjustment
 SELECT staging_table.lmra_pid
      , staging_table.lmra_version
@@ -14702,24 +13211,17 @@ SELECT history_table.lmra_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_mi_rate_adjustment AS current_records
-      LEFT JOIN history_octane.loan_mi_rate_adjustment AS history_records
-        ON current_records.lmra_pid =
-            history_records.lmra_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_mi_rate_adjustment AS current_records
+    LEFT JOIN history_octane.loan_mi_rate_adjustment AS history_records
+              ON current_records.lmra_pid = history_records.lmra_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_mi_rate_adjustment staging_table
           ON staging_table.lmra_pid = history_table.lmra_pid
-WHERE staging_table.lmra_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_mi_rate_adjustment deleted_records
-    WHERE deleted_records.lmra_pid = history_table.lmra_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lmra_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100147', 0, '--finding records to insert into history_octane.loan_mi_surcharge
 SELECT staging_table.lms_pid
      , staging_table.lms_version
@@ -14744,24 +13246,17 @@ SELECT history_table.lms_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_mi_surcharge AS current_records
-      LEFT JOIN history_octane.loan_mi_surcharge AS history_records
-        ON current_records.lms_pid =
-            history_records.lms_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_mi_surcharge AS current_records
+    LEFT JOIN history_octane.loan_mi_surcharge AS history_records
+              ON current_records.lms_pid = history_records.lms_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_mi_surcharge staging_table
           ON staging_table.lms_pid = history_table.lms_pid
-WHERE staging_table.lms_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_mi_surcharge deleted_records
-    WHERE deleted_records.lms_pid = history_table.lms_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lms_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100370', 0, '--finding records to insert into history_octane.loan_org_lineage
 SELECT staging_table.lol_pid
      , staging_table.lol_version
@@ -14786,24 +13281,17 @@ SELECT history_table.lol_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_org_lineage AS current_records
-      LEFT JOIN history_octane.loan_org_lineage AS history_records
-        ON current_records.lol_pid =
-            history_records.lol_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_org_lineage AS current_records
+    LEFT JOIN history_octane.loan_org_lineage AS history_records
+              ON current_records.lol_pid = history_records.lol_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_org_lineage staging_table
           ON staging_table.lol_pid = history_table.lol_pid
-WHERE staging_table.lol_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_org_lineage deleted_records
-    WHERE deleted_records.lol_pid = history_table.lol_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lol_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100371', 0, '--finding records to insert into history_octane.loan_org_lineage_update
 SELECT staging_table.lolu_pid
      , staging_table.lolu_version
@@ -14828,24 +13316,17 @@ SELECT history_table.lolu_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_org_lineage_update AS current_records
-      LEFT JOIN history_octane.loan_org_lineage_update AS history_records
-        ON current_records.lolu_pid =
-            history_records.lolu_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_org_lineage_update AS current_records
+    LEFT JOIN history_octane.loan_org_lineage_update AS history_records
+              ON current_records.lolu_pid = history_records.lolu_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_org_lineage_update staging_table
           ON staging_table.lolu_pid = history_table.lolu_pid
-WHERE staging_table.lolu_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_org_lineage_update deleted_records
-    WHERE deleted_records.lolu_pid = history_table.lolu_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lolu_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100148', 0, '--finding records to insert into history_octane.loan_price_add_on
 SELECT staging_table.lpa_pid
      , staging_table.lpa_version
@@ -14876,24 +13357,17 @@ SELECT history_table.lpa_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_price_add_on AS current_records
-      LEFT JOIN history_octane.loan_price_add_on AS history_records
-        ON current_records.lpa_pid =
-            history_records.lpa_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_price_add_on AS current_records
+    LEFT JOIN history_octane.loan_price_add_on AS history_records
+              ON current_records.lpa_pid = history_records.lpa_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_price_add_on staging_table
           ON staging_table.lpa_pid = history_table.lpa_pid
-WHERE staging_table.lpa_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_price_add_on deleted_records
-    WHERE deleted_records.lpa_pid = history_table.lpa_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lpa_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100149', 0, '--finding records to insert into history_octane.loan_recording
 SELECT staging_table.lr_pid
      , staging_table.lr_version
@@ -14940,24 +13414,17 @@ SELECT history_table.lr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_recording AS current_records
-      LEFT JOIN history_octane.loan_recording AS history_records
-        ON current_records.lr_pid =
-            history_records.lr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_recording AS current_records
+    LEFT JOIN history_octane.loan_recording AS history_records
+              ON current_records.lr_pid = history_records.lr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_recording staging_table
           ON staging_table.lr_pid = history_table.lr_pid
-WHERE staging_table.lr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_recording deleted_records
-    WHERE deleted_records.lr_pid = history_table.lr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100150', 0, '--finding records to insert into history_octane.loan_servicer
 SELECT staging_table.lsv_pid
      , staging_table.lsv_version
@@ -15008,24 +13475,17 @@ SELECT history_table.lsv_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.loan_servicer AS current_records
-      LEFT JOIN history_octane.loan_servicer AS history_records
-        ON current_records.lsv_pid =
-            history_records.lsv_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.loan_servicer AS current_records
+    LEFT JOIN history_octane.loan_servicer AS history_records
+              ON current_records.lsv_pid = history_records.lsv_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.loan_servicer staging_table
           ON staging_table.lsv_pid = history_table.lsv_pid
-WHERE staging_table.lsv_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.loan_servicer deleted_records
-    WHERE deleted_records.lsv_pid = history_table.lsv_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lsv_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100849', 0, '--finding records to insert into history_octane.location
 SELECT staging_table.loc_pid
      , staging_table.loc_version
@@ -15066,24 +13526,17 @@ SELECT history_table.loc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.location AS current_records
-      LEFT JOIN history_octane.location AS history_records
-        ON current_records.loc_pid =
-            history_records.loc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.location AS current_records
+    LEFT JOIN history_octane.location AS history_records
+              ON current_records.loc_pid = history_records.loc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.location staging_table
           ON staging_table.loc_pid = history_table.loc_pid
-WHERE staging_table.loc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.location deleted_records
-    WHERE deleted_records.loc_pid = history_table.loc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.loc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100856', 0, '--finding records to insert into history_octane.location_id_ticker
 SELECT staging_table.loctk_pid
      , staging_table.loctk_version
@@ -15104,24 +13557,17 @@ SELECT history_table.loctk_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.location_id_ticker AS current_records
-      LEFT JOIN history_octane.location_id_ticker AS history_records
-        ON current_records.loctk_pid =
-            history_records.loctk_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.location_id_ticker AS current_records
+    LEFT JOIN history_octane.location_id_ticker AS history_records
+              ON current_records.loctk_pid = history_records.loctk_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.location_id_ticker staging_table
           ON staging_table.loctk_pid = history_table.loctk_pid
-WHERE staging_table.loctk_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.location_id_ticker deleted_records
-    WHERE deleted_records.loctk_pid = history_table.loctk_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.loctk_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100850', 0, '--finding records to insert into history_octane.location_lease
 SELECT staging_table.locl_pid
      , staging_table.locl_version
@@ -15150,24 +13596,17 @@ SELECT history_table.locl_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.location_lease AS current_records
-      LEFT JOIN history_octane.location_lease AS history_records
-        ON current_records.locl_pid =
-            history_records.locl_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.location_lease AS current_records
+    LEFT JOIN history_octane.location_lease AS history_records
+              ON current_records.locl_pid = history_records.locl_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.location_lease staging_table
           ON staging_table.locl_pid = history_table.locl_pid
-WHERE staging_table.locl_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.location_lease deleted_records
-    WHERE deleted_records.locl_pid = history_table.locl_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.locl_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100324', 0, '--finding records to insert into history_octane.lock_series
 SELECT staging_table.lsr_pid
      , staging_table.lsr_version
@@ -15192,24 +13631,17 @@ SELECT history_table.lsr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lock_series AS current_records
-      LEFT JOIN history_octane.lock_series AS history_records
-        ON current_records.lsr_pid =
-            history_records.lsr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lock_series AS current_records
+    LEFT JOIN history_octane.lock_series AS history_records
+              ON current_records.lsr_pid = history_records.lsr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lock_series staging_table
           ON staging_table.lsr_pid = history_table.lsr_pid
-WHERE staging_table.lsr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lock_series deleted_records
-    WHERE deleted_records.lsr_pid = history_table.lsr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lsr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100225', 0, '--finding records to insert into history_octane.lock_term_setting
 SELECT staging_table.lts_pid
      , staging_table.lts_version
@@ -15234,24 +13666,17 @@ SELECT history_table.lts_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lock_term_setting AS current_records
-      LEFT JOIN history_octane.lock_term_setting AS history_records
-        ON current_records.lts_pid =
-            history_records.lts_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lock_term_setting AS current_records
+    LEFT JOIN history_octane.lock_term_setting AS history_records
+              ON current_records.lts_pid = history_records.lts_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lock_term_setting staging_table
           ON staging_table.lts_pid = history_table.lts_pid
-WHERE staging_table.lts_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lock_term_setting deleted_records
-    WHERE deleted_records.lts_pid = history_table.lts_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lts_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100226', 0, '--finding records to insert into history_octane.los_loan_id_ticker
 SELECT staging_table.ltk_pid
      , staging_table.ltk_version
@@ -15272,24 +13697,17 @@ SELECT history_table.ltk_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.los_loan_id_ticker AS current_records
-      LEFT JOIN history_octane.los_loan_id_ticker AS history_records
-        ON current_records.ltk_pid =
-            history_records.ltk_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.los_loan_id_ticker AS current_records
+    LEFT JOIN history_octane.los_loan_id_ticker AS history_records
+              ON current_records.ltk_pid = history_records.ltk_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.los_loan_id_ticker staging_table
           ON staging_table.ltk_pid = history_table.ltk_pid
-WHERE staging_table.ltk_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.los_loan_id_ticker deleted_records
-    WHERE deleted_records.ltk_pid = history_table.ltk_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ltk_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100310', 0, '--finding records to insert into history_octane.lp_finding
 SELECT staging_table.lpf_pid
      , staging_table.lpf_version
@@ -15314,24 +13732,17 @@ SELECT history_table.lpf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lp_finding AS current_records
-      LEFT JOIN history_octane.lp_finding AS history_records
-        ON current_records.lpf_pid =
-            history_records.lpf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lp_finding AS current_records
+    LEFT JOIN history_octane.lp_finding AS history_records
+              ON current_records.lpf_pid = history_records.lpf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lp_finding staging_table
           ON staging_table.lpf_pid = history_table.lpf_pid
-WHERE staging_table.lpf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lp_finding deleted_records
-    WHERE deleted_records.lpf_pid = history_table.lpf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lpf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100125', 0, '--finding records to insert into history_octane.lp_request
 SELECT staging_table.lpr_pid
      , staging_table.lpr_version
@@ -15450,24 +13861,17 @@ SELECT history_table.lpr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lp_request AS current_records
-      LEFT JOIN history_octane.lp_request AS history_records
-        ON current_records.lpr_pid =
-            history_records.lpr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lp_request AS current_records
+    LEFT JOIN history_octane.lp_request AS history_records
+              ON current_records.lpr_pid = history_records.lpr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lp_request staging_table
           ON staging_table.lpr_pid = history_table.lpr_pid
-WHERE staging_table.lpr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lp_request deleted_records
-    WHERE deleted_records.lpr_pid = history_table.lpr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lpr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100311', 0, '--finding records to insert into history_octane.lp_request_credit
 SELECT staging_table.lprc_pid
      , staging_table.lprc_version
@@ -15502,24 +13906,17 @@ SELECT history_table.lprc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.lp_request_credit AS current_records
-      LEFT JOIN history_octane.lp_request_credit AS history_records
-        ON current_records.lprc_pid =
-            history_records.lprc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.lp_request_credit AS current_records
+    LEFT JOIN history_octane.lp_request_credit AS history_records
+              ON current_records.lprc_pid = history_records.lprc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.lp_request_credit staging_table
           ON staging_table.lprc_pid = history_table.lprc_pid
-WHERE staging_table.lprc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lp_request_credit deleted_records
-    WHERE deleted_records.lprc_pid = history_table.lprc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.lprc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100140', 0, '--finding records to insert into history_octane.master_property_insurance
 SELECT staging_table.mpi_pid
      , staging_table.mpi_version
@@ -15596,24 +13993,17 @@ SELECT history_table.mpi_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.master_property_insurance AS current_records
-      LEFT JOIN history_octane.master_property_insurance AS history_records
-        ON current_records.mpi_pid =
-            history_records.mpi_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.master_property_insurance AS current_records
+    LEFT JOIN history_octane.master_property_insurance AS history_records
+              ON current_records.mpi_pid = history_records.mpi_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.master_property_insurance staging_table
           ON staging_table.mpi_pid = history_table.mpi_pid
-WHERE staging_table.mpi_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.master_property_insurance deleted_records
-    WHERE deleted_records.mpi_pid = history_table.mpi_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.mpi_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100042', 0, '--finding records to insert into history_octane.mcr_loan
 SELECT staging_table.mcrl_pid
      , staging_table.mcrl_version
@@ -15720,24 +14110,17 @@ SELECT history_table.mcrl_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.mcr_loan AS current_records
-      LEFT JOIN history_octane.mcr_loan AS history_records
-        ON current_records.mcrl_pid =
-            history_records.mcrl_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.mcr_loan AS current_records
+    LEFT JOIN history_octane.mcr_loan AS history_records
+              ON current_records.mcrl_pid = history_records.mcrl_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.mcr_loan staging_table
           ON staging_table.mcrl_pid = history_table.mcrl_pid
-WHERE staging_table.mcrl_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.mcr_loan deleted_records
-    WHERE deleted_records.mcrl_pid = history_table.mcrl_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.mcrl_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100377', 0, '--finding records to insert into history_octane.mcr_request
 SELECT staging_table.mcrr_pid
      , staging_table.mcrr_version
@@ -15784,24 +14167,17 @@ SELECT history_table.mcrr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.mcr_request AS current_records
-      LEFT JOIN history_octane.mcr_request AS history_records
-        ON current_records.mcrr_pid =
-            history_records.mcrr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.mcr_request AS current_records
+    LEFT JOIN history_octane.mcr_request AS history_records
+              ON current_records.mcrr_pid = history_records.mcrr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.mcr_request staging_table
           ON staging_table.mcrr_pid = history_table.mcrr_pid
-WHERE staging_table.mcrr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.mcr_request deleted_records
-    WHERE deleted_records.mcrr_pid = history_table.mcrr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.mcrr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100233', 0, '--finding records to insert into history_octane.mcr_snapshot
 SELECT staging_table.mcrs_pid
      , staging_table.mcrs_version
@@ -15826,24 +14202,17 @@ SELECT history_table.mcrs_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.mcr_snapshot AS current_records
-      LEFT JOIN history_octane.mcr_snapshot AS history_records
-        ON current_records.mcrs_pid =
-            history_records.mcrs_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.mcr_snapshot AS current_records
+    LEFT JOIN history_octane.mcr_snapshot AS history_records
+              ON current_records.mcrs_pid = history_records.mcrs_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.mcr_snapshot staging_table
           ON staging_table.mcrs_pid = history_table.mcrs_pid
-WHERE staging_table.mcrs_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.mcr_snapshot deleted_records
-    WHERE deleted_records.mcrs_pid = history_table.mcrs_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.mcrs_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100227', 0, '--finding records to insert into history_octane.mercury_client_group
 SELECT staging_table.mcg_pid
      , staging_table.mcg_version
@@ -15868,24 +14237,17 @@ SELECT history_table.mcg_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.mercury_client_group AS current_records
-      LEFT JOIN history_octane.mercury_client_group AS history_records
-        ON current_records.mcg_pid =
-            history_records.mcg_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.mercury_client_group AS current_records
+    LEFT JOIN history_octane.mercury_client_group AS history_records
+              ON current_records.mcg_pid = history_records.mcg_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.mercury_client_group staging_table
           ON staging_table.mcg_pid = history_table.mcg_pid
-WHERE staging_table.mcg_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.mercury_client_group deleted_records
-    WHERE deleted_records.mcg_pid = history_table.mcg_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.mcg_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100103', 0, '--finding records to insert into history_octane.mercury_network_status_request
 SELECT staging_table.mnsr_pid
      , staging_table.mnsr_version
@@ -15910,24 +14272,17 @@ SELECT history_table.mnsr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.mercury_network_status_request AS current_records
-      LEFT JOIN history_octane.mercury_network_status_request AS history_records
-        ON current_records.mnsr_pid =
-            history_records.mnsr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.mercury_network_status_request AS current_records
+    LEFT JOIN history_octane.mercury_network_status_request AS history_records
+              ON current_records.mnsr_pid = history_records.mnsr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.mercury_network_status_request staging_table
           ON staging_table.mnsr_pid = history_table.mnsr_pid
-WHERE staging_table.mnsr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.mercury_network_status_request deleted_records
-    WHERE deleted_records.mnsr_pid = history_table.mnsr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.mnsr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100132', 0, '--finding records to insert into history_octane.mers_daily_report
 SELECT staging_table.medr_pid
      , staging_table.medr_version
@@ -15960,24 +14315,17 @@ SELECT history_table.medr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.mers_daily_report AS current_records
-      LEFT JOIN history_octane.mers_daily_report AS history_records
-        ON current_records.medr_pid =
-            history_records.medr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.mers_daily_report AS current_records
+    LEFT JOIN history_octane.mers_daily_report AS history_records
+              ON current_records.medr_pid = history_records.medr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.mers_daily_report staging_table
           ON staging_table.medr_pid = history_table.medr_pid
-WHERE staging_table.medr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.mers_daily_report deleted_records
-    WHERE deleted_records.medr_pid = history_table.medr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.medr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100036', 0, '--finding records to insert into history_octane.mers_transfer_batch
 SELECT staging_table.metb_pid
      , staging_table.metb_version
@@ -16002,24 +14350,17 @@ SELECT history_table.metb_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.mers_transfer_batch AS current_records
-      LEFT JOIN history_octane.mers_transfer_batch AS history_records
-        ON current_records.metb_pid =
-            history_records.metb_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.mers_transfer_batch AS current_records
+    LEFT JOIN history_octane.mers_transfer_batch AS history_records
+              ON current_records.metb_pid = history_records.metb_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.mers_transfer_batch staging_table
           ON staging_table.metb_pid = history_table.metb_pid
-WHERE staging_table.metb_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.mers_transfer_batch deleted_records
-    WHERE deleted_records.metb_pid = history_table.metb_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.metb_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100134', 0, '--finding records to insert into history_octane.military_service
 SELECT staging_table.ms_pid
      , staging_table.ms_version
@@ -16052,24 +14393,17 @@ SELECT history_table.ms_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.military_service AS current_records
-      LEFT JOIN history_octane.military_service AS history_records
-        ON current_records.ms_pid =
-            history_records.ms_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.military_service AS current_records
+    LEFT JOIN history_octane.military_service AS history_records
+              ON current_records.ms_pid = history_records.ms_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.military_service staging_table
           ON staging_table.ms_pid = history_table.ms_pid
-WHERE staging_table.ms_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.military_service deleted_records
-    WHERE deleted_records.ms_pid = history_table.ms_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ms_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100014', 0, '--finding records to insert into history_octane.minimum_required_residual_income_row
 SELECT staging_table.mrir_pid
      , staging_table.mrir_version
@@ -16098,24 +14432,17 @@ SELECT history_table.mrir_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.minimum_required_residual_income_row AS current_records
-      LEFT JOIN history_octane.minimum_required_residual_income_row AS history_records
-        ON current_records.mrir_pid =
-            history_records.mrir_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.minimum_required_residual_income_row AS current_records
+    LEFT JOIN history_octane.minimum_required_residual_income_row AS history_records
+              ON current_records.mrir_pid = history_records.mrir_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.minimum_required_residual_income_row staging_table
           ON staging_table.mrir_pid = history_table.mrir_pid
-WHERE staging_table.mrir_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.minimum_required_residual_income_row deleted_records
-    WHERE deleted_records.mrir_pid = history_table.mrir_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.mrir_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100015', 0, '--finding records to insert into history_octane.minimum_required_residual_income_table
 SELECT staging_table.mrit_pid
      , staging_table.mrit_version
@@ -16134,24 +14461,17 @@ SELECT history_table.mrit_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.minimum_required_residual_income_table AS current_records
-      LEFT JOIN history_octane.minimum_required_residual_income_table AS history_records
-        ON current_records.mrit_pid =
-            history_records.mrit_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.minimum_required_residual_income_table AS current_records
+    LEFT JOIN history_octane.minimum_required_residual_income_table AS history_records
+              ON current_records.mrit_pid = history_records.mrit_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.minimum_required_residual_income_table staging_table
           ON staging_table.mrit_pid = history_table.mrit_pid
-WHERE staging_table.mrit_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.minimum_required_residual_income_table deleted_records
-    WHERE deleted_records.mrit_pid = history_table.mrit_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.mrit_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100141', 0, '--finding records to insert into history_octane.mi_integration_vendor_request
 SELECT staging_table.mivr_pid
      , staging_table.mivr_version
@@ -16212,24 +14532,17 @@ SELECT history_table.mivr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.mi_integration_vendor_request AS current_records
-      LEFT JOIN history_octane.mi_integration_vendor_request AS history_records
-        ON current_records.mivr_pid =
-            history_records.mivr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.mi_integration_vendor_request AS current_records
+    LEFT JOIN history_octane.mi_integration_vendor_request AS history_records
+              ON current_records.mivr_pid = history_records.mivr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.mi_integration_vendor_request staging_table
           ON staging_table.mivr_pid = history_table.mivr_pid
-WHERE staging_table.mivr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.mi_integration_vendor_request deleted_records
-    WHERE deleted_records.mivr_pid = history_table.mivr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.mivr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100037', 0, '--finding records to insert into history_octane.mortech_account
 SELECT staging_table.ma_pid
      , staging_table.ma_version
@@ -16252,24 +14565,17 @@ SELECT history_table.ma_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.mortech_account AS current_records
-      LEFT JOIN history_octane.mortech_account AS history_records
-        ON current_records.ma_pid =
-            history_records.ma_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.mortech_account AS current_records
+    LEFT JOIN history_octane.mortech_account AS history_records
+              ON current_records.ma_pid = history_records.ma_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.mortech_account staging_table
           ON staging_table.ma_pid = history_table.ma_pid
-WHERE staging_table.ma_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.mortech_account deleted_records
-    WHERE deleted_records.ma_pid = history_table.ma_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ma_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100229', 0, '--finding records to insert into history_octane.mortgage_credit_certificate_issuer
 SELECT staging_table.mcci_pid
      , staging_table.mcci_version
@@ -16318,24 +14624,17 @@ SELECT history_table.mcci_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.mortgage_credit_certificate_issuer AS current_records
-      LEFT JOIN history_octane.mortgage_credit_certificate_issuer AS history_records
-        ON current_records.mcci_pid =
-            history_records.mcci_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.mortgage_credit_certificate_issuer AS current_records
+    LEFT JOIN history_octane.mortgage_credit_certificate_issuer AS history_records
+              ON current_records.mcci_pid = history_records.mcci_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.mortgage_credit_certificate_issuer staging_table
           ON staging_table.mcci_pid = history_table.mcci_pid
-WHERE staging_table.mcci_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.mortgage_credit_certificate_issuer deleted_records
-    WHERE deleted_records.mcci_pid = history_table.mcci_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.mcci_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100154', 0, '--finding records to insert into history_octane.net_tangible_benefit
 SELECT staging_table.ntb_pid
      , staging_table.ntb_version
@@ -16356,24 +14655,17 @@ SELECT history_table.ntb_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.net_tangible_benefit AS current_records
-      LEFT JOIN history_octane.net_tangible_benefit AS history_records
-        ON current_records.ntb_pid =
-            history_records.ntb_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.net_tangible_benefit AS current_records
+    LEFT JOIN history_octane.net_tangible_benefit AS history_records
+              ON current_records.ntb_pid = history_records.ntb_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.net_tangible_benefit staging_table
           ON staging_table.ntb_pid = history_table.ntb_pid
-WHERE staging_table.ntb_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.net_tangible_benefit deleted_records
-    WHERE deleted_records.ntb_pid = history_table.ntb_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ntb_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100016', 0, '--finding records to insert into history_octane.new_lock_only_add_on
 SELECT staging_table.nlo_pid
      , staging_table.nlo_version
@@ -16396,24 +14688,17 @@ SELECT history_table.nlo_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.new_lock_only_add_on AS current_records
-      LEFT JOIN history_octane.new_lock_only_add_on AS history_records
-        ON current_records.nlo_pid =
-            history_records.nlo_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.new_lock_only_add_on AS current_records
+    LEFT JOIN history_octane.new_lock_only_add_on AS history_records
+              ON current_records.nlo_pid = history_records.nlo_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.new_lock_only_add_on staging_table
           ON staging_table.nlo_pid = history_table.nlo_pid
-WHERE staging_table.nlo_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.new_lock_only_add_on deleted_records
-    WHERE deleted_records.nlo_pid = history_table.nlo_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.nlo_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100155', 0, '--finding records to insert into history_octane.obligation
 SELECT staging_table.ob_pid
      , staging_table.ob_version
@@ -16544,24 +14829,17 @@ SELECT history_table.ob_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.obligation AS current_records
-      LEFT JOIN history_octane.obligation AS history_records
-        ON current_records.ob_pid =
-            history_records.ob_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.obligation AS current_records
+    LEFT JOIN history_octane.obligation AS history_records
+              ON current_records.ob_pid = history_records.ob_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.obligation staging_table
           ON staging_table.ob_pid = history_table.ob_pid
-WHERE staging_table.ob_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.obligation deleted_records
-    WHERE deleted_records.ob_pid = history_table.ob_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ob_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100004', 0, '--finding records to insert into history_octane.offering
 SELECT staging_table.of_pid
      , staging_table.of_version
@@ -16594,24 +14872,17 @@ SELECT history_table.of_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.offering AS current_records
-      LEFT JOIN history_octane.offering AS history_records
-        ON current_records.of_pid =
-            history_records.of_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.offering AS current_records
+    LEFT JOIN history_octane.offering AS history_records
+              ON current_records.of_pid = history_records.of_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.offering staging_table
           ON staging_table.of_pid = history_table.of_pid
-WHERE staging_table.of_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.offering deleted_records
-    WHERE deleted_records.of_pid = history_table.of_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.of_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100003', 0, '--finding records to insert into history_octane.offering_group
 SELECT staging_table.ofg_pid
      , staging_table.ofg_version
@@ -16632,24 +14903,17 @@ SELECT history_table.ofg_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.offering_group AS current_records
-      LEFT JOIN history_octane.offering_group AS history_records
-        ON current_records.ofg_pid =
-            history_records.ofg_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.offering_group AS current_records
+    LEFT JOIN history_octane.offering_group AS history_records
+              ON current_records.ofg_pid = history_records.ofg_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.offering_group staging_table
           ON staging_table.ofg_pid = history_table.ofg_pid
-WHERE staging_table.ofg_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.offering_group deleted_records
-    WHERE deleted_records.ofg_pid = history_table.ofg_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ofg_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100106', 0, '--finding records to insert into history_octane.offering_product
 SELECT staging_table.ofp_pid
      , staging_table.ofp_version
@@ -16676,24 +14940,17 @@ SELECT history_table.ofp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.offering_product AS current_records
-      LEFT JOIN history_octane.offering_product AS history_records
-        ON current_records.ofp_pid =
-            history_records.ofp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.offering_product AS current_records
+    LEFT JOIN history_octane.offering_product AS history_records
+              ON current_records.ofp_pid = history_records.ofp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.offering_product staging_table
           ON staging_table.ofp_pid = history_table.ofp_pid
-WHERE staging_table.ofp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.offering_product deleted_records
-    WHERE deleted_records.ofp_pid = history_table.ofp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ofp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100208', 0, '--finding records to insert into history_octane.org_lineage
 SELECT staging_table.ol_pid
      , staging_table.ol_version
@@ -16716,24 +14973,17 @@ SELECT history_table.ol_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.org_lineage AS current_records
-      LEFT JOIN history_octane.org_lineage AS history_records
-        ON current_records.ol_pid =
-            history_records.ol_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.org_lineage AS current_records
+    LEFT JOIN history_octane.org_lineage AS history_records
+              ON current_records.ol_pid = history_records.ol_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.org_lineage staging_table
           ON staging_table.ol_pid = history_table.ol_pid
-WHERE staging_table.ol_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.org_lineage deleted_records
-    WHERE deleted_records.ol_pid = history_table.ol_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ol_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100209', 0, '--finding records to insert into history_octane.org_lineage_node
 SELECT staging_table.oln_pid
      , staging_table.oln_version
@@ -16756,24 +15006,17 @@ SELECT history_table.oln_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.org_lineage_node AS current_records
-      LEFT JOIN history_octane.org_lineage_node AS history_records
-        ON current_records.oln_pid =
-            history_records.oln_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.org_lineage_node AS current_records
+    LEFT JOIN history_octane.org_lineage_node AS history_records
+              ON current_records.oln_pid = history_records.oln_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.org_lineage_node staging_table
           ON staging_table.oln_pid = history_table.oln_pid
-WHERE staging_table.oln_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.org_lineage_node deleted_records
-    WHERE deleted_records.oln_pid = history_table.oln_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.oln_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100372', 0, '--finding records to insert into history_octane.org_lineage_tracker
 SELECT staging_table.olt_pid
      , staging_table.olt_version
@@ -16798,24 +15041,17 @@ SELECT history_table.olt_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.org_lineage_tracker AS current_records
-      LEFT JOIN history_octane.org_lineage_tracker AS history_records
-        ON current_records.olt_pid =
-            history_records.olt_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.org_lineage_tracker AS current_records
+    LEFT JOIN history_octane.org_lineage_tracker AS history_records
+              ON current_records.olt_pid = history_records.olt_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.org_lineage_tracker staging_table
           ON staging_table.olt_pid = history_table.olt_pid
-WHERE staging_table.olt_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.org_lineage_tracker deleted_records
-    WHERE deleted_records.olt_pid = history_table.olt_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.olt_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100878', 0, '--finding records to insert into history_octane.org_lineage_tracker_custom_field_update
 SELECT staging_table.otcfu_pid
      , staging_table.otcfu_version
@@ -16836,24 +15072,17 @@ SELECT history_table.otcfu_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.org_lineage_tracker_custom_field_update AS current_records
-      LEFT JOIN history_octane.org_lineage_tracker_custom_field_update AS history_records
-        ON current_records.otcfu_pid =
-            history_records.otcfu_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.org_lineage_tracker_custom_field_update AS current_records
+    LEFT JOIN history_octane.org_lineage_tracker_custom_field_update AS history_records
+              ON current_records.otcfu_pid = history_records.otcfu_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.org_lineage_tracker_custom_field_update staging_table
           ON staging_table.otcfu_pid = history_table.otcfu_pid
-WHERE staging_table.otcfu_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.org_lineage_tracker_custom_field_update deleted_records
-    WHERE deleted_records.otcfu_pid = history_table.otcfu_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.otcfu_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100367', 0, '--finding records to insert into history_octane.org_node
 SELECT staging_table.on_pid
      , staging_table.on_version
@@ -16890,24 +15119,17 @@ SELECT history_table.on_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.org_node AS current_records
-      LEFT JOIN history_octane.org_node AS history_records
-        ON current_records.on_pid =
-            history_records.on_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.org_node AS current_records
+    LEFT JOIN history_octane.org_node AS history_records
+              ON current_records.on_pid = history_records.on_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.org_node staging_table
           ON staging_table.on_pid = history_table.on_pid
-WHERE staging_table.on_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.org_node deleted_records
-    WHERE deleted_records.on_pid = history_table.on_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.on_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100880', 0, '--finding records to insert into history_octane.org_node_custom_field
 SELECT staging_table.oncf_pid
      , staging_table.oncf_version
@@ -16942,24 +15164,17 @@ SELECT history_table.oncf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.org_node_custom_field AS current_records
-      LEFT JOIN history_octane.org_node_custom_field AS history_records
-        ON current_records.oncf_pid =
-            history_records.oncf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.org_node_custom_field AS current_records
+    LEFT JOIN history_octane.org_node_custom_field AS history_records
+              ON current_records.oncf_pid = history_records.oncf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.org_node_custom_field staging_table
           ON staging_table.oncf_pid = history_table.oncf_pid
-WHERE staging_table.oncf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.org_node_custom_field deleted_records
-    WHERE deleted_records.oncf_pid = history_table.oncf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.oncf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100908', 0, '--finding records to insert into history_octane.org_node_doc
 SELECT staging_table.ond_pid
      , staging_table.ond_version
@@ -16986,24 +15201,17 @@ SELECT history_table.ond_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.org_node_doc AS current_records
-      LEFT JOIN history_octane.org_node_doc AS history_records
-        ON current_records.ond_pid =
-            history_records.ond_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.org_node_doc AS current_records
+    LEFT JOIN history_octane.org_node_doc AS history_records
+              ON current_records.ond_pid = history_records.ond_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.org_node_doc staging_table
           ON staging_table.ond_pid = history_table.ond_pid
-WHERE staging_table.ond_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.org_node_doc deleted_records
-    WHERE deleted_records.ond_pid = history_table.ond_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ond_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100368', 0, '--finding records to insert into history_octane.org_node_lender_user
 SELECT staging_table.onlu_pid
      , staging_table.onlu_version
@@ -17030,24 +15238,17 @@ SELECT history_table.onlu_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.org_node_lender_user AS current_records
-      LEFT JOIN history_octane.org_node_lender_user AS history_records
-        ON current_records.onlu_pid =
-            history_records.onlu_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.org_node_lender_user AS current_records
+    LEFT JOIN history_octane.org_node_lender_user AS history_records
+              ON current_records.onlu_pid = history_records.onlu_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.org_node_lender_user staging_table
           ON staging_table.onlu_pid = history_table.onlu_pid
-WHERE staging_table.onlu_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.org_node_lender_user deleted_records
-    WHERE deleted_records.onlu_pid = history_table.onlu_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.onlu_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100366', 0, '--finding records to insert into history_octane.org_node_tree
 SELECT staging_table.ont_pid
      , staging_table.ont_version
@@ -17066,24 +15267,17 @@ SELECT history_table.ont_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.org_node_tree AS current_records
-      LEFT JOIN history_octane.org_node_tree AS history_records
-        ON current_records.ont_pid =
-            history_records.ont_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.org_node_tree AS current_records
+    LEFT JOIN history_octane.org_node_tree AS history_records
+              ON current_records.ont_pid = history_records.ont_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.org_node_tree staging_table
           ON staging_table.ont_pid = history_table.ont_pid
-WHERE staging_table.ont_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.org_node_tree deleted_records
-    WHERE deleted_records.ont_pid = history_table.ont_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ont_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100369', 0, '--finding records to insert into history_octane.org_node_version
 SELECT staging_table.onv_pid
      , staging_table.onv_version
@@ -17110,24 +15304,17 @@ SELECT history_table.onv_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.org_node_version AS current_records
-      LEFT JOIN history_octane.org_node_version AS history_records
-        ON current_records.onv_pid =
-            history_records.onv_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.org_node_version AS current_records
+    LEFT JOIN history_octane.org_node_version AS history_records
+              ON current_records.onv_pid = history_records.onv_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.org_node_version staging_table
           ON staging_table.onv_pid = history_table.onv_pid
-WHERE staging_table.onv_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.org_node_version deleted_records
-    WHERE deleted_records.onv_pid = history_table.onv_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.onv_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100131', 0, '--finding records to insert into history_octane.other_income
 SELECT staging_table.oi_pid
      , staging_table.oi_version
@@ -17262,24 +15449,17 @@ SELECT history_table.oi_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.other_income AS current_records
-      LEFT JOIN history_octane.other_income AS history_records
-        ON current_records.oi_pid =
-            history_records.oi_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.other_income AS current_records
+    LEFT JOIN history_octane.other_income AS history_records
+              ON current_records.oi_pid = history_records.oi_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.other_income staging_table
           ON staging_table.oi_pid = history_table.oi_pid
-WHERE staging_table.oi_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.other_income deleted_records
-    WHERE deleted_records.oi_pid = history_table.oi_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.oi_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100869', 0, '--finding records to insert into history_octane.password_settings
 SELECT staging_table.pws_pid
      , staging_table.pws_version
@@ -17314,24 +15494,17 @@ SELECT history_table.pws_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.password_settings AS current_records
-      LEFT JOIN history_octane.password_settings AS history_records
-        ON current_records.pws_pid =
-            history_records.pws_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.password_settings AS current_records
+    LEFT JOIN history_octane.password_settings AS history_records
+              ON current_records.pws_pid = history_records.pws_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.password_settings staging_table
           ON staging_table.pws_pid = history_table.pws_pid
-WHERE staging_table.pws_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.password_settings deleted_records
-    WHERE deleted_records.pws_pid = history_table.pws_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pws_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100217', 0, '--finding records to insert into history_octane.payroll_ledger_book_id_ticker
 SELECT staging_table.plbit_pid
      , staging_table.plbit_version
@@ -17360,24 +15533,17 @@ SELECT history_table.plbit_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.payroll_ledger_book_id_ticker AS current_records
-      LEFT JOIN history_octane.payroll_ledger_book_id_ticker AS history_records
-        ON current_records.plbit_pid =
-            history_records.plbit_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.payroll_ledger_book_id_ticker AS current_records
+    LEFT JOIN history_octane.payroll_ledger_book_id_ticker AS history_records
+              ON current_records.plbit_pid = history_records.plbit_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.payroll_ledger_book_id_ticker staging_table
           ON staging_table.plbit_pid = history_table.plbit_pid
-WHERE staging_table.plbit_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.payroll_ledger_book_id_ticker deleted_records
-    WHERE deleted_records.plbit_pid = history_table.plbit_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.plbit_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100104', 0, '--finding records to insert into history_octane.performer_assignment
 SELECT staging_table.pa_pid
      , staging_table.pa_version
@@ -17400,24 +15566,17 @@ SELECT history_table.pa_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.performer_assignment AS current_records
-      LEFT JOIN history_octane.performer_assignment AS history_records
-        ON current_records.pa_pid =
-            history_records.pa_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.performer_assignment AS current_records
+    LEFT JOIN history_octane.performer_assignment AS history_records
+              ON current_records.pa_pid = history_records.pa_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.performer_assignment staging_table
           ON staging_table.pa_pid = history_table.pa_pid
-WHERE staging_table.pa_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.performer_assignment deleted_records
-    WHERE deleted_records.pa_pid = history_table.pa_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pa_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100041', 0, '--finding records to insert into history_octane.performer_team
 SELECT staging_table.ptm_pid
      , staging_table.ptm_version
@@ -17438,24 +15597,17 @@ SELECT history_table.ptm_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.performer_team AS current_records
-      LEFT JOIN history_octane.performer_team AS history_records
-        ON current_records.ptm_pid =
-            history_records.ptm_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.performer_team AS current_records
+    LEFT JOIN history_octane.performer_team AS history_records
+              ON current_records.ptm_pid = history_records.ptm_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.performer_team staging_table
           ON staging_table.ptm_pid = history_table.ptm_pid
-WHERE staging_table.ptm_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.performer_team deleted_records
-    WHERE deleted_records.ptm_pid = history_table.ptm_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ptm_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100012', 0, '--finding records to insert into history_octane.place
 SELECT staging_table.pl_pid
      , staging_table.pl_version
@@ -17898,24 +16050,17 @@ SELECT history_table.pl_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.place AS current_records
-      LEFT JOIN history_octane.place AS history_records
-        ON current_records.pl_pid =
-            history_records.pl_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.place AS current_records
+    LEFT JOIN history_octane.place AS history_records
+              ON current_records.pl_pid = history_records.pl_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.place staging_table
           ON staging_table.pl_pid = history_table.pl_pid
-WHERE staging_table.pl_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.place deleted_records
-    WHERE deleted_records.pl_pid = history_table.pl_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pl_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100068', 0, '--finding records to insert into history_octane.preferred_settlement
 SELECT staging_table.prs_pid
      , staging_table.prs_version
@@ -17948,24 +16093,17 @@ SELECT history_table.prs_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.preferred_settlement AS current_records
-      LEFT JOIN history_octane.preferred_settlement AS history_records
-        ON current_records.prs_pid =
-            history_records.prs_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.preferred_settlement AS current_records
+    LEFT JOIN history_octane.preferred_settlement AS history_records
+              ON current_records.prs_pid = history_records.prs_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.preferred_settlement staging_table
           ON staging_table.prs_pid = history_table.prs_pid
-WHERE staging_table.prs_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.preferred_settlement deleted_records
-    WHERE deleted_records.prs_pid = history_table.prs_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.prs_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100230', 0, '--finding records to insert into history_octane.price_processing_time
 SELECT staging_table.ppt_pid
      , staging_table.ppt_version
@@ -18046,24 +16184,17 @@ SELECT history_table.ppt_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.price_processing_time AS current_records
-      LEFT JOIN history_octane.price_processing_time AS history_records
-        ON current_records.ppt_pid =
-            history_records.ppt_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.price_processing_time AS current_records
+    LEFT JOIN history_octane.price_processing_time AS history_records
+              ON current_records.ppt_pid = history_records.ppt_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.price_processing_time staging_table
           ON staging_table.ppt_pid = history_table.ppt_pid
-WHERE staging_table.ppt_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.price_processing_time deleted_records
-    WHERE deleted_records.ppt_pid = history_table.ppt_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ppt_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100105', 0, '--finding records to insert into history_octane.product
 SELECT staging_table.p_pid
      , staging_table.p_version
@@ -18104,24 +16235,17 @@ SELECT history_table.p_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product AS current_records
-      LEFT JOIN history_octane.product AS history_records
-        ON current_records.p_pid =
-            history_records.p_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product AS current_records
+    LEFT JOIN history_octane.product AS history_records
+              ON current_records.p_pid = history_records.p_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product staging_table
           ON staging_table.p_pid = history_table.p_pid
-WHERE staging_table.p_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product deleted_records
-    WHERE deleted_records.p_pid = history_table.p_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.p_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100107', 0, '--finding records to insert into history_octane.product_add_on
 SELECT staging_table.pao_pid
      , staging_table.pao_version
@@ -18142,24 +16266,17 @@ SELECT history_table.pao_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_add_on AS current_records
-      LEFT JOIN history_octane.product_add_on AS history_records
-        ON current_records.pao_pid =
-            history_records.pao_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_add_on AS current_records
+    LEFT JOIN history_octane.product_add_on AS history_records
+              ON current_records.pao_pid = history_records.pao_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_add_on staging_table
           ON staging_table.pao_pid = history_table.pao_pid
-WHERE staging_table.pao_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_add_on deleted_records
-    WHERE deleted_records.pao_pid = history_table.pao_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pao_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100108', 0, '--finding records to insert into history_octane.product_add_on_rule
 SELECT staging_table.par_pid
      , staging_table.par_version
@@ -18460,24 +16577,17 @@ SELECT history_table.par_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_add_on_rule AS current_records
-      LEFT JOIN history_octane.product_add_on_rule AS history_records
-        ON current_records.par_pid =
-            history_records.par_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_add_on_rule AS current_records
+    LEFT JOIN history_octane.product_add_on_rule AS history_records
+              ON current_records.par_pid = history_records.par_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_add_on_rule staging_table
           ON staging_table.par_pid = history_table.par_pid
-WHERE staging_table.par_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_add_on_rule deleted_records
-    WHERE deleted_records.par_pid = history_table.par_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.par_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100109', 0, '--finding records to insert into history_octane.product_branch
 SELECT staging_table.pbr_pid
      , staging_table.pbr_version
@@ -18504,24 +16614,17 @@ SELECT history_table.pbr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_branch AS current_records
-      LEFT JOIN history_octane.product_branch AS history_records
-        ON current_records.pbr_pid =
-            history_records.pbr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_branch AS current_records
+    LEFT JOIN history_octane.product_branch AS history_records
+              ON current_records.pbr_pid = history_records.pbr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_branch staging_table
           ON staging_table.pbr_pid = history_table.pbr_pid
-WHERE staging_table.pbr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_branch deleted_records
-    WHERE deleted_records.pbr_pid = history_table.pbr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pbr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100286', 0, '--finding records to insert into history_octane.product_buydown
 SELECT staging_table.pbd_pid
      , staging_table.pbd_version
@@ -18542,24 +16645,17 @@ SELECT history_table.pbd_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_buydown AS current_records
-      LEFT JOIN history_octane.product_buydown AS history_records
-        ON current_records.pbd_pid =
-            history_records.pbd_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_buydown AS current_records
+    LEFT JOIN history_octane.product_buydown AS history_records
+              ON current_records.pbd_pid = history_records.pbd_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_buydown staging_table
           ON staging_table.pbd_pid = history_table.pbd_pid
-WHERE staging_table.pbd_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_buydown deleted_records
-    WHERE deleted_records.pbd_pid = history_table.pbd_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pbd_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100110', 0, '--finding records to insert into history_octane.product_deal_check_exclusion
 SELECT staging_table.pdce_pid
      , staging_table.pdce_version
@@ -18580,24 +16676,17 @@ SELECT history_table.pdce_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_deal_check_exclusion AS current_records
-      LEFT JOIN history_octane.product_deal_check_exclusion AS history_records
-        ON current_records.pdce_pid =
-            history_records.pdce_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_deal_check_exclusion AS current_records
+    LEFT JOIN history_octane.product_deal_check_exclusion AS history_records
+              ON current_records.pdce_pid = history_records.pdce_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_deal_check_exclusion staging_table
           ON staging_table.pdce_pid = history_table.pdce_pid
-WHERE staging_table.pdce_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_deal_check_exclusion deleted_records
-    WHERE deleted_records.pdce_pid = history_table.pdce_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pdce_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100281', 0, '--finding records to insert into history_octane.product_eligibility
 SELECT staging_table.pe_pid
      , staging_table.pe_version
@@ -18618,24 +16707,17 @@ SELECT history_table.pe_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_eligibility AS current_records
-      LEFT JOIN history_octane.product_eligibility AS history_records
-        ON current_records.pe_pid =
-            history_records.pe_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_eligibility AS current_records
+    LEFT JOIN history_octane.product_eligibility AS history_records
+              ON current_records.pe_pid = history_records.pe_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_eligibility staging_table
           ON staging_table.pe_pid = history_table.pe_pid
-WHERE staging_table.pe_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_eligibility deleted_records
-    WHERE deleted_records.pe_pid = history_table.pe_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pe_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100111', 0, '--finding records to insert into history_octane.product_eligibility_rule
 SELECT staging_table.per_pid
      , staging_table.per_version
@@ -18924,24 +17006,17 @@ SELECT history_table.per_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_eligibility_rule AS current_records
-      LEFT JOIN history_octane.product_eligibility_rule AS history_records
-        ON current_records.per_pid =
-            history_records.per_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_eligibility_rule AS current_records
+    LEFT JOIN history_octane.product_eligibility_rule AS history_records
+              ON current_records.per_pid = history_records.per_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_eligibility_rule staging_table
           ON staging_table.per_pid = history_table.per_pid
-WHERE staging_table.per_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_eligibility_rule deleted_records
-    WHERE deleted_records.per_pid = history_table.per_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.per_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100294', 0, '--finding records to insert into history_octane.product_interest_only
 SELECT staging_table.pio_pid
      , staging_table.pio_version
@@ -18964,24 +17039,17 @@ SELECT history_table.pio_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_interest_only AS current_records
-      LEFT JOIN history_octane.product_interest_only AS history_records
-        ON current_records.pio_pid =
-            history_records.pio_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_interest_only AS current_records
+    LEFT JOIN history_octane.product_interest_only AS history_records
+              ON current_records.pio_pid = history_records.pio_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_interest_only staging_table
           ON staging_table.pio_pid = history_table.pio_pid
-WHERE staging_table.pio_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_interest_only deleted_records
-    WHERE deleted_records.pio_pid = history_table.pio_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pio_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100112', 0, '--finding records to insert into history_octane.product_lock_term
 SELECT staging_table.plt_pid
      , staging_table.plt_version
@@ -19008,24 +17076,17 @@ SELECT history_table.plt_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_lock_term AS current_records
-      LEFT JOIN history_octane.product_lock_term AS history_records
-        ON current_records.plt_pid =
-            history_records.plt_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_lock_term AS current_records
+    LEFT JOIN history_octane.product_lock_term AS history_records
+              ON current_records.plt_pid = history_records.plt_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_lock_term staging_table
           ON staging_table.plt_pid = history_table.plt_pid
-WHERE staging_table.plt_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_lock_term deleted_records
-    WHERE deleted_records.plt_pid = history_table.plt_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.plt_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100113', 0, '--finding records to insert into history_octane.product_maximum_investor_price
 SELECT staging_table.pmip_pid
      , staging_table.pmip_version
@@ -19054,24 +17115,17 @@ SELECT history_table.pmip_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_maximum_investor_price AS current_records
-      LEFT JOIN history_octane.product_maximum_investor_price AS history_records
-        ON current_records.pmip_pid =
-            history_records.pmip_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_maximum_investor_price AS current_records
+    LEFT JOIN history_octane.product_maximum_investor_price AS history_records
+              ON current_records.pmip_pid = history_records.pmip_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_maximum_investor_price staging_table
           ON staging_table.pmip_pid = history_table.pmip_pid
-WHERE staging_table.pmip_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_maximum_investor_price deleted_records
-    WHERE deleted_records.pmip_pid = history_table.pmip_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pmip_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100282', 0, '--finding records to insert into history_octane.product_maximum_rebate
 SELECT staging_table.pmr_pid
      , staging_table.pmr_version
@@ -19094,24 +17148,17 @@ SELECT history_table.pmr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_maximum_rebate AS current_records
-      LEFT JOIN history_octane.product_maximum_rebate AS history_records
-        ON current_records.pmr_pid =
-            history_records.pmr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_maximum_rebate AS current_records
+    LEFT JOIN history_octane.product_maximum_rebate AS history_records
+              ON current_records.pmr_pid = history_records.pmr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_maximum_rebate staging_table
           ON staging_table.pmr_pid = history_table.pmr_pid
-WHERE staging_table.pmr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_maximum_rebate deleted_records
-    WHERE deleted_records.pmr_pid = history_table.pmr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pmr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100283', 0, '--finding records to insert into history_octane.product_minimum_investor_price
 SELECT staging_table.pminip_pid
      , staging_table.pminip_version
@@ -19140,24 +17187,17 @@ SELECT history_table.pminip_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_minimum_investor_price AS current_records
-      LEFT JOIN history_octane.product_minimum_investor_price AS history_records
-        ON current_records.pminip_pid =
-            history_records.pminip_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_minimum_investor_price AS current_records
+    LEFT JOIN history_octane.product_minimum_investor_price AS history_records
+              ON current_records.pminip_pid = history_records.pminip_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_minimum_investor_price staging_table
           ON staging_table.pminip_pid = history_table.pminip_pid
-WHERE staging_table.pminip_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_minimum_investor_price deleted_records
-    WHERE deleted_records.pminip_pid = history_table.pminip_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pminip_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100284', 0, '--finding records to insert into history_octane.product_originator
 SELECT staging_table.po_pid
      , staging_table.po_version
@@ -19184,24 +17224,17 @@ SELECT history_table.po_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_originator AS current_records
-      LEFT JOIN history_octane.product_originator AS history_records
-        ON current_records.po_pid =
-            history_records.po_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_originator AS current_records
+    LEFT JOIN history_octane.product_originator AS history_records
+              ON current_records.po_pid = history_records.po_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_originator staging_table
           ON staging_table.po_pid = history_table.po_pid
-WHERE staging_table.po_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_originator deleted_records
-    WHERE deleted_records.po_pid = history_table.po_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.po_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100287', 0, '--finding records to insert into history_octane.product_prepay_penalty
 SELECT staging_table.ppp_pid
      , staging_table.ppp_version
@@ -19222,24 +17255,17 @@ SELECT history_table.ppp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_prepay_penalty AS current_records
-      LEFT JOIN history_octane.product_prepay_penalty AS history_records
-        ON current_records.ppp_pid =
-            history_records.ppp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_prepay_penalty AS current_records
+    LEFT JOIN history_octane.product_prepay_penalty AS history_records
+              ON current_records.ppp_pid = history_records.ppp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_prepay_penalty staging_table
           ON staging_table.ppp_pid = history_table.ppp_pid
-WHERE staging_table.ppp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_prepay_penalty deleted_records
-    WHERE deleted_records.ppp_pid = history_table.ppp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ppp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100285', 0, '--finding records to insert into history_octane.product_terms
 SELECT staging_table.pt_pid
      , staging_table.pt_version
@@ -19486,24 +17512,17 @@ SELECT history_table.pt_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_terms AS current_records
-      LEFT JOIN history_octane.product_terms AS history_records
-        ON current_records.pt_pid =
-            history_records.pt_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_terms AS current_records
+    LEFT JOIN history_octane.product_terms AS history_records
+              ON current_records.pt_pid = history_records.pt_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_terms staging_table
           ON staging_table.pt_pid = history_table.pt_pid
-WHERE staging_table.pt_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_terms deleted_records
-    WHERE deleted_records.pt_pid = history_table.pt_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pt_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100341', 0, '--finding records to insert into history_octane.product_third_party_community_second_program
 SELECT staging_table.ptpp_pid
      , staging_table.ptpp_version
@@ -19524,24 +17543,17 @@ SELECT history_table.ptpp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.product_third_party_community_second_program AS current_records
-      LEFT JOIN history_octane.product_third_party_community_second_program AS history_records
-        ON current_records.ptpp_pid =
-            history_records.ptpp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.product_third_party_community_second_program AS current_records
+    LEFT JOIN history_octane.product_third_party_community_second_program AS history_records
+              ON current_records.ptpp_pid = history_records.ptpp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.product_third_party_community_second_program staging_table
           ON staging_table.ptpp_pid = history_table.ptpp_pid
-WHERE staging_table.ptpp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.product_third_party_community_second_program deleted_records
-    WHERE deleted_records.ptpp_pid = history_table.ptpp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ptpp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100326', 0, '--finding records to insert into history_octane.profit_margin_detail
 SELECT staging_table.pmd_pid
      , staging_table.pmd_version
@@ -19570,24 +17582,17 @@ SELECT history_table.pmd_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.profit_margin_detail AS current_records
-      LEFT JOIN history_octane.profit_margin_detail AS history_records
-        ON current_records.pmd_pid =
-            history_records.pmd_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.profit_margin_detail AS current_records
+    LEFT JOIN history_octane.profit_margin_detail AS history_records
+              ON current_records.pmd_pid = history_records.pmd_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.profit_margin_detail staging_table
           ON staging_table.pmd_pid = history_table.pmd_pid
-WHERE staging_table.pmd_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.profit_margin_detail deleted_records
-    WHERE deleted_records.pmd_pid = history_table.pmd_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pmd_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100317', 0, '--finding records to insert into history_octane.proposal
 SELECT staging_table.prp_pid
      , staging_table.prp_version
@@ -20084,24 +18089,17 @@ SELECT history_table.prp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal AS current_records
-      LEFT JOIN history_octane.proposal AS history_records
-        ON current_records.prp_pid =
-            history_records.prp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal AS current_records
+    LEFT JOIN history_octane.proposal AS history_records
+              ON current_records.prp_pid = history_records.prp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal staging_table
           ON staging_table.prp_pid = history_table.prp_pid
-WHERE staging_table.prp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal deleted_records
-    WHERE deleted_records.prp_pid = history_table.prp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.prp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100826', 0, '--finding records to insert into history_octane.proposal_construction
 SELECT staging_table.prpc_pid
      , staging_table.prpc_version
@@ -20154,24 +18152,17 @@ SELECT history_table.prpc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_construction AS current_records
-      LEFT JOIN history_octane.proposal_construction AS history_records
-        ON current_records.prpc_pid =
-            history_records.prpc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_construction AS current_records
+    LEFT JOIN history_octane.proposal_construction AS history_records
+              ON current_records.prpc_pid = history_records.prpc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_construction staging_table
           ON staging_table.prpc_pid = history_table.prpc_pid
-WHERE staging_table.prpc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_construction deleted_records
-    WHERE deleted_records.prpc_pid = history_table.prpc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.prpc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100160', 0, '--finding records to insert into history_octane.proposal_contractor
 SELECT staging_table.pctr_pid
      , staging_table.pctr_version
@@ -20192,24 +18183,17 @@ SELECT history_table.pctr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_contractor AS current_records
-      LEFT JOIN history_octane.proposal_contractor AS history_records
-        ON current_records.pctr_pid =
-            history_records.pctr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_contractor AS current_records
+    LEFT JOIN history_octane.proposal_contractor AS history_records
+              ON current_records.pctr_pid = history_records.pctr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_contractor staging_table
           ON staging_table.pctr_pid = history_table.pctr_pid
-WHERE staging_table.pctr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_contractor deleted_records
-    WHERE deleted_records.pctr_pid = history_table.pctr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pctr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100350', 0, '--finding records to insert into history_octane.proposal_doc
 SELECT staging_table.prpd_pid
      , staging_table.prpd_version
@@ -20342,24 +18326,17 @@ SELECT history_table.prpd_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_doc AS current_records
-      LEFT JOIN history_octane.proposal_doc AS history_records
-        ON current_records.prpd_pid =
-            history_records.prpd_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_doc AS current_records
+    LEFT JOIN history_octane.proposal_doc AS history_records
+              ON current_records.prpd_pid = history_records.prpd_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_doc staging_table
           ON staging_table.prpd_pid = history_table.prpd_pid
-WHERE staging_table.prpd_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_doc deleted_records
-    WHERE deleted_records.prpd_pid = history_table.prpd_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.prpd_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100342', 0, '--finding records to insert into history_octane.proposal_doc_borrower_access
 SELECT staging_table.pdba_pid
      , staging_table.pdba_version
@@ -20380,24 +18357,17 @@ SELECT history_table.pdba_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_doc_borrower_access AS current_records
-      LEFT JOIN history_octane.proposal_doc_borrower_access AS history_records
-        ON current_records.pdba_pid =
-            history_records.pdba_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_doc_borrower_access AS current_records
+    LEFT JOIN history_octane.proposal_doc_borrower_access AS history_records
+              ON current_records.pdba_pid = history_records.pdba_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_doc_borrower_access staging_table
           ON staging_table.pdba_pid = history_table.pdba_pid
-WHERE staging_table.pdba_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_doc_borrower_access deleted_records
-    WHERE deleted_records.pdba_pid = history_table.pdba_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pdba_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100343', 0, '--finding records to insert into history_octane.proposal_doc_file
 SELECT staging_table.prpdf_pid
      , staging_table.prpdf_version
@@ -20424,24 +18394,17 @@ SELECT history_table.prpdf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_doc_file AS current_records
-      LEFT JOIN history_octane.proposal_doc_file AS history_records
-        ON current_records.prpdf_pid =
-            history_records.prpdf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_doc_file AS current_records
+    LEFT JOIN history_octane.proposal_doc_file AS history_records
+              ON current_records.prpdf_pid = history_records.prpdf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_doc_file staging_table
           ON staging_table.prpdf_pid = history_table.prpdf_pid
-WHERE staging_table.prpdf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_doc_file deleted_records
-    WHERE deleted_records.prpdf_pid = history_table.prpdf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.prpdf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100163', 0, '--finding records to insert into history_octane.proposal_doc_set
 SELECT staging_table.prpds_pid
      , staging_table.prpds_version
@@ -20514,24 +18477,17 @@ SELECT history_table.prpds_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_doc_set AS current_records
-      LEFT JOIN history_octane.proposal_doc_set AS history_records
-        ON current_records.prpds_pid =
-            history_records.prpds_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_doc_set AS current_records
+    LEFT JOIN history_octane.proposal_doc_set AS history_records
+              ON current_records.prpds_pid = history_records.prpds_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_doc_set staging_table
           ON staging_table.prpds_pid = history_table.prpds_pid
-WHERE staging_table.prpds_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_doc_set deleted_records
-    WHERE deleted_records.prpds_pid = history_table.prpds_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.prpds_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100164', 0, '--finding records to insert into history_octane.proposal_doc_set_id_ticker
 SELECT staging_table.pdstk_pid
      , staging_table.pdstk_version
@@ -20554,24 +18510,17 @@ SELECT history_table.pdstk_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_doc_set_id_ticker AS current_records
-      LEFT JOIN history_octane.proposal_doc_set_id_ticker AS history_records
-        ON current_records.pdstk_pid =
-            history_records.pdstk_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_doc_set_id_ticker AS current_records
+    LEFT JOIN history_octane.proposal_doc_set_id_ticker AS history_records
+              ON current_records.pdstk_pid = history_records.pdstk_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_doc_set_id_ticker staging_table
           ON staging_table.pdstk_pid = history_table.pdstk_pid
-WHERE staging_table.pdstk_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_doc_set_id_ticker deleted_records
-    WHERE deleted_records.pdstk_pid = history_table.pdstk_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pdstk_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100165', 0, '--finding records to insert into history_octane.proposal_doc_set_signer
 SELECT staging_table.prpdss_pid
      , staging_table.prpdss_version
@@ -20598,24 +18547,17 @@ SELECT history_table.prpdss_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_doc_set_signer AS current_records
-      LEFT JOIN history_octane.proposal_doc_set_signer AS history_records
-        ON current_records.prpdss_pid =
-            history_records.prpdss_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_doc_set_signer AS current_records
+    LEFT JOIN history_octane.proposal_doc_set_signer AS history_records
+              ON current_records.prpdss_pid = history_records.prpdss_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_doc_set_signer staging_table
           ON staging_table.prpdss_pid = history_table.prpdss_pid
-WHERE staging_table.prpdss_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_doc_set_signer deleted_records
-    WHERE deleted_records.prpdss_pid = history_table.prpdss_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.prpdss_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100166', 0, '--finding records to insert into history_octane.proposal_doc_set_snapshot
 SELECT staging_table.prpdssn_pid
      , staging_table.prpdssn_version
@@ -20636,24 +18578,17 @@ SELECT history_table.prpdssn_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_doc_set_snapshot AS current_records
-      LEFT JOIN history_octane.proposal_doc_set_snapshot AS history_records
-        ON current_records.prpdssn_pid =
-            history_records.prpdssn_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_doc_set_snapshot AS current_records
+    LEFT JOIN history_octane.proposal_doc_set_snapshot AS history_records
+              ON current_records.prpdssn_pid = history_records.prpdssn_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_doc_set_snapshot staging_table
           ON staging_table.prpdssn_pid = history_table.prpdssn_pid
-WHERE staging_table.prpdssn_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_doc_set_snapshot deleted_records
-    WHERE deleted_records.prpdssn_pid = history_table.prpdssn_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.prpdssn_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100843', 0, '--finding records to insert into history_octane.proposal_doc_validity
 SELECT staging_table.prpdv_pid
      , staging_table.prpdv_version
@@ -20696,24 +18631,17 @@ SELECT history_table.prpdv_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_doc_validity AS current_records
-      LEFT JOIN history_octane.proposal_doc_validity AS history_records
-        ON current_records.prpdv_pid =
-            history_records.prpdv_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_doc_validity AS current_records
+    LEFT JOIN history_octane.proposal_doc_validity AS history_records
+              ON current_records.prpdv_pid = history_records.prpdv_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_doc_validity staging_table
           ON staging_table.prpdv_pid = history_table.prpdv_pid
-WHERE staging_table.prpdv_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_doc_validity deleted_records
-    WHERE deleted_records.prpdv_pid = history_table.prpdv_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.prpdv_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100167', 0, '--finding records to insert into history_octane.proposal_engagement
 SELECT staging_table.prpe_pid
      , staging_table.prpe_version
@@ -20736,24 +18664,17 @@ SELECT history_table.prpe_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_engagement AS current_records
-      LEFT JOIN history_octane.proposal_engagement AS history_records
-        ON current_records.prpe_pid =
-            history_records.prpe_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_engagement AS current_records
+    LEFT JOIN history_octane.proposal_engagement AS history_records
+              ON current_records.prpe_pid = history_records.prpe_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_engagement staging_table
           ON staging_table.prpe_pid = history_table.prpe_pid
-WHERE staging_table.prpe_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_engagement deleted_records
-    WHERE deleted_records.prpe_pid = history_table.prpe_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.prpe_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100168', 0, '--finding records to insert into history_octane.proposal_grant_program
 SELECT staging_table.pgp_pid
      , staging_table.pgp_version
@@ -20778,24 +18699,17 @@ SELECT history_table.pgp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_grant_program AS current_records
-      LEFT JOIN history_octane.proposal_grant_program AS history_records
-        ON current_records.pgp_pid =
-            history_records.pgp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_grant_program AS current_records
+    LEFT JOIN history_octane.proposal_grant_program AS history_records
+              ON current_records.pgp_pid = history_records.pgp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_grant_program staging_table
           ON staging_table.pgp_pid = history_table.pgp_pid
-WHERE staging_table.pgp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_grant_program deleted_records
-    WHERE deleted_records.pgp_pid = history_table.pgp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pgp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100828', 0, '--finding records to insert into history_octane.proposal_hud_consultant
 SELECT staging_table.phc_pid
      , staging_table.phc_version
@@ -20842,24 +18756,17 @@ SELECT history_table.phc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_hud_consultant AS current_records
-      LEFT JOIN history_octane.proposal_hud_consultant AS history_records
-        ON current_records.phc_pid =
-            history_records.phc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_hud_consultant AS current_records
+    LEFT JOIN history_octane.proposal_hud_consultant AS history_records
+              ON current_records.phc_pid = history_records.phc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_hud_consultant staging_table
           ON staging_table.phc_pid = history_table.phc_pid
-WHERE staging_table.phc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_hud_consultant deleted_records
-    WHERE deleted_records.phc_pid = history_table.phc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.phc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100344', 0, '--finding records to insert into history_octane.proposal_req
 SELECT staging_table.prpr_pid
      , staging_table.prpr_version
@@ -20960,24 +18867,17 @@ SELECT history_table.prpr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_req AS current_records
-      LEFT JOIN history_octane.proposal_req AS history_records
-        ON current_records.prpr_pid =
-            history_records.prpr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_req AS current_records
+    LEFT JOIN history_octane.proposal_req AS history_records
+              ON current_records.prpr_pid = history_records.prpr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_req staging_table
           ON staging_table.prpr_pid = history_table.prpr_pid
-WHERE staging_table.prpr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_req deleted_records
-    WHERE deleted_records.prpr_pid = history_table.prpr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.prpr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100327', 0, '--finding records to insert into history_octane.proposal_review
 SELECT staging_table.prpre_pid
      , staging_table.prpre_version
@@ -21024,24 +18924,17 @@ SELECT history_table.prpre_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_review AS current_records
-      LEFT JOIN history_octane.proposal_review AS history_records
-        ON current_records.prpre_pid =
-            history_records.prpre_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_review AS current_records
+    LEFT JOIN history_octane.proposal_review AS history_records
+              ON current_records.prpre_pid = history_records.prpre_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_review staging_table
           ON staging_table.prpre_pid = history_table.prpre_pid
-WHERE staging_table.prpre_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_review deleted_records
-    WHERE deleted_records.prpre_pid = history_table.prpre_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.prpre_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100328', 0, '--finding records to insert into history_octane.proposal_review_ticker
 SELECT staging_table.prpret_pid
      , staging_table.prpret_version
@@ -21062,24 +18955,17 @@ SELECT history_table.prpret_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_review_ticker AS current_records
-      LEFT JOIN history_octane.proposal_review_ticker AS history_records
-        ON current_records.prpret_pid =
-            history_records.prpret_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_review_ticker AS current_records
+    LEFT JOIN history_octane.proposal_review_ticker AS history_records
+              ON current_records.prpret_pid = history_records.prpret_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_review_ticker staging_table
           ON staging_table.prpret_pid = history_table.prpret_pid
-WHERE staging_table.prpret_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_review_ticker deleted_records
-    WHERE deleted_records.prpret_pid = history_table.prpret_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.prpret_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100329', 0, '--finding records to insert into history_octane.proposal_summary
 SELECT staging_table.ps_pid
      , staging_table.ps_version
@@ -21400,24 +19286,17 @@ SELECT history_table.ps_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.proposal_summary AS current_records
-      LEFT JOIN history_octane.proposal_summary AS history_records
-        ON current_records.ps_pid =
-            history_records.ps_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.proposal_summary AS current_records
+    LEFT JOIN history_octane.proposal_summary AS history_records
+              ON current_records.ps_pid = history_records.ps_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.proposal_summary staging_table
           ON staging_table.ps_pid = history_table.ps_pid
-WHERE staging_table.ps_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_summary deleted_records
-    WHERE deleted_records.ps_pid = history_table.ps_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ps_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100169', 0, '--finding records to insert into history_octane.pte_request
 SELECT staging_table.pter_pid
      , staging_table.pter_version
@@ -21472,24 +19351,17 @@ SELECT history_table.pter_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.pte_request AS current_records
-      LEFT JOIN history_octane.pte_request AS history_records
-        ON current_records.pter_pid =
-            history_records.pter_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.pte_request AS current_records
+    LEFT JOIN history_octane.pte_request AS history_records
+              ON current_records.pter_pid = history_records.pter_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.pte_request staging_table
           ON staging_table.pter_pid = history_table.pter_pid
-WHERE staging_table.pter_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.pte_request deleted_records
-    WHERE deleted_records.pter_pid = history_table.pter_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pter_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100170', 0, '--finding records to insert into history_octane.public_record
 SELECT staging_table.pr_pid
      , staging_table.pr_version
@@ -21560,24 +19432,17 @@ SELECT history_table.pr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.public_record AS current_records
-      LEFT JOIN history_octane.public_record AS history_records
-        ON current_records.pr_pid =
-            history_records.pr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.public_record AS current_records
+    LEFT JOIN history_octane.public_record AS history_records
+              ON current_records.pr_pid = history_records.pr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.public_record staging_table
           ON staging_table.pr_pid = history_table.pr_pid
-WHERE staging_table.pr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.public_record deleted_records
-    WHERE deleted_records.pr_pid = history_table.pr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.pr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100895', 0, '--finding records to insert into history_octane.qm_points_and_fees_thresholds
 SELECT staging_table.qmpaft_pid
      , staging_table.qmpaft_version
@@ -21614,24 +19479,17 @@ SELECT history_table.qmpaft_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.qm_points_and_fees_thresholds AS current_records
-      LEFT JOIN history_octane.qm_points_and_fees_thresholds AS history_records
-        ON current_records.qmpaft_pid =
-            history_records.qmpaft_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.qm_points_and_fees_thresholds AS current_records
+    LEFT JOIN history_octane.qm_points_and_fees_thresholds AS history_records
+              ON current_records.qmpaft_pid = history_records.qmpaft_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.qm_points_and_fees_thresholds staging_table
           ON staging_table.qmpaft_pid = history_table.qmpaft_pid
-WHERE staging_table.qmpaft_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.qm_points_and_fees_thresholds deleted_records
-    WHERE deleted_records.qmpaft_pid = history_table.qmpaft_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.qmpaft_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100896', 0, '--finding records to insert into history_octane.qm_rate_spread_thresholds
 SELECT staging_table.qmrst_pid
      , staging_table.qmrst_version
@@ -21672,24 +19530,17 @@ SELECT history_table.qmrst_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.qm_rate_spread_thresholds AS current_records
-      LEFT JOIN history_octane.qm_rate_spread_thresholds AS history_records
-        ON current_records.qmrst_pid =
-            history_records.qmrst_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.qm_rate_spread_thresholds AS current_records
+    LEFT JOIN history_octane.qm_rate_spread_thresholds AS history_records
+              ON current_records.qmrst_pid = history_records.qmrst_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.qm_rate_spread_thresholds staging_table
           ON staging_table.qmrst_pid = history_table.qmrst_pid
-WHERE staging_table.qmrst_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.qm_rate_spread_thresholds deleted_records
-    WHERE deleted_records.qmrst_pid = history_table.qmrst_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.qmrst_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100288', 0, '--finding records to insert into history_octane.rate_sheet
 SELECT staging_table.rs_pid
      , staging_table.rs_version
@@ -21712,24 +19563,17 @@ SELECT history_table.rs_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.rate_sheet AS current_records
-      LEFT JOIN history_octane.rate_sheet AS history_records
-        ON current_records.rs_pid =
-            history_records.rs_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.rate_sheet AS current_records
+    LEFT JOIN history_octane.rate_sheet AS history_records
+              ON current_records.rs_pid = history_records.rs_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.rate_sheet staging_table
           ON staging_table.rs_pid = history_table.rs_pid
-WHERE staging_table.rs_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.rate_sheet deleted_records
-    WHERE deleted_records.rs_pid = history_table.rs_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rs_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100881', 0, '--finding records to insert into history_octane.rate_sheet_group
 SELECT staging_table.rsg_pid
      , staging_table.rsg_version
@@ -21756,24 +19600,17 @@ SELECT history_table.rsg_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.rate_sheet_group AS current_records
-      LEFT JOIN history_octane.rate_sheet_group AS history_records
-        ON current_records.rsg_pid =
-            history_records.rsg_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.rate_sheet_group AS current_records
+    LEFT JOIN history_octane.rate_sheet_group AS history_records
+              ON current_records.rsg_pid = history_records.rsg_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.rate_sheet_group staging_table
           ON staging_table.rsg_pid = history_table.rsg_pid
-WHERE staging_table.rsg_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.rate_sheet_group deleted_records
-    WHERE deleted_records.rsg_pid = history_table.rsg_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rsg_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100882', 0, '--finding records to insert into history_octane.rate_sheet_group_member
 SELECT staging_table.rsgm_pid
      , staging_table.rsgm_version
@@ -21798,24 +19635,17 @@ SELECT history_table.rsgm_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.rate_sheet_group_member AS current_records
-      LEFT JOIN history_octane.rate_sheet_group_member AS history_records
-        ON current_records.rsgm_pid =
-            history_records.rsgm_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.rate_sheet_group_member AS current_records
+    LEFT JOIN history_octane.rate_sheet_group_member AS history_records
+              ON current_records.rsgm_pid = history_records.rsgm_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.rate_sheet_group_member staging_table
           ON staging_table.rsgm_pid = history_table.rsgm_pid
-WHERE staging_table.rsgm_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.rate_sheet_group_member deleted_records
-    WHERE deleted_records.rsgm_pid = history_table.rsgm_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rsgm_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100290', 0, '--finding records to insert into history_octane.rate_sheet_price
 SELECT staging_table.rsp_pid
      , staging_table.rsp_version
@@ -21840,24 +19670,17 @@ SELECT history_table.rsp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.rate_sheet_price AS current_records
-      LEFT JOIN history_octane.rate_sheet_price AS history_records
-        ON current_records.rsp_pid =
-            history_records.rsp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.rate_sheet_price AS current_records
+    LEFT JOIN history_octane.rate_sheet_price AS history_records
+              ON current_records.rsp_pid = history_records.rsp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.rate_sheet_price staging_table
           ON staging_table.rsp_pid = history_table.rsp_pid
-WHERE staging_table.rsp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.rate_sheet_price deleted_records
-    WHERE deleted_records.rsp_pid = history_table.rsp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rsp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100289', 0, '--finding records to insert into history_octane.rate_sheet_rate
 SELECT staging_table.rsr_pid
      , staging_table.rsr_version
@@ -21882,24 +19705,17 @@ SELECT history_table.rsr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.rate_sheet_rate AS current_records
-      LEFT JOIN history_octane.rate_sheet_rate AS history_records
-        ON current_records.rsr_pid =
-            history_records.rsr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.rate_sheet_rate AS current_records
+    LEFT JOIN history_octane.rate_sheet_rate AS history_records
+              ON current_records.rsr_pid = history_records.rsr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.rate_sheet_rate staging_table
           ON staging_table.rsr_pid = history_table.rsr_pid
-WHERE staging_table.rsr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.rate_sheet_rate deleted_records
-    WHERE deleted_records.rsr_pid = history_table.rsr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rsr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100256', 0, '--finding records to insert into history_octane.recording_city
 SELECT staging_table.rc_pid
      , staging_table.rc_version
@@ -21922,24 +19738,17 @@ SELECT history_table.rc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.recording_city AS current_records
-      LEFT JOIN history_octane.recording_city AS history_records
-        ON current_records.rc_pid =
-            history_records.rc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.recording_city AS current_records
+    LEFT JOIN history_octane.recording_city AS history_records
+              ON current_records.rc_pid = history_records.rc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.recording_city staging_table
           ON staging_table.rc_pid = history_table.rc_pid
-WHERE staging_table.rc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.recording_city deleted_records
-    WHERE deleted_records.rc_pid = history_table.rc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100257', 0, '--finding records to insert into history_octane.recording_district
 SELECT staging_table.rdi_pid
      , staging_table.rdi_version
@@ -21962,24 +19771,17 @@ SELECT history_table.rdi_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.recording_district AS current_records
-      LEFT JOIN history_octane.recording_district AS history_records
-        ON current_records.rdi_pid =
-            history_records.rdi_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.recording_district AS current_records
+    LEFT JOIN history_octane.recording_district AS history_records
+              ON current_records.rdi_pid = history_records.rdi_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.recording_district staging_table
           ON staging_table.rdi_pid = history_table.rdi_pid
-WHERE staging_table.rdi_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.recording_district deleted_records
-    WHERE deleted_records.rdi_pid = history_table.rdi_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rdi_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100259', 0, '--finding records to insert into history_octane.region_ernst_page_rec
 SELECT staging_table.rerc_pid
      , staging_table.rerc_version
@@ -22008,24 +19810,17 @@ SELECT history_table.rerc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.region_ernst_page_rec AS current_records
-      LEFT JOIN history_octane.region_ernst_page_rec AS history_records
-        ON current_records.rerc_pid =
-            history_records.rerc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.region_ernst_page_rec AS current_records
+    LEFT JOIN history_octane.region_ernst_page_rec AS history_records
+              ON current_records.rerc_pid = history_records.rerc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.region_ernst_page_rec staging_table
           ON staging_table.rerc_pid = history_table.rerc_pid
-WHERE staging_table.rerc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.region_ernst_page_rec deleted_records
-    WHERE deleted_records.rerc_pid = history_table.rerc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rerc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100232', 0, '--finding records to insert into history_octane.relock_fee_setting
 SELECT staging_table.rfs_pid
      , staging_table.rfs_version
@@ -22048,24 +19843,17 @@ SELECT history_table.rfs_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.relock_fee_setting AS current_records
-      LEFT JOIN history_octane.relock_fee_setting AS history_records
-        ON current_records.rfs_pid =
-            history_records.rfs_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.relock_fee_setting AS current_records
+    LEFT JOIN history_octane.relock_fee_setting AS history_records
+              ON current_records.rfs_pid = history_records.rfs_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.relock_fee_setting staging_table
           ON staging_table.rfs_pid = history_table.rfs_pid
-WHERE staging_table.rfs_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.relock_fee_setting deleted_records
-    WHERE deleted_records.rfs_pid = history_table.rfs_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rfs_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100171', 0, '--finding records to insert into history_octane.rental_income
 SELECT staging_table.ri_pid
      , staging_table.ri_version
@@ -22310,24 +20098,17 @@ SELECT history_table.ri_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.rental_income AS current_records
-      LEFT JOIN history_octane.rental_income AS history_records
-        ON current_records.ri_pid =
-            history_records.ri_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.rental_income AS current_records
+    LEFT JOIN history_octane.rental_income AS history_records
+              ON current_records.ri_pid = history_records.ri_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.rental_income staging_table
           ON staging_table.ri_pid = history_table.ri_pid
-WHERE staging_table.ri_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.rental_income deleted_records
-    WHERE deleted_records.ri_pid = history_table.ri_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ri_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100043', 0, '--finding records to insert into history_octane.report
 SELECT staging_table.rp_pid
      , staging_table.rp_version
@@ -22368,24 +20149,17 @@ SELECT history_table.rp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.report AS current_records
-      LEFT JOIN history_octane.report AS history_records
-        ON current_records.rp_pid =
-            history_records.rp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.report AS current_records
+    LEFT JOIN history_octane.report AS history_records
+              ON current_records.rp_pid = history_records.rp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.report staging_table
           ON staging_table.rp_pid = history_table.rp_pid
-WHERE staging_table.rp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.report deleted_records
-    WHERE deleted_records.rp_pid = history_table.rp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100046', 0, '--finding records to insert into history_octane.report_column
 SELECT staging_table.rpc_pid
      , staging_table.rpc_version
@@ -22408,24 +20182,17 @@ SELECT history_table.rpc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.report_column AS current_records
-      LEFT JOIN history_octane.report_column AS history_records
-        ON current_records.rpc_pid =
-            history_records.rpc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.report_column AS current_records
+    LEFT JOIN history_octane.report_column AS history_records
+              ON current_records.rpc_pid = history_records.rpc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.report_column staging_table
           ON staging_table.rpc_pid = history_table.rpc_pid
-WHERE staging_table.rpc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.report_column deleted_records
-    WHERE deleted_records.rpc_pid = history_table.rpc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rpc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100044', 0, '--finding records to insert into history_octane.report_row
 SELECT staging_table.rprw_pid
      , staging_table.rprw_version
@@ -22452,24 +20219,17 @@ SELECT history_table.rprw_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.report_row AS current_records
-      LEFT JOIN history_octane.report_row AS history_records
-        ON current_records.rprw_pid =
-            history_records.rprw_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.report_row AS current_records
+    LEFT JOIN history_octane.report_row AS history_records
+              ON current_records.rprw_pid = history_records.rprw_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.report_row staging_table
           ON staging_table.rprw_pid = history_table.rprw_pid
-WHERE staging_table.rprw_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.report_row deleted_records
-    WHERE deleted_records.rprw_pid = history_table.rprw_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rprw_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100291', 0, '--finding records to insert into history_octane.repository_file
 SELECT staging_table.rf_pid
      , staging_table.rf_version
@@ -22514,24 +20274,17 @@ SELECT history_table.rf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.repository_file AS current_records
-      LEFT JOIN history_octane.repository_file AS history_records
-        ON current_records.rf_pid =
-            history_records.rf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.repository_file AS current_records
+    LEFT JOIN history_octane.repository_file AS history_records
+              ON current_records.rf_pid = history_records.rf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.repository_file staging_table
           ON staging_table.rf_pid = history_table.rf_pid
-WHERE staging_table.rf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.repository_file deleted_records
-    WHERE deleted_records.rf_pid = history_table.rf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100047', 0, '--finding records to insert into history_octane.role
 SELECT staging_table.r_pid
      , staging_table.r_version
@@ -22560,24 +20313,17 @@ SELECT history_table.r_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.role AS current_records
-      LEFT JOIN history_octane.role AS history_records
-        ON current_records.r_pid =
-            history_records.r_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.role AS current_records
+    LEFT JOIN history_octane.role AS history_records
+              ON current_records.r_pid = history_records.r_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.role staging_table
           ON staging_table.r_pid = history_table.r_pid
-WHERE staging_table.r_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.role deleted_records
-    WHERE deleted_records.r_pid = history_table.r_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.r_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100049', 0, '--finding records to insert into history_octane.role_charge_permissions
 SELECT staging_table.rcp_pid
      , staging_table.rcp_version
@@ -22616,24 +20362,17 @@ SELECT history_table.rcp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.role_charge_permissions AS current_records
-      LEFT JOIN history_octane.role_charge_permissions AS history_records
-        ON current_records.rcp_pid =
-            history_records.rcp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.role_charge_permissions AS current_records
+    LEFT JOIN history_octane.role_charge_permissions AS history_records
+              ON current_records.rcp_pid = history_records.rcp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.role_charge_permissions staging_table
           ON staging_table.rcp_pid = history_table.rcp_pid
-WHERE staging_table.rcp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.role_charge_permissions deleted_records
-    WHERE deleted_records.rcp_pid = history_table.rcp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rcp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100234', 0, '--finding records to insert into history_octane.role_config_export_permission
 SELECT staging_table.rcep_pid
      , staging_table.rcep_version
@@ -22654,24 +20393,17 @@ SELECT history_table.rcep_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.role_config_export_permission AS current_records
-      LEFT JOIN history_octane.role_config_export_permission AS history_records
-        ON current_records.rcep_pid =
-            history_records.rcep_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.role_config_export_permission AS current_records
+    LEFT JOIN history_octane.role_config_export_permission AS history_records
+              ON current_records.rcep_pid = history_records.rcep_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.role_config_export_permission staging_table
           ON staging_table.rcep_pid = history_table.rcep_pid
-WHERE staging_table.rcep_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.role_config_export_permission deleted_records
-    WHERE deleted_records.rcep_pid = history_table.rcep_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rcep_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100235', 0, '--finding records to insert into history_octane.role_deal_context
 SELECT staging_table.rdc_pid
      , staging_table.rdc_version
@@ -22692,24 +20424,17 @@ SELECT history_table.rdc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.role_deal_context AS current_records
-      LEFT JOIN history_octane.role_deal_context AS history_records
-        ON current_records.rdc_pid =
-            history_records.rdc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.role_deal_context AS current_records
+    LEFT JOIN history_octane.role_deal_context AS history_records
+              ON current_records.rdc_pid = history_records.rdc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.role_deal_context staging_table
           ON staging_table.rdc_pid = history_table.rdc_pid
-WHERE staging_table.rdc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.role_deal_context deleted_records
-    WHERE deleted_records.rdc_pid = history_table.rdc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rdc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100236', 0, '--finding records to insert into history_octane.role_export_permission
 SELECT staging_table.rep_pid
      , staging_table.rep_version
@@ -22730,24 +20455,17 @@ SELECT history_table.rep_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.role_export_permission AS current_records
-      LEFT JOIN history_octane.role_export_permission AS history_records
-        ON current_records.rep_pid =
-            history_records.rep_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.role_export_permission AS current_records
+    LEFT JOIN history_octane.role_export_permission AS history_records
+              ON current_records.rep_pid = history_records.rep_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.role_export_permission staging_table
           ON staging_table.rep_pid = history_table.rep_pid
-WHERE staging_table.rep_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.role_export_permission deleted_records
-    WHERE deleted_records.rep_pid = history_table.rep_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rep_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100237', 0, '--finding records to insert into history_octane.role_lender_toolbox
 SELECT staging_table.rlet_pid
      , staging_table.rlet_version
@@ -22768,24 +20486,17 @@ SELECT history_table.rlet_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.role_lender_toolbox AS current_records
-      LEFT JOIN history_octane.role_lender_toolbox AS history_records
-        ON current_records.rlet_pid =
-            history_records.rlet_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.role_lender_toolbox AS current_records
+    LEFT JOIN history_octane.role_lender_toolbox AS history_records
+              ON current_records.rlet_pid = history_records.rlet_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.role_lender_toolbox staging_table
           ON staging_table.rlet_pid = history_table.rlet_pid
-WHERE staging_table.rlet_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.role_lender_toolbox deleted_records
-    WHERE deleted_records.rlet_pid = history_table.rlet_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rlet_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100238', 0, '--finding records to insert into history_octane.role_loans_toolbox
 SELECT staging_table.rlot_pid
      , staging_table.rlot_version
@@ -22806,24 +20517,17 @@ SELECT history_table.rlot_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.role_loans_toolbox AS current_records
-      LEFT JOIN history_octane.role_loans_toolbox AS history_records
-        ON current_records.rlot_pid =
-            history_records.rlot_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.role_loans_toolbox AS current_records
+    LEFT JOIN history_octane.role_loans_toolbox AS history_records
+              ON current_records.rlot_pid = history_records.rlot_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.role_loans_toolbox staging_table
           ON staging_table.rlot_pid = history_table.rlot_pid
-WHERE staging_table.rlot_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.role_loans_toolbox deleted_records
-    WHERE deleted_records.rlot_pid = history_table.rlot_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rlot_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100239', 0, '--finding records to insert into history_octane.role_performer_assign
 SELECT staging_table.rpa_pid
      , staging_table.rpa_version
@@ -22844,24 +20548,17 @@ SELECT history_table.rpa_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.role_performer_assign AS current_records
-      LEFT JOIN history_octane.role_performer_assign AS history_records
-        ON current_records.rpa_pid =
-            history_records.rpa_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.role_performer_assign AS current_records
+    LEFT JOIN history_octane.role_performer_assign AS history_records
+              ON current_records.rpa_pid = history_records.rpa_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.role_performer_assign staging_table
           ON staging_table.rpa_pid = history_table.rpa_pid
-WHERE staging_table.rpa_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.role_performer_assign deleted_records
-    WHERE deleted_records.rpa_pid = history_table.rpa_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rpa_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100240', 0, '--finding records to insert into history_octane.role_report
 SELECT staging_table.rrp_pid
      , staging_table.rrp_version
@@ -22882,24 +20579,17 @@ SELECT history_table.rrp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.role_report AS current_records
-      LEFT JOIN history_octane.role_report AS history_records
-        ON current_records.rrp_pid =
-            history_records.rrp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.role_report AS current_records
+    LEFT JOIN history_octane.role_report AS history_records
+              ON current_records.rrp_pid = history_records.rrp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.role_report staging_table
           ON staging_table.rrp_pid = history_table.rrp_pid
-WHERE staging_table.rrp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.role_report deleted_records
-    WHERE deleted_records.rrp_pid = history_table.rrp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.rrp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100345', 0, '--finding records to insert into history_octane.sap_deal_step
 SELECT staging_table.sds_pid
      , staging_table.sds_version
@@ -22954,24 +20644,17 @@ SELECT history_table.sds_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.sap_deal_step AS current_records
-      LEFT JOIN history_octane.sap_deal_step AS history_records
-        ON current_records.sds_pid =
-            history_records.sds_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.sap_deal_step AS current_records
+    LEFT JOIN history_octane.sap_deal_step AS history_records
+              ON current_records.sds_pid = history_records.sds_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.sap_deal_step staging_table
           ON staging_table.sds_pid = history_table.sds_pid
-WHERE staging_table.sds_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.sap_deal_step deleted_records
-    WHERE deleted_records.sds_pid = history_table.sds_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sds_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100173', 0, '--finding records to insert into history_octane.sap_quote_request
 SELECT staging_table.sqr_pid
      , staging_table.sqr_version
@@ -23002,24 +20685,17 @@ SELECT history_table.sqr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.sap_quote_request AS current_records
-      LEFT JOIN history_octane.sap_quote_request AS history_records
-        ON current_records.sqr_pid =
-            history_records.sqr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.sap_quote_request AS current_records
+    LEFT JOIN history_octane.sap_quote_request AS history_records
+              ON current_records.sqr_pid = history_records.sqr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.sap_quote_request staging_table
           ON staging_table.sqr_pid = history_table.sqr_pid
-WHERE staging_table.sqr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.sap_quote_request deleted_records
-    WHERE deleted_records.sqr_pid = history_table.sqr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sqr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100241', 0, '--finding records to insert into history_octane.secondary_admin_event
 SELECT staging_table.sae_pid
      , staging_table.sae_version
@@ -23052,24 +20728,17 @@ SELECT history_table.sae_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.secondary_admin_event AS current_records
-      LEFT JOIN history_octane.secondary_admin_event AS history_records
-        ON current_records.sae_pid =
-            history_records.sae_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.secondary_admin_event AS current_records
+    LEFT JOIN history_octane.secondary_admin_event AS history_records
+              ON current_records.sae_pid = history_records.sae_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.secondary_admin_event staging_table
           ON staging_table.sae_pid = history_table.sae_pid
-WHERE staging_table.sae_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.secondary_admin_event deleted_records
-    WHERE deleted_records.sae_pid = history_table.sae_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sae_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100174', 0, '--finding records to insert into history_octane.secondary_settings
 SELECT staging_table.sset_pid
      , staging_table.sset_version
@@ -23142,24 +20811,17 @@ SELECT history_table.sset_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.secondary_settings AS current_records
-      LEFT JOIN history_octane.secondary_settings AS history_records
-        ON current_records.sset_pid =
-            history_records.sset_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.secondary_settings AS current_records
+    LEFT JOIN history_octane.secondary_settings AS history_records
+              ON current_records.sset_pid = history_records.sset_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.secondary_settings staging_table
           ON staging_table.sset_pid = history_table.sset_pid
-WHERE staging_table.sset_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.secondary_settings deleted_records
-    WHERE deleted_records.sset_pid = history_table.sset_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sset_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100330', 0, '--finding records to insert into history_octane.servicer_loan_id_assignment
 SELECT staging_table.slia_pid
      , staging_table.slia_version
@@ -23188,24 +20850,17 @@ SELECT history_table.slia_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.servicer_loan_id_assignment AS current_records
-      LEFT JOIN history_octane.servicer_loan_id_assignment AS history_records
-        ON current_records.slia_pid =
-            history_records.slia_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.servicer_loan_id_assignment AS current_records
+    LEFT JOIN history_octane.servicer_loan_id_assignment AS history_records
+              ON current_records.slia_pid = history_records.slia_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.servicer_loan_id_assignment staging_table
           ON staging_table.slia_pid = history_table.slia_pid
-WHERE staging_table.slia_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.servicer_loan_id_assignment deleted_records
-    WHERE deleted_records.slia_pid = history_table.slia_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.slia_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100175', 0, '--finding records to insert into history_octane.servicer_loan_id_import_request
 SELECT staging_table.slir_pid
      , staging_table.slir_version
@@ -23234,24 +20889,17 @@ SELECT history_table.slir_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.servicer_loan_id_import_request AS current_records
-      LEFT JOIN history_octane.servicer_loan_id_import_request AS history_records
-        ON current_records.slir_pid =
-            history_records.slir_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.servicer_loan_id_import_request AS current_records
+    LEFT JOIN history_octane.servicer_loan_id_import_request AS history_records
+              ON current_records.slir_pid = history_records.slir_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.servicer_loan_id_import_request staging_table
           ON staging_table.slir_pid = history_table.slir_pid
-WHERE staging_table.slir_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.servicer_loan_id_import_request deleted_records
-    WHERE deleted_records.slir_pid = history_table.slir_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.slir_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100050', 0, '--finding records to insert into history_octane.settlement_agent
 SELECT staging_table.sa_pid
      , staging_table.sa_version
@@ -23280,24 +20928,17 @@ SELECT history_table.sa_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.settlement_agent AS current_records
-      LEFT JOIN history_octane.settlement_agent AS history_records
-        ON current_records.sa_pid =
-            history_records.sa_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.settlement_agent AS current_records
+    LEFT JOIN history_octane.settlement_agent AS history_records
+              ON current_records.sa_pid = history_records.sa_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.settlement_agent staging_table
           ON staging_table.sa_pid = history_table.sa_pid
-WHERE staging_table.sa_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.settlement_agent deleted_records
-    WHERE deleted_records.sa_pid = history_table.sa_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sa_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100051', 0, '--finding records to insert into history_octane.settlement_agent_office
 SELECT staging_table.sao_pid
      , staging_table.sao_version
@@ -23340,24 +20981,17 @@ SELECT history_table.sao_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.settlement_agent_office AS current_records
-      LEFT JOIN history_octane.settlement_agent_office AS history_records
-        ON current_records.sao_pid =
-            history_records.sao_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.settlement_agent_office AS current_records
+    LEFT JOIN history_octane.settlement_agent_office AS history_records
+              ON current_records.sao_pid = history_records.sao_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.settlement_agent_office staging_table
           ON staging_table.sao_pid = history_table.sao_pid
-WHERE staging_table.sao_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.settlement_agent_office deleted_records
-    WHERE deleted_records.sao_pid = history_table.sao_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sao_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100242', 0, '--finding records to insert into history_octane.settlement_agent_wire
 SELECT staging_table.saw_pid
      , staging_table.saw_version
@@ -23434,24 +21068,17 @@ SELECT history_table.saw_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.settlement_agent_wire AS current_records
-      LEFT JOIN history_octane.settlement_agent_wire AS history_records
-        ON current_records.saw_pid =
-            history_records.saw_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.settlement_agent_wire AS current_records
+    LEFT JOIN history_octane.settlement_agent_wire AS history_records
+              ON current_records.saw_pid = history_records.saw_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.settlement_agent_wire staging_table
           ON staging_table.saw_pid = history_table.saw_pid
-WHERE staging_table.saw_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.settlement_agent_wire deleted_records
-    WHERE deleted_records.saw_pid = history_table.saw_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.saw_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100053', 0, '--finding records to insert into history_octane.site_allowed_ip
 SELECT staging_table.saip_pid
      , staging_table.saip_version
@@ -23474,24 +21101,17 @@ SELECT history_table.saip_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.site_allowed_ip AS current_records
-      LEFT JOIN history_octane.site_allowed_ip AS history_records
-        ON current_records.saip_pid =
-            history_records.saip_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.site_allowed_ip AS current_records
+    LEFT JOIN history_octane.site_allowed_ip AS history_records
+              ON current_records.saip_pid = history_records.saip_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.site_allowed_ip staging_table
           ON staging_table.saip_pid = history_table.saip_pid
-WHERE staging_table.saip_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.site_allowed_ip deleted_records
-    WHERE deleted_records.saip_pid = history_table.saip_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.saip_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100054', 0, '--finding records to insert into history_octane.smart_charge
 SELECT staging_table.sc_pid
      , staging_table.sc_version
@@ -23520,24 +21140,17 @@ SELECT history_table.sc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_charge AS current_records
-      LEFT JOIN history_octane.smart_charge AS history_records
-        ON current_records.sc_pid =
-            history_records.sc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_charge AS current_records
+    LEFT JOIN history_octane.smart_charge AS history_records
+              ON current_records.sc_pid = history_records.sc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_charge staging_table
           ON staging_table.sc_pid = history_table.sc_pid
-WHERE staging_table.sc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_charge deleted_records
-    WHERE deleted_records.sc_pid = history_table.sc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100245', 0, '--finding records to insert into history_octane.smart_charge_case
 SELECT staging_table.scc_pid
      , staging_table.scc_version
@@ -23592,24 +21205,17 @@ SELECT history_table.scc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_charge_case AS current_records
-      LEFT JOIN history_octane.smart_charge_case AS history_records
-        ON current_records.scc_pid =
-            history_records.scc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_charge_case AS current_records
+    LEFT JOIN history_octane.smart_charge_case AS history_records
+              ON current_records.scc_pid = history_records.scc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_charge_case staging_table
           ON staging_table.scc_pid = history_table.scc_pid
-WHERE staging_table.scc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_charge_case deleted_records
-    WHERE deleted_records.scc_pid = history_table.scc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.scc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100243', 0, '--finding records to insert into history_octane.smart_charge_group
 SELECT staging_table.scg_pid
      , staging_table.scg_version
@@ -23630,24 +21236,17 @@ SELECT history_table.scg_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_charge_group AS current_records
-      LEFT JOIN history_octane.smart_charge_group AS history_records
-        ON current_records.scg_pid =
-            history_records.scg_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_charge_group AS current_records
+    LEFT JOIN history_octane.smart_charge_group AS history_records
+              ON current_records.scg_pid = history_records.scg_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_charge_group staging_table
           ON staging_table.scg_pid = history_table.scg_pid
-WHERE staging_table.scg_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_charge_group deleted_records
-    WHERE deleted_records.scg_pid = history_table.scg_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.scg_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100244', 0, '--finding records to insert into history_octane.smart_charge_group_case
 SELECT staging_table.scgc_pid
      , staging_table.scgc_version
@@ -23670,24 +21269,17 @@ SELECT history_table.scgc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_charge_group_case AS current_records
-      LEFT JOIN history_octane.smart_charge_group_case AS history_records
-        ON current_records.scgc_pid =
-            history_records.scgc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_charge_group_case AS current_records
+    LEFT JOIN history_octane.smart_charge_group_case AS history_records
+              ON current_records.scgc_pid = history_records.scgc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_charge_group_case staging_table
           ON staging_table.scgc_pid = history_table.scgc_pid
-WHERE staging_table.scgc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_charge_group_case deleted_records
-    WHERE deleted_records.scgc_pid = history_table.scgc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.scgc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100333', 0, '--finding records to insert into history_octane.smart_doc
 SELECT staging_table.sd_pid
      , staging_table.sd_version
@@ -23784,24 +21376,17 @@ SELECT history_table.sd_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_doc AS current_records
-      LEFT JOIN history_octane.smart_doc AS history_records
-        ON current_records.sd_pid =
-            history_records.sd_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_doc AS current_records
+    LEFT JOIN history_octane.smart_doc AS history_records
+              ON current_records.sd_pid = history_records.sd_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_doc staging_table
           ON staging_table.sd_pid = history_table.sd_pid
-WHERE staging_table.sd_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_doc deleted_records
-    WHERE deleted_records.sd_pid = history_table.sd_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sd_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100331', 0, '--finding records to insert into history_octane.smart_doc_criteria
 SELECT staging_table.sdc_pid
      , staging_table.sdc_version
@@ -23824,24 +21409,17 @@ SELECT history_table.sdc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_doc_criteria AS current_records
-      LEFT JOIN history_octane.smart_doc_criteria AS history_records
-        ON current_records.sdc_pid =
-            history_records.sdc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_doc_criteria AS current_records
+    LEFT JOIN history_octane.smart_doc_criteria AS history_records
+              ON current_records.sdc_pid = history_records.sdc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_doc_criteria staging_table
           ON staging_table.sdc_pid = history_table.sdc_pid
-WHERE staging_table.sdc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_doc_criteria deleted_records
-    WHERE deleted_records.sdc_pid = history_table.sdc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sdc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100893', 0, '--finding records to insert into history_octane.smart_doc_prior_to_type_case
 SELECT staging_table.sdpttc_pid
      , staging_table.sdpttc_version
@@ -23872,24 +21450,17 @@ SELECT history_table.sdpttc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_doc_prior_to_type_case AS current_records
-      LEFT JOIN history_octane.smart_doc_prior_to_type_case AS history_records
-        ON current_records.sdpttc_pid =
-            history_records.sdpttc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_doc_prior_to_type_case AS current_records
+    LEFT JOIN history_octane.smart_doc_prior_to_type_case AS history_records
+              ON current_records.sdpttc_pid = history_records.sdpttc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_doc_prior_to_type_case staging_table
           ON staging_table.sdpttc_pid = history_table.sdpttc_pid
-WHERE staging_table.sdpttc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_doc_prior_to_type_case deleted_records
-    WHERE deleted_records.sdpttc_pid = history_table.sdpttc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sdpttc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100894', 0, '--finding records to insert into history_octane.smart_doc_provider_type_case
 SELECT staging_table.sdptc_pid
      , staging_table.sdptc_version
@@ -23908,24 +21479,17 @@ SELECT history_table.sdptc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_doc_provider_type_case AS current_records
-      LEFT JOIN history_octane.smart_doc_provider_type_case AS history_records
-        ON current_records.sdptc_pid =
-            history_records.sdptc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_doc_provider_type_case AS current_records
+    LEFT JOIN history_octane.smart_doc_provider_type_case AS history_records
+              ON current_records.sdptc_pid = history_records.sdptc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_doc_provider_type_case staging_table
           ON staging_table.sdptc_pid = history_table.sdptc_pid
-WHERE staging_table.sdptc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_doc_provider_type_case deleted_records
-    WHERE deleted_records.sdptc_pid = history_table.sdptc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sdptc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100178', 0, '--finding records to insert into history_octane.smart_doc_role
 SELECT staging_table.sdr_pid
      , staging_table.sdr_version
@@ -23948,24 +21512,17 @@ SELECT history_table.sdr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_doc_role AS current_records
-      LEFT JOIN history_octane.smart_doc_role AS history_records
-        ON current_records.sdr_pid =
-            history_records.sdr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_doc_role AS current_records
+    LEFT JOIN history_octane.smart_doc_role AS history_records
+              ON current_records.sdr_pid = history_records.sdr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_doc_role staging_table
           ON staging_table.sdr_pid = history_table.sdr_pid
-WHERE staging_table.sdr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_doc_role deleted_records
-    WHERE deleted_records.sdr_pid = history_table.sdr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sdr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100251', 0, '--finding records to insert into history_octane.smart_doc_set
 SELECT staging_table.sdst_pid
      , staging_table.sdst_version
@@ -23992,24 +21549,17 @@ SELECT history_table.sdst_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_doc_set AS current_records
-      LEFT JOIN history_octane.smart_doc_set AS history_records
-        ON current_records.sdst_pid =
-            history_records.sdst_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_doc_set AS current_records
+    LEFT JOIN history_octane.smart_doc_set AS history_records
+              ON current_records.sdst_pid = history_records.sdst_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_doc_set staging_table
           ON staging_table.sdst_pid = history_table.sdst_pid
-WHERE staging_table.sdst_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_doc_set deleted_records
-    WHERE deleted_records.sdst_pid = history_table.sdst_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sdst_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100842', 0, '--finding records to insert into history_octane.smart_doc_validity_date_case
 SELECT staging_table.sdvdc_pid
      , staging_table.sdvdc_version
@@ -24050,24 +21600,17 @@ SELECT history_table.sdvdc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_doc_validity_date_case AS current_records
-      LEFT JOIN history_octane.smart_doc_validity_date_case AS history_records
-        ON current_records.sdvdc_pid =
-            history_records.sdvdc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_doc_validity_date_case AS current_records
+    LEFT JOIN history_octane.smart_doc_validity_date_case AS history_records
+              ON current_records.sdvdc_pid = history_records.sdvdc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_doc_validity_date_case staging_table
           ON staging_table.sdvdc_pid = history_table.sdvdc_pid
-WHERE staging_table.sdvdc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_doc_validity_date_case deleted_records
-    WHERE deleted_records.sdvdc_pid = history_table.sdvdc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sdvdc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100210', 0, '--finding records to insert into history_octane.smart_ledger_plan
 SELECT staging_table.slp_pid
      , staging_table.slp_version
@@ -24092,24 +21635,17 @@ SELECT history_table.slp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_ledger_plan AS current_records
-      LEFT JOIN history_octane.smart_ledger_plan AS history_records
-        ON current_records.slp_pid =
-            history_records.slp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_ledger_plan AS current_records
+    LEFT JOIN history_octane.smart_ledger_plan AS history_records
+              ON current_records.slp_pid = history_records.slp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_ledger_plan staging_table
           ON staging_table.slp_pid = history_table.slp_pid
-WHERE staging_table.slp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_ledger_plan deleted_records
-    WHERE deleted_records.slp_pid = history_table.slp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.slp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100212', 0, '--finding records to insert into history_octane.smart_ledger_plan_case
 SELECT staging_table.slpc_pid
      , staging_table.slpc_version
@@ -24134,24 +21670,17 @@ SELECT history_table.slpc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_ledger_plan_case AS current_records
-      LEFT JOIN history_octane.smart_ledger_plan_case AS history_records
-        ON current_records.slpc_pid =
-            history_records.slpc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_ledger_plan_case AS current_records
+    LEFT JOIN history_octane.smart_ledger_plan_case AS history_records
+              ON current_records.slpc_pid = history_records.slpc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_ledger_plan_case staging_table
           ON staging_table.slpc_pid = history_table.slpc_pid
-WHERE staging_table.slpc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_ledger_plan_case deleted_records
-    WHERE deleted_records.slpc_pid = history_table.slpc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.slpc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100211', 0, '--finding records to insert into history_octane.smart_ledger_plan_case_group
 SELECT staging_table.slpcg_pid
      , staging_table.slpcg_version
@@ -24182,24 +21711,17 @@ SELECT history_table.slpcg_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_ledger_plan_case_group AS current_records
-      LEFT JOIN history_octane.smart_ledger_plan_case_group AS history_records
-        ON current_records.slpcg_pid =
-            history_records.slpcg_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_ledger_plan_case_group AS current_records
+    LEFT JOIN history_octane.smart_ledger_plan_case_group AS history_records
+              ON current_records.slpcg_pid = history_records.slpcg_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_ledger_plan_case_group staging_table
           ON staging_table.slpcg_pid = history_table.slpcg_pid
-WHERE staging_table.slpcg_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_ledger_plan_case_group deleted_records
-    WHERE deleted_records.slpcg_pid = history_table.slpcg_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.slpcg_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100213', 0, '--finding records to insert into history_octane.smart_ledger_plan_case_version
 SELECT staging_table.slpcv_pid
      , staging_table.slpcv_version
@@ -24262,24 +21784,17 @@ SELECT history_table.slpcv_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_ledger_plan_case_version AS current_records
-      LEFT JOIN history_octane.smart_ledger_plan_case_version AS history_records
-        ON current_records.slpcv_pid =
-            history_records.slpcv_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_ledger_plan_case_version AS current_records
+    LEFT JOIN history_octane.smart_ledger_plan_case_version AS history_records
+              ON current_records.slpcv_pid = history_records.slpcv_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_ledger_plan_case_version staging_table
           ON staging_table.slpcv_pid = history_table.slpcv_pid
-WHERE staging_table.slpcv_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_ledger_plan_case_version deleted_records
-    WHERE deleted_records.slpcv_pid = history_table.slpcv_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.slpcv_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100179', 0, '--finding records to insert into history_octane.smart_message
 SELECT staging_table.smsg_pid
      , staging_table.smsg_version
@@ -24324,24 +21839,17 @@ SELECT history_table.smsg_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_message AS current_records
-      LEFT JOIN history_octane.smart_message AS history_records
-        ON current_records.smsg_pid =
-            history_records.smsg_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_message AS current_records
+    LEFT JOIN history_octane.smart_message AS history_records
+              ON current_records.smsg_pid = history_records.smsg_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_message staging_table
           ON staging_table.smsg_pid = history_table.smsg_pid
-WHERE staging_table.smsg_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_message deleted_records
-    WHERE deleted_records.smsg_pid = history_table.smsg_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.smsg_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100871', 0, '--finding records to insert into history_octane.smart_message_available_attachment
 SELECT staging_table.smaa_pid
      , staging_table.smaa_version
@@ -24362,24 +21870,17 @@ SELECT history_table.smaa_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_message_available_attachment AS current_records
-      LEFT JOIN history_octane.smart_message_available_attachment AS history_records
-        ON current_records.smaa_pid =
-            history_records.smaa_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_message_available_attachment AS current_records
+    LEFT JOIN history_octane.smart_message_available_attachment AS history_records
+              ON current_records.smaa_pid = history_records.smaa_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_message_available_attachment staging_table
           ON staging_table.smaa_pid = history_table.smaa_pid
-WHERE staging_table.smaa_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_message_available_attachment deleted_records
-    WHERE deleted_records.smaa_pid = history_table.smaa_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.smaa_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100860', 0, '--finding records to insert into history_octane.smart_message_permission
 SELECT staging_table.smp_pid
      , staging_table.smp_version
@@ -24402,24 +21903,17 @@ SELECT history_table.smp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_message_permission AS current_records
-      LEFT JOIN history_octane.smart_message_permission AS history_records
-        ON current_records.smp_pid =
-            history_records.smp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_message_permission AS current_records
+    LEFT JOIN history_octane.smart_message_permission AS history_records
+              ON current_records.smp_pid = history_records.smp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_message_permission staging_table
           ON staging_table.smp_pid = history_table.smp_pid
-WHERE staging_table.smp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_message_permission deleted_records
-    WHERE deleted_records.smp_pid = history_table.smp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.smp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100180', 0, '--finding records to insert into history_octane.smart_message_recipient
 SELECT staging_table.smr_pid
      , staging_table.smr_version
@@ -24444,24 +21938,17 @@ SELECT history_table.smr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_message_recipient AS current_records
-      LEFT JOIN history_octane.smart_message_recipient AS history_records
-        ON current_records.smr_pid =
-            history_records.smr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_message_recipient AS current_records
+    LEFT JOIN history_octane.smart_message_recipient AS history_records
+              ON current_records.smr_pid = history_records.smr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_message_recipient staging_table
           ON staging_table.smr_pid = history_table.smr_pid
-WHERE staging_table.smr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_message_recipient deleted_records
-    WHERE deleted_records.smr_pid = history_table.smr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.smr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100055', 0, '--finding records to insert into history_octane.smart_mi
 SELECT staging_table.sm_pid
      , staging_table.sm_version
@@ -24482,24 +21969,17 @@ SELECT history_table.sm_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_mi AS current_records
-      LEFT JOIN history_octane.smart_mi AS history_records
-        ON current_records.sm_pid =
-            history_records.sm_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_mi AS current_records
+    LEFT JOIN history_octane.smart_mi AS history_records
+              ON current_records.sm_pid = history_records.sm_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_mi staging_table
           ON staging_table.sm_pid = history_table.sm_pid
-WHERE staging_table.sm_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_mi deleted_records
-    WHERE deleted_records.sm_pid = history_table.sm_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sm_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100056', 0, '--finding records to insert into history_octane.smart_mi_eligibility_case
 SELECT staging_table.smec_pid
      , staging_table.smec_version
@@ -24524,24 +22004,17 @@ SELECT history_table.smec_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_mi_eligibility_case AS current_records
-      LEFT JOIN history_octane.smart_mi_eligibility_case AS history_records
-        ON current_records.smec_pid =
-            history_records.smec_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_mi_eligibility_case AS current_records
+    LEFT JOIN history_octane.smart_mi_eligibility_case AS history_records
+              ON current_records.smec_pid = history_records.smec_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_mi_eligibility_case staging_table
           ON staging_table.smec_pid = history_table.smec_pid
-WHERE staging_table.smec_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_mi_eligibility_case deleted_records
-    WHERE deleted_records.smec_pid = history_table.smec_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.smec_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100246', 0, '--finding records to insert into history_octane.smart_mi_rate_adjustment_case
 SELECT staging_table.smrac_pid
      , staging_table.smrac_version
@@ -24564,24 +22037,17 @@ SELECT history_table.smrac_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_mi_rate_adjustment_case AS current_records
-      LEFT JOIN history_octane.smart_mi_rate_adjustment_case AS history_records
-        ON current_records.smrac_pid =
-            history_records.smrac_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_mi_rate_adjustment_case AS current_records
+    LEFT JOIN history_octane.smart_mi_rate_adjustment_case AS history_records
+              ON current_records.smrac_pid = history_records.smrac_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_mi_rate_adjustment_case staging_table
           ON staging_table.smrac_pid = history_table.smrac_pid
-WHERE staging_table.smrac_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_mi_rate_adjustment_case deleted_records
-    WHERE deleted_records.smrac_pid = history_table.smrac_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.smrac_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100057', 0, '--finding records to insert into history_octane.smart_mi_rate_card
 SELECT staging_table.smrca_pid
      , staging_table.smrca_version
@@ -24610,24 +22076,17 @@ SELECT history_table.smrca_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_mi_rate_card AS current_records
-      LEFT JOIN history_octane.smart_mi_rate_card AS history_records
-        ON current_records.smrca_pid =
-            history_records.smrca_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_mi_rate_card AS current_records
+    LEFT JOIN history_octane.smart_mi_rate_card AS history_records
+              ON current_records.smrca_pid = history_records.smrca_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_mi_rate_card staging_table
           ON staging_table.smrca_pid = history_table.smrca_pid
-WHERE staging_table.smrca_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_mi_rate_card deleted_records
-    WHERE deleted_records.smrca_pid = history_table.smrca_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.smrca_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100247', 0, '--finding records to insert into history_octane.smart_mi_rate_case
 SELECT staging_table.smrc_pid
      , staging_table.smrc_version
@@ -24668,24 +22127,17 @@ SELECT history_table.smrc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_mi_rate_case AS current_records
-      LEFT JOIN history_octane.smart_mi_rate_case AS history_records
-        ON current_records.smrc_pid =
-            history_records.smrc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_mi_rate_case AS current_records
+    LEFT JOIN history_octane.smart_mi_rate_case AS history_records
+              ON current_records.smrc_pid = history_records.smrc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_mi_rate_case staging_table
           ON staging_table.smrc_pid = history_table.smrc_pid
-WHERE staging_table.smrc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_mi_rate_case deleted_records
-    WHERE deleted_records.smrc_pid = history_table.smrc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.smrc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100248', 0, '--finding records to insert into history_octane.smart_mi_surcharge
 SELECT staging_table.sms_pid
      , staging_table.sms_version
@@ -24706,24 +22158,17 @@ SELECT history_table.sms_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_mi_surcharge AS current_records
-      LEFT JOIN history_octane.smart_mi_surcharge AS history_records
-        ON current_records.sms_pid =
-            history_records.sms_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_mi_surcharge AS current_records
+    LEFT JOIN history_octane.smart_mi_surcharge AS history_records
+              ON current_records.sms_pid = history_records.sms_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_mi_surcharge staging_table
           ON staging_table.sms_pid = history_table.sms_pid
-WHERE staging_table.sms_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_mi_surcharge deleted_records
-    WHERE deleted_records.sms_pid = history_table.sms_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sms_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100249', 0, '--finding records to insert into history_octane.smart_mi_surcharge_case
 SELECT staging_table.smsc_pid
      , staging_table.smsc_version
@@ -24748,24 +22193,17 @@ SELECT history_table.smsc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_mi_surcharge_case AS current_records
-      LEFT JOIN history_octane.smart_mi_surcharge_case AS history_records
-        ON current_records.smsc_pid =
-            history_records.smsc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_mi_surcharge_case AS current_records
+    LEFT JOIN history_octane.smart_mi_surcharge_case AS history_records
+              ON current_records.smsc_pid = history_records.smsc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_mi_surcharge_case staging_table
           ON staging_table.smsc_pid = history_table.smsc_pid
-WHERE staging_table.smsc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_mi_surcharge_case deleted_records
-    WHERE deleted_records.smsc_pid = history_table.smsc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.smsc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100334', 0, '--finding records to insert into history_octane.smart_req
 SELECT staging_table.sr_pid
      , staging_table.sr_version
@@ -24796,24 +22234,17 @@ SELECT history_table.sr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_req AS current_records
-      LEFT JOIN history_octane.smart_req AS history_records
-        ON current_records.sr_pid =
-            history_records.sr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_req AS current_records
+    LEFT JOIN history_octane.smart_req AS history_records
+              ON current_records.sr_pid = history_records.sr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_req staging_table
           ON staging_table.sr_pid = history_table.sr_pid
-WHERE staging_table.sr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_req deleted_records
-    WHERE deleted_records.sr_pid = history_table.sr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100335', 0, '--finding records to insert into history_octane.smart_separator
 SELECT staging_table.ssp_pid
      , staging_table.ssp_version
@@ -24838,24 +22269,17 @@ SELECT history_table.ssp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_separator AS current_records
-      LEFT JOIN history_octane.smart_separator AS history_records
-        ON current_records.ssp_pid =
-            history_records.ssp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_separator AS current_records
+    LEFT JOIN history_octane.smart_separator AS history_records
+              ON current_records.ssp_pid = history_records.ssp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_separator staging_table
           ON staging_table.ssp_pid = history_table.ssp_pid
-WHERE staging_table.ssp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_separator deleted_records
-    WHERE deleted_records.ssp_pid = history_table.ssp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ssp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100336', 0, '--finding records to insert into history_octane.smart_set_doc
 SELECT staging_table.sstd_pid
      , staging_table.sstd_version
@@ -24878,24 +22302,17 @@ SELECT history_table.sstd_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_set_doc AS current_records
-      LEFT JOIN history_octane.smart_set_doc AS history_records
-        ON current_records.sstd_pid =
-            history_records.sstd_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_set_doc AS current_records
+    LEFT JOIN history_octane.smart_set_doc AS history_records
+              ON current_records.sstd_pid = history_records.sstd_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_set_doc staging_table
           ON staging_table.sstd_pid = history_table.sstd_pid
-WHERE staging_table.sstd_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_set_doc deleted_records
-    WHERE deleted_records.sstd_pid = history_table.sstd_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sstd_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100250', 0, '--finding records to insert into history_octane.smart_stack
 SELECT staging_table.ss_pid
      , staging_table.ss_version
@@ -24916,24 +22333,17 @@ SELECT history_table.ss_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_stack AS current_records
-      LEFT JOIN history_octane.smart_stack AS history_records
-        ON current_records.ss_pid =
-            history_records.ss_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_stack AS current_records
+    LEFT JOIN history_octane.smart_stack AS history_records
+              ON current_records.ss_pid = history_records.ss_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_stack staging_table
           ON staging_table.ss_pid = history_table.ss_pid
-WHERE staging_table.ss_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_stack deleted_records
-    WHERE deleted_records.ss_pid = history_table.ss_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ss_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100337', 0, '--finding records to insert into history_octane.smart_stack_doc
 SELECT staging_table.ssd_pid
      , staging_table.ssd_version
@@ -24964,24 +22374,17 @@ SELECT history_table.ssd_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_stack_doc AS current_records
-      LEFT JOIN history_octane.smart_stack_doc AS history_records
-        ON current_records.ssd_pid =
-            history_records.ssd_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_stack_doc AS current_records
+    LEFT JOIN history_octane.smart_stack_doc AS history_records
+              ON current_records.ssd_pid = history_records.ssd_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_stack_doc staging_table
           ON staging_table.ssd_pid = history_table.ssd_pid
-WHERE staging_table.ssd_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_stack_doc deleted_records
-    WHERE deleted_records.ssd_pid = history_table.ssd_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ssd_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100192', 0, '--finding records to insert into history_octane.smart_task
 SELECT staging_table.st_pid
      , staging_table.st_version
@@ -25010,24 +22413,17 @@ SELECT history_table.st_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_task AS current_records
-      LEFT JOIN history_octane.smart_task AS history_records
-        ON current_records.st_pid =
-            history_records.st_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_task AS current_records
+    LEFT JOIN history_octane.smart_task AS history_records
+              ON current_records.st_pid = history_records.st_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_task staging_table
           ON staging_table.st_pid = history_table.st_pid
-WHERE staging_table.st_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_task deleted_records
-    WHERE deleted_records.st_pid = history_table.st_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.st_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100193', 0, '--finding records to insert into history_octane.smart_task_tag_modifier
 SELECT staging_table.sttm_pid
      , staging_table.sttm_version
@@ -25050,24 +22446,17 @@ SELECT history_table.sttm_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.smart_task_tag_modifier AS current_records
-      LEFT JOIN history_octane.smart_task_tag_modifier AS history_records
-        ON current_records.sttm_pid =
-            history_records.sttm_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.smart_task_tag_modifier AS current_records
+    LEFT JOIN history_octane.smart_task_tag_modifier AS history_records
+              ON current_records.sttm_pid = history_records.sttm_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.smart_task_tag_modifier staging_table
           ON staging_table.sttm_pid = history_table.sttm_pid
-WHERE staging_table.sttm_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_task_tag_modifier deleted_records
-    WHERE deleted_records.sttm_pid = history_table.sttm_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sttm_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100339', 0, '--finding records to insert into history_octane.stack_export_file
 SELECT staging_table.sef_pid
      , staging_table.sef_version
@@ -25090,24 +22479,17 @@ SELECT history_table.sef_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.stack_export_file AS current_records
-      LEFT JOIN history_octane.stack_export_file AS history_records
-        ON current_records.sef_pid =
-            history_records.sef_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.stack_export_file AS current_records
+    LEFT JOIN history_octane.stack_export_file AS history_records
+              ON current_records.sef_pid = history_records.sef_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.stack_export_file staging_table
           ON staging_table.sef_pid = history_table.sef_pid
-WHERE staging_table.sef_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.stack_export_file deleted_records
-    WHERE deleted_records.sef_pid = history_table.sef_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.sef_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100338', 0, '--finding records to insert into history_octane.stack_export_request
 SELECT staging_table.ser_pid
      , staging_table.ser_version
@@ -25152,24 +22534,17 @@ SELECT history_table.ser_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.stack_export_request AS current_records
-      LEFT JOIN history_octane.stack_export_request AS history_records
-        ON current_records.ser_pid =
-            history_records.ser_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.stack_export_request AS current_records
+    LEFT JOIN history_octane.stack_export_request AS history_records
+              ON current_records.ser_pid = history_records.ser_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.stack_export_request staging_table
           ON staging_table.ser_pid = history_table.ser_pid
-WHERE staging_table.ser_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.stack_export_request deleted_records
-    WHERE deleted_records.ser_pid = history_table.ser_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ser_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100260', 0, '--finding records to insert into history_octane.stripe_payment
 SELECT staging_table.stpm_pid
      , staging_table.stpm_version
@@ -25212,24 +22587,17 @@ SELECT history_table.stpm_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.stripe_payment AS current_records
-      LEFT JOIN history_octane.stripe_payment AS history_records
-        ON current_records.stpm_pid =
-            history_records.stpm_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.stripe_payment AS current_records
+    LEFT JOIN history_octane.stripe_payment AS history_records
+              ON current_records.stpm_pid = history_records.stpm_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.stripe_payment staging_table
           ON staging_table.stpm_pid = history_table.stpm_pid
-WHERE staging_table.stpm_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.stripe_payment deleted_records
-    WHERE deleted_records.stpm_pid = history_table.stpm_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.stpm_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100340', 0, '--finding records to insert into history_octane.tax_transcript_request
 SELECT staging_table.ttr_pid
      , staging_table.ttr_version
@@ -25422,24 +22790,17 @@ SELECT history_table.ttr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.tax_transcript_request AS current_records
-      LEFT JOIN history_octane.tax_transcript_request AS history_records
-        ON current_records.ttr_pid =
-            history_records.ttr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.tax_transcript_request AS current_records
+    LEFT JOIN history_octane.tax_transcript_request AS history_records
+              ON current_records.ttr_pid = history_records.ttr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.tax_transcript_request staging_table
           ON staging_table.ttr_pid = history_table.ttr_pid
-WHERE staging_table.ttr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.tax_transcript_request deleted_records
-    WHERE deleted_records.ttr_pid = history_table.ttr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ttr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100181', 0, '--finding records to insert into history_octane.third_party_community_second_program
 SELECT staging_table.tpcsp_pid
      , staging_table.tpcsp_version
@@ -25482,24 +22843,17 @@ SELECT history_table.tpcsp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.third_party_community_second_program AS current_records
-      LEFT JOIN history_octane.third_party_community_second_program AS history_records
-        ON current_records.tpcsp_pid =
-            history_records.tpcsp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.third_party_community_second_program AS current_records
+    LEFT JOIN history_octane.third_party_community_second_program AS history_records
+              ON current_records.tpcsp_pid = history_records.tpcsp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.third_party_community_second_program staging_table
           ON staging_table.tpcsp_pid = history_table.tpcsp_pid
-WHERE staging_table.tpcsp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.third_party_community_second_program deleted_records
-    WHERE deleted_records.tpcsp_pid = history_table.tpcsp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.tpcsp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100066', 0, '--finding records to insert into history_octane.title_company
 SELECT staging_table.tc_pid
      , staging_table.tc_version
@@ -25526,24 +22880,17 @@ SELECT history_table.tc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.title_company AS current_records
-      LEFT JOIN history_octane.title_company AS history_records
-        ON current_records.tc_pid =
-            history_records.tc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.title_company AS current_records
+    LEFT JOIN history_octane.title_company AS history_records
+              ON current_records.tc_pid = history_records.tc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.title_company staging_table
           ON staging_table.tc_pid = history_table.tc_pid
-WHERE staging_table.tc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.title_company deleted_records
-    WHERE deleted_records.tc_pid = history_table.tc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.tc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100067', 0, '--finding records to insert into history_octane.title_company_office
 SELECT staging_table.tco_pid
      , staging_table.tco_version
@@ -25582,24 +22929,17 @@ SELECT history_table.tco_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.title_company_office AS current_records
-      LEFT JOIN history_octane.title_company_office AS history_records
-        ON current_records.tco_pid =
-            history_records.tco_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.title_company_office AS current_records
+    LEFT JOIN history_octane.title_company_office AS history_records
+              ON current_records.tco_pid = history_records.tco_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.title_company_office staging_table
           ON staging_table.tco_pid = history_table.tco_pid
-WHERE staging_table.tco_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.title_company_office deleted_records
-    WHERE deleted_records.tco_pid = history_table.tco_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.tco_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100347', 0, '--finding records to insert into history_octane.trade
 SELECT staging_table.t_pid
      , staging_table.t_version
@@ -25678,24 +23018,17 @@ SELECT history_table.t_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.trade AS current_records
-      LEFT JOIN history_octane.trade AS history_records
-        ON current_records.t_pid =
-            history_records.t_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.trade AS current_records
+    LEFT JOIN history_octane.trade AS history_records
+              ON current_records.t_pid = history_records.t_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.trade staging_table
           ON staging_table.t_pid = history_table.t_pid
-WHERE staging_table.t_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.trade deleted_records
-    WHERE deleted_records.t_pid = history_table.t_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.t_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100186', 0, '--finding records to insert into history_octane.trade_audit
 SELECT staging_table.ta_pid
      , staging_table.ta_version
@@ -25720,24 +23053,17 @@ SELECT history_table.ta_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.trade_audit AS current_records
-      LEFT JOIN history_octane.trade_audit AS history_records
-        ON current_records.ta_pid =
-            history_records.ta_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.trade_audit AS current_records
+    LEFT JOIN history_octane.trade_audit AS history_records
+              ON current_records.ta_pid = history_records.ta_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.trade_audit staging_table
           ON staging_table.ta_pid = history_table.ta_pid
-WHERE staging_table.ta_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.trade_audit deleted_records
-    WHERE deleted_records.ta_pid = history_table.ta_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ta_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100187', 0, '--finding records to insert into history_octane.trade_fee
 SELECT staging_table.tfe_pid
      , staging_table.tfe_version
@@ -25762,24 +23088,17 @@ SELECT history_table.tfe_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.trade_fee AS current_records
-      LEFT JOIN history_octane.trade_fee AS history_records
-        ON current_records.tfe_pid =
-            history_records.tfe_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.trade_fee AS current_records
+    LEFT JOIN history_octane.trade_fee AS history_records
+              ON current_records.tfe_pid = history_records.tfe_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.trade_fee staging_table
           ON staging_table.tfe_pid = history_table.tfe_pid
-WHERE staging_table.tfe_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.trade_fee deleted_records
-    WHERE deleted_records.tfe_pid = history_table.tfe_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.tfe_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100261', 0, '--finding records to insert into history_octane.trade_fee_type
 SELECT staging_table.tft_pid
      , staging_table.tft_version
@@ -25800,24 +23119,17 @@ SELECT history_table.tft_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.trade_fee_type AS current_records
-      LEFT JOIN history_octane.trade_fee_type AS history_records
-        ON current_records.tft_pid =
-            history_records.tft_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.trade_fee_type AS current_records
+    LEFT JOIN history_octane.trade_fee_type AS history_records
+              ON current_records.tft_pid = history_records.tft_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.trade_fee_type staging_table
           ON staging_table.tft_pid = history_table.tft_pid
-WHERE staging_table.tft_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.trade_fee_type deleted_records
-    WHERE deleted_records.tft_pid = history_table.tft_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.tft_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100188', 0, '--finding records to insert into history_octane.trade_file
 SELECT staging_table.tf_pid
      , staging_table.tf_version
@@ -25838,24 +23150,17 @@ SELECT history_table.tf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.trade_file AS current_records
-      LEFT JOIN history_octane.trade_file AS history_records
-        ON current_records.tf_pid =
-            history_records.tf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.trade_file AS current_records
+    LEFT JOIN history_octane.trade_file AS history_records
+              ON current_records.tf_pid = history_records.tf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.trade_file staging_table
           ON staging_table.tf_pid = history_table.tf_pid
-WHERE staging_table.tf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.trade_file deleted_records
-    WHERE deleted_records.tf_pid = history_table.tf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.tf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100189', 0, '--finding records to insert into history_octane.trade_lock_filter
 SELECT staging_table.tlf_pid
      , staging_table.tlf_version
@@ -25878,24 +23183,17 @@ SELECT history_table.tlf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.trade_lock_filter AS current_records
-      LEFT JOIN history_octane.trade_lock_filter AS history_records
-        ON current_records.tlf_pid =
-            history_records.tlf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.trade_lock_filter AS current_records
+    LEFT JOIN history_octane.trade_lock_filter AS history_records
+              ON current_records.tlf_pid = history_records.tlf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.trade_lock_filter staging_table
           ON staging_table.tlf_pid = history_table.tlf_pid
-WHERE staging_table.tlf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.trade_lock_filter deleted_records
-    WHERE deleted_records.tlf_pid = history_table.tlf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.tlf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100351', 0, '--finding records to insert into history_octane.trade_note
 SELECT staging_table.tn_pid
      , staging_table.tn_version
@@ -25922,24 +23220,17 @@ SELECT history_table.tn_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.trade_note AS current_records
-      LEFT JOIN history_octane.trade_note AS history_records
-        ON current_records.tn_pid =
-            history_records.tn_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.trade_note AS current_records
+    LEFT JOIN history_octane.trade_note AS history_records
+              ON current_records.tn_pid = history_records.tn_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.trade_note staging_table
           ON staging_table.tn_pid = history_table.tn_pid
-WHERE staging_table.tn_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.trade_note deleted_records
-    WHERE deleted_records.tn_pid = history_table.tn_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.tn_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100352', 0, '--finding records to insert into history_octane.trade_note_comment
 SELECT staging_table.tnc_pid
      , staging_table.tnc_version
@@ -25966,24 +23257,17 @@ SELECT history_table.tnc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.trade_note_comment AS current_records
-      LEFT JOIN history_octane.trade_note_comment AS history_records
-        ON current_records.tnc_pid =
-            history_records.tnc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.trade_note_comment AS current_records
+    LEFT JOIN history_octane.trade_note_comment AS history_records
+              ON current_records.tnc_pid = history_records.tnc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.trade_note_comment staging_table
           ON staging_table.tnc_pid = history_table.tnc_pid
-WHERE staging_table.tnc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.trade_note_comment deleted_records
-    WHERE deleted_records.tnc_pid = history_table.tnc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.tnc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100353', 0, '--finding records to insert into history_octane.trade_note_monitor
 SELECT staging_table.tnm_pid
      , staging_table.tnm_version
@@ -26004,24 +23288,17 @@ SELECT history_table.tnm_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.trade_note_monitor AS current_records
-      LEFT JOIN history_octane.trade_note_monitor AS history_records
-        ON current_records.tnm_pid =
-            history_records.tnm_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.trade_note_monitor AS current_records
+    LEFT JOIN history_octane.trade_note_monitor AS history_records
+              ON current_records.tnm_pid = history_records.tnm_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.trade_note_monitor staging_table
           ON staging_table.tnm_pid = history_table.tnm_pid
-WHERE staging_table.tnm_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.trade_note_monitor deleted_records
-    WHERE deleted_records.tnm_pid = history_table.tnm_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.tnm_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100354', 0, '--finding records to insert into history_octane.trade_product
 SELECT staging_table.tp_pid
      , staging_table.tp_version
@@ -26042,24 +23319,17 @@ SELECT history_table.tp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.trade_product AS current_records
-      LEFT JOIN history_octane.trade_product AS history_records
-        ON current_records.tp_pid =
-            history_records.tp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.trade_product AS current_records
+    LEFT JOIN history_octane.trade_product AS history_records
+              ON current_records.tp_pid = history_records.tp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.trade_product staging_table
           ON staging_table.tp_pid = history_table.tp_pid
-WHERE staging_table.tp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.trade_product deleted_records
-    WHERE deleted_records.tp_pid = history_table.tp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.tp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100262', 0, '--finding records to insert into history_octane.trustee
 SELECT staging_table.tru_pid
      , staging_table.tru_version
@@ -26100,24 +23370,17 @@ SELECT history_table.tru_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.trustee AS current_records
-      LEFT JOIN history_octane.trustee AS history_records
-        ON current_records.tru_pid =
-            history_records.tru_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.trustee AS current_records
+    LEFT JOIN history_octane.trustee AS history_records
+              ON current_records.tru_pid = history_records.tru_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.trustee staging_table
           ON staging_table.tru_pid = history_table.tru_pid
-WHERE staging_table.tru_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.trustee deleted_records
-    WHERE deleted_records.tru_pid = history_table.tru_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.tru_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100355', 0, '--finding records to insert into history_octane.unpaid_balance_adjustment
 SELECT staging_table.upba_pid
      , staging_table.upba_version
@@ -26142,24 +23405,17 @@ SELECT history_table.upba_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.unpaid_balance_adjustment AS current_records
-      LEFT JOIN history_octane.unpaid_balance_adjustment AS history_records
-        ON current_records.upba_pid =
-            history_records.upba_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.unpaid_balance_adjustment AS current_records
+    LEFT JOIN history_octane.unpaid_balance_adjustment AS history_records
+              ON current_records.upba_pid = history_records.upba_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.unpaid_balance_adjustment staging_table
           ON staging_table.upba_pid = history_table.upba_pid
-WHERE staging_table.upba_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.unpaid_balance_adjustment deleted_records
-    WHERE deleted_records.upba_pid = history_table.upba_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.upba_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100358', 0, '--finding records to insert into history_octane.vendor_document_event
 SELECT staging_table.vde_pid
      , staging_table.vde_version
@@ -26190,24 +23446,17 @@ SELECT history_table.vde_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.vendor_document_event AS current_records
-      LEFT JOIN history_octane.vendor_document_event AS history_records
-        ON current_records.vde_pid =
-            history_records.vde_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.vendor_document_event AS current_records
+    LEFT JOIN history_octane.vendor_document_event AS history_records
+              ON current_records.vde_pid = history_records.vde_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.vendor_document_event staging_table
           ON staging_table.vde_pid = history_table.vde_pid
-WHERE staging_table.vde_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.vendor_document_event deleted_records
-    WHERE deleted_records.vde_pid = history_table.vde_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.vde_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100356', 0, '--finding records to insert into history_octane.vendor_document_repository_file
 SELECT staging_table.vdrf_pid
      , staging_table.vdrf_version
@@ -26242,24 +23491,17 @@ SELECT history_table.vdrf_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.vendor_document_repository_file AS current_records
-      LEFT JOIN history_octane.vendor_document_repository_file AS history_records
-        ON current_records.vdrf_pid =
-            history_records.vdrf_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.vendor_document_repository_file AS current_records
+    LEFT JOIN history_octane.vendor_document_repository_file AS history_records
+              ON current_records.vdrf_pid = history_records.vdrf_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.vendor_document_repository_file staging_table
           ON staging_table.vdrf_pid = history_table.vdrf_pid
-WHERE staging_table.vdrf_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.vendor_document_repository_file deleted_records
-    WHERE deleted_records.vdrf_pid = history_table.vdrf_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.vdrf_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100194', 0, '--finding records to insert into history_octane.view_wf_deal_step_started
 SELECT staging_table.wds_pid
      , staging_table.wds_version
@@ -26324,24 +23566,17 @@ SELECT history_table.wds_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.view_wf_deal_step_started AS current_records
-      LEFT JOIN history_octane.view_wf_deal_step_started AS history_records
-        ON current_records.wds_pid =
-            history_records.wds_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.view_wf_deal_step_started AS current_records
+    LEFT JOIN history_octane.view_wf_deal_step_started AS history_records
+              ON current_records.wds_pid = history_records.wds_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.view_wf_deal_step_started staging_table
           ON staging_table.wds_pid = history_table.wds_pid
-WHERE staging_table.wds_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.view_wf_deal_step_started deleted_records
-    WHERE deleted_records.wds_pid = history_table.wds_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wds_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100195', 0, '--finding records to insert into history_octane.wf_deal_fork_process
 SELECT staging_table.wdfp_pid
      , staging_table.wdfp_version
@@ -26362,24 +23597,17 @@ SELECT history_table.wdfp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_deal_fork_process AS current_records
-      LEFT JOIN history_octane.wf_deal_fork_process AS history_records
-        ON current_records.wdfp_pid =
-            history_records.wdfp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_deal_fork_process AS current_records
+    LEFT JOIN history_octane.wf_deal_fork_process AS history_records
+              ON current_records.wdfp_pid = history_records.wdfp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_deal_fork_process staging_table
           ON staging_table.wdfp_pid = history_table.wdfp_pid
-WHERE staging_table.wdfp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_deal_fork_process deleted_records
-    WHERE deleted_records.wdfp_pid = history_table.wdfp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wdfp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100196', 0, '--finding records to insert into history_octane.wf_deal_function_queue
 SELECT staging_table.wdfq_pid
      , staging_table.wdfq_version
@@ -26404,24 +23632,17 @@ SELECT history_table.wdfq_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_deal_function_queue AS current_records
-      LEFT JOIN history_octane.wf_deal_function_queue AS history_records
-        ON current_records.wdfq_pid =
-            history_records.wdfq_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_deal_function_queue AS current_records
+    LEFT JOIN history_octane.wf_deal_function_queue AS history_records
+              ON current_records.wdfq_pid = history_records.wdfq_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_deal_function_queue staging_table
           ON staging_table.wdfq_pid = history_table.wdfq_pid
-WHERE staging_table.wdfq_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_deal_function_queue deleted_records
-    WHERE deleted_records.wdfq_pid = history_table.wdfq_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wdfq_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100197', 0, '--finding records to insert into history_octane.wf_deal_outcome
 SELECT staging_table.wdo_pid
      , staging_table.wdo_version
@@ -26452,24 +23673,17 @@ SELECT history_table.wdo_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_deal_outcome AS current_records
-      LEFT JOIN history_octane.wf_deal_outcome AS history_records
-        ON current_records.wdo_pid =
-            history_records.wdo_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_deal_outcome AS current_records
+    LEFT JOIN history_octane.wf_deal_outcome AS history_records
+              ON current_records.wdo_pid = history_records.wdo_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_deal_outcome staging_table
           ON staging_table.wdo_pid = history_table.wdo_pid
-WHERE staging_table.wdo_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_deal_outcome deleted_records
-    WHERE deleted_records.wdo_pid = history_table.wdo_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wdo_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100190', 0, '--finding records to insert into history_octane.wf_deal_process
 SELECT staging_table.wdpr_pid
      , staging_table.wdpr_version
@@ -26498,24 +23712,17 @@ SELECT history_table.wdpr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_deal_process AS current_records
-      LEFT JOIN history_octane.wf_deal_process AS history_records
-        ON current_records.wdpr_pid =
-            history_records.wdpr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_deal_process AS current_records
+    LEFT JOIN history_octane.wf_deal_process AS history_records
+              ON current_records.wdpr_pid = history_records.wdpr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_deal_process staging_table
           ON staging_table.wdpr_pid = history_table.wdpr_pid
-WHERE staging_table.wdpr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_deal_process deleted_records
-    WHERE deleted_records.wdpr_pid = history_table.wdpr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wdpr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100359', 0, '--finding records to insert into history_octane.wf_deal_step
 SELECT staging_table.wds_pid
      , staging_table.wds_version
@@ -26578,24 +23785,17 @@ SELECT history_table.wds_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_deal_step AS current_records
-      LEFT JOIN history_octane.wf_deal_step AS history_records
-        ON current_records.wds_pid =
-            history_records.wds_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_deal_step AS current_records
+    LEFT JOIN history_octane.wf_deal_step AS history_records
+              ON current_records.wds_pid = history_records.wds_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_deal_step staging_table
           ON staging_table.wds_pid = history_table.wds_pid
-WHERE staging_table.wds_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_deal_step deleted_records
-    WHERE deleted_records.wds_pid = history_table.wds_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wds_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100861', 0, '--finding records to insert into history_octane.wf_deal_step_performer_unavailable
 SELECT staging_table.wdspu_pid
      , staging_table.wdspu_version
@@ -26618,24 +23818,17 @@ SELECT history_table.wdspu_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_deal_step_performer_unavailable AS current_records
-      LEFT JOIN history_octane.wf_deal_step_performer_unavailable AS history_records
-        ON current_records.wdspu_pid =
-            history_records.wdspu_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_deal_step_performer_unavailable AS current_records
+    LEFT JOIN history_octane.wf_deal_step_performer_unavailable AS history_records
+              ON current_records.wdspu_pid = history_records.wdspu_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_deal_step_performer_unavailable staging_table
           ON staging_table.wdspu_pid = history_table.wdspu_pid
-WHERE staging_table.wdspu_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_deal_step_performer_unavailable deleted_records
-    WHERE deleted_records.wdspu_pid = history_table.wdspu_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wdspu_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100198', 0, '--finding records to insert into history_octane.wf_deal_step_timeout
 SELECT staging_table.wdst_pid
      , staging_table.wdst_version
@@ -26656,24 +23849,17 @@ SELECT history_table.wdst_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_deal_step_timeout AS current_records
-      LEFT JOIN history_octane.wf_deal_step_timeout AS history_records
-        ON current_records.wdst_pid =
-            history_records.wdst_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_deal_step_timeout AS current_records
+    LEFT JOIN history_octane.wf_deal_step_timeout AS history_records
+              ON current_records.wdst_pid = history_records.wdst_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_deal_step_timeout staging_table
           ON staging_table.wdst_pid = history_table.wdst_pid
-WHERE staging_table.wdst_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_deal_step_timeout deleted_records
-    WHERE deleted_records.wdst_pid = history_table.wdst_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wdst_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100199', 0, '--finding records to insert into history_octane.wf_fork_process
 SELECT staging_table.wfp_pid
      , staging_table.wfp_version
@@ -26694,24 +23880,17 @@ SELECT history_table.wfp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_fork_process AS current_records
-      LEFT JOIN history_octane.wf_fork_process AS history_records
-        ON current_records.wfp_pid =
-            history_records.wfp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_fork_process AS current_records
+    LEFT JOIN history_octane.wf_fork_process AS history_records
+              ON current_records.wfp_pid = history_records.wfp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_fork_process staging_table
           ON staging_table.wfp_pid = history_table.wfp_pid
-WHERE staging_table.wfp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_fork_process deleted_records
-    WHERE deleted_records.wfp_pid = history_table.wfp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wfp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100200', 0, '--finding records to insert into history_octane.wf_outcome
 SELECT staging_table.wo_pid
      , staging_table.wo_version
@@ -26746,24 +23925,17 @@ SELECT history_table.wo_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_outcome AS current_records
-      LEFT JOIN history_octane.wf_outcome AS history_records
-        ON current_records.wo_pid =
-            history_records.wo_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_outcome AS current_records
+    LEFT JOIN history_octane.wf_outcome AS history_records
+              ON current_records.wo_pid = history_records.wo_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_outcome staging_table
           ON staging_table.wo_pid = history_table.wo_pid
-WHERE staging_table.wo_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_outcome deleted_records
-    WHERE deleted_records.wo_pid = history_table.wo_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wo_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100263', 0, '--finding records to insert into history_octane.wf_phase
 SELECT staging_table.wph_pid
      , staging_table.wph_version
@@ -26786,24 +23958,17 @@ SELECT history_table.wph_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_phase AS current_records
-      LEFT JOIN history_octane.wf_phase AS history_records
-        ON current_records.wph_pid =
-            history_records.wph_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_phase AS current_records
+    LEFT JOIN history_octane.wf_phase AS history_records
+              ON current_records.wph_pid = history_records.wph_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_phase staging_table
           ON staging_table.wph_pid = history_table.wph_pid
-WHERE staging_table.wph_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_phase deleted_records
-    WHERE deleted_records.wph_pid = history_table.wph_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wph_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100069', 0, '--finding records to insert into history_octane.wf_polling_time_slice
 SELECT staging_table.wts_pid
      , staging_table.wts_version
@@ -26826,24 +23991,17 @@ SELECT history_table.wts_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_polling_time_slice AS current_records
-      LEFT JOIN history_octane.wf_polling_time_slice AS history_records
-        ON current_records.wts_pid =
-            history_records.wts_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_polling_time_slice AS current_records
+    LEFT JOIN history_octane.wf_polling_time_slice AS history_records
+              ON current_records.wts_pid = history_records.wts_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_polling_time_slice staging_table
           ON staging_table.wts_pid = history_table.wts_pid
-WHERE staging_table.wts_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_polling_time_slice deleted_records
-    WHERE deleted_records.wts_pid = history_table.wts_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wts_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100832', 0, '--finding records to insert into history_octane.wf_prereq
 SELECT staging_table.wp_pid
      , staging_table.wp_version
@@ -26864,24 +24022,17 @@ SELECT history_table.wp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_prereq AS current_records
-      LEFT JOIN history_octane.wf_prereq AS history_records
-        ON current_records.wp_pid =
-            history_records.wp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_prereq AS current_records
+    LEFT JOIN history_octane.wf_prereq AS history_records
+              ON current_records.wp_pid = history_records.wp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_prereq staging_table
           ON staging_table.wp_pid = history_table.wp_pid
-WHERE staging_table.wp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_prereq deleted_records
-    WHERE deleted_records.wp_pid = history_table.wp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100831', 0, '--finding records to insert into history_octane.wf_prereq_set
 SELECT staging_table.wps_pid
      , staging_table.wps_version
@@ -26902,24 +24053,17 @@ SELECT history_table.wps_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_prereq_set AS current_records
-      LEFT JOIN history_octane.wf_prereq_set AS history_records
-        ON current_records.wps_pid =
-            history_records.wps_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_prereq_set AS current_records
+    LEFT JOIN history_octane.wf_prereq_set AS history_records
+              ON current_records.wps_pid = history_records.wps_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_prereq_set staging_table
           ON staging_table.wps_pid = history_table.wps_pid
-WHERE staging_table.wps_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_prereq_set deleted_records
-    WHERE deleted_records.wps_pid = history_table.wps_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wps_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100264', 0, '--finding records to insert into history_octane.wf_process
 SELECT staging_table.wpr_pid
      , staging_table.wpr_version
@@ -26946,24 +24090,17 @@ SELECT history_table.wpr_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_process AS current_records
-      LEFT JOIN history_octane.wf_process AS history_records
-        ON current_records.wpr_pid =
-            history_records.wpr_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_process AS current_records
+    LEFT JOIN history_octane.wf_process AS history_records
+              ON current_records.wpr_pid = history_records.wpr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_process staging_table
           ON staging_table.wpr_pid = history_table.wpr_pid
-WHERE staging_table.wpr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_process deleted_records
-    WHERE deleted_records.wpr_pid = history_table.wpr_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wpr_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100191', 0, '--finding records to insert into history_octane.wf_step
 SELECT staging_table.ws_pid
      , staging_table.ws_version
@@ -27042,24 +24179,17 @@ SELECT history_table.ws_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_step AS current_records
-      LEFT JOIN history_octane.wf_step AS history_records
-        ON current_records.ws_pid =
-            history_records.ws_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_step AS current_records
+    LEFT JOIN history_octane.wf_step AS history_records
+              ON current_records.ws_pid = history_records.ws_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_step staging_table
           ON staging_table.ws_pid = history_table.ws_pid
-WHERE staging_table.ws_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_step deleted_records
-    WHERE deleted_records.ws_pid = history_table.ws_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.ws_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100201', 0, '--finding records to insert into history_octane.wf_step_deal_check
 SELECT staging_table.wsdc_pid
      , staging_table.wsdc_version
@@ -27082,24 +24212,17 @@ SELECT history_table.wsdc_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_step_deal_check AS current_records
-      LEFT JOIN history_octane.wf_step_deal_check AS history_records
-        ON current_records.wsdc_pid =
-            history_records.wsdc_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_step_deal_check AS current_records
+    LEFT JOIN history_octane.wf_step_deal_check AS history_records
+              ON current_records.wsdc_pid = history_records.wsdc_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_step_deal_check staging_table
           ON staging_table.wsdc_pid = history_table.wsdc_pid
-WHERE staging_table.wsdc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_step_deal_check deleted_records
-    WHERE deleted_records.wsdc_pid = history_table.wsdc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wsdc_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100202', 0, '--finding records to insert into history_octane.wf_step_deal_check_definition
 SELECT staging_table.wsdd_pid
      , staging_table.wsdd_version
@@ -27122,24 +24245,17 @@ SELECT history_table.wsdd_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_step_deal_check_definition AS current_records
-      LEFT JOIN history_octane.wf_step_deal_check_definition AS history_records
-        ON current_records.wsdd_pid =
-            history_records.wsdd_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_step_deal_check_definition AS current_records
+    LEFT JOIN history_octane.wf_step_deal_check_definition AS history_records
+              ON current_records.wsdd_pid = history_records.wsdd_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_step_deal_check_definition staging_table
           ON staging_table.wsdd_pid = history_table.wsdd_pid
-WHERE staging_table.wsdd_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_step_deal_check_definition deleted_records
-    WHERE deleted_records.wsdd_pid = history_table.wsdd_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wsdd_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100203', 0, '--finding records to insert into history_octane.wf_step_deal_check_dependency
 SELECT staging_table.wsdp_pid
      , staging_table.wsdp_version
@@ -27160,24 +24276,17 @@ SELECT history_table.wsdp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_step_deal_check_dependency AS current_records
-      LEFT JOIN history_octane.wf_step_deal_check_dependency AS history_records
-        ON current_records.wsdp_pid =
-            history_records.wsdp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_step_deal_check_dependency AS current_records
+    LEFT JOIN history_octane.wf_step_deal_check_dependency AS history_records
+              ON current_records.wsdp_pid = history_records.wsdp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_step_deal_check_dependency staging_table
           ON staging_table.wsdp_pid = history_table.wsdp_pid
-WHERE staging_table.wsdp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_step_deal_check_dependency deleted_records
-    WHERE deleted_records.wsdp_pid = history_table.wsdp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wsdp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100204', 0, '--finding records to insert into history_octane.wf_step_deal_tag_modifier
 SELECT staging_table.wsdt_pid
      , staging_table.wsdt_version
@@ -27200,24 +24309,17 @@ SELECT history_table.wsdt_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_step_deal_tag_modifier AS current_records
-      LEFT JOIN history_octane.wf_step_deal_tag_modifier AS history_records
-        ON current_records.wsdt_pid =
-            history_records.wsdt_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_step_deal_tag_modifier AS current_records
+    LEFT JOIN history_octane.wf_step_deal_tag_modifier AS history_records
+              ON current_records.wsdt_pid = history_records.wsdt_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_step_deal_tag_modifier staging_table
           ON staging_table.wsdt_pid = history_table.wsdt_pid
-WHERE staging_table.wsdt_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_step_deal_tag_modifier deleted_records
-    WHERE deleted_records.wsdt_pid = history_table.wsdt_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wsdt_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100900', 0, '--finding records to insert into history_octane.wf_step_function_parameters
 SELECT staging_table.wsfp_pid
      , staging_table.wsfp_version
@@ -27242,24 +24344,17 @@ SELECT history_table.wsfp_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.wf_step_function_parameters AS current_records
-      LEFT JOIN history_octane.wf_step_function_parameters AS history_records
-        ON current_records.wsfp_pid =
-            history_records.wsfp_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.wf_step_function_parameters AS current_records
+    LEFT JOIN history_octane.wf_step_function_parameters AS history_records
+              ON current_records.wsfp_pid = history_records.wsfp_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.wf_step_function_parameters staging_table
           ON staging_table.wsfp_pid = history_table.wsfp_pid
-WHERE staging_table.wsfp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.wf_step_function_parameters deleted_records
-    WHERE deleted_records.wsfp_pid = history_table.wsfp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.wsfp_pid IS NULL;', 'Staging DB Connection')
          , ('ETL-100205', 0, '--finding records to insert into history_octane.zip_code_info
 SELECT staging_table.zci_pid
      , staging_table.zci_version
@@ -27282,24 +24377,17 @@ SELECT history_table.zci_pid
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM (
-      SELECT current_records.*
-      FROM history_octane.zip_code_info AS current_records
-      LEFT JOIN history_octane.zip_code_info AS history_records
-        ON current_records.zci_pid =
-            history_records.zci_pid
-          AND current_records.data_source_updated_datetime <
-              history_records.data_source_updated_datetime
-      WHERE history_records.data_source_updated_datetime IS NULL
-     ) AS history_table
+    SELECT current_records.*
+    FROM history_octane.zip_code_info AS current_records
+    LEFT JOIN history_octane.zip_code_info AS history_records
+              ON current_records.zci_pid = history_records.zci_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
 LEFT JOIN staging_octane.zip_code_info staging_table
           ON staging_table.zci_pid = history_table.zci_pid
-WHERE staging_table.zci_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.zip_code_info deleted_records
-    WHERE deleted_records.zci_pid = history_table.zci_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
+WHERE staging_table.zci_pid IS NULL;', 'Staging DB Connection')
 )
 UPDATE mdi.table_input_step
 SET data_source_dwid = update_rows.data_source_dwid
