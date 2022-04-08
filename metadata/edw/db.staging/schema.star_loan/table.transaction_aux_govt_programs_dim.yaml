@@ -316,58 +316,57 @@ step_functions:
           		, transaction_dim.dwid AS transaction_dwid
           		, deal.d_pid AS deal_pid
           		, proposal.prp_pid AS active_proposal_pid
-              	, proposal.prp_disaster_declaration_check_date_type
-          		, proposal.prp_fha_mip_refund_request_input_error
-          		, proposal.prp_fha_non_arms_length_ltv_exception_verified
-                  , proposal.prp_request_fha_mip_refund_required
-                  , proposal.prp_texas_equity_conversion_determination_datetime_override
-                  , proposal.prp_texas_equity_determination_datetime_override
-                  , proposal.prp_va_maintenance_utilities_auto_compute
-                  , proposal.prp_fha_prior_agency_case_endorsement_date
-                  , proposal.prp_fha_refinance_authorization_expiration_date
-                  , proposal.prp_texas_equity_determination_datetime
-                  , proposal.prp_usda_gsa_sam_checked_date
-                  , proposal.prp_va_notice_of_value_date
-                  , proposal.prp_cema_borrower_savings
-                  , proposal.prp_fha_va_reasonable_value_amount
-                  , proposal.prp_va_actual_guaranty_amount
-                  , proposal.prp_va_amount_used_to_calculate_maximum_guaranty
-                  , proposal.prp_va_energy_efficient_improvements_amount
-                  , proposal.prp_va_guaranty_percent
-                  , proposal.prp_va_maintenance_utilities_per_square_feet_amount
-                  , proposal.prp_va_maximum_base_loan_amount
-                  , proposal.prp_va_maximum_funding_fee_amount
-                  , proposal.prp_va_maximum_total_loan_amount
-                  , proposal.prp_va_monthly_maintenance_utilities_amount
-                  , proposal.prp_va_notice_of_value_estimated_reasonable_value_amount
-                  , proposal.prp_va_required_cash_amount
-                  , proposal.prp_va_required_guaranty_amount
-                  , proposal.prp_fha_prior_agency_case_id
-                  , proposal.prp_fha_refinance_authorization_number
-                  , proposal.prp_fhac_refinance_authorization_messages
-                  , proposal.prp_texas_equity_conversion_determ_datetime_override_reason
-                  , proposal.prp_texas_equity_determination_datetime_override_reason
-                  , proposal.prp_va_prior_paid_in_full_loan_number
-              	, fha_non_arms_length_ltv_limit_exception_type.value
-              	, proposal.prp_fha_non_arms_length_ltv_exception_type
-              	, hud_fha_de_approval_type.value
-              	, proposal.prp_hud_fha_de_approval_type
-              	, usda_rd_single_family_housing_type.value
-              	, proposal.prp_usda_rd_single_family_housing_type
-              	, va_notice_of_value_source_type.value
-              	, proposal.prp_va_notice_of_value_source_type
-              	, va_past_credit_record_type.value
-              	, proposal.prp_va_past_credit_record_type
-              	, cema_ynna_type.value
-              	, proposal.prp_cema
-          	    , fha_eligible_maximum_financing_ynu_type.value
-              	, proposal.prp_fha_eligible_maximum_financing
-              	, usda_gsa_sam_exclusion_ynu_type.value
-          	    , proposal.prp_usda_gsa_sam_exclusion
-          		, va_meets_credit_standards_ynu_type.value
-          	    , proposal.prp_va_meets_credit_standards
-              	, va_monthly_utilities_included_ynu_type.value
-          	    , proposal.prp_va_monthly_utilities_included
+          		, proposal.prp_fha_mip_refund_request_input_error AS fha_mip_refund_request_input_error_flag
+          		, proposal.prp_fha_non_arms_length_ltv_exception_verified AS fha_non_arms_length_ltv_exception_verified_flag
+                , proposal.prp_request_fha_mip_refund_required AS request_fha_mip_refund_required_flag
+                , proposal.prp_texas_equity_conversion_determination_datetime_override AS texas_equity_conversion_determination_datetime_override_flag
+                , proposal.prp_texas_equity_determination_datetime_override AS texas_equity_determination_datetime_override_flag
+                , proposal.prp_va_maintenance_utilities_auto_compute AS va_maintenance_utilities_auto_compute_flag
+                , proposal.prp_fha_prior_agency_case_endorsement_date AS fha_prior_agency_case_endorsement_date
+                , proposal.prp_fha_refinance_authorization_expiration_date AS fha_refinance_authorization_expiration_date
+                , proposal.prp_texas_equity_determination_datetime AS texas_equity_determination_datetime
+                , proposal.prp_usda_gsa_sam_checked_date AS usda_gsa_sam_checked_date
+                , proposal.prp_va_notice_of_value_date AS va_notice_of_value_date
+                , proposal.prp_cema_borrower_savings AS cema_borrower_savings
+                , proposal.prp_fha_va_reasonable_value_amount AS fha_va_reasonable_value_amount
+                , proposal.prp_va_actual_guaranty_amount AS va_actual_guaranty_amount
+                , proposal.prp_va_amount_used_to_calculate_maximum_guaranty AS va_amount_used_to_calculate_maximum_guaranty
+                , proposal.prp_va_energy_efficient_improvements_amount AS va_energy_efficient_improvements_amount
+                , proposal.prp_va_guaranty_percent AS va_guaranty_percent
+                , proposal.prp_va_maintenance_utilities_per_square_feet_amount AS va_maintenance_utilities_per_square_feet_amount
+                , proposal.prp_va_maximum_base_loan_amount AS va_maximum_base_loan_amount
+                , proposal.prp_va_maximum_funding_fee_amount AS va_maximum_funding_fee_amount
+                , proposal.prp_va_maximum_total_loan_amount AS va_maximum_total_loan_amount
+                , proposal.prp_va_monthly_maintenance_utilities_amount AS va_monthly_maintenance_utilities_amount
+                , proposal.prp_va_notice_of_value_estimated_reasonable_value_amount AS va_notice_of_value_estimated_reasonable_value_amount
+                , proposal.prp_va_required_cash_amount AS va_required_cash_amount
+                , proposal.prp_va_required_guaranty_amount AS va_required_guaranty_amount
+                , proposal.prp_fha_prior_agency_case_id AS fha_prior_agency_case_id
+                , proposal.prp_fha_refinance_authorization_number AS fha_refinance_authorization_number
+                , proposal.prp_fhac_refinance_authorization_messages AS fhac_refinance_authorization_messages
+                , proposal.prp_texas_equity_conversion_determ_datetime_override_reason AS texas_equity_conversion_determ_datetime_override_reason
+                , proposal.prp_texas_equity_determination_datetime_override_reason AS texas_equity_determination_datetime_override_reason
+                , proposal.prp_va_prior_paid_in_full_loan_number AS va_prior_paid_in_full_loan_number
+              	, fha_non_arms_length_ltv_limit_exception_type.value AS fha_non_arms_length_ltv_limit_exception
+              	, proposal.prp_fha_non_arms_length_ltv_exception_type AS fha_non_arms_length_ltv_exception_code
+              	, hud_fha_de_approval_type.value AS hud_fha_de_approval
+              	, proposal.prp_hud_fha_de_approval_type AS hud_fha_de_approval_code
+              	, usda_rd_single_family_housing_type.value AS usda_rd_single_family_housing
+              	, proposal.prp_usda_rd_single_family_housing_type AS usda_rd_single_family_housing_code
+              	, va_notice_of_value_source_type.value AS va_notice_of_value_source
+              	, proposal.prp_va_notice_of_value_source_type AS va_notice_of_value_source_code
+              	, va_past_credit_record_type.value AS va_past_credit_record
+              	, proposal.prp_va_past_credit_record_type AS va_past_credit_record_code
+              	, cema_ynna_type.value AS cema
+              	, proposal.prp_cema AS cema_code
+          	    , fha_eligible_maximum_financing_ynu_type.value AS fha_eligible_maximum_financing
+              	, proposal.prp_fha_eligible_maximum_financing AS fha_eligible_maximum_financing_code
+              	, usda_gsa_sam_exclusion_ynu_type.value AS usda_gsa_sam_exclusion
+          	    , proposal.prp_usda_gsa_sam_exclusion AS usda_gsa_sam_exclusion_code
+          		, va_meets_credit_standards_ynu_type.value AS va_meets_credit_standards
+          	    , proposal.prp_va_meets_credit_standards AS va_meets_credit_standards_code
+              	, va_monthly_utilities_included_ynu_type.value AS va_monthly_utilities_included
+          	    , proposal.prp_va_monthly_utilities_included AS va_monthly_utilities_included_code
           		, GREATEST(deal.etl_end_date_time, proposal.etl_end_date_time, fha_non_arms_length_ltv_limit_exception_type
           		    .etl_end_date_time, hud_fha_de_approval_type.etl_end_date_time, usda_rd_single_family_housing_type
           		        .etl_end_date_time, va_notice_of_value_source_type.etl_end_date_time, va_past_credit_record_type
