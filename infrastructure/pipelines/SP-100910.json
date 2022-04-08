@@ -1,0 +1,48 @@
+{
+    "Comment": "SP-100910 - ETL to insert records into staging.history_octane.change_request_add_user_broker using staging.staging_octane.change_request_add_user_broker as the primary source",
+    "StartAt": "ETL-100910",
+    "States": {
+        "ETL-100910": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::ecs:runTask.sync",
+            "Parameters": {
+                "LaunchType": "FARGATE",
+                "Cluster": "${ecsClusterARN}",
+                "TaskDefinition": "${mdi_2_arn}",
+                "NetworkConfiguration": {
+                    "AwsvpcConfiguration": {
+                        "AssignPublicIp": "DISABLED",
+                        "SecurityGroups": [
+                            "${securityGroupId}"
+                        ],
+                        "Subnets": ${subnetIDs}
+                    }
+                },
+                "Overrides": {
+                    "Memory": "2048",
+                    "ContainerOverrides": [
+                        {
+                            "Memory": 2048,
+                            "Environment": [
+                                {
+                                    "Name": "PROCESS_NAME",
+                                    "Value": "ETL-100910"
+                                },
+                                {
+                                    "Name": "INPUT_DATA",
+                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                },
+                                {
+                                    "Name": "TOKEN_ID",
+                                    "Value.$": "$$.Task.Token"
+                                }
+                            ],
+                            "Name": "${mdi_2_container}"
+                        }
+                    ]
+                }
+            },
+            "End": true
+        }
+    }
+}

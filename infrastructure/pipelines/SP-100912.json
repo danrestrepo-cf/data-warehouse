@@ -1,0 +1,48 @@
+{
+    "Comment": "SP-100912 - ETL to insert records into staging.history_octane.change_request_status_type using staging.staging_octane.change_request_status_type as the primary source",
+    "StartAt": "ETL-100912",
+    "States": {
+        "ETL-100912": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::ecs:runTask.sync",
+            "Parameters": {
+                "LaunchType": "FARGATE",
+                "Cluster": "${ecsClusterARN}",
+                "TaskDefinition": "${mdi_2_arn}",
+                "NetworkConfiguration": {
+                    "AwsvpcConfiguration": {
+                        "AssignPublicIp": "DISABLED",
+                        "SecurityGroups": [
+                            "${securityGroupId}"
+                        ],
+                        "Subnets": ${subnetIDs}
+                    }
+                },
+                "Overrides": {
+                    "Memory": "2048",
+                    "ContainerOverrides": [
+                        {
+                            "Memory": 2048,
+                            "Environment": [
+                                {
+                                    "Name": "PROCESS_NAME",
+                                    "Value": "ETL-100912"
+                                },
+                                {
+                                    "Name": "INPUT_DATA",
+                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                },
+                                {
+                                    "Name": "TOKEN_ID",
+                                    "Value.$": "$$.Task.Token"
+                                }
+                            ],
+                            "Name": "${mdi_2_container}"
+                        }
+                    ]
+                }
+            },
+            "End": true
+        }
+    }
+}

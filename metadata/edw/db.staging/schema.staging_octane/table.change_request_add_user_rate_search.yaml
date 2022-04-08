@@ -1,0 +1,51 @@
+name: change_request_add_user_rate_search
+primary_key:
+- chraurs_pid
+foreign_keys:
+  fk_change_request_add_user_rate_search_1:
+    columns:
+    - chraurs_change_request_pid
+    references:
+      columns:
+      - chr_pid
+      schema: staging_octane
+      table: change_request
+  fk_change_request_add_user_rate_search_2:
+    columns:
+    - chraurs_branch_pid
+    references:
+      columns:
+      - br_pid
+      schema: staging_octane
+      table: branch
+columns:
+  chraurs_branch_pid:
+    data_type: BIGINT
+  chraurs_change_request_pid:
+    data_type: BIGINT
+  chraurs_channel_id:
+    data_type: VARCHAR(16)
+  chraurs_email:
+    data_type: VARCHAR(256)
+  chraurs_first_name:
+    data_type: VARCHAR(32)
+  chraurs_last_name:
+    data_type: VARCHAR(32)
+  chraurs_middle_name:
+    data_type: VARCHAR(32)
+  chraurs_office_phone:
+    data_type: VARCHAR(32)
+  chraurs_office_phone_extension:
+    data_type: VARCHAR(16)
+  chraurs_parent_org_node_id:
+    data_type: BIGINT
+  chraurs_pid:
+    data_type: BIGINT
+  chraurs_suffix:
+    data_type: VARCHAR(32)
+  chraurs_through_date:
+    data_type: DATE
+  chraurs_title:
+    data_type: VARCHAR(128)
+  chraurs_version:
+    data_type: INTEGER

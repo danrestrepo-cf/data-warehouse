@@ -5339,3 +5339,245 @@ WHERE EXISTS(
       AND current_records.zci_version > non_current_records.zci_version
     )
   AND non_current_records.data_source_deleted_flag IS TRUE;
+
+--
+-- Main | EDW | Octane schema synchronization for v2022.4.2.0 (2022-04-08)
+-- https://app.asana.com/0/0/1202081116048248
+--
+
+DROP INDEX history_octane.fk_lender_settings_6;
+
+--staging_octane
+
+CREATE TABLE staging_octane.change_request_type (
+    code VARCHAR(128),
+    value VARCHAR(1024),
+    CONSTRAINT pk_change_request_type
+        PRIMARY KEY (code)
+);
+
+CREATE TABLE staging_octane.change_request_status_type (
+    code VARCHAR(128),
+    value VARCHAR(1024),
+    CONSTRAINT pk_change_request_status_type
+        PRIMARY KEY (code)
+);
+
+ALTER TABLE staging_octane.lender_settings
+    ADD COLUMN lss_default_change_request_rate_search_user_branch_pid BIGINT,
+    ADD COLUMN lss_default_change_request_rate_search_user_org_node_pid BIGINT;
+
+CREATE TABLE staging_octane.change_request (
+    chr_pid BIGINT,
+    chr_version INTEGER,
+    CONSTRAINT pk_change_request
+        PRIMARY KEY (chr_pid),
+    chr_request_by_lender_user_pid BIGINT,
+    chr_change_request_type VARCHAR(128),
+    chr_create_datetime TIMESTAMP,
+    chr_resolved_datetime TIMESTAMP,
+    chr_completing_user_pid BIGINT,
+    chr_change_request_status_type VARCHAR(128)
+);
+
+CREATE INDEX idx_change_request__chr_pid_chr_version ON staging_octane.change_request (chr_pid, chr_version);
+
+CREATE TABLE staging_octane.change_request_add_user_broker (
+    chraub_pid BIGINT,
+    chraub_version INTEGER,
+    CONSTRAINT pk_change_request_add_user_broker
+        PRIMARY KEY (chraub_pid),
+    chraub_change_request_pid BIGINT,
+    chraub_first_name VARCHAR(32),
+    chraub_last_name VARCHAR(32),
+    chraub_middle_name VARCHAR(32),
+    chraub_suffix VARCHAR(32),
+    chraub_email VARCHAR(256),
+    chraub_title VARCHAR(128),
+    chraub_branch_pid BIGINT,
+    chraub_performer_team_pid BIGINT,
+    chraub_nmls_id VARCHAR(16),
+    chraub_phone VARCHAR(32),
+    chraub_phone_extension VARCHAR(16),
+    chraub_lead_source_tier VARCHAR(32),
+    chraub_parent_org_node_id BIGINT
+);
+
+CREATE INDEX idx_change_request_add_user_broker__chraub_pid_chraub_version ON staging_octane.change_request_add_user_broker (chraub_pid, chraub_version);
+
+CREATE TABLE staging_octane.change_request_add_user_rate_search (
+    chraurs_pid BIGINT,
+    chraurs_version INTEGER,
+    CONSTRAINT pk_change_request_add_user_rate_search
+        PRIMARY KEY (chraurs_pid),
+    chraurs_change_request_pid BIGINT,
+    chraurs_first_name VARCHAR(32),
+    chraurs_last_name VARCHAR(32),
+    chraurs_middle_name VARCHAR(32),
+    chraurs_suffix VARCHAR(32),
+    chraurs_email VARCHAR(256),
+    chraurs_title VARCHAR(128),
+    chraurs_through_date DATE,
+    chraurs_branch_pid BIGINT,
+    chraurs_office_phone VARCHAR(32),
+    chraurs_office_phone_extension VARCHAR(16),
+    chraurs_parent_org_node_id BIGINT,
+    chraurs_channel_id VARCHAR(16)
+);
+
+CREATE INDEX idx_56ee9a5389e3d20805effff41e12f1ff ON staging_octane.change_request_add_user_rate_search (chraurs_pid, chraurs_version);
+
+ALTER TABLE staging_octane.config_note
+    ADD COLUMN cn_change_request_pid BIGINT;
+
+--history_octane
+
+CREATE TABLE history_octane.change_request_type (
+    code VARCHAR(128),
+    value VARCHAR(1024),
+    data_source_updated_datetime timestamptz,
+    data_source_deleted_flag BOOLEAN,
+    etl_batch_id TEXT
+);
+
+CREATE INDEX idx_change_request_type__code ON history_octane.change_request_type (code);
+
+CREATE INDEX idx_change_request_type__data_source_updated_datetime ON history_octane.change_request_type (data_source_updated_datetime);
+
+CREATE INDEX idx_change_request_type__data_source_deleted_flag ON history_octane.change_request_type (data_source_deleted_flag);
+
+CREATE INDEX idx_change_request_type__etl_batch_id ON history_octane.change_request_type (etl_batch_id);
+
+CREATE TABLE history_octane.change_request_status_type (
+    code VARCHAR(128),
+    value VARCHAR(1024),
+    data_source_updated_datetime timestamptz,
+    data_source_deleted_flag BOOLEAN,
+    etl_batch_id TEXT
+);
+
+CREATE INDEX idx_change_request_status_type__code ON history_octane.change_request_status_type (code);
+
+CREATE INDEX idx_change_request_status_type__data_source_updated_datetime ON history_octane.change_request_status_type (data_source_updated_datetime);
+
+CREATE INDEX idx_change_request_status_type__data_source_deleted_flag ON history_octane.change_request_status_type (data_source_deleted_flag);
+
+CREATE INDEX idx_change_request_status_type__etl_batch_id ON history_octane.change_request_status_type (etl_batch_id);
+
+ALTER TABLE history_octane.lender_settings
+    ADD COLUMN lss_default_change_request_rate_search_user_branch_pid BIGINT,
+    ADD COLUMN lss_default_change_request_rate_search_user_org_node_pid BIGINT;
+
+CREATE INDEX fk_lender_settings_6 ON history_octane.lender_settings (lss_default_change_request_rate_search_user_branch_pid);
+
+CREATE INDEX fk_lender_settings_7 ON history_octane.lender_settings (lss_default_change_request_rate_search_user_org_node_pid);
+
+CREATE TABLE history_octane.change_request (
+    chr_pid BIGINT,
+    chr_version INTEGER,
+    chr_request_by_lender_user_pid BIGINT,
+    chr_change_request_type VARCHAR(128),
+    chr_create_datetime TIMESTAMP,
+    chr_resolved_datetime TIMESTAMP,
+    chr_completing_user_pid BIGINT,
+    chr_change_request_status_type VARCHAR(128),
+    data_source_updated_datetime timestamptz,
+    data_source_deleted_flag BOOLEAN,
+    etl_batch_id TEXT
+);
+
+CREATE INDEX idx_change_request__chr_pid ON history_octane.change_request (chr_pid);
+
+CREATE INDEX idx_change_request__data_source_updated_datetime ON history_octane.change_request (data_source_updated_datetime);
+
+CREATE INDEX idx_change_request__data_source_deleted_flag ON history_octane.change_request (data_source_deleted_flag);
+
+CREATE INDEX idx_change_request__etl_batch_id ON history_octane.change_request (etl_batch_id);
+
+CREATE INDEX idx_change_request__chr_pid_chr_version ON history_octane.change_request (chr_pid, chr_version);
+
+CREATE INDEX fk_change_request_1 ON history_octane.change_request (chr_request_by_lender_user_pid);
+
+CREATE INDEX fk_change_request_2 ON history_octane.change_request (chr_completing_user_pid);
+
+CREATE INDEX fkt_chr_change_request_type ON history_octane.change_request (chr_change_request_type);
+
+CREATE INDEX fkt_chr_change_request_status_type ON history_octane.change_request (chr_change_request_status_type);
+
+CREATE TABLE history_octane.change_request_add_user_broker (
+    chraub_pid BIGINT,
+    chraub_version INTEGER,
+    chraub_change_request_pid BIGINT,
+    chraub_first_name VARCHAR(32),
+    chraub_last_name VARCHAR(32),
+    chraub_middle_name VARCHAR(32),
+    chraub_suffix VARCHAR(32),
+    chraub_email VARCHAR(256),
+    chraub_title VARCHAR(128),
+    chraub_branch_pid BIGINT,
+    chraub_performer_team_pid BIGINT,
+    chraub_nmls_id VARCHAR(16),
+    chraub_phone VARCHAR(32),
+    chraub_phone_extension VARCHAR(16),
+    chraub_lead_source_tier VARCHAR(32),
+    chraub_parent_org_node_id BIGINT,
+    data_source_updated_datetime timestamptz,
+    data_source_deleted_flag BOOLEAN,
+    etl_batch_id TEXT
+);
+
+CREATE INDEX idx_change_request_add_user_broker__chraub_pid ON history_octane.change_request_add_user_broker (chraub_pid);
+
+CREATE INDEX idx_fab3571ac9fbebee53c3034b96a2f422 ON history_octane.change_request_add_user_broker (data_source_updated_datetime);
+
+CREATE INDEX idx_change_request_add_user_broker__data_source_deleted_flag ON history_octane.change_request_add_user_broker (data_source_deleted_flag);
+
+CREATE INDEX idx_change_request_add_user_broker__etl_batch_id ON history_octane.change_request_add_user_broker (etl_batch_id);
+
+CREATE INDEX idx_change_request_add_user_broker__chraub_pid_chraub_version ON history_octane.change_request_add_user_broker (chraub_pid, chraub_version);
+
+CREATE INDEX fk_change_request_add_user_broker_1 ON history_octane.change_request_add_user_broker (chraub_change_request_pid);
+
+CREATE INDEX fk_change_request_add_user_broker_2 ON history_octane.change_request_add_user_broker (chraub_branch_pid);
+
+CREATE INDEX fk_change_request_add_user_broker_3 ON history_octane.change_request_add_user_broker (chraub_performer_team_pid);
+
+CREATE TABLE history_octane.change_request_add_user_rate_search (
+    chraurs_pid BIGINT,
+    chraurs_version INTEGER,
+    chraurs_change_request_pid BIGINT,
+    chraurs_first_name VARCHAR(32),
+    chraurs_last_name VARCHAR(32),
+    chraurs_middle_name VARCHAR(32),
+    chraurs_suffix VARCHAR(32),
+    chraurs_email VARCHAR(256),
+    chraurs_title VARCHAR(128),
+    chraurs_through_date DATE,
+    chraurs_branch_pid BIGINT,
+    chraurs_office_phone VARCHAR(32),
+    chraurs_office_phone_extension VARCHAR(16),
+    chraurs_parent_org_node_id BIGINT,
+    chraurs_channel_id VARCHAR(16),
+    data_source_updated_datetime timestamptz,
+    data_source_deleted_flag BOOLEAN,
+    etl_batch_id TEXT
+);
+
+CREATE INDEX idx_change_request_add_user_rate_search__chraurs_pid ON history_octane.change_request_add_user_rate_search (chraurs_pid);
+
+CREATE INDEX idx_386490daed3e538ca22fa6d140b96655 ON history_octane.change_request_add_user_rate_search (data_source_updated_datetime);
+
+CREATE INDEX idx_c13fbd18880574afa2115bfd967aab25 ON history_octane.change_request_add_user_rate_search (data_source_deleted_flag);
+
+CREATE INDEX idx_change_request_add_user_rate_search__etl_batch_id ON history_octane.change_request_add_user_rate_search (etl_batch_id);
+
+CREATE INDEX idx_56ee9a5389e3d20805effff41e12f1ff ON history_octane.change_request_add_user_rate_search (chraurs_pid, chraurs_version);
+
+CREATE INDEX fk_change_request_add_user_rate_search_1 ON history_octane.change_request_add_user_rate_search (chraurs_change_request_pid);
+
+CREATE INDEX fk_change_request_add_user_rate_search_2 ON history_octane.change_request_add_user_rate_search (chraurs_branch_pid);
+
+ALTER TABLE history_octane.config_note
+    ADD COLUMN cn_change_request_pid BIGINT;
+
+CREATE INDEX fk_config_note_8 ON history_octane.config_note (cn_change_request_pid);

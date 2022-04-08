@@ -52,6 +52,14 @@ foreign_keys:
       - ws_pid
       schema: history_octane
       table: wf_step
+  fk_config_note_8:
+    columns:
+    - cn_change_request_pid
+    references:
+      columns:
+      - chr_pid
+      schema: history_octane
+      table: change_request
   fkt_cn_config_note_scope_type:
     columns:
     - cn_config_note_scope_type
@@ -73,6 +81,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.cn_author_unparsed_name
+  cn_change_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cn_change_request_pid
   cn_config_note_scope_type:
     data_type: VARCHAR(128)
     source:
@@ -152,6 +164,7 @@ step_functions:
                , staging_table.cn_smart_doc_pid
                , staging_table.cn_wf_process_pid
                , staging_table.cn_wf_step_pid
+               , staging_table.cn_change_request_pid
                , FALSE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM staging_octane.config_note staging_table
@@ -173,6 +186,7 @@ step_functions:
                , history_table.cn_smart_doc_pid
                , history_table.cn_wf_process_pid
                , history_table.cn_wf_step_pid
+               , history_table.cn_change_request_pid
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (

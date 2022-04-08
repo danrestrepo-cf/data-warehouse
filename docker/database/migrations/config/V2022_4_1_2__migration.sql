@@ -24397,3 +24397,646 @@ FROM update_rows
 JOIN mdi.process
      ON process.name = update_rows.process_name
 WHERE process.dwid = table_input_step.process_dwid;
+
+--
+-- Main | EDW | Octane schema synchronization for v2022.4.2.0 (2022-04-08)
+-- https://app.asana.com/0/0/1202081116048248
+--
+
+/*
+INSERTIONS
+*/
+
+--edw_table_definition
+WITH insert_rows (database_name, schema_name, table_name, source_database_name, source_schema_name, source_table_name) AS (
+    VALUES ('staging', 'staging_octane', 'change_request', NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_status_type', NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_type', NULL, NULL, NULL)
+)
+INSERT
+INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid)
+SELECT insert_rows.database_name, insert_rows.schema_name, insert_rows.table_name, source_table_definition.dwid
+FROM insert_rows
+LEFT JOIN mdi.edw_table_definition source_table_definition
+          ON insert_rows.source_database_name = source_table_definition.database_name
+              AND insert_rows.source_schema_name = source_table_definition.schema_name
+              AND insert_rows.source_table_name = source_table_definition.table_name;
+
+WITH insert_rows (database_name, schema_name, table_name, source_database_name, source_schema_name, source_table_name) AS (
+    VALUES ('staging', 'history_octane', 'change_request', 'staging', 'staging_octane', 'change_request')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'staging', 'staging_octane', 'change_request_add_user_broker')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'staging', 'staging_octane', 'change_request_add_user_rate_search')
+         , ('staging', 'history_octane', 'change_request_status_type', 'staging', 'staging_octane', 'change_request_status_type')
+         , ('staging', 'history_octane', 'change_request_type', 'staging', 'staging_octane', 'change_request_type')
+)
+INSERT
+INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid)
+SELECT insert_rows.database_name, insert_rows.schema_name, insert_rows.table_name, source_table_definition.dwid
+FROM insert_rows
+LEFT JOIN mdi.edw_table_definition source_table_definition
+          ON insert_rows.source_database_name = source_table_definition.database_name
+              AND insert_rows.source_schema_name = source_table_definition.schema_name
+              AND insert_rows.source_table_name = source_table_definition.table_name;
+
+--edw_field_definition
+WITH insert_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
+    VALUES ('staging', 'history_octane', 'change_request', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'change_request', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'change_request', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'change_request_status_type', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'change_request_status_type', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'change_request_status_type', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'change_request_type', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'change_request_type', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'change_request_type', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request', 'chr_change_request_status_type', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request', 'chr_change_request_type', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request', 'chr_completing_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request', 'chr_create_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request', 'chr_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request', 'chr_request_by_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request', 'chr_resolved_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request', 'chr_version', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_branch_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_change_request_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_email', 'VARCHAR(256)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_first_name', 'VARCHAR(32)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_last_name', 'VARCHAR(32)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_lead_source_tier', 'VARCHAR(32)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_middle_name', 'VARCHAR(32)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_nmls_id', 'VARCHAR(16)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_parent_org_node_id', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_performer_team_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_phone', 'VARCHAR(32)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_phone_extension', 'VARCHAR(16)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_suffix', 'VARCHAR(32)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_title', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_version', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_branch_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_change_request_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_channel_id', 'VARCHAR(16)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_email', 'VARCHAR(256)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_first_name', 'VARCHAR(32)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_last_name', 'VARCHAR(32)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_middle_name', 'VARCHAR(32)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_office_phone', 'VARCHAR(32)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_office_phone_extension', 'VARCHAR(16)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_parent_org_node_id', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_suffix', 'VARCHAR(32)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_through_date', 'DATE', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_title', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_version', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_status_type', 'code', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_status_type', 'value', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_type', 'code', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'change_request_type', 'value', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'config_note', 'cn_change_request_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'lender_settings', 'lss_default_change_request_rate_search_user_branch_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'lender_settings', 'lss_default_change_request_rate_search_user_org_node_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+)
+INSERT
+INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
+SELECT edw_table_definition.dwid, insert_rows.field_name, FALSE, source_field_definition.dwid, NULL, insert_rows.data_type, NULL, NULL, NULL, NULL
+FROM insert_rows
+JOIN mdi.edw_table_definition
+     ON insert_rows.database_name = edw_table_definition.database_name
+         AND insert_rows.schema_name = edw_table_definition.schema_name
+         AND insert_rows.table_name = edw_table_definition.table_name
+LEFT JOIN mdi.edw_table_definition source_table_definition
+          ON insert_rows.source_database_name = source_table_definition.database_name
+              AND insert_rows.source_schema_name = source_table_definition.schema_name
+              AND insert_rows.source_table_name = source_table_definition.table_name
+LEFT JOIN mdi.edw_field_definition source_field_definition
+          ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
+              AND insert_rows.source_field_name = source_field_definition.field_name;
+
+WITH insert_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
+    VALUES ('staging', 'history_octane', 'change_request', 'chr_change_request_status_type', 'VARCHAR(128)', 'staging', 'staging_octane', 'change_request', 'chr_change_request_status_type')
+         , ('staging', 'history_octane', 'change_request', 'chr_change_request_type', 'VARCHAR(128)', 'staging', 'staging_octane', 'change_request', 'chr_change_request_type')
+         , ('staging', 'history_octane', 'change_request', 'chr_completing_user_pid', 'BIGINT', 'staging', 'staging_octane', 'change_request', 'chr_completing_user_pid')
+         , ('staging', 'history_octane', 'change_request', 'chr_create_datetime', 'TIMESTAMP', 'staging', 'staging_octane', 'change_request', 'chr_create_datetime')
+         , ('staging', 'history_octane', 'change_request', 'chr_pid', 'BIGINT', 'staging', 'staging_octane', 'change_request', 'chr_pid')
+         , ('staging', 'history_octane', 'change_request', 'chr_request_by_lender_user_pid', 'BIGINT', 'staging', 'staging_octane', 'change_request', 'chr_request_by_lender_user_pid')
+         , ('staging', 'history_octane', 'change_request', 'chr_resolved_datetime', 'TIMESTAMP', 'staging', 'staging_octane', 'change_request', 'chr_resolved_datetime')
+         , ('staging', 'history_octane', 'change_request', 'chr_version', 'INTEGER', 'staging', 'staging_octane', 'change_request', 'chr_version')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_branch_pid', 'BIGINT', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_branch_pid')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_change_request_pid', 'BIGINT', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_change_request_pid')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_email', 'VARCHAR(256)', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_email')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_first_name', 'VARCHAR(32)', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_first_name')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_last_name', 'VARCHAR(32)', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_last_name')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_lead_source_tier', 'VARCHAR(32)', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_lead_source_tier')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_middle_name', 'VARCHAR(32)', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_middle_name')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_nmls_id', 'VARCHAR(16)', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_nmls_id')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_parent_org_node_id', 'BIGINT', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_parent_org_node_id')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_performer_team_pid', 'BIGINT', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_performer_team_pid')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_phone', 'VARCHAR(32)', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_phone')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_phone_extension', 'VARCHAR(16)', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_phone_extension')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_pid', 'BIGINT', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_pid')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_suffix', 'VARCHAR(32)', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_suffix')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_title', 'VARCHAR(128)', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_title')
+         , ('staging', 'history_octane', 'change_request_add_user_broker', 'chraub_version', 'INTEGER', 'staging', 'staging_octane', 'change_request_add_user_broker', 'chraub_version')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_branch_pid', 'BIGINT', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_branch_pid')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_change_request_pid', 'BIGINT', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_change_request_pid')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_channel_id', 'VARCHAR(16)', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_channel_id')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_email', 'VARCHAR(256)', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_email')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_first_name', 'VARCHAR(32)', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_first_name')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_last_name', 'VARCHAR(32)', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_last_name')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_middle_name', 'VARCHAR(32)', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_middle_name')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_office_phone', 'VARCHAR(32)', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_office_phone')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_office_phone_extension', 'VARCHAR(16)', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_office_phone_extension')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_parent_org_node_id', 'BIGINT', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_parent_org_node_id')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_pid', 'BIGINT', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_pid')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_suffix', 'VARCHAR(32)', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_suffix')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_through_date', 'DATE', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_through_date')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_title', 'VARCHAR(128)', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_title')
+         , ('staging', 'history_octane', 'change_request_add_user_rate_search', 'chraurs_version', 'INTEGER', 'staging', 'staging_octane', 'change_request_add_user_rate_search', 'chraurs_version')
+         , ('staging', 'history_octane', 'change_request_status_type', 'code', 'VARCHAR(128)', 'staging', 'staging_octane', 'change_request_status_type', 'code')
+         , ('staging', 'history_octane', 'change_request_status_type', 'value', 'VARCHAR(1024)', 'staging', 'staging_octane', 'change_request_status_type', 'value')
+         , ('staging', 'history_octane', 'change_request_type', 'code', 'VARCHAR(128)', 'staging', 'staging_octane', 'change_request_type', 'code')
+         , ('staging', 'history_octane', 'change_request_type', 'value', 'VARCHAR(1024)', 'staging', 'staging_octane', 'change_request_type', 'value')
+         , ('staging', 'history_octane', 'config_note', 'cn_change_request_pid', 'BIGINT', 'staging', 'staging_octane', 'config_note', 'cn_change_request_pid')
+         , ('staging', 'history_octane', 'lender_settings', 'lss_default_change_request_rate_search_user_branch_pid', 'BIGINT', 'staging', 'staging_octane', 'lender_settings', 'lss_default_change_request_rate_search_user_branch_pid')
+         , ('staging', 'history_octane', 'lender_settings', 'lss_default_change_request_rate_search_user_org_node_pid', 'BIGINT', 'staging', 'staging_octane', 'lender_settings', 'lss_default_change_request_rate_search_user_org_node_pid')
+)
+INSERT
+INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
+SELECT edw_table_definition.dwid, insert_rows.field_name, FALSE, source_field_definition.dwid, NULL, insert_rows.data_type, NULL, NULL, NULL, NULL
+FROM insert_rows
+JOIN mdi.edw_table_definition
+     ON insert_rows.database_name = edw_table_definition.database_name
+         AND insert_rows.schema_name = edw_table_definition.schema_name
+         AND insert_rows.table_name = edw_table_definition.table_name
+LEFT JOIN mdi.edw_table_definition source_table_definition
+          ON insert_rows.source_database_name = source_table_definition.database_name
+              AND insert_rows.source_schema_name = source_table_definition.schema_name
+              AND insert_rows.source_table_name = source_table_definition.table_name
+LEFT JOIN mdi.edw_field_definition source_field_definition
+          ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
+              AND insert_rows.source_field_name = source_field_definition.field_name;
+
+--process
+INSERT
+INTO mdi.process (name, description)
+VALUES ('ETL-100909', 'ETL to insert records into staging.history_octane.change_request using staging.staging_octane.change_request as the primary source')
+     , ('ETL-100910', 'ETL to insert records into staging.history_octane.change_request_add_user_broker using staging.staging_octane.change_request_add_user_broker as the primary source')
+     , ('ETL-100911', 'ETL to insert records into staging.history_octane.change_request_add_user_rate_search using staging.staging_octane.change_request_add_user_rate_search as the primary source')
+     , ('ETL-100912', 'ETL to insert records into staging.history_octane.change_request_status_type using staging.staging_octane.change_request_status_type as the primary source')
+     , ('ETL-100913', 'ETL to insert records into staging.history_octane.change_request_type using staging.staging_octane.change_request_type as the primary source');
+
+--table_input_step
+WITH insert_rows (process_name, data_source_dwid, sql, connectionname) AS (
+    VALUES ('ETL-100909', 0, '--finding records to insert into history_octane.change_request
+SELECT staging_table.chr_pid
+     , staging_table.chr_version
+     , staging_table.chr_request_by_lender_user_pid
+     , staging_table.chr_change_request_type
+     , staging_table.chr_create_datetime
+     , staging_table.chr_resolved_datetime
+     , staging_table.chr_completing_user_pid
+     , staging_table.chr_change_request_status_type
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.change_request staging_table
+LEFT JOIN history_octane.change_request history_table
+          ON staging_table.chr_pid = history_table.chr_pid
+              AND staging_table.chr_version = history_table.chr_version
+WHERE history_table.chr_pid IS NULL
+UNION ALL
+SELECT history_table.chr_pid
+     , history_table.chr_version + 1
+     , history_table.chr_request_by_lender_user_pid
+     , history_table.chr_change_request_type
+     , history_table.chr_create_datetime
+     , history_table.chr_resolved_datetime
+     , history_table.chr_completing_user_pid
+     , history_table.chr_change_request_status_type
+     , TRUE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM (
+    SELECT current_records.*
+    FROM history_octane.change_request AS current_records
+    LEFT JOIN history_octane.change_request AS history_records
+              ON current_records.chr_pid = history_records.chr_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
+LEFT JOIN staging_octane.change_request staging_table
+          ON staging_table.chr_pid = history_table.chr_pid
+WHERE staging_table.chr_pid IS NULL;', 'Staging DB Connection')
+         , ('ETL-100910', 0, '--finding records to insert into history_octane.change_request_add_user_broker
+SELECT staging_table.chraub_pid
+     , staging_table.chraub_version
+     , staging_table.chraub_change_request_pid
+     , staging_table.chraub_first_name
+     , staging_table.chraub_last_name
+     , staging_table.chraub_middle_name
+     , staging_table.chraub_suffix
+     , staging_table.chraub_email
+     , staging_table.chraub_title
+     , staging_table.chraub_branch_pid
+     , staging_table.chraub_performer_team_pid
+     , staging_table.chraub_nmls_id
+     , staging_table.chraub_phone
+     , staging_table.chraub_phone_extension
+     , staging_table.chraub_lead_source_tier
+     , staging_table.chraub_parent_org_node_id
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.change_request_add_user_broker staging_table
+LEFT JOIN history_octane.change_request_add_user_broker history_table
+          ON staging_table.chraub_pid = history_table.chraub_pid
+              AND staging_table.chraub_version = history_table.chraub_version
+WHERE history_table.chraub_pid IS NULL
+UNION ALL
+SELECT history_table.chraub_pid
+     , history_table.chraub_version + 1
+     , history_table.chraub_change_request_pid
+     , history_table.chraub_first_name
+     , history_table.chraub_last_name
+     , history_table.chraub_middle_name
+     , history_table.chraub_suffix
+     , history_table.chraub_email
+     , history_table.chraub_title
+     , history_table.chraub_branch_pid
+     , history_table.chraub_performer_team_pid
+     , history_table.chraub_nmls_id
+     , history_table.chraub_phone
+     , history_table.chraub_phone_extension
+     , history_table.chraub_lead_source_tier
+     , history_table.chraub_parent_org_node_id
+     , TRUE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM (
+    SELECT current_records.*
+    FROM history_octane.change_request_add_user_broker AS current_records
+    LEFT JOIN history_octane.change_request_add_user_broker AS history_records
+              ON current_records.chraub_pid = history_records.chraub_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
+LEFT JOIN staging_octane.change_request_add_user_broker staging_table
+          ON staging_table.chraub_pid = history_table.chraub_pid
+WHERE staging_table.chraub_pid IS NULL;', 'Staging DB Connection')
+         , ('ETL-100911', 0, '--finding records to insert into history_octane.change_request_add_user_rate_search
+SELECT staging_table.chraurs_pid
+     , staging_table.chraurs_version
+     , staging_table.chraurs_change_request_pid
+     , staging_table.chraurs_first_name
+     , staging_table.chraurs_last_name
+     , staging_table.chraurs_middle_name
+     , staging_table.chraurs_suffix
+     , staging_table.chraurs_email
+     , staging_table.chraurs_title
+     , staging_table.chraurs_through_date
+     , staging_table.chraurs_branch_pid
+     , staging_table.chraurs_office_phone
+     , staging_table.chraurs_office_phone_extension
+     , staging_table.chraurs_parent_org_node_id
+     , staging_table.chraurs_channel_id
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.change_request_add_user_rate_search staging_table
+LEFT JOIN history_octane.change_request_add_user_rate_search history_table
+          ON staging_table.chraurs_pid = history_table.chraurs_pid
+              AND staging_table.chraurs_version = history_table.chraurs_version
+WHERE history_table.chraurs_pid IS NULL
+UNION ALL
+SELECT history_table.chraurs_pid
+     , history_table.chraurs_version + 1
+     , history_table.chraurs_change_request_pid
+     , history_table.chraurs_first_name
+     , history_table.chraurs_last_name
+     , history_table.chraurs_middle_name
+     , history_table.chraurs_suffix
+     , history_table.chraurs_email
+     , history_table.chraurs_title
+     , history_table.chraurs_through_date
+     , history_table.chraurs_branch_pid
+     , history_table.chraurs_office_phone
+     , history_table.chraurs_office_phone_extension
+     , history_table.chraurs_parent_org_node_id
+     , history_table.chraurs_channel_id
+     , TRUE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM (
+    SELECT current_records.*
+    FROM history_octane.change_request_add_user_rate_search AS current_records
+    LEFT JOIN history_octane.change_request_add_user_rate_search AS history_records
+              ON current_records.chraurs_pid = history_records.chraurs_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
+LEFT JOIN staging_octane.change_request_add_user_rate_search staging_table
+          ON staging_table.chraurs_pid = history_table.chraurs_pid
+WHERE staging_table.chraurs_pid IS NULL;', 'Staging DB Connection')
+         , ('ETL-100912', 0, '--finding records to insert into history_octane.change_request_status_type
+SELECT staging_table.code
+     , staging_table.value
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.change_request_status_type staging_table
+LEFT JOIN history_octane.change_request_status_type history_table
+          ON staging_table.code = history_table.code
+              AND staging_table.value = history_table.value
+WHERE history_table.code IS NULL;', 'Staging DB Connection')
+         , ('ETL-100913', 0, '--finding records to insert into history_octane.change_request_type
+SELECT staging_table.code
+     , staging_table.value
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.change_request_type staging_table
+LEFT JOIN history_octane.change_request_type history_table
+          ON staging_table.code = history_table.code
+              AND staging_table.value = history_table.value
+WHERE history_table.code IS NULL;', 'Staging DB Connection')
+)
+INSERT
+INTO mdi.table_input_step (process_dwid, data_source_dwid, sql, limit_size, execute_for_each_row, replace_variables, enable_lazy_conversion, cached_row_meta, connectionname)
+SELECT process.dwid, insert_rows.data_source_dwid, insert_rows.sql, 0, 'N', 'N', 'N', 'N', insert_rows.connectionname::mdi.pentaho_db_connection_name
+FROM insert_rows
+JOIN mdi.process
+     ON process.name = insert_rows.process_name;
+
+--table_output_step
+WITH insert_rows (process_name, target_schema, target_table, truncate_table, connectionname) AS (
+    VALUES ('ETL-100909', 'history_octane', 'change_request', 'N', 'Staging DB Connection')
+         , ('ETL-100910', 'history_octane', 'change_request_add_user_broker', 'N', 'Staging DB Connection')
+         , ('ETL-100911', 'history_octane', 'change_request_add_user_rate_search', 'N', 'Staging DB Connection')
+         , ('ETL-100912', 'history_octane', 'change_request_status_type', 'N', 'Staging DB Connection')
+         , ('ETL-100913', 'history_octane', 'change_request_type', 'N', 'Staging DB Connection')
+)
+INSERT INTO mdi.table_output_step (process_dwid, target_schema, target_table, commit_size, partitioning_field, table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field, return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors, use_batch_update)
+SELECT process.dwid, insert_rows.target_schema, insert_rows.target_table, 1000, NULL, NULL, NULL, NULL, 'N', NULL, insert_rows.truncate_table::mdi.pentaho_y_or_n, insert_rows.connectionname, 'N', 'Y', 'N', 'N'
+FROM insert_rows
+JOIN mdi.process
+     ON process.name = insert_rows.process_name;
+
+--table_output_field
+WITH insert_rows (process_name, database_field_name) AS (
+    VALUES ('ETL-100909', 'chr_change_request_status_type')
+         , ('ETL-100909', 'chr_change_request_type')
+         , ('ETL-100909', 'chr_completing_user_pid')
+         , ('ETL-100909', 'chr_create_datetime')
+         , ('ETL-100909', 'chr_pid')
+         , ('ETL-100909', 'chr_request_by_lender_user_pid')
+         , ('ETL-100909', 'chr_resolved_datetime')
+         , ('ETL-100909', 'chr_version')
+         , ('ETL-100909', 'data_source_deleted_flag')
+         , ('ETL-100909', 'data_source_updated_datetime')
+         , ('ETL-100909', 'etl_batch_id')
+         , ('ETL-100910', 'chraub_branch_pid')
+         , ('ETL-100910', 'chraub_change_request_pid')
+         , ('ETL-100910', 'chraub_email')
+         , ('ETL-100910', 'chraub_first_name')
+         , ('ETL-100910', 'chraub_last_name')
+         , ('ETL-100910', 'chraub_lead_source_tier')
+         , ('ETL-100910', 'chraub_middle_name')
+         , ('ETL-100910', 'chraub_nmls_id')
+         , ('ETL-100910', 'chraub_parent_org_node_id')
+         , ('ETL-100910', 'chraub_performer_team_pid')
+         , ('ETL-100910', 'chraub_phone')
+         , ('ETL-100910', 'chraub_phone_extension')
+         , ('ETL-100910', 'chraub_pid')
+         , ('ETL-100910', 'chraub_suffix')
+         , ('ETL-100910', 'chraub_title')
+         , ('ETL-100910', 'chraub_version')
+         , ('ETL-100910', 'data_source_deleted_flag')
+         , ('ETL-100910', 'data_source_updated_datetime')
+         , ('ETL-100910', 'etl_batch_id')
+         , ('ETL-100911', 'chraurs_branch_pid')
+         , ('ETL-100911', 'chraurs_change_request_pid')
+         , ('ETL-100911', 'chraurs_channel_id')
+         , ('ETL-100911', 'chraurs_email')
+         , ('ETL-100911', 'chraurs_first_name')
+         , ('ETL-100911', 'chraurs_last_name')
+         , ('ETL-100911', 'chraurs_middle_name')
+         , ('ETL-100911', 'chraurs_office_phone')
+         , ('ETL-100911', 'chraurs_office_phone_extension')
+         , ('ETL-100911', 'chraurs_parent_org_node_id')
+         , ('ETL-100911', 'chraurs_pid')
+         , ('ETL-100911', 'chraurs_suffix')
+         , ('ETL-100911', 'chraurs_through_date')
+         , ('ETL-100911', 'chraurs_title')
+         , ('ETL-100911', 'chraurs_version')
+         , ('ETL-100911', 'data_source_deleted_flag')
+         , ('ETL-100911', 'data_source_updated_datetime')
+         , ('ETL-100911', 'etl_batch_id')
+         , ('ETL-100912', 'code')
+         , ('ETL-100912', 'data_source_deleted_flag')
+         , ('ETL-100912', 'data_source_updated_datetime')
+         , ('ETL-100912', 'etl_batch_id')
+         , ('ETL-100912', 'value')
+         , ('ETL-100913', 'code')
+         , ('ETL-100913', 'data_source_deleted_flag')
+         , ('ETL-100913', 'data_source_updated_datetime')
+         , ('ETL-100913', 'etl_batch_id')
+         , ('ETL-100913', 'value')
+         , ('ETL-100901', 'cn_change_request_pid')
+         , ('ETL-100095', 'lss_default_change_request_rate_search_user_branch_pid')
+         , ('ETL-100095', 'lss_default_change_request_rate_search_user_org_node_pid')
+)
+INSERT
+INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive)
+SELECT table_output_step.dwid, insert_rows.database_field_name, insert_rows.database_field_name, 0, FALSE
+FROM insert_rows
+JOIN mdi.process
+     ON process.name = insert_rows.process_name
+JOIN mdi.table_output_step
+     ON process.dwid = table_output_step.process_dwid;
+
+
+--json_output_field
+WITH insert_rows (process_name, json_output_field) AS (
+    VALUES ('ETL-100909', 'chr_pid')
+         , ('ETL-100910', 'chraub_pid')
+         , ('ETL-100911', 'chraurs_pid')
+         , ('ETL-100912', 'code')
+         , ('ETL-100913', 'code')
+)
+INSERT
+INTO mdi.json_output_field (process_dwid, field_name)
+SELECT process.dwid, insert_rows.json_output_field
+FROM insert_rows
+JOIN mdi.process
+     ON insert_rows.process_name = process.name;
+
+/*
+UPDATES
+*/
+
+--table_input_step
+WITH update_rows (process_name, data_source_dwid, sql, connectionname) AS (
+    VALUES ('ETL-100901', 0, '--finding records to insert into history_octane.config_note
+SELECT staging_table.cn_pid
+     , staging_table.cn_version
+     , staging_table.cn_account_pid
+     , staging_table.cn_create_datetime
+     , staging_table.cn_content
+     , staging_table.cn_author_unparsed_name
+     , staging_table.cn_author_lender_user_pid
+     , staging_table.cn_config_note_scope_type
+     , staging_table.cn_scope_name
+     , staging_table.cn_location_pid
+     , staging_table.cn_smart_doc_pid
+     , staging_table.cn_wf_process_pid
+     , staging_table.cn_wf_step_pid
+     , staging_table.cn_change_request_pid
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.config_note staging_table
+LEFT JOIN history_octane.config_note history_table
+          ON staging_table.cn_pid = history_table.cn_pid
+              AND staging_table.cn_version = history_table.cn_version
+WHERE history_table.cn_pid IS NULL
+UNION ALL
+SELECT history_table.cn_pid
+     , history_table.cn_version + 1
+     , history_table.cn_account_pid
+     , history_table.cn_create_datetime
+     , history_table.cn_content
+     , history_table.cn_author_unparsed_name
+     , history_table.cn_author_lender_user_pid
+     , history_table.cn_config_note_scope_type
+     , history_table.cn_scope_name
+     , history_table.cn_location_pid
+     , history_table.cn_smart_doc_pid
+     , history_table.cn_wf_process_pid
+     , history_table.cn_wf_step_pid
+     , history_table.cn_change_request_pid
+     , TRUE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM (
+    SELECT current_records.*
+    FROM history_octane.config_note AS current_records
+    LEFT JOIN history_octane.config_note AS history_records
+              ON current_records.cn_pid = history_records.cn_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
+LEFT JOIN staging_octane.config_note staging_table
+          ON staging_table.cn_pid = history_table.cn_pid
+WHERE staging_table.cn_pid IS NULL;', 'Staging DB Connection')
+         , ('ETL-100095', 0, '--finding records to insert into history_octane.lender_settings
+SELECT staging_table.lss_pid
+     , staging_table.lss_version
+     , staging_table.lss_account_pid
+     , staging_table.lss_company_time_zone_type
+     , staging_table.lss_fha_home_office_branch_pid
+     , staging_table.lss_fnma_seller_id
+     , staging_table.lss_fre_seller_id
+     , staging_table.lss_lp_submission_type
+     , staging_table.lss_lender_user_email_from
+     , staging_table.lss_hmda_contact_pid
+     , staging_table.lss_hmda_legal_entity_id
+     , staging_table.lss_hmda_respondent_id
+     , staging_table.lss_hmda_agency_id_type
+     , staging_table.lss_prequalification_program
+     , staging_table.lss_preapproval_program
+     , staging_table.lss_pest_inspector_company_name
+     , staging_table.lss_pest_inspector_phone
+     , staging_table.lss_pest_inspector_website_url
+     , staging_table.lss_pest_inspector_address_street1
+     , staging_table.lss_pest_inspector_address_street2
+     , staging_table.lss_pest_inspector_address_city
+     , staging_table.lss_pest_inspector_address_state
+     , staging_table.lss_pest_inspector_address_postal_code
+     , staging_table.lss_take_application_hours
+     , staging_table.lss_originator_title
+     , staging_table.lss_default_credit_bureau_type
+     , staging_table.lss_sap_minimum_decision_credit_score
+     , staging_table.lss_default_standalone_lock_term_setting_pid
+     , staging_table.lss_default_combo_lock_term_setting_pid
+     , staging_table.lss_preferred_aus_type
+     , staging_table.lss_borrower_quote_filter_pivot_type
+     , staging_table.lss_borrower_quote_filter_pivot_lower_count
+     , staging_table.lss_borrower_quote_filter_pivot_higher_count
+     , staging_table.lss_equifax_submitting_party_name
+     , staging_table.lss_factual_data_submitting_party_name
+     , staging_table.lss_factual_data_submitting_party_id
+     , staging_table.lss_meridian_link_submitting_party_id
+     , staging_table.lss_default_change_request_rate_search_user_branch_pid
+     , staging_table.lss_default_change_request_rate_search_user_org_node_pid
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.lender_settings staging_table
+LEFT JOIN history_octane.lender_settings history_table
+          ON staging_table.lss_pid = history_table.lss_pid
+              AND staging_table.lss_version = history_table.lss_version
+WHERE history_table.lss_pid IS NULL
+UNION ALL
+SELECT history_table.lss_pid
+     , history_table.lss_version + 1
+     , history_table.lss_account_pid
+     , history_table.lss_company_time_zone_type
+     , history_table.lss_fha_home_office_branch_pid
+     , history_table.lss_fnma_seller_id
+     , history_table.lss_fre_seller_id
+     , history_table.lss_lp_submission_type
+     , history_table.lss_lender_user_email_from
+     , history_table.lss_hmda_contact_pid
+     , history_table.lss_hmda_legal_entity_id
+     , history_table.lss_hmda_respondent_id
+     , history_table.lss_hmda_agency_id_type
+     , history_table.lss_prequalification_program
+     , history_table.lss_preapproval_program
+     , history_table.lss_pest_inspector_company_name
+     , history_table.lss_pest_inspector_phone
+     , history_table.lss_pest_inspector_website_url
+     , history_table.lss_pest_inspector_address_street1
+     , history_table.lss_pest_inspector_address_street2
+     , history_table.lss_pest_inspector_address_city
+     , history_table.lss_pest_inspector_address_state
+     , history_table.lss_pest_inspector_address_postal_code
+     , history_table.lss_take_application_hours
+     , history_table.lss_originator_title
+     , history_table.lss_default_credit_bureau_type
+     , history_table.lss_sap_minimum_decision_credit_score
+     , history_table.lss_default_standalone_lock_term_setting_pid
+     , history_table.lss_default_combo_lock_term_setting_pid
+     , history_table.lss_preferred_aus_type
+     , history_table.lss_borrower_quote_filter_pivot_type
+     , history_table.lss_borrower_quote_filter_pivot_lower_count
+     , history_table.lss_borrower_quote_filter_pivot_higher_count
+     , history_table.lss_equifax_submitting_party_name
+     , history_table.lss_factual_data_submitting_party_name
+     , history_table.lss_factual_data_submitting_party_id
+     , history_table.lss_meridian_link_submitting_party_id
+     , history_table.lss_default_change_request_rate_search_user_branch_pid
+     , history_table.lss_default_change_request_rate_search_user_org_node_pid
+     , TRUE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM (
+    SELECT current_records.*
+    FROM history_octane.lender_settings AS current_records
+    LEFT JOIN history_octane.lender_settings AS history_records
+              ON current_records.lss_pid = history_records.lss_pid
+                  AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.data_source_updated_datetime IS NULL
+      AND current_records.data_source_deleted_flag = FALSE
+) AS history_table
+LEFT JOIN staging_octane.lender_settings staging_table
+          ON staging_table.lss_pid = history_table.lss_pid
+WHERE staging_table.lss_pid IS NULL;', 'Staging DB Connection')
+)
+UPDATE mdi.table_input_step
+SET data_source_dwid = update_rows.data_source_dwid
+  , sql = update_rows.sql
+  , connectionname = update_rows.connectionname::mdi.pentaho_db_connection_name
+FROM update_rows
+JOIN mdi.process
+     ON process.name = update_rows.process_name
+WHERE process.dwid = table_input_step.process_dwid;
