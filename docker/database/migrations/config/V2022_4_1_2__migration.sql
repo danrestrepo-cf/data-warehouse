@@ -1,3 +1,8 @@
+--
+-- EDW | history_octane ETLs are writing multiple records for deleted records in staging_octane
+-- https://app.asana.com/0/0/1202009355727701
+--
+
 /*
 UPDATES
 */
