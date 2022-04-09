@@ -53,27 +53,62 @@
                     "Next": "Success"
                 }
             ],
-            "Default": "SP-200006_message"
+            "Default": "ETL-100800_Next_Step_Functions"
         },
         "Success": {
             "Type": "Succeed"
         },
-        "SP-200006_message": {
-            "Type": "Task",
-            "Resource": "arn:aws:states:::sqs:sendMessage",
-            "Parameters": {
-                "QueueUrl": "${fullCheckQueueUrl}",
-                "MessageGroupId": "borrower_lending_profile_dim",
-                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
-                "MessageAttributes": {
-                    "ProcessId": {
-                        "DataType": "String",
-                        "StringValue": "SP-200006"
+        "ETL-100800_Next_Step_Functions": {
+            "Type": "Parallel",
+            "End": true,
+            "Branches": [
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200006",
+                    "StartAt": "SP-200006_message",
+                    "States": {
+                        "SP-200006_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "borrower_lending_profile_dim",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200006"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
                     }
                 },
-                "MessageBody.$": "States.JsonToString($)"
-            },
-            "End": true
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200019",
+                    "StartAt": "SP-200019_message",
+                    "States": {
+                        "SP-200019_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "transaction_dim",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200019"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                }
+            ]
         }
     }
 }
