@@ -907,6 +907,30 @@ foreign_keys:
         - dwid
       schema: star_common
       table: date_dim
+  fk_loan_fact__cash_out_reason_dwid:
+    columns:
+      - cash_out_reason_dwid
+    references:
+      columns:
+        - dwid
+      schema: star_loan
+      table: cash_out_reason_dim
+  fk_loan_fact__hmda_action_dwid:
+    columns:
+      - hmda_action_dwid
+    references:
+      columns:
+        - dwid
+      schema: star_loan
+      table: hmda_action_dim
+  fk_loan_fact__underwrite_dwid:
+    columns:
+      - underwrite_dwid
+    references:
+      columns:
+        - dwid
+      schema: star_loan
+      table: underwrite_dim
 columns:
   data_source_dwid:
     data_type: BIGINT
@@ -1339,6 +1363,15 @@ columns:
   underwrite_publish_date_dwid:
     data_type: BIGINT
     update_flag: true
+  cash_out_reason_dwid:
+    data_type: BIGINT
+    update_flag: true
+  hmda_action_dwid:
+    data_type: BIGINT
+    update_flag: true
+  underwrite_dwid:
+    data_type: BIGINT
+    update_flag: true
 step_functions:
   SP-300001-insert-update:
     etls:
@@ -1472,8 +1505,8 @@ step_functions:
           	, loan_fact_incl_new_records.current_transaction_stage_from_date_dwid
           	, loan_fact_incl_new_records.cd_clear_date_dwid
           	, loan_fact_incl_new_records.charges_enabled_date_dwid
-            , loan_fact_incl_new_records.ecoa_application_date_dwid
-            , loan_fact_incl_new_records.effective_earliest_allowed_consummation_date_dwid
+          	, loan_fact_incl_new_records.ecoa_application_date_dwid
+          	, loan_fact_incl_new_records.effective_earliest_allowed_consummation_date_dwid
           	, loan_fact_incl_new_records.effective_hmda_action_date_dwid
           	, loan_fact_incl_new_records.effective_note_date_dwid
           	, loan_fact_incl_new_records.hmda_action_date_dwid
@@ -1486,6 +1519,9 @@ step_functions:
           	, loan_fact_incl_new_records.transaction_welcome_call_date_dwid
           	, loan_fact_incl_new_records.trid_application_date_dwid
           	, loan_fact_incl_new_records.underwrite_publish_date_dwid
+          	, loan_fact_incl_new_records.cash_out_reason_dwid
+          	, loan_fact_incl_new_records.hmda_action_dwid
+          	, loan_fact_incl_new_records.underwrite_dwid
           FROM (
           	SELECT COALESCE(loan_fact.edw_created_datetime, NOW()) AS edw_created_datetime
           		, NOW() AS edw_modified_datetime
@@ -1621,6 +1657,9 @@ step_functions:
           		, COALESCE(transaction_welcome_call_date_dim.dwid, 0) AS transaction_welcome_call_date_dwid
           		, COALESCE(trid_application_date_dim.dwid, 0) AS trid_application_date_dwid
           		, COALESCE(underwrite_publish_date_dim.dwid, 0) AS underwrite_publish_date_dwid
+          		, COALESCE(cash_out_reason_dim.dwid, 0) AS cash_out_reason_dwid
+          		, COALESCE(hmda_action_dim.dwid, 0) AS hmda_action_dwid
+          		, COALESCE(underwrite_dim.dwid, 0) AS underwrite_dwid
           	FROM
           		-- history_octane deal
           		(
@@ -2882,7 +2921,47 @@ step_functions:
           		) AS hmda_purchaser_of_loan_dim ON hmda_purchaser_of_loan_2017_type.code IS NOT DISTINCT FROM hmda_purchaser_of_loan_dim.code_2017
           			AND hmda_purchaser_of_loan_2018_type.code IS NOT DISTINCT FROM hmda_purchaser_of_loan_dim.code_2018
           			AND hmda_purchaser_of_loan_dim.data_source_dwid = 1
-          			-- star_loan.date_dim joins for date dwids
+          			-- star_loan.cash_out_reason_dim
+          			LEFT JOIN (
+          			SELECT cash_out_reason_dim.*
+          			    , <<cash_out_reason_dim_partial_load_condition>> AS include_record
+          			FROM star_loan.cash_out_reason_dim
+          		) AS cash_out_reason_dim ON proposal.prp_cash_out_reason_business_debt_or_debt_consolidation IS NOT DISTINCT FROM
+          		                            cash_out_reason_dim.cash_out_reason_business_debt_or_debt_consolidation_flag
+          			    AND proposal.prp_cash_out_reason_debt_or_debt_consolidation IS NOT DISTINCT FROM cash_out_reason_dim
+          			        .cash_out_reason_business_debt_or_debt_consolidation_flag
+          			    AND proposal.prp_cash_out_reason_future_investment_not_under_contract IS NOT DISTINCT FROM
+          			        cash_out_reason_dim.cash_out_reason_future_investment_not_under_contract_flag
+          			    AND proposal.prp_cash_out_reason_future_investment_under_contract IS NOT DISTINCT FROM
+          			        cash_out_reason_dim.cash_out_reason_future_investment_under_contract_flag
+          			    AND proposal.prp_cash_out_reason_home_improvement IS NOT DISTINCT FROM cash_out_reason_dim.cash_out_reason_home_improvement_flag
+          			    AND proposal.prp_cash_out_reason_investment_or_business_property IS NOT DISTINCT FROM cash_out_reason_dim.cash_out_reason_investment_or_business_property_flag
+          			    AND proposal.prp_cash_out_reason_other IS NOT DISTINCT FROM cash_out_reason_dim.cash_out_reason_other_flag
+          			    AND proposal.prp_cash_out_reason_personal_use IS NOT DISTINCT FROM cash_out_reason_dim.cash_out_reason_personal_use_flag
+          			    AND proposal.prp_cash_out_reason_student_loans IS NOT DISTINCT FROM cash_out_reason_dim.cash_out_reason_student_loans_flag
+          			    AND proposal.prp_non_business_cash_out_reason_acknowledged IS NOT DISTINCT FROM cash_out_reason_dim.non_business_cash_out_reason_acknowledged_code
+          			    AND cash_out_reason_dim.data_source_dwid = 1
+          			-- star_loan.hmda_action_dim
+          		    LEFT JOIN (
+          				SELECT hmda_action_dim.*
+          					, <<hmda_action_dim_partial_load_condition>> AS include_record
+          				FROM star_loan.hmda_action_dim
+          		) AS hmda_action_dim ON deal.d_hmda_action_type IS NOT DISTINCT FROM hmda_action_dim.hmda_action_code
+          			    AND deal.d_hmda_denial_reason_type_1 IS NOT DISTINCT FROM hmda_action_dim.hmda_denial_reason_code_1
+          				AND deal.d_hmda_denial_reason_type_2 IS NOT DISTINCT FROM hmda_action_dim.hmda_denial_reason_code_2
+          				AND deal.d_hmda_denial_reason_type_3 IS NOT DISTINCT FROM hmda_action_dim.hmda_denial_reason_code_3
+          				AND deal.d_hmda_denial_reason_type_4 IS NOT DISTINCT FROM hmda_action_dim.hmda_denial_reason_code_4
+          		        AND hmda_action_dim.data_source_dwid = 1
+          		    -- star_loan.underwrite_dim
+          		    LEFT JOIN (
+          		        SELECT underwrite_dim.*
+          		        	, <<underwrite_dim_partial_load_condition>> AS include_record
+          		        FROM star_loan.underwrite_dim
+          		) AS underwrite_dim ON proposal.prp_underwrite_disposition_type IS NOT DISTINCT FROM underwrite_dim.underwrite_disposition_code
+          		    	AND proposal.prp_underwrite_method_type IS NOT DISTINCT FROM underwrite_dim.underwrite_method_code
+          		    	AND proposal.prp_underwrite_risk_assessment_type IS NOT DISTINCT FROM underwrite_dim.underwrite_risk_assessment_code
+          		    	AND underwrite_dim.data_source_dwid = 1
+                    -- star_loan.date_dim joins for date dwids
           			LEFT JOIN star_common.date_dim current_deal_stage_date_dim ON deal_stage.dst_from_date = current_deal_stage_date_dim.value
           			LEFT JOIN star_common.date_dim agency_case_id_assigned_date_dim ON loan.l_agency_case_id_assigned_date =
           																			   agency_case_id_assigned_date_dim.value
@@ -2930,31 +3009,31 @@ step_functions:
           			LEFT JOIN star_common.date_dim va_guaranty_date_dim ON loan.l_va_guaranty_date = va_guaranty_date_dim.value
           			LEFT JOIN star_common.date_dim cd_clear_date_dim ON proposal.prp_cd_clear_date = cd_clear_date_dim.value
           			LEFT JOIN star_common.date_dim charges_enabled_date_dim ON deal.d_charges_enabled_date =
-          			                                                           charges_enabled_date_dim.value
+          																	   charges_enabled_date_dim.value
           			LEFT JOIN star_common.date_dim ecoa_application_date_dim ON deal.d_ecoa_application_date =
-          			                                                            ecoa_application_date_dim.value
+          																		ecoa_application_date_dim.value
           			LEFT JOIN star_common.date_dim effective_earliest_allowed_consummation_date_dim
-          			    ON proposal.prp_effective_earliest_allowed_consummation_date = effective_earliest_allowed_consummation_date_dim.value
+          			ON proposal.prp_effective_earliest_allowed_consummation_date = effective_earliest_allowed_consummation_date_dim.value
           			LEFT JOIN star_common.date_dim effective_hmda_action_date_dim ON deal.d_effective_hmda_action_date =
-          			                                                                 effective_hmda_action_date_dim.value
+          																			 effective_hmda_action_date_dim.value
           			LEFT JOIN star_common.date_dim effective_note_date_dim ON proposal.prp_effective_note_date = effective_note_date_dim.value
           			LEFT JOIN star_common.date_dim hmda_action_date_dim ON deal.d_hmda_action_date = hmda_action_date_dim.value
           			LEFT JOIN star_common.date_dim initial_cancel_status_date_dim ON deal.d_initial_cancel_status_date =
-          			                                                                 initial_cancel_status_date_dim.value
+          																			 initial_cancel_status_date_dim.value
           			LEFT JOIN star_common.date_dim initial_uw_disposition_date_dim ON DATE(proposal
-          			    .prp_initial_uw_disposition_datetime) = initial_uw_disposition_date_dim.value
+          			.prp_initial_uw_disposition_datetime) = initial_uw_disposition_date_dim.value
           			LEFT JOIN star_common.date_dim initial_uw_submit_date_dim ON DATE(proposal
-          			    .prp_initial_uw_submit_datetime) = initial_uw_submit_date_dim.value
+          			.prp_initial_uw_submit_datetime) = initial_uw_submit_date_dim.value
           			LEFT JOIN star_common.date_dim note_date_dim ON proposal.prp_note_date = note_date_dim.value
           			LEFT JOIN star_common.date_dim preapproval_uw_submit_date_dim ON DATE(proposal
-          			    .prp_preapproval_uw_submit_datetime) = preapproval_uw_submit_date_dim.value
-          			LEFT JOIN star_common.date_dim deal_create_date_dim ON deal.d_deal_create_date = deal_create_date_dim.value
-          			LEFT JOIN star_common.date_dim deal_welcome_call_date_dim ON DATE(deal.d_welcome_call_datetime) =
-          			                                                             deal_welcome_call_date_dim.value
+          			.prp_preapproval_uw_submit_datetime) = preapproval_uw_submit_date_dim.value
+          			LEFT JOIN star_common.date_dim transaction_create_date_dim ON deal.d_deal_create_date = transaction_create_date_dim.value
+          			LEFT JOIN star_common.date_dim transaction_welcome_call_date_dim ON DATE(deal.d_welcome_call_datetime) =
+          																		 transaction_welcome_call_date_dim.value
           			LEFT JOIN star_common.date_dim trid_application_date_dim ON deal.d_trid_application_date =
-          			                                                            trid_application_date_dim.value
+          																		trid_application_date_dim.value
           			LEFT JOIN star_common.date_dim underwrite_publish_date_dim ON proposal.prp_underwrite_publish_date =
-          			                                                              underwrite_publish_date_dim.value
+          																		  underwrite_publish_date_dim.value
           	WHERE GREATEST(deal.include_record, proposal.include_record, primary_application.include_record, loan.include_record,
           				   deal_key_roles.include_record, borrower_b1.include_record, borrower_b2.include_record,
           				   borrower_b3.include_record,
@@ -3003,7 +3082,8 @@ step_functions:
           				   first_beneficiary_after_initial_investor_dim.include_record,
           				   most_recent_purchasing_beneficiary_investor_dim.include_record,
           				   loan_dim.include_record, loan_funding_dim.include_record, product_dim.include_record,
-          				   product_terms_dim.include_record, transaction_dim.include_record) IS TRUE
+          				   product_terms_dim.include_record, transaction_dim.include_record, cash_out_reason_dim.include_record,
+          	    		   hmda_action_dim.include_record, underwrite_dim.include_record) IS TRUE
           ) AS loan_fact_incl_new_records
           	LEFT JOIN star_loan.loan_fact ON loan_fact_incl_new_records.data_source_integration_id =
           									 loan_fact.data_source_integration_id
@@ -3155,6 +3235,9 @@ step_functions:
           		AND loan_fact_incl_new_records.transaction_welcome_call_date_dwid = loan_fact.transaction_welcome_call_date_dwid
           		AND loan_fact_incl_new_records.trid_application_date_dwid = loan_fact.trid_application_date_dwid
           		AND loan_fact_incl_new_records.underwrite_publish_date_dwid = loan_fact.underwrite_publish_date_dwid
+          		AND loan_fact_incl_new_records.cash_out_reason_dwid = loan_fact.cash_out_reason_dwid
+          		AND loan_fact_incl_new_records.hmda_action_dwid = loan_fact.hmda_action_dwid
+          		AND loan_fact_incl_new_records.underwrite_dwid = loan_fact.underwrite_dwid
           WHERE loan_fact.loan_dwid IS NULL;
   SP-300001-delete:
     etls:
