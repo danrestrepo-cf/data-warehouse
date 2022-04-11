@@ -158,7 +158,7 @@ step_functions:
           		) AS primary_table
           	) AS proposal
               	ON deal.d_active_proposal_pid = proposal.prp_pid
-              JOIN (
+              LEFT JOIN (
                   SELECT *
                   FROM (
                       SELECT <<construction_lot_ownership_status_type_partial_load_condition>> AS include_record

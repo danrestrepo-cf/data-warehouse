@@ -1721,7 +1721,7 @@ step_functions:
           				) AS primary_table
           			) AS effective_property_value_type
           				ON primary_table.prp_effective_property_value_type = effective_property_value_type.code
-          		INNER JOIN (
+          		LEFT JOIN (
           		    SELECT *
           		    FROM (
           		        SELECT <<state_type_partial_load_condition>> AS include_record
