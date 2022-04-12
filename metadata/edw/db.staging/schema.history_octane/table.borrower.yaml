@@ -737,6 +737,10 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.b_office_phone_extension
+  b_oldest_credit_report_received_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.b_oldest_credit_report_received_date
   b_on_gsa_list:
     data_type: VARCHAR(128)
     source:
@@ -1248,6 +1252,7 @@ step_functions:
                , staging_table.b_closing_disclosure_signer
                , staging_table.b_snapshotted_pid
                , staging_table.b_mobile_phone_na
+               , staging_table.b_oldest_credit_report_received_date
                , FALSE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM staging_octane.borrower staging_table
@@ -1426,6 +1431,7 @@ step_functions:
                , history_table.b_closing_disclosure_signer
                , history_table.b_snapshotted_pid
                , history_table.b_mobile_phone_na
+               , history_table.b_oldest_credit_report_received_date
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (
