@@ -3,8 +3,6 @@
 -- https://app.asana.com/0/0/1201990575730852
 --
 
--- TODO: update zero row integration columns and ID (remove values, add "<NULL>" to ids
--- TODO: seed initial data into new loan_fact columns
 -- TODO: seed initial data into new borrower_dim columns
 
 /*
@@ -37,6 +35,20 @@ CREATE INDEX idx_loan_fact__b1_borrower_junk_dwid ON star_loan.loan_fact (b1_bor
 CREATE INDEX idx_loan_fact__b1_borrower_pre_umdp_declarations_dwid ON star_loan.loan_fact (b1_borrower_pre_umdp_declarations_dwid);
 CREATE INDEX idx_loan_fact__b1_borrower_property_declarations_dwid ON star_loan.loan_fact (b1_borrower_property_declarations_dwid);
 CREATE INDEX idx_loan_fact__b1_borrower_relations_dwid ON star_loan.loan_fact (b1_borrower_relations_dwid);
+
+UPDATE star_loan.loan_fact
+SET b1_borrower_counseling_dwid = 0
+  , b1_borrower_employee_status_dwid = 0
+  , b1_borrower_finances_declarations_dwid = 0
+  , b1_borrower_hmda_ethnicity_dwid = 0
+  , b1_borrower_hmda_race_dwid = 0
+  , b1_borrower_hmda_sex_dwid = 0
+  , b1_borrower_junk_dwid = 0
+  , b1_borrower_pre_umdp_declarations_dwid = 0
+  , b1_borrower_property_declarations_dwid = 0
+  , b1_borrower_relations_dwid = 0
+--add non-restrictive condition to silence IDE warnings about unqualified UPDATE statement
+WHERE TRUE;
 
 /*
  update borrower_dim columns/indexes
