@@ -609,10 +609,6 @@ ALTER TABLE star_loan.loan_fact
 	ADD COLUMN cash_out_reason_dwid BIGINT
 	, ADD COLUMN hmda_action_dwid BIGINT
 	, ADD COLUMN underwrite_dwid BIGINT
-	, ADD COLUMN transaction_aux_construction_dwid BIGINT
-	, ADD COLUMN transaction_aux_disaster_declaration_dwid BIGINT
-	, ADD COLUMN transaction_aux_govt_programs_dwid BIGINT
-	, ADD COLUMN transaction_aux_property_repairs_dwid BIGINT
     , ADD COLUMN cd_clear_date_dwid BIGINT
 	, ADD COLUMN charges_enabled_date_dwid BIGINT
 	, ADD COLUMN ecoa_application_date_dwid BIGINT
@@ -633,10 +629,6 @@ ALTER TABLE star_loan.loan_fact
 CREATE INDEX idx_loan_fact__cash_out_reason_dwid ON star_loan.loan_fact (cash_out_reason_dwid);
 CREATE INDEX idx_loan_fact__hmda_action_dwid ON star_loan.loan_fact (hmda_action_dwid);
 CREATE INDEX idx_loan_fact__underwrite_dwid ON star_loan.loan_fact (underwrite_dwid);
-CREATE INDEX idx_loan_fact__transaction_aux_construction_dwid ON star_loan.loan_fact (transaction_aux_construction_dwid);
-CREATE INDEX idx_loan_fact__transaction_aux_disaster_declaration_dwid ON star_loan.loan_fact (transaction_aux_disaster_declaration_dwid);
-CREATE INDEX idx_loan_fact__transaction_aux_govt_programs_dwid ON star_loan.loan_fact (transaction_aux_govt_programs_dwid);
-CREATE INDEX idx_loan_fact__transaction_aux_property_repairs_dwid ON star_loan.loan_fact (transaction_aux_property_repairs_dwid);
 CREATE INDEX idx_loan_fact__cd_clear_date_dwid ON star_loan.loan_fact (cd_clear_date_dwid);
 CREATE INDEX idx_loan_fact__charges_enabled_date_dwid ON star_loan.loan_fact (charges_enabled_date_dwid);
 CREATE INDEX idx_loan_fact__ecoa_appication_date_dwid ON star_loan.loan_fact (ecoa_application_date_dwid);
@@ -1551,3 +1543,4 @@ WHERE loan_fact.loan_pid = loan.l_pid
 		, loan_fact.transaction_welcome_call_date_dwid
 		, loan_fact.trid_application_date_dwid
 		, loan_fact.underwrite_publish_date_dwid) IS NULL;
+
