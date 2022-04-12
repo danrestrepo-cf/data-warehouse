@@ -96,7 +96,7 @@ CREATE INDEX idx_borrower_counseling_dim__data_source_integration_id ON star_loa
 
 INSERT
 INTO star_loan.borrower_counseling_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id, data_source_integration_columns, data_source_integration_id, data_source_modified_datetime, first_time_homebuyer_auto_compute_flag, first_time_homebuyer_flag, homeownership_education, homeownership_education_code, homeownership_education_agency, homeownership_education_agency_code, housing_counseling, housing_counseling_code, housing_counseling_agency, housing_counseling_agency_code)
-VALUES (0, 0, NOW( ), NOW( ), NULL, 'first_time_homebuyer_auto_compute_flag~first_time_homebuyer_flag~homeownership_education~homeownership_education_code~homeownership_education_agency~homeownership_education_agency_code~housing_counseling~housing_counseling_code~housing_counseling_agency~housing_counseling_agency_code~data_source_dwid', '~~~~~~~~~~', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+VALUES (0, 0, NOW( ), NOW( ), NULL, 'first_time_homebuyer_auto_compute_flag~first_time_homebuyer_flag~homeownership_education_code~homeownership_education_agency_code~housing_counseling_code~housing_counseling_agency_code~data_source_dwid', '<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~0', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --borrower_employee_status_dim
 CREATE TABLE star_loan.borrower_employee_status_dim (
@@ -121,7 +121,7 @@ CREATE INDEX idx_borrower_employee_status_dim__data_source_integration_id ON sta
 
 INSERT
 INTO star_loan.borrower_employee_status_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id, data_source_integration_columns, data_source_integration_id, data_source_modified_datetime, hud_employee_flag, lender_employee, lender_employee_code, lender_employee_status_confirmed_flag)
-VALUES (0, 0, NOW( ), NOW( ), NULL, 'hud_employee_flag~lender_employee~lender_employee_code~lender_employee_status_confirmed_flag~data_source_dwid', '~~~~', NOW( ), NULL, NULL, NULL, NULL);
+VALUES (0, 0, NOW( ), NOW( ), NULL, 'hud_employee_flag~lender_employee_code~lender_employee_status_confirmed_flag~data_source_dwid', '<NULL>~<NULL>~<NULL>~0', NOW( ), NULL, NULL, NULL, NULL);
 
 --borrower_finances_declarations_dim
 CREATE TABLE star_loan.borrower_finances_declarations_dim (
@@ -166,7 +166,7 @@ CREATE INDEX idx_a924558105603ba33130b825269a41e8 ON star_loan.borrower_finances
 
 INSERT
 INTO star_loan.borrower_finances_declarations_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id, data_source_integration_columns, data_source_integration_id, data_source_modified_datetime, bankruptcy, bankruptcy_code, outstanding_judgements, outstanding_judgements_code, bankruptcy_chapter_7, bankruptcy_chapter_7_code, bankruptcy_chapter_11, bankruptcy_chapter_11_code, bankruptcy_chapter_12, bankruptcy_chapter_12_code, bankruptcy_chapter_13, bankruptcy_chapter_13_code, completed_pre_foreclosure_short_sale, completed_pre_foreclosure_short_sale_code, conveyed_title_in_lieu_of_foreclosure, conveyed_title_in_lieu_of_foreclosure_code, cosigner_undisclosed, cosigner_undisclosed_code, currently_delinquent_federal_debt, currently_delinquent_federal_debt_code, party_to_lawsuit, party_to_lawsuit_code, property_foreclosure, property_foreclosure_code)
-VALUES (0, 0, NOW( ), NOW( ), NULL, 'bankruptcy~bankruptcy_code~outstanding_judgements~outstanding_judgements_code~bankruptcy_chapter_7~bankruptcy_chapter_7_code~bankruptcy_chapter_11~bankruptcy_chapter_11_code~bankruptcy_chapter_12~bankruptcy_chapter_12_code~bankruptcy_chapter_13~bankruptcy_chapter_13_code~completed_pre_foreclosure_short_sale~completed_pre_foreclosure_short_sale_code~conveyed_title_in_lieu_of_foreclosure~conveyed_title_in_lieu_of_foreclosure_code~cosigner_undisclosed~cosigner_undisclosed_code~currently_delinquent_federal_debt~currently_delinquent_federal_debt_code~party_to_lawsuit~party_to_lawsuit_code~property_foreclosure~property_foreclosure_code~data_source_dwid', '~~~~~~~~~~~~~~~~~~~~~~~~', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+VALUES (0, 0, NOW( ), NOW( ), NULL, 'bankruptcy_code~outstanding_judgements_code~bankruptcy_chapter_7_code~bankruptcy_chapter_11_code~bankruptcy_chapter_12_code~bankruptcy_chapter_13_code~completed_pre_foreclosure_short_sale_code~conveyed_title_in_lieu_of_foreclosure_code~cosigner_undisclosed_code~currently_delinquent_federal_debt_code~party_to_lawsuit_code~property_foreclosure_code~data_source_dwid', '<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~0', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --borrower_hmda_ethnicity_dim
 CREATE TABLE star_loan.borrower_hmda_ethnicity_dim (
@@ -194,7 +194,7 @@ CREATE INDEX idx_borrower_hmda_ethnicity_dim__data_source_integration_id ON star
 
 INSERT
 INTO star_loan.borrower_hmda_ethnicity_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id, data_source_integration_columns, data_source_integration_id, data_source_modified_datetime, ethnicity_cuban_flag, ethnicity_hispanic_or_latino_flag, ethnicity_mexican_flag, ethnicity_not_hispanic_or_latino_flag, ethnicity_other_hispanic_or_latino_description_flag, ethnicity_other_hispanic_or_latino_flag, ethnicity_puerto_rican_flag)
-VALUES (0, 0, NOW( ), NOW( ), NULL, 'ethnicity_cuban_flag~ethnicity_hispanic_or_latino_flag~ethnicity_mexican_flag~ethnicity_not_hispanic_or_latino_flag~ethnicity_other_hispanic_or_latino_description_flag~ethnicity_other_hispanic_or_latino_flag~ethnicity_puerto_rican_flag~data_source_dwid', '~~~~~~~', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+VALUES (0, 0, NOW( ), NOW( ), NULL, 'ethnicity_cuban_flag~ethnicity_hispanic_or_latino_flag~ethnicity_mexican_flag~ethnicity_not_hispanic_or_latino_flag~ethnicity_other_hispanic_or_latino_description_flag~ethnicity_other_hispanic_or_latino_flag~ethnicity_puerto_rican_flag~data_source_dwid', '<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~0', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --borrower_hmda_race_dim
 CREATE TABLE star_loan.borrower_hmda_race_dim (
@@ -236,7 +236,7 @@ CREATE INDEX idx_borrower_hmda_race_dim__data_source_integration_id ON star_loan
 
 INSERT
 INTO star_loan.borrower_hmda_race_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id, data_source_integration_columns, data_source_integration_id, data_source_modified_datetime, other_race_national_origin_description_flag, race_american_indian_or_alaska_native_flag, race_asian_flag, race_asian_indian_flag, race_black_or_african_american_flag, race_chinese_flag, race_filipino_flag, race_guamanian_or_chamorro_flag, race_japanese_flag, race_korean_flag, race_native_hawaiian_flag, race_native_hawaiian_or_other_pacific_islander_flag, race_not_applicable_flag, race_other_american_indian_or_alaska_native_description_flag, race_other_asian_description_flag, race_other_asian_flag, race_other_pacific_islander_description_flag, race_other_pacific_islander_flag, race_samoan_flag, race_vietnamese_flag, race_white_flag)
-VALUES (0, 0, NOW( ), NOW( ), NULL, 'other_race_national_origin_description_flag~race_american_indian_or_alaska_native_flag~race_asian_flag~race_asian_indian_flag~race_black_or_african_american_flag~race_chinese_flag~race_filipino_flag~race_guamanian_or_chamorro_flag~race_japanese_flag~race_korean_flag~race_native_hawaiian_flag~race_native_hawaiian_or_other_pacific_islander_flag~race_not_applicable_flag~race_other_american_indian_or_alaska_native_description_flag~race_other_asian_description_flag~race_other_asian_flag~race_other_pacific_islander_description_flag~race_other_pacific_islander_flag~race_samoan_flag~race_vietnamese_flag~race_white_flag~data_source_dwid', '~~~~~~~~~~~~~~~~~~~~~', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+VALUES (0, 0, NOW( ), NOW( ), NULL, 'other_race_national_origin_description_flag~race_american_indian_or_alaska_native_flag~race_asian_flag~race_asian_indian_flag~race_black_or_african_american_flag~race_chinese_flag~race_filipino_flag~race_guamanian_or_chamorro_flag~race_japanese_flag~race_korean_flag~race_native_hawaiian_flag~race_native_hawaiian_or_other_pacific_islander_flag~race_not_applicable_flag~race_other_american_indian_or_alaska_native_description_flag~race_other_asian_description_flag~race_other_asian_flag~race_other_pacific_islander_description_flag~race_other_pacific_islander_flag~race_samoan_flag~race_vietnamese_flag~race_white_flag~data_source_dwid', '<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~0', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --borrower_hmda_sex_dim
 CREATE TABLE star_loan.borrower_hmda_sex_dim (
@@ -259,7 +259,7 @@ CREATE INDEX idx_borrower_hmda_sex_dim__data_source_integration_id ON star_loan.
 
 INSERT
 INTO star_loan.borrower_hmda_sex_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id, data_source_integration_columns, data_source_integration_id, data_source_modified_datetime, sex_female_flag, sex_male_flag)
-VALUES (0, 0, NOW( ), NOW( ), NULL, 'sex_female_flag~sex_male_flag~data_source_dwid', '~~', NOW( ), NULL, NULL);
+VALUES (0, 0, NOW( ), NOW( ), NULL, 'sex_female_flag~sex_male_flag~data_source_dwid', '<NULL>~<NULL>~0', NOW( ), NULL, NULL);
 
 --borrower_junk_dim
 CREATE TABLE star_loan.borrower_junk_dim (
@@ -290,7 +290,7 @@ CREATE INDEX idx_borrower_junk_dim__data_source_integration_id ON star_loan.borr
 
 INSERT
 INTO star_loan.borrower_junk_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id, data_source_integration_columns, data_source_integration_id, data_source_modified_datetime, citizenship_residency, citizenship_residency_code, disabled, disabled_code, on_gsa_list, on_gsa_list_code, on_ldp_list, on_ldp_list_code, titleholder, titleholder_code)
-VALUES (0, 0, NOW( ), NOW( ), NULL, 'citizenship_residency~citizenship_residency_code~disabled~disabled_code~on_gsa_list~on_gsa_list_code~on_ldp_list~on_ldp_list_code~titleholder~titleholder_code~data_source_dwid', '~~~~~~~~~~', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+VALUES (0, 0, NOW( ), NOW( ), NULL, 'citizenship_residency_code~disabled_code~on_gsa_list_code~on_ldp_list_code~titleholder_code~data_source_dwid', '<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~0', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --borrower_pre_umdp_declarations_dim
 CREATE TABLE star_loan.borrower_pre_umdp_declarations_dim (
@@ -325,7 +325,7 @@ CREATE INDEX idx_b4aecef00805d646d8fdcb541d520c04 ON star_loan.borrower_pre_umdp
 
 INSERT
 INTO star_loan.borrower_pre_umdp_declarations_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id, data_source_integration_columns, data_source_integration_id, data_source_modified_datetime, alimony_child_support, alimony_child_support_code, borrowed_down_payment, borrowed_down_payment_code, note_endorser, note_endorser_code, obligated_loan_foreclosure, obligated_loan_foreclosure_code, party_to_lawsuit, party_to_lawsuit_code, presently_delinquent, presently_delinquent_code, property_foreclosure, property_foreclosure_code)
-VALUES (0, 0, NOW( ), NOW( ), NULL, 'alimony_child_support~alimony_child_support_code~borrowed_down_payment~borrowed_down_payment_code~note_endorser~note_endorser_code~obligated_loan_foreclosure~obligated_loan_foreclosure_code~party_to_lawsuit~party_to_lawsuit_code~presently_delinquent~presently_delinquent_code~property_foreclosure~property_foreclosure_code~data_source_dwid', '~~~~~~~~~~~~~~', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+VALUES (0, 0, NOW( ), NOW( ), NULL, 'alimony_child_support_code~borrowed_down_payment_code~note_endorser_code~obligated_loan_foreclosure_code~party_to_lawsuit_code~presently_delinquent_code~property_foreclosure_code~data_source_dwid', '<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~0', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --borrower_property_declarations_dim
 CREATE TABLE star_loan.borrower_property_declarations_dim (
@@ -368,7 +368,7 @@ CREATE INDEX idx_5ed7738771f3a95d0549be162e6fea54 ON star_loan.borrower_property
 
 INSERT
 INTO star_loan.borrower_property_declarations_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id, data_source_integration_columns, data_source_integration_id, data_source_modified_datetime, applying_for_credit_before_closing, applying_for_credit_before_closing_code, borrowed_funds_undisclosed, borrowed_funds_undisclosed_code, fha_secondary_residence, fha_secondary_residence_code, homeowner_past_three_years, homeowner_past_three_years_code, intend_to_occupy, intend_to_occupy_code, intend_to_occupy_more_than_14_days, intend_to_occupy_more_than_14_days_code, other_mortgage_in_progress_before_closing, other_mortgage_in_progress_before_closing_code, prior_property_title, prior_property_title_code, prior_property_usage, prior_property_usage_code, priority_given_to_another_lien, priority_given_to_another_lien_code, relationship_with_seller, relationship_with_seller_code)
-VALUES (0, 0, NOW( ), NOW( ), NULL, 'applying_for_credit_before_closing~applying_for_credit_before_closing_code~borrowed_funds_undisclosed~borrowed_funds_undisclosed_code~fha_secondary_residence~fha_secondary_residence_code~homeowner_past_three_years~homeowner_past_three_years_code~intend_to_occupy~intend_to_occupy_code~intend_to_occupy_more_than_14_days~intend_to_occupy_more_than_14_days_code~other_mortgage_in_progress_before_closing~other_mortgage_in_progress_before_closing_code~prior_property_title~prior_property_title_code~prior_property_usage~prior_property_usage_code~priority_given_to_another_lien~priority_given_to_another_lien_code~relationship_with_seller~relationship_with_seller_code~data_source_dwid', '~~~~~~~~~~~~~~~~~~~~~~', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+VALUES (0, 0, NOW( ), NOW( ), NULL, 'applying_for_credit_before_closing_code~borrowed_funds_undisclosed_code~fha_secondary_residence_code~homeowner_past_three_years_code~intend_to_occupy_code~intend_to_occupy_more_than_14_days_code~other_mortgage_in_progress_before_closing_code~prior_property_title_code~prior_property_usage_code~priority_given_to_another_lien_code~relationship_with_seller_code~data_source_dwid', '<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~0', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --borrower_relations_dim
 CREATE TABLE star_loan.borrower_relations_dim (
@@ -397,4 +397,4 @@ CREATE INDEX idx_borrower_relations_dim__data_source_integration_id ON star_loan
 
 INSERT
 INTO star_loan.borrower_relations_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id, data_source_integration_columns, data_source_integration_id, data_source_modified_datetime, dependents, dependents_code, domestic_relationship_state, domestic_relationship_state_code, marital_status, marital_status_code, spousal_homestead, spousal_homestead_code)
-VALUES (0, 0, NOW( ), NOW( ), NULL, 'dependents~dependents_code~domestic_relationship_state~domestic_relationship_state_code~marital_status~marital_status_code~spousal_homestead~spousal_homestead_code~data_source_dwid', '~~~~~~~~', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+VALUES (0, 0, NOW( ), NOW( ), NULL, 'dependents_code~domestic_relationship_state_code~marital_status_code~spousal_homestead_code~data_source_dwid', '<NULL>~<NULL>~<NULL>~<NULL>~0', NOW( ), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
