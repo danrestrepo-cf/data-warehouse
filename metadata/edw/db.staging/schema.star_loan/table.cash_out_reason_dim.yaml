@@ -99,7 +99,7 @@ step_functions:
         input_sql: |-
           WITH cash_out_reason_dim_new_records AS (
               SELECT 'cash_out_reason_business_debt_or_debt_consolidation_flag~' ||
-          		   'cash_out_reason_debt_or_other_consolidation_flag~' ||
+          		   'cash_out_reason_debt_or_debt_consolidation_flag~' ||
           		   'cash_out_reason_future_investment_not_under_contract_flag~' ||
           		   'cash_out_reason_future_investment_under_contract_flag~' ||
           		   'cash_out_reason_home_improvement_flag~' ||
@@ -123,7 +123,7 @@ step_functions:
                   , NOW() AS edw_modified_datetime
                   , MAX(proposal.data_source_updated_datetime) AS data_source_modified_datetime
           		, proposal.prp_cash_out_reason_business_debt_or_debt_consolidation AS cash_out_reason_business_debt_or_debt_consolidation_flag
-          		, proposal.prp_cash_out_reason_debt_or_debt_consolidation AS cash_out_reason_debt_or_other_consolidation_flag
+          		, proposal.prp_cash_out_reason_debt_or_debt_consolidation AS cash_out_reason_debt_or_debt_consolidation_flag
           		, proposal.prp_cash_out_reason_future_investment_not_under_contract AS cash_out_reason_future_investment_not_under_contract_flag
           		, proposal.prp_cash_out_reason_future_investment_under_contract AS cash_out_reason_future_investment_under_contract_flag
           		, proposal.prp_cash_out_reason_home_improvement AS cash_out_reason_home_improvement_flag

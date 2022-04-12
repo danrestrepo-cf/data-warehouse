@@ -347,7 +347,7 @@ step_functions:
                 , proposal.prp_texas_equity_conversion_determ_datetime_override_reason AS texas_equity_conversion_determ_datetime_override_reason
                 , proposal.prp_texas_equity_determination_datetime_override_reason AS texas_equity_determination_datetime_override_reason
                 , proposal.prp_va_prior_paid_in_full_loan_number AS va_prior_paid_in_full_loan_number
-              	, fha_non_arms_length_ltv_limit_exception_type.value AS fha_non_arms_length_ltv_limit_exception
+              	, fha_non_arms_length_ltv_limit_exception_type.value AS fha_non_arms_length_ltv_exception
               	, proposal.prp_fha_non_arms_length_ltv_exception_type AS fha_non_arms_length_ltv_exception_code
               	, hud_fha_de_approval_type.value AS hud_fha_de_approval
               	, proposal.prp_hud_fha_de_approval_type AS hud_fha_de_approval_code
@@ -585,7 +585,7 @@ step_functions:
           LEFT JOIN star_loan.transaction_aux_govt_programs_dim
           	ON transaction_aux_govt_programs_dim_incl_new_records.data_source_integration_id =
           	   transaction_aux_govt_programs_dim.data_source_integration_id
-          WHERE transaction_aux_govt_programs_dim_incl_new_records.transaction_dwid IS NULL
+          WHERE transaction_aux_govt_programs_dim.transaction_dwid IS NULL
           UNION ALL
           -- existing records that need to be updated
           SELECT transaction_aux_govt_programs_dim_incl_new_records.*

@@ -15,7 +15,7 @@ CREATE TABLE star_loan.cash_out_reason_dim (
 	, data_source_integration_id TEXT NOT NULL
 	, data_source_modified_datetime TIMESTAMPTZ
 	, cash_out_reason_business_debt_or_debt_consolidation_flag BOOLEAN
-	, cash_out_reason_debt_or_other_consolidation_flag BOOLEAN
+	, cash_out_reason_debt_or_debt_consolidation_flag BOOLEAN
 	, cash_out_reason_future_investment_not_under_contract_flag BOOLEAN
 	, cash_out_reason_future_investment_under_contract_flag BOOLEAN
 	, cash_out_reason_home_improvement_flag BOOLEAN
@@ -35,7 +35,7 @@ INTO star_loan.cash_out_reason_dim (dwid, data_source_dwid, edw_created_datetime
 								   , data_source_integration_columns, data_source_integration_id
 								   , data_source_modified_datetime
 								   , cash_out_reason_business_debt_or_debt_consolidation_flag
-								   , cash_out_reason_debt_or_other_consolidation_flag
+								   , cash_out_reason_debt_or_debt_consolidation_flag
 								   , cash_out_reason_future_investment_not_under_contract_flag
 								   , cash_out_reason_future_investment_under_contract_flag
 								   , cash_out_reason_home_improvement_flag
@@ -45,7 +45,7 @@ INTO star_loan.cash_out_reason_dim (dwid, data_source_dwid, edw_created_datetime
 								   , non_business_cash_out_reason_acknowledged
 								   , non_business_cash_out_reason_acknowledged_code)
 	VALUES (0, 0, NOW(), NOW(), NULL, 'cash_out_reason_business_debt_or_debt_consolidation_flag~' ||
-	                                  'cash_out_reason_debt_or_other_consolidation_flag~' ||
+	                                  'cash_out_reason_debt_or_debt_consolidation_flag~' ||
 	                                  'cash_out_reason_future_investment_not_under_contract_flag~' ||
 	                                  'cash_out_reason_future_investment_under_contract_flag~' ||
 	                                  'cash_out_reason_home_improvement_flag~' ||

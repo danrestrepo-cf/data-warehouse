@@ -116,7 +116,7 @@ step_functions:
               	, transaction_dim.dwid AS transaction_dwid
                 , deal.d_pid AS deal_pid
               	, proposal.prp_pid AS active_proposal_pid
-              	, proposal.prp_financed_property_improvements AS financed_property_improvements
+              	, proposal.prp_financed_property_improvements AS financed_property_improvements_flag
               	, proposal.prp_loan_modification_agreement_executed_received_datetime AS loan_modification_agreement_executed_received_datetime
               	, proposal.prp_adjusted_as_is_value_amount AS adjusted_as_is_value_amount
               	, proposal.prp_after_improved_value_amount AS after_improved_value_amount
@@ -207,8 +207,8 @@ step_functions:
           FROM transaction_aux_construction_dim_incl_new_records
           LEFT JOIN star_loan.transaction_aux_construction_dim
           	ON transaction_aux_construction_dim_incl_new_records.data_source_integration_id =
-          	   transaction_aux_construction_dim_incl_new_records.data_source_integration_id
-          WHERE transaction_aux_construction_dim_incl_new_records.transaction_dwid IS NULL
+          	   transaction_aux_construction_dim.data_source_integration_id
+          WHERE transaction_aux_construction_dim.transaction_dwid IS NULL
           UNION ALL
           -- existing records that need to be updated
           SELECT transaction_aux_construction_dim_incl_new_records.*
