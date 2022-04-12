@@ -3044,7 +3044,8 @@ step_functions:
           			LEFT JOIN star_common.date_dim underwrite_publish_date_dim ON proposal.prp_underwrite_publish_date =
           																		  underwrite_publish_date_dim.value
           	WHERE GREATEST(deal.include_record, proposal.include_record, primary_application.include_record, loan.include_record,
-          				   deal_key_roles.include_record, borrower_b1.include_record, borrower_b2.include_record,
+          				   deal_key_roles.include_record, deal_stage.include_record, borrower_b1.include_record,
+                           borrower_b2.include_record,
           				   borrower_b3.include_record,
           				   borrower_b4.include_record, borrower_b5.include_record, borrower_c1.include_record,
           				   borrower_c2.include_record,
