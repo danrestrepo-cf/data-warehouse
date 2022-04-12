@@ -225,10 +225,14 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.d_early_wire_request
-  d_ecoa_application_date:
+  d_ecoa_application_complete_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.d_ecoa_application_date
+      field: primary_source_table.columns.d_ecoa_application_complete_date
+  d_ecoa_application_received_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.d_ecoa_application_received_date
   d_ecoa_decision_due_date:
     data_type: DATE
     source:
@@ -462,10 +466,11 @@ step_functions:
                , staging_table.d_enable_electronic_transaction
                , staging_table.d_initial_cancel_status_date
                , staging_table.d_location_pid
-               , staging_table.d_ecoa_application_date
+               , staging_table.d_ecoa_application_complete_date
                , staging_table.d_ecoa_decision_due_date
                , staging_table.d_ecoa_notice_of_incomplete_date
                , staging_table.d_ecoa_notice_of_incomplete_due_date
+               , staging_table.d_ecoa_application_received_date
                , FALSE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM staging_octane.deal staging_table
@@ -529,10 +534,11 @@ step_functions:
                , history_table.d_enable_electronic_transaction
                , history_table.d_initial_cancel_status_date
                , history_table.d_location_pid
-               , history_table.d_ecoa_application_date
+               , history_table.d_ecoa_application_complete_date
                , history_table.d_ecoa_decision_due_date
                , history_table.d_ecoa_notice_of_incomplete_date
                , history_table.d_ecoa_notice_of_incomplete_due_date
+               , history_table.d_ecoa_application_received_date
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (
