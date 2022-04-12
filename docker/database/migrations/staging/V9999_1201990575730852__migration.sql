@@ -3,8 +3,6 @@
 -- https://app.asana.com/0/0/1201990575730852
 --
 
--- TODO: seed initial data into new borrower_dim columns
-
 /*
  update loan_fact columns/indexes
  */
@@ -67,6 +65,19 @@ ALTER TABLE star_loan.borrower_dim
     --add schooling_years column
     ADD COLUMN schooling_years INT,
     ADD COLUMN homeownership_education_complete_date DATE;
+
+UPDATE star_loan.borrower_dim
+SET schooling_years = borrower.b_schooling_years
+  , homeownership_education_complete_date = borrower.b_homeownership_education_complete_date
+FROM (
+    SELECT borrower.*
+    FROM history_octane.borrower
+    LEFT JOIN history_octane.borrower AS history_records
+              ON borrower.b_pid = history_records.b_pid
+                  AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.b_pid IS NULL
+) AS borrower
+WHERE borrower_dim.borrower_pid = borrower.b_pid;
 
 /*
  drop old borrower unique dimensions
