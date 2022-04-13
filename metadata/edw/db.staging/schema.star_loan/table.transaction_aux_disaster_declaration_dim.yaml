@@ -162,7 +162,7 @@ step_functions:
           LEFT JOIN star_loan.transaction_aux_disaster_declaration_dim
           	ON transaction_aux_disaster_declaration_dim_incl_new_records.data_source_integration_id =
           	   transaction_aux_disaster_declaration_dim.data_source_integration_id
-          WHERE transaction_aux_disaster_declaration.transaction_dwid IS NULL
+          WHERE transaction_aux_disaster_declaration_dim.transaction_dwid IS NULL
           UNION ALL
           -- existing records that need to be updated
           SELECT transaction_aux_disaster_declaration_dim_incl_new_records.*

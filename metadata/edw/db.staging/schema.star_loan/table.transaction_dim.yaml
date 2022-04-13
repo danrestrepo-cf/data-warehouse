@@ -276,6 +276,16 @@ columns:
     source:
       field: primary_source_table.columns.prp_docs_enabled_datetime
     update_flag: true
+  ecoa_application_complete_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_ecoa_application_complete_date
+    update_flag: true
+  ecoa_application_received_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_ecoa_application_received_date
+    update_flag: true
   ecoa_decision_due_date:
     data_type: DATE
     source:
@@ -1250,6 +1260,8 @@ step_functions:
           		, primary_table.prp_charges_updated_datetime AS charges_updated_datetime
           		, primary_table.prp_closing_document_sign_datetime AS closing_document_sign_datetime
           		, primary_table.prp_docs_enabled_datetime AS docs_enabled_datetime
+          		, t1441.d_ecoa_application_complete_date AS ecoa_application_complete_date
+                , t1441.d_ecoa_application_received_date AS ecoa_application_received_date
           		, t1441.d_ecoa_decision_due_date AS ecoa_decision_due_date
           		, t1441.d_ecoa_notice_of_incomplete_date AS ecoa_notice_of_incomplete_date
           		, t1441.d_ecoa_notice_of_incomplete_due_date AS ecoa_notice_of_incomplete_due_date

@@ -30,8 +30,7 @@ CREATE TABLE star_loan.cash_out_reason_dim (
 CREATE INDEX idx_cash_out_reason_dim__etl_batch_id ON star_loan.cash_out_reason_dim (etl_batch_id);
 CREATE INDEX idx_cash_out_reason_dim__data_source_integration_id ON star_loan.cash_out_reason_dim (data_source_integration_id);
 
-INSERT
-INTO star_loan.cash_out_reason_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id
+INSERT INTO star_loan.cash_out_reason_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id
 								   , data_source_integration_columns, data_source_integration_id
 								   , data_source_modified_datetime
 								   , cash_out_reason_business_debt_or_debt_consolidation_flag
@@ -84,8 +83,7 @@ CREATE TABLE star_loan.hmda_action_dim (
 CREATE INDEX idx_hmda_action_dim__etl_batch_id ON star_loan.hmda_action_dim (etl_batch_id);
 CREATE INDEX idx_hmda_action_dim__data_source_integration_id ON star_loan.hmda_action_dim (data_source_integration_id);
 
-INSERT
-INTO star_loan.hmda_action_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id
+INSERT INTO star_loan.hmda_action_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id
 							   , data_source_integration_columns, data_source_integration_id
 							   , data_source_modified_datetime, hmda_action, hmda_action_code, hmda_denial_reason_1
 							   , hmda_denial_reason_2, hmda_denial_reason_3, hmda_denial_reason_4
@@ -117,8 +115,7 @@ CREATE TABLE star_loan.underwrite_dim (
 CREATE INDEX idx_underwrite_dim__etl_batch_id ON star_loan.underwrite_dim (etl_batch_id);
 CREATE INDEX idx_underwrite_dim__data_source_integration_id ON star_loan.underwrite_dim (data_source_integration_id);
 
-INSERT
-INTO star_loan.underwrite_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id
+INSERT INTO star_loan.underwrite_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime, etl_batch_id
 									 , data_source_integration_columns, data_source_integration_id
 									 , data_source_modified_datetime, underwrite_disposition
 									 , underwrite_disposition_code, underwrite_method, underwrite_method_code
@@ -159,8 +156,7 @@ CREATE INDEX idx_27025b9014d47d482cd5e9ec905c2147 ON star_loan.transaction_aux_c
 CREATE INDEX idx_transaction_aux_construction_dim__deal_pid ON star_loan.transaction_aux_construction_dim (deal_pid);
 CREATE INDEX idx_transaction_aux_construction_dim__active_proposal_pid ON star_loan.transaction_aux_construction_dim (active_proposal_pid);
 
-INSERT
-INTO star_loan.transaction_aux_construction_dim (transaction_dwid, data_source_dwid, edw_created_datetime
+INSERT INTO star_loan.transaction_aux_construction_dim (transaction_dwid, data_source_dwid, edw_created_datetime
 													   , edw_modified_datetime, etl_batch_id
 													   , data_source_integration_columns, data_source_integration_id
 													   , data_source_modified_datetime, deal_pid, active_proposal_pid
@@ -290,8 +286,7 @@ CREATE INDEX idx_9e2819b5aa61f14cd203b6213dea81a0 ON star_loan.transaction_aux_g
 CREATE INDEX idx_transaction_aux_govt_programs_dim__deal_pid ON star_loan.transaction_aux_govt_programs_dim (deal_pid);
 CREATE INDEX idx_transaction_aux_govt_programs_dim__active_proposal_pid ON star_loan.transaction_aux_govt_programs_dim (active_proposal_pid);
 
-INSERT
-INTO star_loan.transaction_aux_govt_programs_dim (transaction_dwid, data_source_dwid, edw_created_datetime
+INSERT INTO star_loan.transaction_aux_govt_programs_dim (transaction_dwid, data_source_dwid, edw_created_datetime
 												 , edw_modified_datetime, etl_batch_id, data_source_integration_columns
 												 , data_source_integration_id, data_source_modified_datetime, deal_pid
 												 , active_proposal_pid, fha_mip_refund_request_input_error_flag
@@ -425,6 +420,8 @@ ALTER TABLE star_loan.transaction_dim
 	, ADD COLUMN charges_updated_datetime TIMESTAMPTZ
 	, ADD COLUMN closing_document_sign_datetime TIMESTAMPTZ
 	, ADD COLUMN docs_enabled_datetime TIMESTAMPTZ
+	, ADD COLUMN ecoa_application_complete_date DATE
+	, ADD COLUMN ecoa_application_received_date DATE
 	, ADD COLUMN ecoa_decision_due_date DATE
 	, ADD COLUMN ecoa_notice_of_incomplete_date DATE
 	, ADD COLUMN ecoa_notice_of_incomplete_due_date DATE
@@ -611,7 +608,6 @@ ALTER TABLE star_loan.loan_fact
 	, ADD COLUMN underwrite_dwid BIGINT
     , ADD COLUMN cd_clear_date_dwid BIGINT
 	, ADD COLUMN charges_enabled_date_dwid BIGINT
-	, ADD COLUMN ecoa_application_date_dwid BIGINT
 	, ADD COLUMN effective_earliest_allowed_consummation_date_dwid BIGINT
 	, ADD COLUMN effective_hmda_action_date_dwid BIGINT
 	, ADD COLUMN effective_note_date_dwid BIGINT
@@ -631,7 +627,6 @@ CREATE INDEX idx_loan_fact__hmda_action_dwid ON star_loan.loan_fact (hmda_action
 CREATE INDEX idx_loan_fact__underwrite_dwid ON star_loan.loan_fact (underwrite_dwid);
 CREATE INDEX idx_loan_fact__cd_clear_date_dwid ON star_loan.loan_fact (cd_clear_date_dwid);
 CREATE INDEX idx_loan_fact__charges_enabled_date_dwid ON star_loan.loan_fact (charges_enabled_date_dwid);
-CREATE INDEX idx_loan_fact__ecoa_appication_date_dwid ON star_loan.loan_fact (ecoa_application_date_dwid);
 CREATE INDEX idx_4f7b260241c5cf3e35a967b26b40a9c5 ON star_loan.loan_fact (effective_earliest_allowed_consummation_date_dwid);
 CREATE INDEX idx_loan_fact__effective_hmda_action_date_dwid ON star_loan.loan_fact (effective_hmda_action_date_dwid);
 CREATE INDEX idx_loan_fact__effective_note_date_dwid ON star_loan.loan_fact (effective_note_date_dwid);
@@ -867,6 +862,8 @@ UPDATE star_loan.transaction_dim
 		, vesting_change_titleholder_removed_code = proposal.prp_vesting_change_titleholder_removed
 		, windstorm_insurance_applicable = windstorm_insurance_applicable_ynu_type.value
 		, windstorm_insurance_applicable_code = proposal.prp_windstorm_insurance_applicable
+		, ecoa_application_complete_date = deal.d_ecoa_application_complete_date
+		, ecoa_application_received_date = deal.d_ecoa_application_received_date
 FROM (
 	SELECT proposal.*
 	FROM history_octane.proposal
@@ -1394,7 +1391,9 @@ WHERE transaction_dim.deal_pid = deal.d_pid
 	, transaction_dim.vesting_change_titleholder_removed
 	, transaction_dim.vesting_change_titleholder_removed_code
 	, transaction_dim.windstorm_insurance_applicable
-	, transaction_dim.windstorm_insurance_applicable_code) IS NULL;
+	, transaction_dim.windstorm_insurance_applicable_code
+	, transaction_dim.ecoa_application_complete_date
+	, transaction_dim.ecoa_application_received_date) IS NULL;
 
 
 UPDATE star_loan.loan_fact
@@ -1404,7 +1403,6 @@ SET edw_modified_datetime = NOW()
   	, underwrite_dwid = COALESCE(underwrite_dim.dwid, 0)
 	, cd_clear_date_dwid = COALESCE(cd_clear_date_dim.dwid, 0)
 	, charges_enabled_date_dwid = COALESCE(charges_enabled_date_dim.dwid, 0)
-	, ecoa_application_date_dwid = COALESCE(ecoa_application_date_dim.dwid, 0)
 	, effective_earliest_allowed_consummation_date_dwid = COALESCE(effective_earliest_allowed_consummation_date_dim.dwid, 0)
 	, effective_hmda_action_date_dwid = COALESCE(effective_hmda_action_date_dim.dwid, 0)
 	, effective_note_date_dwid = COALESCE(effective_note_date_dim.dwid, 0)
@@ -1495,8 +1493,6 @@ FROM (
 	    ON proposal.prp_cd_clear_date = cd_clear_date_dim.value
 	LEFT JOIN star_common.date_dim charges_enabled_date_dim
 	    ON deal.d_charges_enabled_date = charges_enabled_date_dim.value
-	LEFT JOIN star_common.date_dim ecoa_application_date_dim
-	    ON deal.d_ecoa_application_date = ecoa_application_date_dim.value
 	LEFT JOIN star_common.date_dim effective_earliest_allowed_consummation_date_dim
 		ON proposal.prp_effective_earliest_allowed_consummation_date = effective_earliest_allowed_consummation_date_dim.value
 	LEFT JOIN star_common.date_dim effective_hmda_action_date_dim
@@ -1529,7 +1525,6 @@ WHERE loan_fact.loan_pid = loan.l_pid
 	    , loan_fact.underwrite_dwid
 		, loan_fact.cd_clear_date_dwid
 		, loan_fact.charges_enabled_date_dwid
-		, loan_fact.ecoa_application_date_dwid
 		, loan_fact.effective_earliest_allowed_consummation_date_dwid
 		, loan_fact.effective_hmda_action_date_dwid
 		, loan_fact.effective_note_date_dwid

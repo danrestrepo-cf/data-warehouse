@@ -795,14 +795,6 @@ foreign_keys:
         - dwid
       schema: star_common
       table: date_dim
-  fk_loan_fact__ecoa_application_date_dwid:
-    columns:
-      - ecoa_application_date_dwid
-    references:
-      columns:
-        - dwid
-      schema: star_common
-      table: date_dim
   fk_loan_fact__effective_earliest_allowed_consummation_date_dwid:
     columns:
       - effective_earliest_allowed_consummation_date_dwid
@@ -1321,9 +1313,6 @@ columns:
   charges_enabled_date_dwid:
     data_type: BIGINT
     update_flag: true
-  ecoa_application_date_dwid:
-    data_type: BIGINT
-    update_flag: true
   effective_earliest_allowed_consummation_date_dwid:
     data_type: BIGINT
     update_flag: true
@@ -1506,7 +1495,6 @@ step_functions:
           	, loan_fact_incl_new_records.current_transaction_stage_from_date_dwid
           	, loan_fact_incl_new_records.cd_clear_date_dwid
           	, loan_fact_incl_new_records.charges_enabled_date_dwid
-          	, loan_fact_incl_new_records.ecoa_application_date_dwid
           	, loan_fact_incl_new_records.effective_earliest_allowed_consummation_date_dwid
           	, loan_fact_incl_new_records.effective_hmda_action_date_dwid
           	, loan_fact_incl_new_records.effective_note_date_dwid
@@ -1645,7 +1633,6 @@ step_functions:
           		, COALESCE(current_deal_stage_date_dim.dwid, 0) AS current_transaction_stage_from_date_dwid
           		, COALESCE(cd_clear_date_dim.dwid, 0) AS cd_clear_date_dwid
           		, COALESCE(charges_enabled_date_dim.dwid, 0) AS charges_enabled_date_dwid
-          		, COALESCE(ecoa_application_date_dim.dwid, 0) AS ecoa_application_date_dwid
           		, COALESCE(effective_earliest_allowed_consummation_date_dim.dwid, 0) AS effective_earliest_allowed_consummation_date_dwid
           		, COALESCE(effective_hmda_action_date_dim.dwid, 0) AS effective_hmda_action_date_dwid
           		, COALESCE(effective_note_date_dim.dwid, 0) AS effective_note_date_dwid
@@ -3019,8 +3006,6 @@ step_functions:
           			LEFT JOIN star_common.date_dim cd_clear_date_dim ON proposal.prp_cd_clear_date = cd_clear_date_dim.value
           			LEFT JOIN star_common.date_dim charges_enabled_date_dim ON deal.d_charges_enabled_date =
           																	   charges_enabled_date_dim.value
-          			LEFT JOIN star_common.date_dim ecoa_application_date_dim ON deal.d_ecoa_application_date =
-          																		ecoa_application_date_dim.value
           			LEFT JOIN star_common.date_dim effective_earliest_allowed_consummation_date_dim
           			ON proposal.prp_effective_earliest_allowed_consummation_date = effective_earliest_allowed_consummation_date_dim.value
           			LEFT JOIN star_common.date_dim effective_hmda_action_date_dim ON deal.d_effective_hmda_action_date =
@@ -3232,7 +3217,6 @@ step_functions:
           		AND loan_fact_incl_new_records.current_transaction_stage_from_date_dwid = loan_fact.current_transaction_stage_from_date_dwid
           		AND loan_fact_incl_new_records.cd_clear_date_dwid = loan_fact.cd_clear_date_dwid
           		AND loan_fact_incl_new_records.charges_enabled_date_dwid = loan_fact.charges_enabled_date_dwid
-          		AND loan_fact_incl_new_records.ecoa_application_date_dwid = loan_fact.ecoa_application_date_dwid
           		AND loan_fact_incl_new_records.effective_earliest_allowed_consummation_date_dwid = loan_fact.effective_earliest_allowed_consummation_date_dwid
           		AND loan_fact_incl_new_records.effective_hmda_action_date_dwid = loan_fact.effective_hmda_action_date_dwid
           		AND loan_fact_incl_new_records.effective_note_date_dwid = loan_fact.effective_note_date_dwid
