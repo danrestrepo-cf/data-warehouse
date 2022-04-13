@@ -645,7 +645,6 @@ CREATE INDEX idx_loan_fact__underwrite_publish_date_dwid ON star_loan.loan_fact 
 /*
 BACKFILL NEW FIELDS IN THE FOLLOWING TABLES:
 	- transaction_dim
-	- loan_fact
 */
 
 UPDATE star_loan.transaction_dim
