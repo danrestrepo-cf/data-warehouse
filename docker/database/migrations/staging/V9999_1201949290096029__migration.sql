@@ -1392,8 +1392,8 @@ WHERE transaction_dim.deal_pid = deal.d_pid
 	, transaction_dim.vesting_change_titleholder_removed_code
 	, transaction_dim.windstorm_insurance_applicable
 	, transaction_dim.windstorm_insurance_applicable_code
-	, transaction_dim.ecoa_application_complete_date
-	, transaction_dim.ecoa_application_received_date) IS NULL;
+	, transaction_dim.ecoa_application_complete_date::VARCHAR
+	, transaction_dim.ecoa_application_received_date::VARCHAR) IS NULL;
 
 
 UPDATE star_loan.loan_fact
