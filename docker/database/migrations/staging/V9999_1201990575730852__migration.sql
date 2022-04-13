@@ -4,6 +4,46 @@
 --
 
 /*
+ update borrower_lkup columns/indexes
+ */
+ALTER TABLE star_loan.borrower_lkup
+    ADD COLUMN borrower_counseling_dwid BIGINT,
+    ADD COLUMN borrower_employee_status_dwid BIGINT,
+    ADD COLUMN borrower_finances_declarations_dwid BIGINT,
+    ADD COLUMN borrower_hmda_ethnicity_dwid BIGINT,
+    ADD COLUMN borrower_hmda_race_dwid BIGINT,
+    ADD COLUMN borrower_hmda_sex_dwid BIGINT,
+    ADD COLUMN borrower_junk_dwid BIGINT,
+    ADD COLUMN borrower_pre_umdp_declarations_dwid BIGINT,
+    ADD COLUMN borrower_property_declarations_dwid BIGINT,
+    ADD COLUMN borrower_relations_dwid BIGINT;
+
+CREATE INDEX idx_borrower_lkup__borrower_counseling_dwid ON star_loan.borrower_lkup (borrower_counseling_dwid);
+CREATE INDEX idx_borrower_lkup__borrower_employee_status_dwid ON star_loan.borrower_lkup (borrower_employee_status_dwid);
+CREATE INDEX idx_borrower_lkup__borrower_finances_declarations_dwid ON star_loan.borrower_lkup (borrower_finances_declarations_dwid);
+CREATE INDEX idx_borrower_lkup__borrower_hmda_ethnicity_dwid ON star_loan.borrower_lkup (borrower_hmda_ethnicity_dwid);
+CREATE INDEX idx_borrower_lkup__borrower_hmda_race_dwid ON star_loan.borrower_lkup (borrower_hmda_race_dwid);
+CREATE INDEX idx_borrower_lkup__borrower_hmda_sex_dwid ON star_loan.borrower_lkup (borrower_hmda_sex_dwid);
+CREATE INDEX idx_borrower_lkup__borrower_junk_dwid ON star_loan.borrower_lkup (borrower_junk_dwid);
+CREATE INDEX idx_borrower_lkup__borrower_pre_umdp_declarations_dwid ON star_loan.borrower_lkup (borrower_pre_umdp_declarations_dwid);
+CREATE INDEX idx_borrower_lkup__borrower_property_declarations_dwid ON star_loan.borrower_lkup (borrower_property_declarations_dwid);
+CREATE INDEX idx_borrower_lkup__borrower_relations_dwid ON star_loan.borrower_lkup (borrower_relations_dwid);
+
+UPDATE star_loan.borrower_lkup
+SET borrower_counseling_dwid = 0
+  , borrower_employee_status_dwid = 0
+  , borrower_finances_declarations_dwid = 0
+  , borrower_hmda_ethnicity_dwid = 0
+  , borrower_hmda_race_dwid = 0
+  , borrower_hmda_sex_dwid = 0
+  , borrower_junk_dwid = 0
+  , borrower_pre_umdp_declarations_dwid = 0
+  , borrower_property_declarations_dwid = 0
+  , borrower_relations_dwid = 0
+--add non-restrictive condition to silence IDE warnings about unqualified UPDATE statement
+WHERE TRUE;
+
+/*
  update loan_fact columns/indexes
  */
 
