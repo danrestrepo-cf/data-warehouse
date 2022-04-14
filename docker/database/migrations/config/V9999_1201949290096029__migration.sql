@@ -3523,7 +3523,7 @@ FROM (
 		) AS cash_out_reason_dim ON proposal.prp_cash_out_reason_business_debt_or_debt_consolidation IS NOT DISTINCT FROM
 		                            cash_out_reason_dim.cash_out_reason_business_debt_or_debt_consolidation_flag
 			    AND proposal.prp_cash_out_reason_debt_or_debt_consolidation IS NOT DISTINCT FROM cash_out_reason_dim
-			        .cash_out_reason_business_debt_or_debt_consolidation_flag
+			        .cash_out_reason_debt_or_debt_consolidation_flag
 			    AND proposal.prp_cash_out_reason_future_investment_not_under_contract IS NOT DISTINCT FROM
 			        cash_out_reason_dim.cash_out_reason_future_investment_not_under_contract_flag
 			    AND proposal.prp_cash_out_reason_future_investment_under_contract IS NOT DISTINCT FROM
