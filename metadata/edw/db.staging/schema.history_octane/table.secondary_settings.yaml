@@ -83,6 +83,14 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.sset_expired_lock_update_allowed_days
+  sset_high_balance_llpa_filter_applicable_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.sset_high_balance_llpa_filter_applicable_date
+  sset_high_balance_llpa_prefixes:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.sset_high_balance_llpa_prefixes
   sset_initial_lender_lock_id:
     data_type: BIGINT
     source:
@@ -213,6 +221,8 @@ step_functions:
                , staging_table.sset_third_party_floating_margin_prefixes
                , staging_table.sset_month_ami_uses_subsequent_year
                , staging_table.sset_day_ami_uses_subsequent_year
+               , staging_table.sset_high_balance_llpa_prefixes
+               , staging_table.sset_high_balance_llpa_filter_applicable_date
                , FALSE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM staging_octane.secondary_settings staging_table
@@ -251,6 +261,8 @@ step_functions:
                , history_table.sset_third_party_floating_margin_prefixes
                , history_table.sset_month_ami_uses_subsequent_year
                , history_table.sset_day_ami_uses_subsequent_year
+               , history_table.sset_high_balance_llpa_prefixes
+               , history_table.sset_high_balance_llpa_filter_applicable_date
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (
