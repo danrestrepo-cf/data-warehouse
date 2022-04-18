@@ -189,7 +189,7 @@ step_functions:
                   ) AS primary_table
               ) AS housing_counseling_agency_type
                    ON borrower.b_housing_counseling_agency_type = housing_counseling_agency_type.code
-              WHERE GREATEST( homeownership_education_type.include_record, borrower.include_record,
+              WHERE GREATEST( borrower.include_record, homeownership_education_type.include_record, borrower.include_record,
                               homeownership_education_agency_type.include_record,
                               housing_counseling_type.include_record, housing_counseling_agency_type.include_record ) IS TRUE
               GROUP BY borrower.b_first_time_home_buyer_auto_compute
