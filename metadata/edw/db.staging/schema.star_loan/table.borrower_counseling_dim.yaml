@@ -1,0 +1,225 @@
+name: borrower_counseling_dim
+primary_source_table: staging.history_octane.borrower
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: false
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: false
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  first_time_homebuyer_auto_compute_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_first_time_home_buyer_auto_compute
+    update_flag: false
+  first_time_homebuyer_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_first_time_homebuyer
+    update_flag: false
+  homeownership_education:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_homeownership_education_type.columns.value
+    update_flag: true
+  homeownership_education_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_homeownership_education_type
+    update_flag: false
+  homeownership_education_agency:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_homeownership_education_agency_type.columns.value
+    update_flag: true
+  homeownership_education_agency_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_homeownership_education_agency_type
+    update_flag: false
+  housing_counseling:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_housing_counseling_type.columns.value
+    update_flag: true
+  housing_counseling_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_housing_counseling_type
+    update_flag: false
+  housing_counseling_agency:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_housing_counseling_agency_type.columns.value
+    update_flag: true
+  housing_counseling_agency_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_housing_counseling_agency_type
+    update_flag: false
+step_functions:
+  SP-200030:
+    etls:
+      ETL-200030:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.borrower_counseling_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-200022-update
+        input_sql: |-
+          WITH borrower_counseling_dim_new_records AS (
+              SELECT 'first_time_homebuyer_auto_compute_flag~first_time_homebuyer_flag~homeownership_education_code~homeownership_education_agency_code~housing_counseling_code~housing_counseling_agency_code~data_source_dwid' AS data_source_integration_columns
+                   , COALESCE( CAST( borrower.b_first_time_home_buyer_auto_compute AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_first_time_homebuyer AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_homeownership_education_type AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_homeownership_education_agency_type AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_housing_counseling_type AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_housing_counseling_agency_type AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
+                   , NOW( ) AS edw_created_datetime
+                   , NOW( ) AS edw_modified_datetime
+                   , MAX( borrower.data_source_updated_datetime ) AS data_source_modified_datetime
+                   , borrower.b_first_time_home_buyer_auto_compute AS first_time_homebuyer_auto_compute_flag
+                   , borrower.b_first_time_homebuyer AS first_time_homebuyer_flag
+                   , homeownership_education_type.value AS homeownership_education
+                   , borrower.b_homeownership_education_type AS homeownership_education_code
+                   , homeownership_education_agency_type.value AS homeownership_education_agency
+                   , borrower.b_homeownership_education_agency_type AS homeownership_education_agency_code
+                   , housing_counseling_type.value AS housing_counseling
+                   , borrower.b_housing_counseling_type AS housing_counseling_code
+                   , housing_counseling_agency_type.value AS housing_counseling_agency
+                   , borrower.b_housing_counseling_agency_type AS housing_counseling_agency_code
+                   , MAX( GREATEST( homeownership_education_type.etl_end_date_time, homeownership_education_agency_type.etl_end_date_time,
+                                    housing_counseling_type.etl_end_date_time,
+                                    housing_counseling_agency_type.etl_end_date_time ) ) AS max_source_etl_end_date_time
+              FROM (
+                  SELECT <<borrower_partial_load_condition>> AS include_record
+                       , borrower.*
+                  FROM history_octane.borrower
+                  LEFT JOIN history_octane.borrower AS history_records
+                            ON borrower.b_pid = history_records.b_pid
+                                AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.b_pid IS NULL
+              ) AS borrower
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<homeownership_education_type_partial_load_condition>> AS include_record
+                           , homeownership_education_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.homeownership_education_type
+                      LEFT JOIN history_octane.homeownership_education_type AS history_records
+                                ON homeownership_education_type.code = history_records.code
+                                    AND homeownership_education_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON homeownership_education_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS homeownership_education_type
+                   ON borrower.b_homeownership_education_type = homeownership_education_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<housing_counseling_agency_type_partial_load_condition>> AS include_record
+                           , housing_counseling_agency_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.housing_counseling_agency_type
+                      LEFT JOIN history_octane.housing_counseling_agency_type AS history_records
+                                ON housing_counseling_agency_type.code = history_records.code
+                                    AND housing_counseling_agency_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON housing_counseling_agency_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS homeownership_education_agency_type
+                   ON borrower.b_homeownership_education_agency_type = homeownership_education_agency_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<housing_counseling_type_partial_load_condition>> AS include_record
+                           , housing_counseling_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.housing_counseling_type
+                      LEFT JOIN history_octane.housing_counseling_type AS history_records
+                                ON housing_counseling_type.code = history_records.code
+                                    AND housing_counseling_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON housing_counseling_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS housing_counseling_type
+                   ON borrower.b_housing_counseling_type = housing_counseling_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<housing_counseling_agency_type_partial_load_condition>> AS include_record
+                           , housing_counseling_agency_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.housing_counseling_agency_type
+                      LEFT JOIN history_octane.housing_counseling_agency_type AS history_records
+                                ON housing_counseling_agency_type.code = history_records.code
+                                    AND housing_counseling_agency_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON housing_counseling_agency_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS housing_counseling_agency_type
+                   ON borrower.b_housing_counseling_agency_type = housing_counseling_agency_type.code
+              WHERE GREATEST( homeownership_education_type.include_record, borrower.include_record,
+                              homeownership_education_agency_type.include_record,
+                              housing_counseling_type.include_record, housing_counseling_agency_type.include_record ) IS TRUE
+              GROUP BY borrower.b_first_time_home_buyer_auto_compute
+                     , borrower.b_first_time_homebuyer
+                     , homeownership_education_type.value
+                     , borrower.b_homeownership_education_type
+                     , homeownership_education_agency_type.value
+                     , borrower.b_homeownership_education_agency_type
+                     , housing_counseling_type.value
+                     , borrower.b_housing_counseling_type
+                     , housing_counseling_agency_type.value
+                     , borrower.b_housing_counseling_agency_type
+          )
+              --new records that should be inserted
+          SELECT borrower_counseling_dim_new_records.*
+          FROM borrower_counseling_dim_new_records
+          LEFT JOIN star_loan.borrower_counseling_dim
+                    ON borrower_counseling_dim_new_records.data_source_integration_id = borrower_counseling_dim.data_source_integration_id
+          WHERE borrower_counseling_dim.dwid IS NULL
+          UNION ALL
+          --existing records that need to be updated
+          SELECT borrower_counseling_dim_new_records.*
+          FROM borrower_counseling_dim_new_records
+          JOIN (
+              SELECT borrower_counseling_dim.data_source_integration_id, etl_log.etl_start_date_time
+              FROM star_loan.borrower_counseling_dim
+              JOIN star_common.etl_log
+                   ON borrower_counseling_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_counseling_dim_etl_start_times
+               ON borrower_counseling_dim_new_records.data_source_integration_id =
+                  borrower_counseling_dim_etl_start_times.data_source_integration_id
+                   AND borrower_counseling_dim_new_records.max_source_etl_end_date_time >=
+                       borrower_counseling_dim_etl_start_times.etl_start_date_time;
