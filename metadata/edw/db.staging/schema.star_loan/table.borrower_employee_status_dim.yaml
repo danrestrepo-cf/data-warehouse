@@ -1,0 +1,128 @@
+name: borrower_employee_status_dim
+primary_source_table: staging.history_octane.borrower
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: false
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: false
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  hud_employee_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_hud_employee
+    update_flag: false
+  lender_employee:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_lender_employee.columns.value
+    update_flag: true
+  lender_employee_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_lender_employee
+    update_flag: false
+  lender_employee_status_confirmed_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_lender_employee_status_confirmed
+    update_flag: false
+step_functions:
+  SP-200031:
+    etls:
+      ETL-200031:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.borrower_employee_status_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-200022-update
+        input_sql: |-
+          WITH borrower_employee_status_dim_new_records AS (
+              SELECT 'hud_employee_flag~lender_employee_code~lender_employee_status_confirmed_flag~data_source_dwid' AS data_source_integration_columns
+                   , COALESCE( CAST( borrower.b_hud_employee AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_lender_employee AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_lender_employee_status_confirmed AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
+                   , NOW( ) AS edw_created_datetime
+                   , NOW( ) AS edw_modified_datetime
+                   , MAX( borrower.data_source_updated_datetime ) AS data_source_modified_datetime
+                   , borrower.b_hud_employee AS hud_employee_flag
+                   , lender_employee_type.value AS lender_employee
+                   , borrower.b_lender_employee AS lender_employee_code
+                   , borrower.b_lender_employee_status_confirmed AS lender_employee_status_confirmed_flag
+                   , MAX( lender_employee_type.etl_end_date_time ) AS max_source_etl_end_date_time
+              FROM (
+                  SELECT <<borrower_partial_load_condition>> AS include_record
+                       , borrower.*
+                  FROM history_octane.borrower
+                  LEFT JOIN history_octane.borrower AS history_records
+                            ON borrower.b_pid = history_records.b_pid
+                                AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.b_pid IS NULL
+              ) AS borrower
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                           , yes_no_unknown_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.yes_no_unknown_type
+                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                                ON yes_no_unknown_type.code = history_records.code
+                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS lender_employee_type
+                   ON borrower.b_lender_employee = lender_employee_type.code
+              WHERE GREATEST( borrower.include_record, lender_employee_type.include_record ) IS TRUE
+              GROUP BY borrower.b_hud_employee
+                     , lender_employee_type.value
+                     , borrower.b_lender_employee
+                     , borrower.b_lender_employee_status_confirmed
+          )
+              --new records that should be inserted
+          SELECT borrower_employee_status_dim_new_records.*
+          FROM borrower_employee_status_dim_new_records
+          LEFT JOIN star_loan.borrower_employee_status_dim
+                    ON borrower_employee_status_dim_new_records.data_source_integration_id = borrower_employee_status_dim.data_source_integration_id
+          WHERE borrower_employee_status_dim.dwid IS NULL
+          UNION ALL
+          --existing records that need to be updated
+          SELECT borrower_employee_status_dim_new_records.*
+          FROM borrower_employee_status_dim_new_records
+          JOIN (
+              SELECT borrower_employee_status_dim.data_source_integration_id, etl_log.etl_start_date_time
+              FROM star_loan.borrower_employee_status_dim
+              JOIN star_common.etl_log
+                   ON borrower_employee_status_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_employee_status_dim_etl_start_times
+               ON borrower_employee_status_dim_new_records.data_source_integration_id =
+                  borrower_employee_status_dim_etl_start_times.data_source_integration_id
+                   AND borrower_employee_status_dim_new_records.max_source_etl_end_date_time >=
+                       borrower_employee_status_dim_etl_start_times.etl_start_date_time;
