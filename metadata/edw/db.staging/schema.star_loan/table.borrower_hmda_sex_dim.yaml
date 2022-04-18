@@ -1,0 +1,66 @@
+name: borrower_hmda_sex_dim
+primary_source_table: staging.history_octane.borrower
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+  data_source_dwid:
+    data_type: BIGINT
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  data_source_integration_columns:
+    data_type: TEXT
+  data_source_integration_id:
+    data_type: TEXT
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+  sex_female_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_sex_female
+  sex_male_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_sex_male
+step_functions:
+  SP-200035:
+    etls:
+      ETL-200035:
+        input_type: table
+        output_type: insert
+        output_table: staging.star_loan.borrower_hmda_sex_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          WITH borrower_hmda_sex_dim_new_records AS (
+              SELECT 'sex_female_flag~sex_male_flag~data_source_dwid' AS data_source_integration_columns
+                   , COALESCE( CAST( borrower.b_sex_female AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_sex_male AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
+                   , NOW( ) AS edw_created_datetime
+                   , NOW( ) AS edw_modified_datetime
+                   , MAX( borrower.data_source_updated_datetime ) AS data_source_modified_datetime
+                   , borrower.b_sex_female AS sex_female_flag
+                   , borrower.b_sex_male AS sex_male_flag
+              FROM (
+                  SELECT borrower.*
+                  FROM history_octane.borrower
+                  LEFT JOIN history_octane.borrower AS history_records
+                            ON borrower.b_pid = history_records.b_pid
+                                AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.b_pid IS NULL
+                    AND <<borrower_partial_load_condition>>
+              ) AS borrower
+              GROUP BY borrower.b_sex_female, borrower.b_sex_male
+          )
+          SELECT borrower_hmda_sex_dim_new_records.*
+          FROM borrower_hmda_sex_dim_new_records
+          LEFT JOIN star_loan.borrower_hmda_sex_dim
+                    ON borrower_hmda_sex_dim_new_records.data_source_integration_id = borrower_hmda_sex_dim.data_source_integration_id
+          WHERE borrower_hmda_sex_dim.dwid IS NULL;
