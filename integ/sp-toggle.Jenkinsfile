@@ -61,7 +61,7 @@ pipeline {
                 echo "Clear Pending SP SQS Queue for environment ${params.environment}"
             }
         }
-        stage("Stop Jobs") {
+        stage("Stop All Running SPs") {
             when { equals expected: true, actual: params.stop_jobs}
             environment {
                 AWS_PROFILE = "${params.environment}"
@@ -69,6 +69,23 @@ pipeline {
             steps {
                 // sh "integ/scripts/step-functions-stop-executions.sh ${params.environment}"
                 echo "Stop Jobs for environment ${params.environment}"
+            }
+        }
+        stage("Notify to Kill PostgreSQL Connections and ECS Containers") {
+            when { equals expected: true, actual: params.stop_jobs}
+            steps {
+                zoomAlarm("PAUSED","!!! Waiting for infrastructure to kill PostgreSQL connections and ECS containers. Resuming after manual approval !!!")
+            }
+        }
+        stage("Prompt to continue") {
+            when { equals expected: true, actual: params.stop_jobs}
+            agent none
+            options {
+                timeout(time: 8, unit: 'HOURS')
+            }
+            steps {
+                input message: "Is the above plan correct?", ok: 'Yes.'
+                echo "Proceeding."
             }
         }
         stage("Enable EDW Triggers") {
