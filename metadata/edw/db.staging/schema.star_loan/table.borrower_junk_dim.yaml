@@ -1,0 +1,238 @@
+name: borrower_junk_dim
+primary_source_table: staging.history_octane.borrower
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: false
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: false
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  citizenship_residency:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_citizenship_residency_type.columns.value
+    update_flag: true
+  citizenship_residency_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_citizenship_residency_type
+    update_flag: false
+  disabled:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_disabled.columns.value
+    update_flag: true
+  disabled_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_disabled
+    update_flag: false
+  on_gsa_list:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_on_gsa_list.columns.value
+    update_flag: true
+  on_gsa_list_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_on_gsa_list
+    update_flag: false
+  on_ldp_list:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_on_ldp_list.columns.value
+    update_flag: true
+  on_ldp_list_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_on_ldp_list
+    update_flag: false
+  titleholder:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_titleholder.columns.value
+    update_flag: true
+  titleholder_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_titleholder
+    update_flag: false
+step_functions:
+  SP-200036:
+    etls:
+      ETL-200036:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.borrower_junk_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-200022-update
+        input_sql: |-
+          WITH borrower_junk_dim_new_records AS (
+              SELECT 'citizenship_residency_code~disabled_code~on_gsa_list_code~on_ldp_list_code~titleholder_code~data_source_dwid' AS data_source_integration_columns
+                   , COALESCE( CAST( borrower.b_citizenship_residency_type AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_disabled AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_on_gsa_list AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_on_ldp_list AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_titleholder AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
+                   , NOW( ) AS edw_created_datetime
+                   , NOW( ) AS edw_modified_datetime
+                   , MAX( borrower.data_source_updated_datetime ) AS data_source_modified_datetime
+                   , citizenship_residency_type.value AS citizenship_residency
+                   , borrower.b_citizenship_residency_type AS citizenship_residency_code
+                   , disabled_type.value AS disabled
+                   , borrower.b_disabled AS disabled_code
+                   , on_gsa_list_type.value AS on_gsa_list
+                   , borrower.b_on_gsa_list AS on_gsa_list_code
+                   , on_ldp_list_type.value AS on_ldp_list
+                   , borrower.b_on_ldp_list AS on_ldp_list_code
+                   , titleholder_type.value AS titleholder
+                   , borrower.b_titleholder AS titleholder_code
+                   , MAX( GREATEST( citizenship_residency_type.etl_end_date_time, disabled_type.etl_end_date_time, on_gsa_list_type.etl_end_date_time,
+                                    on_ldp_list_type.etl_end_date_time, titleholder_type.etl_end_date_time ) ) AS max_source_etl_end_date_time
+              FROM (
+                  SELECT <<borrower_partial_load_condition>> AS include_record
+                       , borrower.*
+                  FROM history_octane.borrower
+                  LEFT JOIN history_octane.borrower AS history_records
+                            ON borrower.b_pid = history_records.b_pid
+                                AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.b_pid IS NULL
+              ) AS borrower
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<citizenship_residency_type_partial_load_condition>> AS include_record
+                           , citizenship_residency_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.citizenship_residency_type
+                      LEFT JOIN history_octane.citizenship_residency_type AS history_records
+                                ON citizenship_residency_type.code = history_records.code
+                                    AND citizenship_residency_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON citizenship_residency_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS citizenship_residency_type
+                   ON borrower.b_citizenship_residency_type = citizenship_residency_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                           , yes_no_unknown_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.yes_no_unknown_type
+                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                                ON yes_no_unknown_type.code = history_records.code
+                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS disabled_type
+                   ON borrower.b_disabled = disabled_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                           , yes_no_unknown_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.yes_no_unknown_type
+                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                                ON yes_no_unknown_type.code = history_records.code
+                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS on_gsa_list_type
+                   ON borrower.b_on_gsa_list = on_gsa_list_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                           , yes_no_unknown_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.yes_no_unknown_type
+                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                                ON yes_no_unknown_type.code = history_records.code
+                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS on_ldp_list_type
+                   ON borrower.b_on_ldp_list = on_ldp_list_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                           , yes_no_unknown_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.yes_no_unknown_type
+                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                                ON yes_no_unknown_type.code = history_records.code
+                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS titleholder_type
+                   ON borrower.b_titleholder = titleholder_type.code
+              WHERE GREATEST( borrower.include_record, citizenship_residency_type.include_record, disabled_type.include_record,
+                              on_gsa_list_type.include_record, on_ldp_list_type.include_record, titleholder_type.include_record ) IS TRUE
+              GROUP BY citizenship_residency_type.value
+                     , borrower.b_citizenship_residency_type
+                     , disabled_type.value
+                     , borrower.b_disabled
+                     , on_gsa_list_type.value
+                     , borrower.b_on_gsa_list
+                     , on_ldp_list_type.value
+                     , borrower.b_on_ldp_list
+                     , titleholder_type.value
+                     , borrower.b_titleholder
+          )
+              --new records that should be inserted
+          SELECT borrower_junk_dim_new_records.*
+          FROM borrower_junk_dim_new_records
+          LEFT JOIN star_loan.borrower_junk_dim
+                    ON borrower_junk_dim_new_records.data_source_integration_id = borrower_junk_dim.data_source_integration_id
+          WHERE borrower_junk_dim.dwid IS NULL
+          UNION ALL
+          --existing records that need to be updated
+          SELECT borrower_junk_dim_new_records.*
+          FROM borrower_junk_dim_new_records
+          JOIN (
+              SELECT borrower_junk_dim.data_source_integration_id, etl_log.etl_start_date_time
+              FROM star_loan.borrower_junk_dim
+              JOIN star_common.etl_log
+                   ON borrower_junk_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_junk_dim_etl_start_times
+               ON borrower_junk_dim_new_records.data_source_integration_id =
+                  borrower_junk_dim_etl_start_times.data_source_integration_id
+                   AND borrower_junk_dim_new_records.max_source_etl_end_date_time >=
+                       borrower_junk_dim_etl_start_times.etl_start_date_time;
