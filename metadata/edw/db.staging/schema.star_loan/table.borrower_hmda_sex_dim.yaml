@@ -38,6 +38,8 @@ step_functions:
         json_output_field: data_source_integration_id
         truncate_table: false
         container_memory: 2048
+        next_step_functions:
+        - SP-200022-update
         input_sql: |-
           WITH borrower_hmda_sex_dim_new_records AS (
               SELECT 'sex_female_flag~sex_male_flag~data_source_dwid' AS data_source_integration_columns
