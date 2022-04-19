@@ -130,7 +130,7 @@ step_functions:
         - SP-200022-update
         input_sql: |-
           WITH borrower_hmda_race_dim_new_records AS (
-              SELECT 'ethnicity_cuban_flag~ethnicity_hispanic_or_latino_flag~ethnicity_mexican_flag~ethnicity_not_hispanic_or_latino_flag~ethnicity_other_hispanic_or_latino_description_flag~ethnicity_other_hispanic_or_latino_flag~ethnicity_puerto_rican_flag~data_source_dwid' AS data_source_integration_columns
+              SELECT 'other_race_national_origin_description_flag~race_american_indian_or_alaska_native_flag~race_asian_flag~race_asian_indian_flag~race_black_or_african_american_flag~race_chinese_flag~race_filipino_flag~race_guamanian_or_chamorro_flag~race_japanese_flag~race_korean_flag~race_native_hawaiian_flag~race_native_hawaiian_or_other_pacific_islander_flag~race_not_applicable_flag~race_other_american_indian_or_alaska_native_description_flag~race_other_asian_description_flag~race_other_asian_flag~race_other_pacific_islander_description_flag~race_other_pacific_islander_flag~race_samoan_flag~race_vietnamese_flag~race_white_flag~data_source_dwid' AS data_source_integration_columns
                    , COALESCE( CAST( borrower.b_other_race_national_origin_description <> '' AND
                                      borrower.b_other_race_national_origin_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
                      COALESCE( CAST( borrower.b_race_american_indian_or_alaska_native AS TEXT ), '<NULL>' ) || '~' ||
