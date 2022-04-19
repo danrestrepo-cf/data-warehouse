@@ -69,7 +69,16 @@ pipeline {
                 AWS_PROFILE = "${params.environment}"
             }
             steps {
-                sh "integ/scripts/events-toggle-triggers.sh ${params.environment} disable"
+                build job: 'bi-ops-data-warehouse-sp-toggle',
+                        propagate: true,
+                        wait: true,
+                        parameters: [
+                                choice(name: 'environment', value: params.environment),
+                                string(name: 'disable_edw_triggers', value: true),
+                                string(name: 'clear_pending_sqs_queue', value: false),
+                                string(name: 'stop_jobs', value: false),
+                                string(name: 'enable_edw_triggers', value: false)
+                        ]
             }
         }
         stage("Purge Pending Jobs") {
@@ -78,7 +87,16 @@ pipeline {
                 AWS_PROFILE = "${params.environment}"
             }
             steps {
-                sh "integ/scripts/clear-sqs.sh ${params.environment}"
+                build job: 'bi-ops-data-warehouse-sp-toggle',
+                        propagate: true,
+                        wait: true,
+                        parameters: [
+                                choice(name: 'environment', value: params.environment),
+                                string(name: 'disable_edw_triggers', value: false),
+                                string(name: 'clear_pending_sqs_queue', value: true),
+                                string(name: 'stop_jobs', value: false),
+                                string(name: 'enable_edw_triggers', value: false)
+                        ]
             }
         }
         stage("Prepare Deploy") {
@@ -109,7 +127,16 @@ pipeline {
                         AWS_PROFILE = "${params.environment}"
                     }
                     steps {
-                        sh "integ/scripts/step-functions-stop-executions.sh ${params.environment}"
+                        build job: 'bi-ops-data-warehouse-sp-toggle',
+                                propagate: true,
+                                wait: true,
+                                parameters: [
+                                        choice(name: 'environment', value: params.environment),
+                                        string(name: 'disable_edw_triggers', value: false),
+                                        string(name: 'clear_pending_sqs_queue', value: false),
+                                        string(name: 'stop_jobs', value: true),
+                                        string(name: 'enable_edw_triggers', value: false)
+                                ]
                     }
                 }
             }
@@ -146,8 +173,16 @@ pipeline {
                         AWS_PROFILE = "${params.environment}"
                     }
                     steps {
-                        sh "sleep 10"
-                        sh "integ/scripts/events-toggle-triggers.sh ${params.environment} enable"
+                        build job: 'bi-ops-data-warehouse-sp-toggle',
+                                propagate: true,
+                                wait: true,
+                                parameters: [
+                                        choice(name: 'environment', value: params.environment),
+                                        string(name: 'disable_edw_triggers', value: false),
+                                        string(name: 'clear_pending_sqs_queue', value: false),
+                                        string(name: 'stop_jobs', value: false),
+                                        string(name: 'enable_edw_triggers', value: true)
+                                ]
                     }
                 }
                 stage("Update DMS") {
