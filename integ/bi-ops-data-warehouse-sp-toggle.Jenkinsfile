@@ -3,6 +3,7 @@
 pipeline {
     agent { label "dev-data-warehouse-deploy-agent" }
     parameters {
+        string(name: "git_branch", defaultValue: "", description: "Enter the name of the branch to build. E.g. master")
         choice(name: "environment", description: "Choose which environment to run on.", choices: ["qa", "prod"])
         booleanParam(name: "disable_edw_triggers", defaultValue: false, description: "Disable event triggers.")
         booleanParam(name: "clear_pending_sqs_queue", defaultValue: false, description: "Purge the SQS queues.")
