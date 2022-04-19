@@ -221,10 +221,10 @@ foreign_keys:
       table: borrower_lending_profile_dim
   fk_loan_fact__b1_borrower_hmda_collection_dwid:
     columns:
-      - b1_borrower_hmda_collection_dwid
+    - b1_borrower_hmda_collection_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_loan
       table: borrower_hmda_collection_dim
   fk_loan_fact__primary_application_dwid:
@@ -789,138 +789,138 @@ foreign_keys:
       table: date_dim
   fk_loan_fact__charges_enabled_date_dwid:
     columns:
-      - charges_enabled_date_dwid
+    - charges_enabled_date_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_common
       table: date_dim
   fk_loan_fact__effective_earliest_allowed_consummation_date_dwid:
     columns:
-      - effective_earliest_allowed_consummation_date_dwid
+    - effective_earliest_allowed_consummation_date_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_common
       table: date_dim
   fk_loan_fact__effective_hmda_action_date_dwid:
     columns:
-      - effective_hmda_action_date_dwid
+    - effective_hmda_action_date_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_common
       table: date_dim
   fk_loan_fact__effective_note_date_dwid:
     columns:
-      - effective_note_date_dwid
+    - effective_note_date_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_common
       table: date_dim
   fk_loan_fact__hmda_action_date_dwid:
     columns:
-      - hmda_action_date_dwid
+    - hmda_action_date_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_common
       table: date_dim
   fk_loan_fact__initial_cancel_status_date_dwid:
     columns:
-      - initial_cancel_status_date_dwid
+    - initial_cancel_status_date_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_common
       table: date_dim
   fk_loan_fact__initial_uw_disposition_date_dwid:
     columns:
-      - initial_uw_disposition_date_dwid
+    - initial_uw_disposition_date_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_common
       table: date_dim
   fk_loan_fact__initial_uw_submit_date_dwid:
     columns:
-      - initial_uw_submit_date_dwid
+    - initial_uw_submit_date_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_common
       table: date_dim
   fk_loan_fact__note_date_dwid:
     columns:
-      - note_date_dwid
+    - note_date_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_common
       table: date_dim
   fk_loan_fact__preapproval_uw_submit_date_dwid:
     columns:
-      - preapproval_uw_submit_date_dwid
+    - preapproval_uw_submit_date_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_common
       table: date_dim
   fk_loan_fact__transaction_create_date_dwid:
     columns:
-      - transaction_create_date_dwid
+    - transaction_create_date_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_common
       table: date_dim
   fk_loan_fact__transaction_welcome_call_date_dwid:
     columns:
-      - transaction_welcome_call_date_dwid
+    - transaction_welcome_call_date_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_common
       table: date_dim
   fk_loan_fact__trid_application_date_dwid:
     columns:
-      - trid_application_date_dwid
+    - trid_application_date_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_common
       table: date_dim
   fk_loan_fact__underwrite_publish_date_dwid:
     columns:
-      - underwrite_publish_date_dwid
+    - underwrite_publish_date_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_common
       table: date_dim
   fk_loan_fact__cash_out_reason_dwid:
     columns:
-      - cash_out_reason_dwid
+    - cash_out_reason_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_loan
       table: cash_out_reason_dim
   fk_loan_fact__hmda_action_dwid:
     columns:
-      - hmda_action_dwid
+    - hmda_action_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_loan
       table: hmda_action_dim
   fk_loan_fact__underwrite_dwid:
     columns:
-      - underwrite_dwid
+    - underwrite_dwid
     references:
       columns:
-        - dwid
+      - dwid
       schema: star_loan
       table: underwrite_dim
 columns:
