@@ -48,8 +48,7 @@ pipeline {
                 AWS_PROFILE = "${params.environment}"
             }
             steps {
-                // sh "integ/scripts/events-toggle-triggers.sh ${params.environment} disable"
-                echo "Disable EDW Triggers for environment ${params.environment}"
+                sh "integ/scripts/events-toggle-triggers.sh ${params.environment} disable"
             }
         }
         stage("Clear Pending SP SQS Queue") {
@@ -58,8 +57,7 @@ pipeline {
                 AWS_PROFILE = "${params.environment}"
             }
             steps {
-                // sh "integ/scripts/clear-sqs.sh ${params.environment}"
-                echo "Clear Pending SP SQS Queue for environment ${params.environment}"
+                sh "integ/scripts/clear-sqs.sh ${params.environment}"
             }
         }
         stage("Stop All Running SPs") {
@@ -68,8 +66,7 @@ pipeline {
                 AWS_PROFILE = "${params.environment}"
             }
             steps {
-                // sh "integ/scripts/step-functions-stop-executions.sh ${params.environment}"
-                echo "Stop Jobs for environment ${params.environment}"
+                sh "integ/scripts/step-functions-stop-executions.sh ${params.environment}"
             }
         }
         stage("Notify to Kill PostgreSQL Connections and ECS Containers") {
@@ -96,8 +93,7 @@ pipeline {
             }
             steps {
                 sh "sleep 10"
-                // sh "integ/scripts/events-toggle-triggers.sh ${params.environment} enable"
-                echo "Enable EDW Triggers for environment ${params.environment}"
+                sh "integ/scripts/events-toggle-triggers.sh ${params.environment} enable"
             }
         }
     }
