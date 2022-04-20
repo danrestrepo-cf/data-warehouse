@@ -73,7 +73,7 @@ pipeline {
                         propagate: true,
                         wait: true,
                         parameters: [
-                                choice(name: 'environment', value: params.environment),
+                                string(name: 'environment', value: params.environment),
                                 string(name: 'disable_edw_triggers', value: true),
                                 string(name: 'clear_pending_sqs_queue', value: false),
                                 string(name: 'stop_jobs', value: false),
@@ -91,7 +91,7 @@ pipeline {
                         propagate: true,
                         wait: true,
                         parameters: [
-                                choice(name: 'environment', value: params.environment),
+                                string(name: 'environment', value: params.environment),
                                 string(name: 'disable_edw_triggers', value: false),
                                 string(name: 'clear_pending_sqs_queue', value: true),
                                 string(name: 'stop_jobs', value: false),
@@ -131,7 +131,7 @@ pipeline {
                                 propagate: true,
                                 wait: true,
                                 parameters: [
-                                        choice(name: 'environment', value: params.environment),
+                                        string(name: 'environment', value: params.environment),
                                         string(name: 'disable_edw_triggers', value: false),
                                         string(name: 'clear_pending_sqs_queue', value: false),
                                         string(name: 'stop_jobs', value: true),
@@ -177,7 +177,7 @@ pipeline {
                                 propagate: true,
                                 wait: true,
                                 parameters: [
-                                        choice(name: 'environment', value: params.environment),
+                                        string(name: 'environment', value: params.environment),
                                         string(name: 'disable_edw_triggers', value: false),
                                         string(name: 'clear_pending_sqs_queue', value: false),
                                         string(name: 'stop_jobs', value: false),
