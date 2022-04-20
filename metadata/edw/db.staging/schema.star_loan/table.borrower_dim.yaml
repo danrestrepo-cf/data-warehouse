@@ -597,6 +597,16 @@ columns:
   current_residence_country:
     data_type: VARCHAR(1024)
     update_flag: true
+  schooling_years:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.b_schooling_years
+    update_flag: true
+  homeownership_education_complete_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.b_homeownership_education_complete_date
+    update_flag: true
 step_functions:
   SP-200005-insert-update:
     etls:
@@ -739,6 +749,8 @@ step_functions:
                    , current_borrower_residence_place.pl_state_fips AS current_residence_state_fips
                    , current_borrower_residence_place.pl_country AS current_residence_country_code
                    , country_type.value AS current_residence_country
+                   , primary_table.b_schooling_years AS schooling_years
+                   , primary_table.b_homeownership_education_complete_date AS homeownership_education_complete_date
                    , GREATEST( primary_table.etl_end_date_time, t114.etl_end_date_time, t115.etl_end_date_time, t149.etl_end_date_time,
                                t150.etl_end_date_time, t118.etl_end_date_time, t142.etl_end_date_time, t120.etl_end_date_time, t129.etl_end_date_time,
                                t130.etl_end_date_time, t132.etl_end_date_time, t144.etl_end_date_time, t145.etl_end_date_time,
@@ -970,12 +982,12 @@ step_functions:
                   FROM (
                       SELECT <<borrower_residence_partial_load_condition>> AS include_record
                            , borrower_residence.*
-                          , etl_log.etl_end_date_time
-                   FROM history_octane.borrower_residence
-                   LEFT JOIN history_octane.borrower_residence AS history_records
-                           ON borrower_residence.bres_pid = history_records.bres_pid
-                              AND borrower_residence.data_source_updated_datetime < history_records.data_source_updated_datetime
-                   JOIN star_common.etl_log
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.borrower_residence
+                      LEFT JOIN history_octane.borrower_residence AS history_records
+                                ON borrower_residence.bres_pid = history_records.bres_pid
+                                    AND borrower_residence.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
                            ON borrower_residence.etl_batch_id = etl_log.etl_batch_id
                       WHERE history_records.bres_pid IS NULL
                   ) AS primary_table
@@ -1013,7 +1025,7 @@ step_functions:
                       WHERE history_records.c_pid IS NULL
                   ) AS primary_table
               ) AS county
-                         ON current_borrower_residence_place.pl_county_pid = county.c_pid
+                        ON current_borrower_residence_place.pl_county_pid = county.c_pid
               INNER JOIN (
                   SELECT *
                   FROM (
@@ -1036,7 +1048,7 @@ step_functions:
                               current_borrower_residence.include_record, current_borrower_residence_place.include_record,
                               county.include_record, country_type.include_record ) IS TRUE
           )
-          --new records that should be inserted
+              --new records that should be inserted
           SELECT borrower_dim_incl_new_records.*
           FROM borrower_dim_incl_new_records
           LEFT JOIN star_loan.borrower_dim
