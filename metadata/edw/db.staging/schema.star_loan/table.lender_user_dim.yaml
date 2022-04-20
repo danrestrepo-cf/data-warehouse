@@ -292,6 +292,16 @@ columns:
     source:
       field: primary_source_table.columns.lu_through_date
     update_flag: true
+  marketing_details_enabled:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lu_marketing_details_enabled
+    update_flag: true
+  marketing_details_featured_review:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lu_marketing_details_featured_review
+    update_flag: true
 step_functions:
   SP-200010:
     etls:
@@ -364,6 +374,8 @@ step_functions:
                    , primary_table.lu_time_zone AS time_zone_code
                    , primary_table.lu_unparsed_name AS unparsed_name
                    , primary_table.lu_lender_user_status_type AS status_code
+                   , primary_table.lu_marketing_details_enabled as marketing_details_enabled
+                   , primary_table.lu_marketing_details_featured_review as marketing_details_featured_review
                    , t456.value AS status
                    , t457.value AS type
                    , t458.value AS time_zone
