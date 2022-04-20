@@ -82,7 +82,7 @@ pipeline {
                 timeout(time: 8, unit: 'HOURS')
             }
             steps {
-                input message: "Has the infrastructure team killed PostgreSQL connections and ECS containers?", ok: 'Yes.'
+                input message: "Has the infrastructure team killed PostgreSQL connections and ECS containers?", ok: 'Yes'
                 echo "Proceeding."
             }
         }
