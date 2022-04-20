@@ -126,67 +126,55 @@ step_functions:
                   WHERE history_records.b_pid IS NULL
               ) AS borrower
               JOIN (
-                  SELECT *
-                  FROM (
-                      SELECT <<homeownership_education_type_partial_load_condition>> AS include_record
-                           , homeownership_education_type.*
-                           , etl_log.etl_end_date_time
-                      FROM history_octane.homeownership_education_type
-                      LEFT JOIN history_octane.homeownership_education_type AS history_records
-                                ON homeownership_education_type.code = history_records.code
-                                    AND homeownership_education_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                      JOIN star_common.etl_log
-                           ON homeownership_education_type.etl_batch_id = etl_log.etl_batch_id
-                      WHERE history_records.code IS NULL
-                  ) AS primary_table
+                  SELECT <<homeownership_education_type_partial_load_condition>> AS include_record
+                       , homeownership_education_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.homeownership_education_type
+                  LEFT JOIN history_octane.homeownership_education_type AS history_records
+                            ON homeownership_education_type.code = history_records.code
+                                AND homeownership_education_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON homeownership_education_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
               ) AS homeownership_education_type
                    ON borrower.b_homeownership_education_type = homeownership_education_type.code
               JOIN (
-                  SELECT *
-                  FROM (
-                      SELECT <<housing_counseling_agency_type_partial_load_condition>> AS include_record
-                           , housing_counseling_agency_type.*
-                           , etl_log.etl_end_date_time
-                      FROM history_octane.housing_counseling_agency_type
-                      LEFT JOIN history_octane.housing_counseling_agency_type AS history_records
-                                ON housing_counseling_agency_type.code = history_records.code
-                                    AND housing_counseling_agency_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                      JOIN star_common.etl_log
-                           ON housing_counseling_agency_type.etl_batch_id = etl_log.etl_batch_id
-                      WHERE history_records.code IS NULL
-                  ) AS primary_table
+                  SELECT <<housing_counseling_agency_type_partial_load_condition>> AS include_record
+                       , housing_counseling_agency_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.housing_counseling_agency_type
+                  LEFT JOIN history_octane.housing_counseling_agency_type AS history_records
+                            ON housing_counseling_agency_type.code = history_records.code
+                                AND housing_counseling_agency_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON housing_counseling_agency_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
               ) AS homeownership_education_agency_type
                    ON borrower.b_homeownership_education_agency_type = homeownership_education_agency_type.code
               JOIN (
-                  SELECT *
-                  FROM (
-                      SELECT <<housing_counseling_type_partial_load_condition>> AS include_record
-                           , housing_counseling_type.*
-                           , etl_log.etl_end_date_time
-                      FROM history_octane.housing_counseling_type
-                      LEFT JOIN history_octane.housing_counseling_type AS history_records
-                                ON housing_counseling_type.code = history_records.code
-                                    AND housing_counseling_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                      JOIN star_common.etl_log
-                           ON housing_counseling_type.etl_batch_id = etl_log.etl_batch_id
-                      WHERE history_records.code IS NULL
-                  ) AS primary_table
+                  SELECT <<housing_counseling_type_partial_load_condition>> AS include_record
+                       , housing_counseling_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.housing_counseling_type
+                  LEFT JOIN history_octane.housing_counseling_type AS history_records
+                            ON housing_counseling_type.code = history_records.code
+                                AND housing_counseling_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON housing_counseling_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
               ) AS housing_counseling_type
                    ON borrower.b_housing_counseling_type = housing_counseling_type.code
               JOIN (
-                  SELECT *
-                  FROM (
-                      SELECT <<housing_counseling_agency_type_partial_load_condition>> AS include_record
-                           , housing_counseling_agency_type.*
-                           , etl_log.etl_end_date_time
-                      FROM history_octane.housing_counseling_agency_type
-                      LEFT JOIN history_octane.housing_counseling_agency_type AS history_records
-                                ON housing_counseling_agency_type.code = history_records.code
-                                    AND housing_counseling_agency_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                      JOIN star_common.etl_log
-                           ON housing_counseling_agency_type.etl_batch_id = etl_log.etl_batch_id
-                      WHERE history_records.code IS NULL
-                  ) AS primary_table
+                  SELECT <<housing_counseling_agency_type_partial_load_condition>> AS include_record
+                       , housing_counseling_agency_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.housing_counseling_agency_type
+                  LEFT JOIN history_octane.housing_counseling_agency_type AS history_records
+                            ON housing_counseling_agency_type.code = history_records.code
+                                AND housing_counseling_agency_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON housing_counseling_agency_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
               ) AS housing_counseling_agency_type
                    ON borrower.b_housing_counseling_agency_type = housing_counseling_agency_type.code
               WHERE GREATEST( borrower.include_record, homeownership_education_type.include_record, borrower.include_record,
