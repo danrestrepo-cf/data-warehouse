@@ -48,9 +48,6 @@ WHERE TRUE;
  */
 
 ALTER TABLE star_loan.loan_fact
-    --drop old unique dim foreign key columns
-    DROP COLUMN b1_borrower_demographics_dwid,
-    DROP COLUMN b1_borrower_lending_profile_dwid,
     --add new unique dim foreign key columns
     ADD COLUMN b1_borrower_counseling_dwid BIGINT,
     ADD COLUMN b1_borrower_employee_status_dwid BIGINT,
@@ -93,16 +90,6 @@ WHERE TRUE;
  */
 
 ALTER TABLE star_loan.borrower_dim
-    --drop columns which will be incorporated into new unique dims
-    DROP COLUMN housing_counseling,
-    DROP COLUMN housing_counseling_code,
-    DROP COLUMN housing_counseling_agency_code,
-    DROP COLUMN housing_counseling_agency,
-    DROP COLUMN prior_property_title,
-    DROP COLUMN prior_property_usage_code,
-    DROP COLUMN prior_property_title_code,
-    DROP COLUMN prior_property_usage,
-    --add schooling_years column
     ADD COLUMN schooling_years INT,
     ADD COLUMN homeownership_education_complete_date DATE;
 
@@ -118,13 +105,6 @@ FROM (
     WHERE history_records.b_pid IS NULL
 ) AS borrower
 WHERE borrower_dim.borrower_pid = borrower.b_pid;
-
-/*
- drop old borrower unique dimensions
- */
-
-DROP TABLE star_loan.borrower_demographics_dim;
-DROP TABLE star_loan.borrower_lending_profile_dim;
 
 /*
  create new unique borrower dimensions and insert "zero" rows
