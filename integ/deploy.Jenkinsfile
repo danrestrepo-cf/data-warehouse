@@ -74,6 +74,7 @@ pipeline {
                         wait: true,
                         parameters: [
                                 string(name: 'environment', value: params.environment),
+                                string(name: 'git_branch', value: params.git_branch),
                                 booleanParam(name: 'disable_edw_triggers', value: true),
                                 booleanParam(name: 'clear_pending_sqs_queue', value: false),
                                 booleanParam(name: 'stop_jobs', value: false),
@@ -92,6 +93,7 @@ pipeline {
                         wait: true,
                         parameters: [
                                 string(name: 'environment', value: params.environment),
+                                string(name: 'git_branch', value: params.git_branch),
                                 booleanParam(name: 'disable_edw_triggers', value: false),
                                 booleanParam(name: 'clear_pending_sqs_queue', value: true),
                                 booleanParam(name: 'stop_jobs', value: false),
@@ -132,6 +134,7 @@ pipeline {
                                 wait: true,
                                 parameters: [
                                         string(name: 'environment', value: params.environment),
+                                        string(name: 'git_branch', value: params.git_branch),
                                         booleanParam(name: 'disable_edw_triggers', value: false),
                                         booleanParam(name: 'clear_pending_sqs_queue', value: false),
                                         booleanParam(name: 'stop_jobs', value: true),
@@ -178,6 +181,7 @@ pipeline {
                                 wait: true,
                                 parameters: [
                                         string(name: 'environment', value: params.environment),
+                                        string(name: 'git_branch', value: params.git_branch),
                                         booleanParam(name: 'disable_edw_triggers', value: false),
                                         booleanParam(name: 'clear_pending_sqs_queue', value: false),
                                         booleanParam(name: 'stop_jobs', value: false),
