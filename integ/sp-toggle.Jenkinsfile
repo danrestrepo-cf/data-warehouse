@@ -75,7 +75,7 @@ pipeline {
         stage("Notify to Kill PostgreSQL Connections and ECS Containers") {
             when { equals expected: true, actual: params.stop_jobs}
             steps {
-                zoomAlarm("PAUSED","!!! Waiting for infrastructure to kill PostgreSQL connections and ECS containers. Resuming after manual approval https://jenkins.taggartsoftware.com/view/Operations%20-%20BI/job/bi-ops-data-warehouse-sp-toggle/${currentBuild.number}/consoleFull !!!")
+                zoomAlarm("PAUSED","!!! Waiting for infrastructure to kill PostgreSQL connections and ECS containers. Resuming after manual approval https://jenkins.taggartsoftware.com/view/Operations%20-%20BI/job/${env.JOB_NAME}/${currentBuild.number}/consoleFull !!!")
             }
         }
         stage("Prompt to continue") {
