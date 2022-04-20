@@ -74,10 +74,10 @@ pipeline {
                         wait: true,
                         parameters: [
                                 string(name: 'environment', value: params.environment),
-                                string(name: 'disable_edw_triggers', value: true),
-                                string(name: 'clear_pending_sqs_queue', value: false),
-                                string(name: 'stop_jobs', value: false),
-                                string(name: 'enable_edw_triggers', value: false)
+                                booleanParam(name: 'disable_edw_triggers', value: true),
+                                booleanParam(name: 'clear_pending_sqs_queue', value: false),
+                                booleanParam(name: 'stop_jobs', value: false),
+                                booleanParam(name: 'enable_edw_triggers', value: false)
                         ]
             }
         }
@@ -92,10 +92,10 @@ pipeline {
                         wait: true,
                         parameters: [
                                 string(name: 'environment', value: params.environment),
-                                string(name: 'disable_edw_triggers', value: false),
-                                string(name: 'clear_pending_sqs_queue', value: true),
-                                string(name: 'stop_jobs', value: false),
-                                string(name: 'enable_edw_triggers', value: false)
+                                booleanParam(name: 'disable_edw_triggers', value: false),
+                                booleanParam(name: 'clear_pending_sqs_queue', value: true),
+                                booleanParam(name: 'stop_jobs', value: false),
+                                booleanParam(name: 'enable_edw_triggers', value: false)
                         ]
             }
         }
@@ -132,10 +132,10 @@ pipeline {
                                 wait: true,
                                 parameters: [
                                         string(name: 'environment', value: params.environment),
-                                        string(name: 'disable_edw_triggers', value: false),
-                                        string(name: 'clear_pending_sqs_queue', value: false),
-                                        string(name: 'stop_jobs', value: true),
-                                        string(name: 'enable_edw_triggers', value: false)
+                                        booleanParam(name: 'disable_edw_triggers', value: false),
+                                        booleanParam(name: 'clear_pending_sqs_queue', value: false),
+                                        booleanParam(name: 'stop_jobs', value: true),
+                                        booleanParam(name: 'enable_edw_triggers', value: false)
                                 ]
                     }
                 }
@@ -178,10 +178,10 @@ pipeline {
                                 wait: true,
                                 parameters: [
                                         string(name: 'environment', value: params.environment),
-                                        string(name: 'disable_edw_triggers', value: false),
-                                        string(name: 'clear_pending_sqs_queue', value: false),
-                                        string(name: 'stop_jobs', value: false),
-                                        string(name: 'enable_edw_triggers', value: true)
+                                        booleanParam(name: 'disable_edw_triggers', value: false),
+                                        booleanParam(name: 'clear_pending_sqs_queue', value: false),
+                                        booleanParam(name: 'stop_jobs', value: false),
+                                        booleanParam(name: 'enable_edw_triggers', value: true)
                                 ]
                     }
                 }
