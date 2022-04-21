@@ -1,5 +1,5 @@
 name: transaction_aux_govt_programs_dim
-primary_source_table: staging.history_octane.proposal
+primary_source_table: staging.history_octane.deal
 primary_key:
   - transaction_dwid
 columns:
@@ -30,266 +30,266 @@ columns:
   deal_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_pid
+      field: primary_source_table.columns.d_pid
     update_flag: true
   active_proposal_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.prp_pid
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_pid
     update_flag: true
   fha_mip_refund_request_input_error_flag:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.prp_fha_mip_refund_request_input_error
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_mip_refund_request_input_error
     update_flag: true
   fha_non_arms_length_ltv_exception_verified_flag:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.prp_fha_non_arms_length_ltv_exception_verified
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_non_arms_length_ltv_exception_verified
   request_fha_mip_refund_required_flag:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.prp_request_fha_mip_refund_required
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_request_fha_mip_refund_required
     update_flag: true
   texas_equity_conversion_determination_datetime_override_flag:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.prp_texas_equity_conversion_determination_datetime_override
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_texas_equity_conversion_determination_datetime_override
     update_flag: true
   texas_equity_determination_datetime_override_flag:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.prp_texas_equity_determination_datetime_override
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_texas_equity_determination_datetime_override
     update_flag: true
   va_maintenance_utilities_auto_compute_flag:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.prp_va_maintenance_utilities_auto_compute
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_maintenance_utilities_auto_compute
     update_flag: true
   fha_prior_agency_case_endorsement_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.prp_fha_prior_agency_case_endorsement_date
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_prior_agency_case_endorsement_date
     update_flag: true
   fha_refinance_authorization_expiration_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.prp_fha_refinance_authorization_expiration_date
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_refinance_authorization_expiration_date
     update_flag: true
   texas_equity_determination_datetime:
     data_type: TIMESTAMPTZ
     source:
-      field: primary_source_table.columns.prp_texas_equity_determination_datetime
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_texas_equity_determination_datetime
     update_flag: true
   usda_gsa_sam_checked_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.prp_usda_gsa_sam_checked_date
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_usda_gsa_sam_checked_date
     update_flag: true
   va_notice_of_value_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.prp_va_notice_of_value_date
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_notice_of_value_date
     update_flag: true
   cema_borrower_savings:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.prp_cema_borrower_savings
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_cema_borrower_savings
     update_flag: true
   fha_va_reasonable_value_amount:
     data_type: NUMERIC(15,0)
     source:
-      field: primary_source_table.columns.prp_fha_va_reasonable_value_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_va_reasonable_value_amount
     update_flag: true
   va_actual_guaranty_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.prp_va_actual_guaranty_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_actual_guaranty_amount
     update_flag: true
   va_amount_used_to_calculate_maximum_guaranty:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.prp_va_amount_used_to_calculate_maximum_guaranty
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_amount_used_to_calculate_maximum_guaranty
     update_flag: true
   va_energy_efficient_improvements_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.prp_va_energy_efficient_improvements_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_energy_efficient_improvements_amount
     update_flag: true
   va_guaranty_percent:
     data_type: NUMERIC(11,9)
     source:
-      field: primary_source_table.columns.prp_va_guaranty_percent
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_guaranty_percent
     update_flag: true
   va_maintenance_utilities_per_square_feet_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.prp_va_maintenance_utilities_per_square_feet_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_maintenance_utilities_per_square_feet_amount
     update_flag: true
   va_maximum_base_loan_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.prp_va_maximum_base_loan_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_maximum_base_loan_amount
     update_flag: true
   va_maximum_funding_fee_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.prp_va_maximum_funding_fee_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_maximum_funding_fee_amount
     update_flag: true
   va_maximum_total_loan_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.prp_va_maximum_total_loan_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_maximum_total_loan_amount
     update_flag: true
   va_monthly_maintenance_utilities_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.prp_va_monthly_maintenance_utilities_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_monthly_maintenance_utilities_amount
     update_flag: true
   va_notice_of_value_estimated_reasonable_value_amount:
     data_type: NUMERIC(15,0)
     source:
-      field: primary_source_table.columns.prp_va_notice_of_value_estimated_reasonable_value_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_notice_of_value_estimated_reasonable_value_amount
     update_flag: true
   va_required_cash_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.prp_va_required_cash_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_required_cash_amount
     update_flag: true
   va_required_guaranty_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.prp_va_required_guaranty_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_required_guaranty_amount
     update_flag: true
   fha_prior_agency_case_id:
     data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.prp_fha_prior_agency_case_id
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_prior_agency_case_id
     update_flag: true
   fha_refinance_authorization_number:
     data_type: VARCHAR(16)
     source:
-      field: primary_source_table.columns.prp_fha_refinance_authorization_number
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_refinance_authorization_number
     update_flag: true
   fhac_refinance_authorization_messages:
     data_type: TEXT
     source:
-      field: primary_source_table.columns.prp_fhac_refinance_authorization_messages
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fhac_refinance_authorization_messages
     update_flag: true
   texas_equity_conversion_determ_datetime_override_reason:
     data_type: TEXT
     source:
-      field: primary_source_table.columns.prp_texas_equity_conversion_determ_datetime_override_reason
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_texas_equity_conversion_determ_datetime_override_reason
     update_flag: true
   texas_equity_determination_datetime_override_reason:
     data_type: TEXT
     source:
-      field: primary_source_table.columns.prp_texas_equity_determination_datetime_override_reason
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_texas_equity_determination_datetime_override_reason
     update_flag: true
   va_prior_paid_in_full_loan_number:
     data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.prp_va_prior_paid_in_full_loan_number
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_prior_paid_in_full_loan_number
     update_flag: true
   fha_non_arms_length_ltv_exception:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_fha_non_arms_length_ltv_exception_type.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_fha_non_arms_length_ltv_exception_type.columns.value
     update_flag: true
   fha_non_arms_length_ltv_exception_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_fha_non_arms_length_ltv_exception_type
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_non_arms_length_ltv_exception_type
     update_flag: true
   hud_fha_de_approval:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_hud_fha_de_approval_type.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_hud_fha_de_approval_type.columns.value
     update_flag: true
   hud_fha_de_approval_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_hud_fha_de_approval_type
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_hud_fha_de_approval_type
     update_flag: true
   usda_rd_single_family_housing:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_usda_rd_single_family_housing_type.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_usda_rd_single_family_housing_type.columns.value
     update_flag: true
   usda_rd_single_family_housing_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_usda_rd_single_family_housing_type
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_usda_rd_single_family_housing_type
     update_flag: true
   va_notice_of_value_source:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_va_notice_of_value_source_type.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_va_notice_of_value_source_type.columns.value
     update_flag: true
   va_notice_of_value_source_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_va_notice_of_value_source_type
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_notice_of_value_source_type
     update_flag: true
   va_past_credit_record:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_va_past_credit_record_type.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_va_past_credit_record_type.columns.value
     update_flag: true
   va_past_credit_record_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_va_past_credit_record_type
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_past_credit_record_type
     update_flag: true
   cema:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_cema.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_cema.columns.value
     update_flag: true
   cema_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_cema
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_cema
     update_flag: true
   fha_eligible_maximum_financing:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_fha_eligible_maximum_financing.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_fha_eligible_maximum_financing.columns.value
     update_flag: true
   fha_eligible_maximum_financing_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_fha_eligible_maximum_financing
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_eligible_maximum_financing
     update_flag: true
   usda_gsa_sam_exclusion:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_usda_gsa_sam_exclusion.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_usda_gsa_sam_exclusion.columns.value
     update_flag: true
   usda_gsa_sam_exclusion_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_usda_gsa_sam_exclusion
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_usda_gsa_sam_exclusion
     update_flag: true
   va_meets_credit_standards:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_va_meets_credit_standards.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_va_meets_credit_standards.columns.value
     update_flag: true
   va_meets_credit_standards_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_va_meets_credit_standards
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_meets_credit_standards
     update_flag: true
   va_monthly_utilities_included:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_va_monthly_utilities_included.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_va_monthly_utilities_included.columns.value
     update_flag: true
   va_monthly_utilities_included_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_va_monthly_utilities_included
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_monthly_utilities_included
     update_flag: true
 step_functions:
   SP-200028:

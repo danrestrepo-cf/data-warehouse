@@ -1,5 +1,5 @@
 name: transaction_aux_disaster_declaration_dim
-primary_source_table: staging.history_octane.proposal
+primary_source_table: staging.history_octane.deal
 primary_key:
 - transaction_dwid
 columns:
@@ -30,42 +30,42 @@ columns:
   deal_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_pid
+      field: primary_source_table.columns.d_pid
     update_flag: true
   active_proposal_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.prp_pid
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_pid
     update_flag: true
   any_disaster_declaration_after_appraisal_flag:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.prp_any_disaster_declaration_after_appraisal
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_any_disaster_declaration_after_appraisal
     update_flag: true
   any_disaster_declaration_before_appraisal_flag:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.prp_any_disaster_declaration_before_appraisal
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_any_disaster_declaration_before_appraisal
     update_flag: true
   any_disaster_declaration_flag:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.prp_any_disaster_declaration
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_any_disaster_declaration
     update_flag: true
   disaster_declaration_check_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.prp_disaster_declaration_check_date
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_disaster_declaration_check_date
     update_flag: true
   disaster_declaration_check_date_type:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_disaster_declaration_check_date_type.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_disaster_declaration_check_date_type.columns.value
     update_flag: true
   disaster_declaration_check_date_type_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_disaster_declaration_check_date_type
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_disaster_declaration_check_date_type
     update_flag: true
 step_functions:
   SP-200027:

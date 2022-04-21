@@ -11,10 +11,10 @@ INSERTIONS
 WITH insert_rows (database_name, schema_name, table_name, source_database_name, source_schema_name, source_table_name) AS (
 	VALUES ('staging', 'star_loan', 'cash_out_reason_dim', 'staging', 'history_octane', 'proposal')
 		, ('staging', 'star_loan', 'hmda_action_dim', 'staging', 'history_octane', 'deal')
-		, ('staging', 'star_loan', 'transaction_aux_construction_dim', 'staging', 'history_octane', 'proposal')
-		, ('staging', 'star_loan', 'transaction_aux_disaster_declaration_dim', 'staging', 'history_octane', 'proposal')
-		, ('staging', 'star_loan', 'transaction_aux_govt_programs_dim', 'staging', 'history_octane', 'proposal')
-		, ('staging', 'star_loan', 'transaction_aux_property_repairs_dim', 'staging', 'history_octane', 'proposal')
+		, ('staging', 'star_loan', 'transaction_aux_construction_dim', 'staging', 'history_octane', 'deal')
+		, ('staging', 'star_loan', 'transaction_aux_disaster_declaration_dim', 'staging', 'history_octane', 'deal')
+		, ('staging', 'star_loan', 'transaction_aux_govt_programs_dim', 'staging', 'history_octane', 'deal')
+		, ('staging', 'star_loan', 'transaction_aux_property_repairs_dim', 'staging', 'history_octane', 'deal')
 		, ('staging', 'star_loan', 'underwrite_dim', 'staging', 'history_octane', 'proposal')
 )
 INSERT
@@ -474,10 +474,10 @@ INSERT
 INTO mdi.process (name, description)
 VALUES ('ETL-200023', 'ETL to insert_update records into staging.star_loan.cash_out_reason_dim using staging.history_octane.proposal as the primary source')
 	, ('ETL-200024', 'ETL to insert_update records into staging.star_loan.hmda_action_dim using staging.history_octane.deal as the primary source')
-	, ('ETL-200026', 'ETL to insert_update records into staging.star_loan.transaction_aux_construction_dim using staging.history_octane.proposal as the primary source')
-	, ('ETL-200027', 'ETL to insert_update records into staging.star_loan.transaction_aux_disaster_declaration_dim using staging.history_octane.proposal as the primary source')
-	, ('ETL-200028', 'ETL to insert_update records into staging.star_loan.transaction_aux_govt_programs_dim using staging.history_octane.proposal as the primary source')
-	, ('ETL-200029', 'ETL to insert_update records into staging.star_loan.transaction_aux_property_repairs_dim using staging.history_octane.proposal as the primary source')
+	, ('ETL-200026', 'ETL to insert_update records into staging.star_loan.transaction_aux_construction_dim using staging.history_octane.deal as the primary source')
+	, ('ETL-200027', 'ETL to insert_update records into staging.star_loan.transaction_aux_disaster_declaration_dim using staging.history_octane.deal as the primary source')
+	, ('ETL-200028', 'ETL to insert_update records into staging.star_loan.transaction_aux_govt_programs_dim using staging.history_octane.deal as the primary source')
+	, ('ETL-200029', 'ETL to insert_update records into staging.star_loan.transaction_aux_property_repairs_dim using staging.history_octane.deal as the primary source')
 	, ('ETL-200025', 'ETL to insert_update records into staging.star_loan.underwrite_dim using staging.history_octane.proposal as the primary source');
 
 --table_input_step

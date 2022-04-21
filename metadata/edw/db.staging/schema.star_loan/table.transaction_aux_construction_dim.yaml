@@ -1,5 +1,5 @@
 name: transaction_aux_construction_dim
-primary_source_table: staging.history_octane.proposal
+primary_source_table: staging.history_octane.deal
 primary_key:
 - transaction_dwid
 columns:
@@ -30,67 +30,67 @@ columns:
   deal_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_pid
+      field: primary_source_table.columns.d_pid
     update_flag: true
   active_proposal_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.prp_pid
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_pid
     update_flag: true
   financed_property_improvements_flag:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.prp_financed_property_improvements
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_financed_property_improvements
     update_flag: true
   loan_modification_agreement_executed_received_datetime:
     data_type: TIMESTAMPTZ
     source:
-      field: primary_source_table.columns.prp_loan_modification_agreement_executed_received_datetime
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_loan_modification_agreement_executed_received_datetime
     update_flag: true
   adjusted_as_is_value_amount:
     data_type: NUMERIC(15,0)
     source:
-      field: primary_source_table.columns.prp_adjusted_as_is_value_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_adjusted_as_is_value_amount
     update_flag: true
   after_improved_value_amount:
     data_type: NUMERIC(15,0)
     source:
-      field: primary_source_table.columns.prp_after_improved_value_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_after_improved_value_amount
     update_flag: true
   construction_borrower_contribution_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.prp_construction_borrower_contribution_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_construction_borrower_contribution_amount
     update_flag: true
   estimated_hard_construction_cost_amount:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.prp_estimated_hard_construction_cost_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_estimated_hard_construction_cost_amount
     update_flag: true
   cr_tracker_url:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.columns.prp_cr_tracker_url
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_cr_tracker_url
     update_flag: true
   construction_lot_ownership_status:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_construction_lot_ownership_status_type.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_construction_lot_ownership_status_type.columns.value
     update_flag: true
   construction_lot_ownership_status_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_construction_lot_ownership_status_type
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_construction_lot_ownership_status_type
     update_flag: true
   financed_property_improvements_category:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_financed_property_improvements_category_type.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_financed_property_improvements_category_type.columns.value
     update_flag: true
   financed_property_improvements_category_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_financed_property_improvements_category_type
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_financed_property_improvements_category_type
 step_functions:
   SP-200026:
     etls:

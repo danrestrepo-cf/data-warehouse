@@ -1,5 +1,5 @@
 name: transaction_aux_property_repairs_dim
-primary_source_table: staging.history_octane.proposal
+primary_source_table: staging.history_octane.deal
 primary_key:
 - transaction_dwid
 columns:
@@ -30,87 +30,87 @@ columns:
   deal_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_pid
+      field: primary_source_table.columns.d_pid
     update_flag: true
   active_proposal_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.prp_pid
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_pid
     update_flag: true
   property_repairs_completed_notification_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.prp_property_repairs_completed_notification_date
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_property_repairs_completed_notification_date
     update_flag: true
   property_repairs_funds_released_contractor_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.prp_property_repairs_funds_released_contractor_date
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_property_repairs_funds_released_contractor_date
     update_flag: true
   property_repairs_holdback_required_completion_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.prp_property_repairs_holdback_required_completion_date
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_property_repairs_holdback_required_completion_date
     update_flag: true
   property_repairs_inspection_completed_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.prp_property_repairs_inspection_completed_date
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_property_repairs_inspection_completed_date
     update_flag: true
   property_repairs_inspection_ordered_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.prp_property_repairs_inspection_ordered_date
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_property_repairs_inspection_ordered_date
     update_flag: true
   property_repairs_cost_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.prp_property_repairs_cost_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_property_repairs_cost_amount
     update_flag: true
   property_repairs_holdback_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.prp_property_repairs_holdback_amount
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_property_repairs_holdback_amount
     update_flag: true
   property_repairs_description:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.columns.prp_property_repairs_description
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_property_repairs_description
     update_flag: true
   property_repairs_holdback_administrator:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_property_repairs_holdback_administrator
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_property_repairs_holdback_administrator
     update_flag: true
   property_repairs_holdback_calc:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_property_repairs_holdback_calc_type.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_property_repairs_holdback_calc_type.columns.value
     update_flag: true
   property_repairs_holdback_calc_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_property_repairs_holdback_calc_type
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_property_repairs_holdback_calc_type
     update_flag: true
   property_repairs_holdback_payer:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_property_repairs_holdback_payer_type.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_property_repairs_holdback_payer_type.columns.value
     update_flag: true
   property_repairs_holdback_payer_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_property_repairs_holdback_payer_type
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_property_repairs_holdback_payer_type
     update_flag: true
   property_repairs_required:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.foreign_keys.fkt_prp_property_repairs_required_type.columns.value
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_property_repairs_required_type.columns.value
     update_flag: true
   property_repairs_required_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prp_property_repairs_required_type
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_property_repairs_required_type
     update_flag: true
 step_functions:
   SP-200029:
