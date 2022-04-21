@@ -34,7 +34,10 @@ class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
                                   'data_source_dwid', 'edw_created_datetime', 'edw_modified_datetime',
                                   'data_source_integration_columns', 'data_source_integration_id',
                                   'data_source_modified_datetime', 'octane_username', 'loan_dwid', 'account_pid',
-                                  'borrower_dwid', 'borrower_pid', 'borrower_hmda_collection_dwid']
+                                  'borrower_dwid', 'borrower_pid', 'borrower_hmda_collection_dwid', 'borrower_counseling_dwid',
+                                  'borrower_employee_status_dwid', 'borrower_finances_declarations_dwid', 'borrower_hmda_ethnicity_dwid',
+                                  'borrower_hmda_race_dwid', 'borrower_hmda_sex_dwid', 'borrower_junk_dwid',
+                                  'borrower_pre_umdp_declarations_dwid', 'borrower_property_declarations_dwid', 'borrower_relations_dwid']
         metadata_table = self.construct_empty_metadata_table()
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
