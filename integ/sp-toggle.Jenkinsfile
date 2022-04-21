@@ -118,7 +118,7 @@ def zoomMessage(status, token, webhook, message = null) {
                 "   stop_jobs: ${params.stop_jobs}\n" +
                 "   enable_edw_triggers: ${params.enable_edw_triggers}\n" +
                 (message == null ? "" : "    ${message}\n") +
-                "Submitted by ${env.BUILD_USER}"
+                "Submitted by ${env.BUILD_USER} for ${params.git_branch}"
         )
     }
 }
