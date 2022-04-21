@@ -201,6 +201,29 @@
                     }
                 },
                 {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200019",
+                    "StartAt": "SP-200019_message",
+                    "States": {
+                        "SP-200019_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "transaction_dim",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200019"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
                     "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200021",
                     "StartAt": "SP-200021_message",
                     "States": {
@@ -215,6 +238,29 @@
                                     "ProcessId": {
                                         "DataType": "String",
                                         "StringValue": "SP-200021"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200028",
+                    "StartAt": "SP-200028_message",
+                    "States": {
+                        "SP-200028_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "transaction_aux_govt_programs_dim",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200028"
                                     }
                                 },
                                 "MessageBody.$": "States.JsonToString($)"

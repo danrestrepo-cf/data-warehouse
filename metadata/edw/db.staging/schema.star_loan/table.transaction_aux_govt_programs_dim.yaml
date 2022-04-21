@@ -1,0 +1,603 @@
+name: transaction_aux_govt_programs_dim
+primary_source_table: staging.history_octane.deal
+primary_key:
+  - transaction_dwid
+columns:
+  transaction_dwid:
+    data_type: BIGINT
+    update_flag: true
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: true
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: false
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.d_pid
+    update_flag: true
+  active_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_pid
+    update_flag: true
+  fha_mip_refund_request_input_error_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_mip_refund_request_input_error
+    update_flag: true
+  fha_non_arms_length_ltv_exception_verified_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_non_arms_length_ltv_exception_verified
+  request_fha_mip_refund_required_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_request_fha_mip_refund_required
+    update_flag: true
+  texas_equity_conversion_determination_datetime_override_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_texas_equity_conversion_determination_datetime_override
+    update_flag: true
+  texas_equity_determination_datetime_override_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_texas_equity_determination_datetime_override
+    update_flag: true
+  va_maintenance_utilities_auto_compute_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_maintenance_utilities_auto_compute
+    update_flag: true
+  fha_prior_agency_case_endorsement_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_prior_agency_case_endorsement_date
+    update_flag: true
+  fha_refinance_authorization_expiration_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_refinance_authorization_expiration_date
+    update_flag: true
+  texas_equity_determination_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_texas_equity_determination_datetime
+    update_flag: true
+  usda_gsa_sam_checked_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_usda_gsa_sam_checked_date
+    update_flag: true
+  va_notice_of_value_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_notice_of_value_date
+    update_flag: true
+  cema_borrower_savings:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_cema_borrower_savings
+    update_flag: true
+  fha_va_reasonable_value_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_va_reasonable_value_amount
+    update_flag: true
+  va_actual_guaranty_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_actual_guaranty_amount
+    update_flag: true
+  va_amount_used_to_calculate_maximum_guaranty:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_amount_used_to_calculate_maximum_guaranty
+    update_flag: true
+  va_energy_efficient_improvements_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_energy_efficient_improvements_amount
+    update_flag: true
+  va_guaranty_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_guaranty_percent
+    update_flag: true
+  va_maintenance_utilities_per_square_feet_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_maintenance_utilities_per_square_feet_amount
+    update_flag: true
+  va_maximum_base_loan_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_maximum_base_loan_amount
+    update_flag: true
+  va_maximum_funding_fee_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_maximum_funding_fee_amount
+    update_flag: true
+  va_maximum_total_loan_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_maximum_total_loan_amount
+    update_flag: true
+  va_monthly_maintenance_utilities_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_monthly_maintenance_utilities_amount
+    update_flag: true
+  va_notice_of_value_estimated_reasonable_value_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_notice_of_value_estimated_reasonable_value_amount
+    update_flag: true
+  va_required_cash_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_required_cash_amount
+    update_flag: true
+  va_required_guaranty_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_required_guaranty_amount
+    update_flag: true
+  fha_prior_agency_case_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_prior_agency_case_id
+    update_flag: true
+  fha_refinance_authorization_number:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_refinance_authorization_number
+    update_flag: true
+  fhac_refinance_authorization_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fhac_refinance_authorization_messages
+    update_flag: true
+  texas_equity_conversion_determ_datetime_override_reason:
+    data_type: TEXT
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_texas_equity_conversion_determ_datetime_override_reason
+    update_flag: true
+  texas_equity_determination_datetime_override_reason:
+    data_type: TEXT
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_texas_equity_determination_datetime_override_reason
+    update_flag: true
+  va_prior_paid_in_full_loan_number:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_prior_paid_in_full_loan_number
+    update_flag: true
+  fha_non_arms_length_ltv_exception:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_fha_non_arms_length_ltv_exception_type.columns.value
+    update_flag: true
+  fha_non_arms_length_ltv_exception_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_non_arms_length_ltv_exception_type
+    update_flag: true
+  hud_fha_de_approval:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_hud_fha_de_approval_type.columns.value
+    update_flag: true
+  hud_fha_de_approval_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_hud_fha_de_approval_type
+    update_flag: true
+  usda_rd_single_family_housing:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_usda_rd_single_family_housing_type.columns.value
+    update_flag: true
+  usda_rd_single_family_housing_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_usda_rd_single_family_housing_type
+    update_flag: true
+  va_notice_of_value_source:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_va_notice_of_value_source_type.columns.value
+    update_flag: true
+  va_notice_of_value_source_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_notice_of_value_source_type
+    update_flag: true
+  va_past_credit_record:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_va_past_credit_record_type.columns.value
+    update_flag: true
+  va_past_credit_record_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_past_credit_record_type
+    update_flag: true
+  cema:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_cema.columns.value
+    update_flag: true
+  cema_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_cema
+    update_flag: true
+  fha_eligible_maximum_financing:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_fha_eligible_maximum_financing.columns.value
+    update_flag: true
+  fha_eligible_maximum_financing_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_fha_eligible_maximum_financing
+    update_flag: true
+  usda_gsa_sam_exclusion:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_usda_gsa_sam_exclusion.columns.value
+    update_flag: true
+  usda_gsa_sam_exclusion_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_usda_gsa_sam_exclusion
+    update_flag: true
+  va_meets_credit_standards:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_va_meets_credit_standards.columns.value
+    update_flag: true
+  va_meets_credit_standards_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_meets_credit_standards
+    update_flag: true
+  va_monthly_utilities_included:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_va_monthly_utilities_included.columns.value
+    update_flag: true
+  va_monthly_utilities_included_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_va_monthly_utilities_included
+    update_flag: true
+step_functions:
+  SP-200028:
+    etls:
+      ETL-200028:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.transaction_aux_govt_programs_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-300001-insert-update
+        input_sql: |-
+          WITH transaction_aux_govt_programs_dim_incl_new_records AS (
+          	SELECT 'deal_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
+          		, COALESCE(CAST(deal.d_pid AS TEXT), '<NULL>') || '~' ||
+          		  COALESCE(CAST(1 AS TEXT), '<NULL>') AS data_source_integration_id
+          		, NOW() AS edw_created_datetime
+          		, NOW() AS edw_modified_datetime
+          		, proposal.data_source_updated_datetime AS data_source_modified_datetime
+          		, transaction_dim.dwid AS transaction_dwid
+          		, deal.d_pid AS deal_pid
+          		, proposal.prp_pid AS active_proposal_pid
+          		, proposal.prp_fha_mip_refund_request_input_error AS fha_mip_refund_request_input_error_flag
+          		, proposal.prp_fha_non_arms_length_ltv_exception_verified AS fha_non_arms_length_ltv_exception_verified_flag
+                , proposal.prp_request_fha_mip_refund_required AS request_fha_mip_refund_required_flag
+                , proposal.prp_texas_equity_conversion_determination_datetime_override AS texas_equity_conversion_determination_datetime_override_flag
+                , proposal.prp_texas_equity_determination_datetime_override AS texas_equity_determination_datetime_override_flag
+                , proposal.prp_va_maintenance_utilities_auto_compute AS va_maintenance_utilities_auto_compute_flag
+                , proposal.prp_fha_prior_agency_case_endorsement_date AS fha_prior_agency_case_endorsement_date
+                , proposal.prp_fha_refinance_authorization_expiration_date AS fha_refinance_authorization_expiration_date
+                , proposal.prp_texas_equity_determination_datetime AS texas_equity_determination_datetime
+                , proposal.prp_usda_gsa_sam_checked_date AS usda_gsa_sam_checked_date
+                , proposal.prp_va_notice_of_value_date AS va_notice_of_value_date
+                , proposal.prp_cema_borrower_savings AS cema_borrower_savings
+                , proposal.prp_fha_va_reasonable_value_amount AS fha_va_reasonable_value_amount
+                , proposal.prp_va_actual_guaranty_amount AS va_actual_guaranty_amount
+                , proposal.prp_va_amount_used_to_calculate_maximum_guaranty AS va_amount_used_to_calculate_maximum_guaranty
+                , proposal.prp_va_energy_efficient_improvements_amount AS va_energy_efficient_improvements_amount
+                , proposal.prp_va_guaranty_percent AS va_guaranty_percent
+                , proposal.prp_va_maintenance_utilities_per_square_feet_amount AS va_maintenance_utilities_per_square_feet_amount
+                , proposal.prp_va_maximum_base_loan_amount AS va_maximum_base_loan_amount
+                , proposal.prp_va_maximum_funding_fee_amount AS va_maximum_funding_fee_amount
+                , proposal.prp_va_maximum_total_loan_amount AS va_maximum_total_loan_amount
+                , proposal.prp_va_monthly_maintenance_utilities_amount AS va_monthly_maintenance_utilities_amount
+                , proposal.prp_va_notice_of_value_estimated_reasonable_value_amount AS va_notice_of_value_estimated_reasonable_value_amount
+                , proposal.prp_va_required_cash_amount AS va_required_cash_amount
+                , proposal.prp_va_required_guaranty_amount AS va_required_guaranty_amount
+                , proposal.prp_fha_prior_agency_case_id AS fha_prior_agency_case_id
+                , proposal.prp_fha_refinance_authorization_number AS fha_refinance_authorization_number
+                , proposal.prp_fhac_refinance_authorization_messages AS fhac_refinance_authorization_messages
+                , proposal.prp_texas_equity_conversion_determ_datetime_override_reason AS texas_equity_conversion_determ_datetime_override_reason
+                , proposal.prp_texas_equity_determination_datetime_override_reason AS texas_equity_determination_datetime_override_reason
+                , proposal.prp_va_prior_paid_in_full_loan_number AS va_prior_paid_in_full_loan_number
+              	, fha_non_arms_length_ltv_limit_exception_type.value AS fha_non_arms_length_ltv_exception
+              	, proposal.prp_fha_non_arms_length_ltv_exception_type AS fha_non_arms_length_ltv_exception_code
+              	, hud_fha_de_approval_type.value AS hud_fha_de_approval
+              	, proposal.prp_hud_fha_de_approval_type AS hud_fha_de_approval_code
+              	, usda_rd_single_family_housing_type.value AS usda_rd_single_family_housing
+              	, proposal.prp_usda_rd_single_family_housing_type AS usda_rd_single_family_housing_code
+              	, va_notice_of_value_source_type.value AS va_notice_of_value_source
+              	, proposal.prp_va_notice_of_value_source_type AS va_notice_of_value_source_code
+              	, va_past_credit_record_type.value AS va_past_credit_record
+              	, proposal.prp_va_past_credit_record_type AS va_past_credit_record_code
+              	, cema_ynna_type.value AS cema
+              	, proposal.prp_cema AS cema_code
+          	    , fha_eligible_maximum_financing_ynu_type.value AS fha_eligible_maximum_financing
+              	, proposal.prp_fha_eligible_maximum_financing AS fha_eligible_maximum_financing_code
+              	, usda_gsa_sam_exclusion_ynu_type.value AS usda_gsa_sam_exclusion
+          	    , proposal.prp_usda_gsa_sam_exclusion AS usda_gsa_sam_exclusion_code
+          		, va_meets_credit_standards_ynu_type.value AS va_meets_credit_standards
+          	    , proposal.prp_va_meets_credit_standards AS va_meets_credit_standards_code
+              	, va_monthly_utilities_included_ynu_type.value AS va_monthly_utilities_included
+          	    , proposal.prp_va_monthly_utilities_included AS va_monthly_utilities_included_code
+          		, GREATEST(deal.etl_end_date_time, proposal.etl_end_date_time, fha_non_arms_length_ltv_limit_exception_type
+          		    .etl_end_date_time, hud_fha_de_approval_type.etl_end_date_time, usda_rd_single_family_housing_type
+          		        .etl_end_date_time, va_notice_of_value_source_type.etl_end_date_time, va_past_credit_record_type
+          		            .etl_end_date_time, cema_ynna_type.etl_end_date_time, fha_eligible_maximum_financing_ynu_type
+          		                .etl_end_date_time, usda_gsa_sam_exclusion_ynu_type.etl_end_date_time,
+          		    va_meets_credit_standards_ynu_type.etl_end_date_time, va_monthly_utilities_included_ynu_type
+          		        .etl_end_date_time, transaction_dim.etl_end_date_time) AS max_source_etl_end_date_time
+          	FROM (
+          		SELECT <<deal_partial_load_condition>> AS include_record
+          			, deal.*
+          			, etl_log.etl_end_date_time
+          		FROM history_octane.deal
+          			LEFT JOIN history_octane.deal AS history_records
+          				ON deal.d_pid = history_records.d_pid
+          					AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+          			JOIN star_common.etl_log
+          				ON deal.etl_batch_id = etl_log.etl_batch_id
+          		WHERE history_records.d_pid IS NULL
+          	) AS deal
+          		JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<proposal_partial_load_condition>> AS include_record
+          					, proposal.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.proposal
+          					LEFT JOIN history_octane.proposal AS history_records
+          						ON proposal.prp_pid = history_records.prp_pid
+          							AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON proposal.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.prp_pid IS NULL
+          			) AS primary_table
+          		) AS proposal
+          			ON deal.d_active_proposal_pid = proposal.prp_pid
+          		JOIN (
+          		    SELECT *
+          		    FROM (
+          		        SELECT <<fha_non_arms_length_ltv_limit_exception_type_partial_load_condition>> AS include_record
+          		        	, fha_non_arms_length_ltv_limit_exception_type.*
+          		        	, etl_log.etl_end_date_time
+          		        FROM history_octane.fha_non_arms_length_ltv_limit_exception_type
+          		        	LEFT JOIN history_octane.fha_non_arms_length_ltv_limit_exception_type AS history_records
+          		        		ON fha_non_arms_length_ltv_limit_exception_type.code = history_records.code
+          		        			AND fha_non_arms_length_ltv_limit_exception_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          		        	JOIN star_common.etl_log
+          		        		ON fha_non_arms_length_ltv_limit_exception_type.etl_batch_id = etl_log.etl_batch_id
+          		        WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS fha_non_arms_length_ltv_limit_exception_type
+          	    		ON proposal.prp_fha_non_arms_length_ltv_exception_type = fha_non_arms_length_ltv_limit_exception_type.code
+          	    JOIN (
+          	        SELECT *
+          	        FROM (
+          	            SELECT <<hud_fha_de_approval_type_partial_load_condition>> AS include_record
+          	            	, hud_fha_de_approval_type.*
+          	            	, etl_log.etl_end_date_time
+          	            FROM history_octane.hud_fha_de_approval_type
+          	            	LEFT JOIN history_octane.hud_fha_de_approval_type AS history_records
+          	            		ON hud_fha_de_approval_type.code = history_records.code
+          	            			AND hud_fha_de_approval_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          	            	JOIN star_common.etl_log
+          	            		ON hud_fha_de_approval_type.etl_batch_id = etl_log.etl_batch_id
+          	            WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS hud_fha_de_approval_type
+          	    	ON proposal.prp_hud_fha_de_approval_type = hud_fha_de_approval_type.code
+          	    JOIN (
+          	        SELECT *
+          	        FROM (
+          	            SELECT <<usda_rd_single_family_housing_type_partial_load_condition>> AS include_record
+          	            	, usda_rd_single_family_housing_type.*
+          	            	, etl_log.etl_end_date_time
+          	            FROM history_octane.usda_rd_single_family_housing_type
+          	            	LEFT JOIN history_octane.usda_rd_single_family_housing_type AS history_records
+          	            		ON usda_rd_single_family_housing_type.code = history_records.code
+          	            			AND usda_rd_single_family_housing_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          	            	JOIN star_common.etl_log
+          	            		ON usda_rd_single_family_housing_type.etl_batch_id = etl_log.etl_batch_id
+          	            WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS usda_rd_single_family_housing_type
+          			ON proposal.prp_usda_rd_single_family_housing_type = usda_rd_single_family_housing_type.code
+          	    JOIN (
+          	        SELECT *
+          	        FROM (
+          	            SELECT <<va_notice_of_value_source_type_partial_load_condition>> AS include_record
+          	            	, va_notice_of_value_source_type.*
+          	            	, etl_log.etl_end_date_time
+          	            FROM history_octane.va_notice_of_value_source_type
+          	            	LEFT JOIN history_octane.va_notice_of_value_source_type AS history_records
+          	            		ON va_notice_of_value_source_type.code = history_records.code
+          	            			AND va_notice_of_value_source_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          	            	JOIN star_common.etl_log
+          	            		ON va_notice_of_value_source_type.etl_batch_id = etl_log.etl_batch_id
+          	            WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS va_notice_of_value_source_type
+          	    	ON proposal.prp_va_notice_of_value_source_type = va_notice_of_value_source_type.code
+          	    JOIN (
+          	        SELECT *
+          	        FROM (
+          	            SELECT <<va_past_credit_record_type_partial_load_condition>> AS include_record
+          	            	, va_past_credit_record_type.*
+          	            	, etl_log.etl_end_date_time
+          	            FROM history_octane.va_past_credit_record_type
+          	            	LEFT JOIN history_octane.va_past_credit_record_type AS history_records
+          	            		ON va_past_credit_record_type.code = history_records.code
+          	            			AND va_past_credit_record_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          	            	JOIN star_common.etl_log
+          	            		ON va_past_credit_record_type.etl_batch_id = etl_log.etl_batch_id
+          	            WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS va_past_credit_record_type
+          	    	ON proposal.prp_va_past_credit_record_type = va_past_credit_record_type.code
+          	    JOIN (
+          	        SELECT *
+          	        FROM (
+          	            SELECT <<yes_no_na_type_partial_load_condition>> AS include_record
+          	            	, yes_no_na_type.*
+          	            	, etl_log.etl_end_date_time
+          	            FROM history_octane.yes_no_na_type
+          	            	LEFT JOIN history_octane.yes_no_na_type AS history_records
+          	            		ON yes_no_na_type.code = history_records.code
+          	            			AND yes_no_na_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          	            	JOIN star_common.etl_log
+          	            		ON yes_no_na_type.etl_batch_id = etl_log.etl_batch_id
+          	            WHERE history_records.code IS NULL
+          				) AS primary_table
+          			) AS cema_ynna_type
+          	    		ON proposal.prp_cema = cema_ynna_type.code
+          	    JOIN (
+          	        SELECT *
+          	        FROM (
+          	            SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          	            	, yes_no_unknown_type.*
+          	            	, etl_log.etl_end_date_time
+          	            FROM history_octane.yes_no_unknown_type
+          	            	LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          	            		ON yes_no_unknown_type.code = history_records.code
+          	            			AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          	            	JOIN star_common.etl_log
+          	            		ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          	            WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS fha_eligible_maximum_financing_ynu_type
+          	    		ON proposal.prp_fha_eligible_maximum_financing = fha_eligible_maximum_financing_ynu_type.code
+          		JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS usda_gsa_sam_exclusion_ynu_type
+          	    	ON proposal.prp_usda_gsa_sam_exclusion = usda_gsa_sam_exclusion_ynu_type.code
+          		JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS va_meets_credit_standards_ynu_type
+          	    	ON proposal.prp_va_meets_credit_standards = va_meets_credit_standards_ynu_type.code
+          		JOIN (
+          			SELECT *
+          			FROM (
+          				SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+          					, yes_no_unknown_type.*
+          					, etl_log.etl_end_date_time
+          				FROM history_octane.yes_no_unknown_type
+          					LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+          						ON yes_no_unknown_type.code = history_records.code
+          							AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          					JOIN star_common.etl_log
+          						ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+          				WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS va_monthly_utilities_included_ynu_type
+          	    	ON proposal.prp_va_monthly_utilities_included = va_monthly_utilities_included_ynu_type.code
+          		JOIN (
+          			SELECT <<transaction_dim_partial_load_condition>> AS include_record
+          				, transaction_dim.*
+          				, etl_log.etl_end_date_time
+          			FROM star_loan.transaction_dim
+          				JOIN star_common.etl_log
+          					ON transaction_dim.etl_batch_id = etl_log.etl_batch_id
+          		) AS transaction_dim
+          			ON deal.d_pid = transaction_dim.deal_pid
+              WHERE GREATEST(deal.include_record, proposal.include_record, fha_non_arms_length_ltv_limit_exception_type
+          		.include_record, hud_fha_de_approval_type.include_record, usda_rd_single_family_housing_type
+          					   .include_record, va_notice_of_value_source_type.include_record, va_past_credit_record_type
+          					   .include_record, cema_ynna_type.include_record, fha_eligible_maximum_financing_ynu_type
+          					   .include_record, usda_gsa_sam_exclusion_ynu_type.include_record,
+          				   va_meets_credit_standards_ynu_type.include_record, va_monthly_utilities_included_ynu_type
+          					   .include_record, transaction_dim.include_record) IS TRUE
+          )
+          -- new records that should be inserted
+          SELECT transaction_aux_govt_programs_dim_incl_new_records.*
+          FROM transaction_aux_govt_programs_dim_incl_new_records
+          LEFT JOIN star_loan.transaction_aux_govt_programs_dim
+          	ON transaction_aux_govt_programs_dim_incl_new_records.data_source_integration_id =
+          	   transaction_aux_govt_programs_dim.data_source_integration_id
+          WHERE transaction_aux_govt_programs_dim.transaction_dwid IS NULL
+          UNION ALL
+          -- existing records that need to be updated
+          SELECT transaction_aux_govt_programs_dim_incl_new_records.*
+          FROM transaction_aux_govt_programs_dim_incl_new_records
+          JOIN (
+              SELECT transaction_aux_govt_programs_dim.data_source_integration_id
+              	, etl_log.etl_start_date_time
+              FROM star_loan.transaction_aux_govt_programs_dim
+              	JOIN star_common.etl_log
+              		ON transaction_aux_govt_programs_dim.etl_batch_id = etl_log.etl_batch_id
+          		) AS transaction_aux_govt_programs_dim_etl_start_times
+          		ON transaction_aux_govt_programs_dim_incl_new_records.data_source_integration_id =
+          		   transaction_aux_govt_programs_dim_etl_start_times.data_source_integration_id
+          			AND transaction_aux_govt_programs_dim_incl_new_records.max_source_etl_end_date_time >=
+          			    transaction_aux_govt_programs_dim_etl_start_times.etl_start_date_time;

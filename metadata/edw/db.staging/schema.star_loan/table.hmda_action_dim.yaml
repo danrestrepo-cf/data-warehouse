@@ -1,0 +1,244 @@
+name: hmda_action_dim
+primary_source_table: staging.history_octane.deal
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: false
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: false
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  hmda_action:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_d_hmda_action_type.columns.value
+    update_flag: true
+  hmda_action_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.d_hmda_action_type
+    update_flag: false
+  hmda_denial_reason_1:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_d_hmda_denial_reason_type_1.columns.value
+    update_flag: true
+  hmda_denial_reason_2:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_d_hmda_denial_reason_type_2.columns.value
+    update_flag: true
+  hmda_denial_reason_3:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_d_hmda_denial_reason_type_3.columns.value
+    update_flag: true
+  hmda_denial_reason_4:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_d_hmda_denial_reason_type_4.columns.value
+    update_flag: true
+  hmda_denial_reason_code_1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.d_hmda_denial_reason_type_1
+    update_flag: false
+  hmda_denial_reason_code_2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.d_hmda_denial_reason_type_2
+    update_flag: false
+  hmda_denial_reason_code_3:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.d_hmda_denial_reason_type_3
+    update_flag: false
+  hmda_denial_reason_code_4:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.d_hmda_denial_reason_type_4
+    update_flag: false
+step_functions:
+  SP-200024:
+    etls:
+      ETL-200024:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.hmda_action_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-300001-insert-update
+        input_sql: |-
+          WITH hmda_action_dim_new_records AS (
+              SELECT 'hmda_action_code~hmda_denial_reason_code_1~' ||
+                     'hmda_denial_reason_code_2~' ||
+                     'hmda_denial_reason_code_3~' ||
+                     'hmda_denial_reason_code_4~' ||
+                     'data_source_dwid' AS data_source_integration_columns
+              	, COALESCE(CAST(deal.d_hmda_action_type AS TEXT), '<NULL>') || '~' ||
+              	  COALESCE(CAST(deal.d_hmda_denial_reason_type_1 AS TEXT), '<NULL>') || '~' ||
+              	  COALESCE(CAST(deal.d_hmda_denial_reason_type_2 AS TEXT), '<NULL>') || '~' ||
+              	  COALESCE(CAST(deal.d_hmda_denial_reason_type_3 AS TEXT), '<NULL>') || '~' ||
+              	  COALESCE(CAST(deal.d_hmda_denial_reason_type_4 AS TEXT), '<NULL>') || '~' ||
+              	  COALESCE(CAST(1 AS TEXT), '<NULL>') AS data_source_integration_id
+              	, NOW() AS edw_created_datetime
+              	, NOW() AS edw_modified_datetime
+              	, MAX(deal.data_source_updated_datetime) AS data_source_modified_datetime
+          		, hmda_action_type.value AS hmda_action
+              	, deal.d_hmda_action_type AS hmda_action_code
+              	, hmda_denial_reason_type_1.value AS hmda_denial_reason_1
+              	, hmda_denial_reason_type_2.value AS hmda_deniaL_reason_2
+          		, hmda_denial_reason_type_3.value AS hmda_deniaL_reason_3
+          		, hmda_denial_reason_type_4.value AS hmda_deniaL_reason_4
+              	, deal.d_hmda_denial_reason_type_1 AS hmda_denial_reason_code_1
+          		, deal.d_hmda_denial_reason_type_2 AS hmda_denial_reason_code_2
+          		, deal.d_hmda_denial_reason_type_3 AS hmda_denial_reason_code_3
+          		, deal.d_hmda_denial_reason_type_4 AS hmda_denial_reason_code_4
+              	, MAX(GREATEST(hmda_action_type.etl_end_date_time, hmda_denial_reason_type_1.etl_end_date_time,
+              	    hmda_denial_reason_type_2.etl_end_date_time, hmda_denial_reason_type_3.etl_end_date_time,
+              	    hmda_denial_reason_type_4.etl_end_date_time)) AS max_source_etl_end_date_time
+              FROM (
+                   SELECT <<deal_partial_load_condition>> AS include_record
+                   	, deal.*
+                   FROM history_octane.deal
+                   LEFT JOIN history_octane.deal AS history_records
+                   	ON deal.d_pid = history_records.d_pid
+                   		AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                   WHERE history_records.d_pid IS NULL
+          		) AS deal
+              JOIN (
+                  SELECT *
+                  FROM (
+                  	SELECT <<hmda_action_type_partial_load_condition>> AS include_record
+                      	, hmda_action_type.*
+                      	, etl_log.etl_end_date_time
+                      FROM history_octane.hmda_action_type
+                      LEFT JOIN history_octane.hmda_action_type AS history_records
+                      	ON hmda_action_type.code = history_records.code
+                      		AND hmda_action_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                      	ON hmda_action_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS hmda_action_type
+              		ON deal.d_hmda_action_type = hmda_action_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                  	SELECT <<hmda_denial_reason_type_partial_load_condition>> AS include_record
+                      	, hmda_denial_reason_type.*
+                      	, etl_log.etl_end_date_time
+                      FROM history_octane.hmda_denial_reason_type
+                      LEFT JOIN history_octane.hmda_denial_reason_type AS history_records
+                      	ON hmda_denial_reason_type.code = history_records.code
+                      		AND hmda_denial_reason_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                      	ON hmda_denial_reason_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS hmda_denial_reason_type_1
+              		ON deal.d_hmda_denial_reason_type_1 = hmda_denial_reason_type_1.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                  	SELECT <<hmda_denial_reason_type_partial_load_condition>> AS include_record
+                      	, hmda_denial_reason_type.*
+                      	, etl_log.etl_end_date_time
+                      FROM history_octane.hmda_denial_reason_type
+                      LEFT JOIN history_octane.hmda_denial_reason_type AS history_records
+                      	ON hmda_denial_reason_type.code = history_records.code
+                      		AND hmda_denial_reason_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                      	ON hmda_denial_reason_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS hmda_denial_reason_type_2
+              		ON deal.d_hmda_denial_reason_type_2 = hmda_denial_reason_type_2.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                  	SELECT <<hmda_denial_reason_type_partial_load_condition>> AS include_record
+                      	, hmda_denial_reason_type.*
+                      	, etl_log.etl_end_date_time
+                      FROM history_octane.hmda_denial_reason_type
+                      LEFT JOIN history_octane.hmda_denial_reason_type AS history_records
+                      	ON hmda_denial_reason_type.code = history_records.code
+                      		AND hmda_denial_reason_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                      	ON hmda_denial_reason_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS hmda_denial_reason_type_3
+              		ON deal.d_hmda_denial_reason_type_3 = hmda_denial_reason_type_3.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                  	SELECT <<hmda_denial_reason_type_partial_load_condition>> AS include_record
+                      	, hmda_denial_reason_type.*
+                      	, etl_log.etl_end_date_time
+                      FROM history_octane.hmda_denial_reason_type
+                      LEFT JOIN history_octane.hmda_denial_reason_type AS history_records
+                      	ON hmda_denial_reason_type.code = history_records.code
+                      		AND hmda_denial_reason_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                      	ON hmda_denial_reason_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+          			) AS primary_table
+          		) AS hmda_denial_reason_type_4
+              		ON deal.d_hmda_denial_reason_type_4 = hmda_denial_reason_type_4.code
+              WHERE GREATEST(deal.include_record, hmda_action_type.include_record, hmda_denial_reason_type_1.include_record,
+                  hmda_denial_reason_type_2.include_record, hmda_denial_reason_type_3.include_record, hmda_denial_reason_type_4
+                      .include_record) IS TRUE
+              GROUP BY hmda_action_type.value
+              	, deal.d_hmda_action_type
+              	, hmda_denial_reason_type_1.value
+              	, hmda_denial_reason_type_2.value
+          		, hmda_denial_reason_type_3.value
+          		, hmda_denial_reason_type_4.value
+              	, deal.d_hmda_denial_reason_type_1
+          		, deal.d_hmda_denial_reason_type_2
+          		, deal.d_hmda_denial_reason_type_3
+          		, deal.d_hmda_denial_reason_type_4
+          )
+          -- new records that should be inserted
+          SELECT hmda_action_dim_new_records.*
+          FROM hmda_action_dim_new_records
+          LEFT JOIN star_loan.hmda_action_dim
+          	ON hmda_action_dim_new_records.data_source_integration_id = hmda_action_dim.data_source_integration_id
+          WHERE hmda_action_dim.dwid IS NULL
+          UNION ALL
+          -- existing records that should be updated
+          SELECT hmda_action_dim_new_records.*
+          FROM hmda_action_dim_new_records
+          JOIN (
+              SELECT hmda_action_dim.data_source_integration_id
+              	, etl_log.etl_start_date_time
+          	FROM star_loan.hmda_action_dim
+              	JOIN star_common.etl_log
+              		ON hmda_action_dim.etl_batch_id = etl_log.etl_batch_id
+          	) AS hmda_action_dim_etl_start_times
+          	ON hmda_action_dim_new_records.data_source_integration_id = hmda_action_dim_etl_start_times.data_source_integration_id
+          		AND hmda_action_dim_new_records.max_source_etl_end_date_time >= hmda_action_dim_etl_start_times.etl_start_date_time;

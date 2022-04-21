@@ -53,27 +53,85 @@
                     "Next": "Success"
                 }
             ],
-            "Default": "SP-200014_message"
+            "Default": "ETL-100695_Next_Step_Functions"
         },
         "Success": {
             "Type": "Succeed"
         },
-        "SP-200014_message": {
-            "Type": "Task",
-            "Resource": "arn:aws:states:::sqs:sendMessage",
-            "Parameters": {
-                "QueueUrl": "${fullCheckQueueUrl}",
-                "MessageGroupId": "loan_junk_dim",
-                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
-                "MessageAttributes": {
-                    "ProcessId": {
-                        "DataType": "String",
-                        "StringValue": "SP-200014"
+        "ETL-100695_Next_Step_Functions": {
+            "Type": "Parallel",
+            "End": true,
+            "Branches": [
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200014",
+                    "StartAt": "SP-200014_message",
+                    "States": {
+                        "SP-200014_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "loan_junk_dim",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200014"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
                     }
                 },
-                "MessageBody.$": "States.JsonToString($)"
-            },
-            "End": true
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200023",
+                    "StartAt": "SP-200023_message",
+                    "States": {
+                        "SP-200023_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "cash_out_reason_dim",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200023"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200028",
+                    "StartAt": "SP-200028_message",
+                    "States": {
+                        "SP-200028_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "transaction_aux_govt_programs_dim",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200028"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                }
+            ]
         }
     }
 }
