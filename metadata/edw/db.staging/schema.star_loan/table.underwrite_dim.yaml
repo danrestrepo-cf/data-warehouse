@@ -1,0 +1,179 @@
+name: underwrite_dim
+primary_source_table: staging.history_octane.proposal
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: false
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: false
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  underwrite_disposition:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_underwrite_disposition_type.columns.value
+    update_flag: true
+  underwrite_disposition_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_underwrite_disposition_type
+    update_flag: false
+  underwrite_method:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_underwrite_method_type.columns.value
+    update_flag: true
+  underwrite_method_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_underwrite_method_type
+    update_flag: false
+  underwrite_risk_assessment:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_prp_underwrite_risk_assessment_type.columns.value
+    update_flag: true
+  underwrite_risk_assessment_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prp_underwrite_risk_assessment_type
+    update_flag: false
+step_functions:
+  SP-200025:
+    etls:
+      ETL-200025:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.underwrite_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-300001-insert-update
+        input_sql: |-
+          WITH underwrite_dim_new_records AS (
+              SELECT 'underwrite_disposition_code~' ||
+                     'underwrite_method_code~' ||
+                     'underwrite_risk_assessment_code~' ||
+                     'data_source_dwid' AS data_source_integration_columns
+              	, COALESCE(CAST(proposal.prp_underwrite_disposition_type AS TEXT), '<NULL>') || '~' ||
+              	  COALESCE(CAST(proposal.prp_underwrite_method_type AS TEXT), '<NULL>') || '~' ||
+              	  COALESCE(CAST(proposal.prp_underwrite_risk_assessment_type AS TEXT), '<NULL>') || '~' ||
+              	  COALESCE(CAST(1 AS TEXT), '<NULL>') AS data_source_integration_id
+              	, NOW() AS edw_created_datetime
+              	, NOW() AS edw_modified_datetime
+              	, MAX(proposal.data_source_updated_datetime) AS data_source_modified_datetime
+              	, underwrite_disposition_type.value AS underwrite_disposition
+              	, proposal.prp_underwrite_disposition_type AS underwrite_disposition_code
+              	, underwrite_method_type.value AS underwrite_method
+              	, proposal.prp_underwrite_method_type AS underwrite_method_code
+              	, underwrite_risk_assessment_type.value AS underwrite_risk_assessment
+              	, proposal.prp_underwrite_risk_assessment_type AS underwrite_risk_assessment_code
+              	, MAX(GREATEST(underwrite_disposition_type.etl_end_date_time, underwrite_method_type.etl_end_date_time,
+              	    underwrite_risk_assessment_type.etl_end_date_time)) AS max_source_etl_end_date_time
+              FROM (
+          		 SELECT <<proposal_partial_load_condition>> AS include_record
+          			, proposal.*
+          		 FROM history_octane.proposal
+          		 LEFT JOIN history_octane.proposal AS history_records
+          			ON proposal.prp_pid = history_records.prp_pid
+          				AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                   WHERE history_records.prp_pid IS NULL
+          	) AS proposal
+              JOIN (
+                  SELECT *
+                  FROM (
+                       SELECT <<underwrite_disposition_type_partial_load_condition>> AS include_record
+                      	, underwrite_disposition_type.*
+                      	, etl_log.etl_end_date_time
+                      FROM history_octane.underwrite_disposition_type
+                      LEFT JOIN history_octane.underwrite_disposition_type AS history_records
+                      	ON underwrite_disposition_type.code = history_records.code
+                      		AND underwrite_disposition_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                      	ON underwrite_disposition_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+          		) AS primary_table
+          	) AS underwrite_disposition_type
+              	ON proposal.prp_underwrite_disposition_type = underwrite_disposition_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                       SELECT <<underwrite_method_type_partial_load_condition>> AS include_record
+                      	, underwrite_method_type.*
+                      	, etl_log.etl_end_date_time
+                       FROM history_octane.underwrite_method_type
+                       LEFT JOIN history_octane.underwrite_method_type AS history_records
+                       	ON underwrite_method_type.code = history_records.code
+                       		AND underwrite_method_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                       JOIN star_common.etl_log
+                       	ON underwrite_method_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+          		) AS primary_table
+          	) AS underwrite_method_type
+              	ON proposal.prp_underwrite_method_type = underwrite_method_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<underwrite_risk_assessment_type_partial_load_condition>> AS include_record
+                      	, underwrite_risk_assessment_type.*
+                      	, etl_log.etl_end_date_time
+                      FROM history_octane.underwrite_risk_assessment_type
+                      LEFT JOIN history_octane.underwrite_risk_assessment_type AS history_records
+                      	ON underwrite_risk_assessment_type.code = history_records.code
+                      		AND underwrite_risk_assessment_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                      	ON underwrite_risk_assessment_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+          		) AS primary_table
+          	) AS underwrite_risk_assessment_type
+              	ON proposal.prp_underwrite_risk_assessment_type = underwrite_risk_assessment_type.code
+              WHERE GREATEST(proposal.include_record, underwrite_disposition_type.include_record, underwrite_method_type
+                  .include_record, underwrite_risk_assessment_type.include_record) IS TRUE
+              GROUP BY underwrite_disposition_type.value
+              	, proposal.prp_underwrite_disposition_type
+              	, underwrite_method_type.value
+              	, proposal.prp_underwrite_method_type
+              	, underwrite_risk_assessment_type.value
+              	, proposal.prp_underwrite_risk_assessment_type
+          )
+          -- new records that should be inserted
+          SELECT underwrite_dim_new_records.*
+          FROM underwrite_dim_new_records
+          LEFT JOIN star_loan.underwrite_dim
+          	ON underwrite_dim_new_records.data_source_integration_id = underwrite_dim.data_source_integration_id
+          WHERE underwrite_dim.dwid IS NULL
+          UNION ALL
+          -- existing records that should be updated
+          SELECT underwrite_dim_new_records.*
+          FROM underwrite_dim_new_records
+          JOIN (
+              SELECT underwrite_dim.data_source_integration_id
+              	, etl_log.etl_start_date_time
+              FROM star_loan.underwrite_dim
+              	JOIN star_common.etl_log
+              		ON underwrite_dim.etl_batch_id = etl_log.etl_batch_id
+          	) AS underwrite_dim_etl_start_times
+          	ON underwrite_dim_new_records.data_source_integration_id = underwrite_dim_etl_start_times.data_source_integration_id
+          		AND underwrite_dim_new_records.max_source_etl_end_date_time >= underwrite_dim_etl_start_times.etl_start_date_time;
