@@ -4,6 +4,17 @@
 --
 
 /*
+ MANUALLY-WRITTEN MIGRATIONS
+ */
+
+ ALTER TABLE star_loan.loan_fact
+     RENAME COLUMN preapproval_uw_submit_date_dwid TO preapproval_complete_date_dwid;
+
+/*
+ AUTO-GENERATED DDL MIGRATIONS
+ */
+
+/*
 staging_octane
 */
 
