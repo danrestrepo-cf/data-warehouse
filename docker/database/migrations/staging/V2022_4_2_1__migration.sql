@@ -10,6 +10,13 @@
  ALTER TABLE star_loan.loan_fact
      RENAME COLUMN preapproval_uw_submit_date_dwid TO preapproval_complete_date_dwid;
 
+ALTER TABLE star_loan.transaction_dim
+    RENAME COLUMN preapproval_uw_submit_datetime TO preapproval_complete_datetime;
+
+ALTER TABLE star_loan.transaction_dim
+    RENAME COLUMN preapproval_uw_disposition_datetime TO preapproval_disposition_datetime;
+
+
 /*
  AUTO-GENERATED DDL MIGRATIONS
  */
