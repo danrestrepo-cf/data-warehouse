@@ -361,15 +361,15 @@ columns:
     source:
       field: primary_source_table.columns.prp_overridden_earliest_allowed_consummation_date
     update_flag: true
-  preapproval_uw_disposition_datetime:
+  preapproval_disposition_datetime:
     data_type: TIMESTAMPTZ
     source:
-      field: primary_source_table.columns.prp_preapproval_uw_disposition_datetime
+      field: primary_source_table.columns.prp_preapproval_disposition_datetime
     update_flag: true
-  preapproval_uw_submit_datetime:
+  preapproval_complete_datetime:
     data_type: TIMESTAMPTZ
     source:
-      field: primary_source_table.columns.prp_preapproval_uw_submit_datetime
+      field: primary_source_table.columns.prp_preapproval_complete_datetime
     update_flag: true
   proposal_expiration_date:
     data_type: DATE
@@ -1277,8 +1277,8 @@ step_functions:
           		, primary_table.prp_last_requested_disclosure_date AS last_requested_disclosure_date
           		, primary_table.prp_lender_escrow_loan_due_date AS lender_escrow_loan_due_date
           		, primary_table.prp_overridden_earliest_allowed_consummation_date AS overridden_earliest_allowed_consummation_date
-          		, primary_table.prp_preapproval_uw_disposition_datetime AS preapproval_uw_disposition_datetime
-          		, primary_table.prp_preapproval_uw_submit_datetime AS preapproval_uw_submit_datetime
+          		, primary_table.prp_preapproval_disposition_datetime AS preapproval_disposition_datetime
+          		, primary_table.prp_preapproval_complete_datetime AS preapproval_complete_datetime
           		, primary_table.prp_proposal_expiration_date AS proposal_expiration_date
           		, primary_table.prp_purchase_contract_date AS purchase_contract_date
           		, primary_table.prp_purchase_contract_financing_contingency_date AS purchase_contract_financing_contingency_date
