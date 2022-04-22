@@ -50,6 +50,14 @@ foreign_keys:
       - wps_pid
       schema: staging_octane
       table: wf_prereq_set
+  fk_wf_step_8:
+    columns:
+    - ws_trustee_pid
+    references:
+      columns:
+      - tru_pid
+      schema: staging_octane
+      table: trustee
   fk_ws_step_6:
     columns:
     - ws_smart_doc_set_pid
@@ -177,6 +185,8 @@ columns:
     data_type: BOOLEAN
   ws_timeout_time_zone_type:
     data_type: VARCHAR(128)
+  ws_trustee_pid:
+    data_type: BIGINT
   ws_user_step_name:
     data_type: VARCHAR(128)
   ws_version:
