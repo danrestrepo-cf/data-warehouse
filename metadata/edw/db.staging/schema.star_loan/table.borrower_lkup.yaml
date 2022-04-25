@@ -116,8 +116,8 @@ step_functions:
               ON borrower.b_pid = borrower_dim.borrower_pid
                   AND borrower_dim.data_source_dwid = 1
           LEFT JOIN (
-              SELECT <<borrower_declarations_partial_load_condition>> AS include_record
-                   , borrower_declarations.*
+              SELECT borrower_declarations.*
+                   , <<borrower_declarations_partial_load_condition>> AS include_record
               FROM history_octane.borrower_declarations
               LEFT JOIN history_octane.borrower_declarations AS history_records
                         ON borrower_declarations.bdec_pid = history_records.bdec_pid
