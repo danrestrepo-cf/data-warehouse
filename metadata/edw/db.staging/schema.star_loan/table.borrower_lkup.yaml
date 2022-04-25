@@ -125,18 +125,6 @@ step_functions:
               WHERE history_records.bdec_pid IS NULL
           ) AS borrower_declarations
                     ON borrower.b_pid = borrower_declarations.bdec_borrower_pid
-          LEFT JOIN star_loan.borrower_hmda_collection_dim
-                    ON COALESCE( CAST( borrower.b_ethnicity_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
-                       COALESCE( CAST( borrower.b_ethnicity_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
-                       COALESCE( CAST( borrower.b_ethnicity_refused AS TEXT ), '<NULL>' ) || '~' ||
-                       COALESCE( CAST( borrower.b_race_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
-                       COALESCE( CAST( borrower.b_race_information_not_provided AS TEXT ), '<NULL>' ) || '~' ||
-                       COALESCE( CAST( borrower.b_race_national_origin_refusal AS TEXT ), '<NULL>' ) || '~' ||
-                       COALESCE( CAST( borrower.b_race_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
-                       COALESCE( CAST( borrower.b_race_refused AS TEXT ), '<NULL>' ) || '~' ||
-                       COALESCE( CAST( borrower.b_sex_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
-                       COALESCE( CAST( borrower.b_sex_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
-                       COALESCE( CAST( borrower.b_sex_refused AS TEXT ), '<NULL>' ) || '~1' = borrower_hmda_collection_dim.data_source_integration_id
           LEFT JOIN star_loan.borrower_counseling_dim
                     ON COALESCE( CAST( borrower.b_first_time_home_buyer_auto_compute AS TEXT ), '<NULL>' ) || '~' ||
                        COALESCE( CAST( borrower.b_first_time_homebuyer AS TEXT ), '<NULL>' ) || '~' ||
@@ -164,6 +152,18 @@ step_functions:
                        COALESCE( CAST( borrower_declarations.bdec_party_to_lawsuit AS TEXT ), '<NULL>' ) || '~' ||
                        COALESCE( CAST( borrower_declarations.bdec_property_foreclosure AS TEXT ), '<NULL>' ) || '~1' =
                        borrower_finances_declarations_dim.data_source_integration_id
+          LEFT JOIN star_loan.borrower_hmda_collection_dim
+                    ON COALESCE( CAST( borrower.b_ethnicity_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_ethnicity_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_ethnicity_refused AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_information_not_provided AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_national_origin_refusal AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_refused AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_sex_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_sex_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_sex_refused AS TEXT ), '<NULL>' ) || '~1' = borrower_hmda_collection_dim.data_source_integration_id
           LEFT JOIN star_loan.borrower_hmda_ethnicity_dim
                     ON COALESCE( CAST( borrower.b_ethnicity_cuban AS TEXT ), '<NULL>' ) || '~' ||
                        COALESCE( CAST( borrower.b_ethnicity_hispanic_or_latino AS TEXT ), '<NULL>' ) || '~' ||
@@ -258,7 +258,17 @@ step_functions:
                , borrower.data_source_updated_datetime AS data_source_modified_datetime
                , borrower_dim.dwid AS borrower_dwid
                , borrower_lkup.borrower_pid
-               , borrower_hmda_collection_dim.dwid AS borrower_hmda_collection_dwid
+               , COALESCE( borrower_counseling_dim.dwid, 0 ) AS borrower_counseling_dwid
+               , COALESCE( borrower_employee_status_dim.dwid, 0 ) AS borrower_employee_status_dwid
+               , COALESCE( borrower_finances_declarations_dim.dwid, 0 ) AS borrower_finances_declarations_dwid
+               , COALESCE( borrower_hmda_collection_dim.dwid, 0 ) AS borrower_hmda_collection_dwid
+               , COALESCE( borrower_hmda_ethnicity_dim.dwid, 0 ) AS borrower_hmda_ethnicity_dwid
+               , COALESCE( borrower_hmda_race_dim.dwid, 0 ) AS borrower_hmda_race_dwid
+               , COALESCE( borrower_hmda_sex_dim.dwid, 0 ) AS borrower_hmda_sex_dwid
+               , COALESCE( borrower_junk_dim.dwid, 0 ) AS borrower_junk_dwid
+               , COALESCE( borrower_pre_umdp_declarations_dim.dwid, 0 ) AS borrower_pre_umdp_declarations_dwid
+               , COALESCE( borrower_property_declarations_dim.dwid, 0 ) AS borrower_property_declarations_dwid
+               , COALESCE( borrower_relations_dim.dwid, 0 ) AS borrower_relations_dwid
           FROM (
               SELECT borrower.*
                    , <<borrower_partial_load_condition>> AS include_record
@@ -281,7 +291,68 @@ step_functions:
           ) AS borrower_dim
                ON borrower.b_pid = borrower_dim.borrower_pid
                    AND borrower_dim.data_source_dwid = 1
-          JOIN (
+          LEFT JOIN (
+              SELECT borrower_declarations.*
+                   , <<borrower_declarations_partial_load_condition>> AS include_record
+                   , etl_log.etl_end_date_time
+              FROM history_octane.borrower_declarations
+              LEFT JOIN history_octane.borrower_declarations AS history_records
+                        ON borrower_declarations.bdec_pid = history_records.bdec_pid
+                            AND borrower_declarations.data_source_updated_datetime < history_records.data_source_updated_datetime
+              JOIN star_common.etl_log
+                   ON borrower_declarations.etl_batch_id = etl_log.etl_batch_id
+              WHERE history_records.bdec_pid IS NULL
+          ) AS borrower_declarations
+                    ON borrower.b_pid = borrower_declarations.bdec_borrower_pid
+          LEFT JOIN (
+              SELECT borrower_counseling_dim.*
+                   , <<borrower_counseling_dim_partial_load_condition>> AS include_record
+                   , etl_log.etl_end_date_time
+              FROM star_loan.borrower_counseling_dim
+              JOIN star_common.etl_log
+                   ON borrower_counseling_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_counseling_dim
+                    ON COALESCE( CAST( borrower.b_first_time_home_buyer_auto_compute AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_first_time_homebuyer AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_homeownership_education_type AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_homeownership_education_agency_type AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_housing_counseling_type AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_housing_counseling_agency_type AS TEXT ), '<NULL>' ) || '~1' =
+                       borrower_counseling_dim.data_source_integration_id
+          LEFT JOIN (
+              SELECT borrower_employee_status_dim.*
+                   , <<borrower_employee_status_dim_partial_load_condition>> AS include_record
+                   , etl_log.etl_end_date_time
+              FROM star_loan.borrower_employee_status_dim
+              JOIN star_common.etl_log
+                   ON borrower_employee_status_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_employee_status_dim
+                    ON COALESCE( CAST( borrower.b_hud_employee AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_lender_employee AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_lender_employee_status_confirmed AS TEXT ), '<NULL>' ) || '~1' =
+                       borrower_employee_status_dim.data_source_integration_id
+          LEFT JOIN (
+              SELECT borrower_finances_declarations_dim.*
+                   , <<borrower_finances_declarations_dim_partial_load_condition>> AS include_record
+                   , etl_log.etl_end_date_time
+              FROM star_loan.borrower_finances_declarations_dim
+              JOIN star_common.etl_log
+                   ON borrower_finances_declarations_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_finances_declarations_dim
+                    ON COALESCE( CAST( borrower.b_bankruptcy AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_outstanding_judgements AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_bankruptcy_chapter_7 AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_bankruptcy_chapter_11 AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_bankruptcy_chapter_12 AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_bankruptcy_chapter_13 AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_completed_pre_foreclosure_short_sale AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_conveyed_title_in_lieu_of_foreclosure AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_cosigner_undisclosed AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_currently_delinquent_federal_debt AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_party_to_lawsuit AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_property_foreclosure AS TEXT ), '<NULL>' ) || '~1' =
+                       borrower_finances_declarations_dim.data_source_integration_id
+          LEFT JOIN (
               SELECT borrower_hmda_collection_dim.*
                    , <<borrower_hmda_collection_dim_partial_load_condition>> AS include_record
                    , etl_log.etl_end_date_time
@@ -289,17 +360,138 @@ step_functions:
               JOIN star_common.etl_log
                    ON borrower_hmda_collection_dim.etl_batch_id = etl_log.etl_batch_id
           ) AS borrower_hmda_collection_dim
-               ON COALESCE( CAST( borrower.b_ethnicity_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
-                  COALESCE( CAST( borrower.b_ethnicity_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
-                  COALESCE( CAST( borrower.b_ethnicity_refused AS TEXT ), '<NULL>' ) || '~' ||
-                  COALESCE( CAST( borrower.b_race_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
-                  COALESCE( CAST( borrower.b_race_information_not_provided AS TEXT ), '<NULL>' ) || '~' ||
-                  COALESCE( CAST( borrower.b_race_national_origin_refusal AS TEXT ), '<NULL>' ) || '~' ||
-                  COALESCE( CAST( borrower.b_race_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
-                  COALESCE( CAST( borrower.b_race_refused AS TEXT ), '<NULL>' ) || '~' ||
-                  COALESCE( CAST( borrower.b_sex_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
-                  COALESCE( CAST( borrower.b_sex_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
-                  COALESCE( CAST( borrower.b_sex_refused AS TEXT ), '<NULL>' ) || '~1' = borrower_hmda_collection_dim.data_source_integration_id
+                    ON COALESCE( CAST( borrower.b_ethnicity_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_ethnicity_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_ethnicity_refused AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_information_not_provided AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_national_origin_refusal AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_refused AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_sex_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_sex_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_sex_refused AS TEXT ), '<NULL>' ) || '~1' = borrower_hmda_collection_dim.data_source_integration_id
+          LEFT JOIN (
+              SELECT borrower_hmda_ethnicity_dim.*
+                   , <<borrower_hmda_ethnicity_dim_partial_load_condition>> AS include_record
+                   , etl_log.etl_end_date_time
+              FROM star_loan.borrower_hmda_ethnicity_dim
+              JOIN star_common.etl_log
+                   ON borrower_hmda_ethnicity_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_hmda_ethnicity_dim
+                    ON COALESCE( CAST( borrower.b_ethnicity_cuban AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_ethnicity_hispanic_or_latino AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_ethnicity_mexican AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_ethnicity_not_hispanic_or_latino AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_ethnicity_other_hispanic_or_latino_description <> '' AND
+                                       borrower.b_ethnicity_other_hispanic_or_latino_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_ethnicity_other_hispanic_or_latino AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_ethnicity_puerto_rican AS TEXT ), '<NULL>' ) || '~1' =
+                       borrower_hmda_ethnicity_dim.data_source_integration_id
+          LEFT JOIN (
+              SELECT borrower_hmda_race_dim.*
+                   , <<borrower_hmda_race_dim_partial_load_condition>> AS include_record
+                   , etl_log.etl_end_date_time
+              FROM star_loan.borrower_hmda_race_dim
+              JOIN star_common.etl_log
+                   ON borrower_hmda_race_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_hmda_race_dim
+                    ON COALESCE( CAST( borrower.b_other_race_national_origin_description <> '' AND
+                                       borrower.b_other_race_national_origin_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_american_indian_or_alaska_native AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_asian AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_asian_indian AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_black_or_african_american AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_chinese AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_filipino AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_guamanian_or_chamorro AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_japanese AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_korean AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_native_hawaiian AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_native_hawaiian_or_other_pacific_islander AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_not_applicable AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_other_american_indian_or_alaska_native_description <> '' AND
+                                       borrower.b_race_other_american_indian_or_alaska_native_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_other_asian_description <> '' AND
+                                       borrower.b_race_other_asian_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_other_asian AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_other_pacific_islander_description <> '' AND
+                                       borrower.b_race_other_pacific_islander_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_other_pacific_islander AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_samoan AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_vietnamese AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_race_white AS TEXT ), '<NULL>' ) || '~1' = borrower_hmda_race_dim.data_source_integration_id
+          LEFT JOIN (
+              SELECT borrower_hmda_sex_dim.*
+                   , <<borrower_hmda_sex_dim_partial_load_condition>> AS include_record
+                   , etl_log.etl_end_date_time
+              FROM star_loan.borrower_hmda_sex_dim
+              JOIN star_common.etl_log
+                   ON borrower_hmda_sex_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_hmda_sex_dim
+                    ON COALESCE( CAST( borrower.b_sex_female AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_sex_male AS TEXT ), '<NULL>' ) || '~1' = borrower_hmda_sex_dim.data_source_integration_id
+          LEFT JOIN (
+              SELECT borrower_junk_dim.*
+                   , <<borrower_junk_dim_partial_load_condition>> AS include_record
+                   , etl_log.etl_end_date_time
+              FROM star_loan.borrower_junk_dim
+              JOIN star_common.etl_log
+                   ON borrower_junk_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_junk_dim
+                    ON COALESCE( CAST( borrower.b_citizenship_residency_type AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_disabled AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_on_gsa_list AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_on_ldp_list AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_titleholder AS TEXT ), '<NULL>' ) || '~1' = borrower_junk_dim.data_source_integration_id
+          LEFT JOIN (
+              SELECT borrower_pre_umdp_declarations_dim.*
+                   , <<borrower_pre_umdp_declarations_dim_partial_load_condition>> AS include_record
+                   , etl_log.etl_end_date_time
+              FROM star_loan.borrower_pre_umdp_declarations_dim
+              JOIN star_common.etl_log
+                   ON borrower_pre_umdp_declarations_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_pre_umdp_declarations_dim
+                    ON COALESCE( CAST( borrower.b_alimony_child_support AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_borrowed_down_payment AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_note_endorser AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_obligated_loan_foreclosure AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_party_to_lawsuit AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_presently_delinquent AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_property_foreclosure AS TEXT ), '<NULL>' ) || '~1' =
+                       borrower_pre_umdp_declarations_dim.data_source_integration_id
+          LEFT JOIN (
+              SELECT borrower_property_declarations_dim.*
+                   , <<borrower_property_declarations_dim_partial_load_condition>> AS include_record
+                   , etl_log.etl_end_date_time
+              FROM star_loan.borrower_property_declarations_dim
+              JOIN star_common.etl_log
+                   ON borrower_property_declarations_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_property_declarations_dim
+                    ON COALESCE( CAST( borrower_declarations.bdec_applying_for_credit_before_closing AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_borrowed_funds_undisclosed AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_fha_secondary_residence AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_homeowner_past_three_years AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_intend_to_occupy AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_intend_to_occupy_more_than_14_days AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_other_mortgage_in_progress_before_closing AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_prior_property_title_type AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_prior_property_usage_type AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_priority_given_to_another_lien AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower_declarations.bdec_relationship_with_seller AS TEXT ), '<NULL>' ) || '~1' =
+                       borrower_property_declarations_dim.data_source_integration_id
+          LEFT JOIN (
+              SELECT borrower_relations_dim.*
+                   , <<borrower_relations_dim_partial_load_condition>> AS include_record
+                   , etl_log.etl_end_date_time
+              FROM star_loan.borrower_relations_dim
+              JOIN star_common.etl_log
+                   ON borrower_relations_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_relations_dim
+                    ON COALESCE( CAST( borrower.b_has_dependents AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_domestic_relationship_state_type AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_marital_status_type AS TEXT ), '<NULL>' ) || '~' ||
+                       COALESCE( CAST( borrower.b_spousal_homestead AS TEXT ), '<NULL>' ) || '~1' = borrower_relations_dim.data_source_integration_id
           JOIN (
               SELECT borrower_lkup.*
                    , etl_log.etl_start_date_time
@@ -309,6 +501,17 @@ step_functions:
           ) AS borrower_lkup
                ON borrower.b_pid = borrower_lkup.borrower_pid
                    AND borrower_lkup.data_source_dwid = 1
-                   AND GREATEST( borrower.etl_end_date_time, borrower_dim.etl_end_date_time,
-                                 borrower_hmda_collection_dim.etl_end_date_time ) >= borrower_lkup.etl_start_date_time
-          WHERE GREATEST( borrower.include_record, borrower_dim.include_record, borrower_hmda_collection_dim.include_record ) IS TRUE;
+                   AND GREATEST( borrower.etl_end_date_time, borrower_dim.etl_end_date_time, borrower_declarations.etl_end_date_time,
+                                 borrower_hmda_collection_dim.etl_end_date_time, borrower_counseling_dim.etl_end_date_time,
+                                 borrower_employee_status_dim.etl_end_date_time, borrower_finances_declarations_dim.etl_end_date_time,
+                                 borrower_hmda_ethnicity_dim.etl_end_date_time, borrower_hmda_race_dim.etl_end_date_time,
+                                 borrower_hmda_sex_dim.etl_end_date_time, borrower_junk_dim.etl_end_date_time,
+                                 borrower_pre_umdp_declarations_dim.etl_end_date_time, borrower_property_declarations_dim.etl_end_date_time,
+                                 borrower_relations_dim.etl_end_date_time ) >=
+                       borrower_lkup.etl_start_date_time
+          WHERE GREATEST( borrower.include_record, borrower_dim.include_record, borrower_declarations.include_record,
+                          borrower_hmda_collection_dim.include_record, borrower_counseling_dim.include_record,
+                          borrower_employee_status_dim.include_record, borrower_finances_declarations_dim.include_record,
+                          borrower_hmda_ethnicity_dim.include_record, borrower_hmda_race_dim.include_record, borrower_hmda_sex_dim.include_record,
+                          borrower_junk_dim.include_record, borrower_pre_umdp_declarations_dim.include_record,
+                          borrower_property_declarations_dim.include_record, borrower_relations_dim.include_record ) IS TRUE;
