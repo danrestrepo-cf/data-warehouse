@@ -5,6 +5,16 @@
         "ETL-100880": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
+            "Retry": [
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "IntervalSeconds": 10,
+                    "MaxAttempts": 5,
+                    "BackoffRate": 2.0
+                }
+            ],
             "Parameters": {
                 "LaunchType": "FARGATE",
                 "Cluster": "${ecsClusterARN}",

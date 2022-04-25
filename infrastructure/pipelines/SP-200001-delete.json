@@ -13,6 +13,16 @@
                         "ETL-200001-delete-0": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -56,6 +66,16 @@
                         "ETL-200001-delete-27": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -99,6 +119,16 @@
                         "ETL-200001-delete-45": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -142,6 +172,16 @@
                         "ETL-200001-delete-63": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -185,6 +225,16 @@
                         "ETL-200001-delete-81": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -234,6 +284,16 @@
                         "ETL-200001-delete-1": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -277,6 +337,16 @@
                         "ETL-200001-delete-28": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -320,6 +390,16 @@
                         "ETL-200001-delete-46": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -363,6 +443,16 @@
                         "ETL-200001-delete-64": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -406,6 +496,16 @@
                         "ETL-200001-delete-82": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -455,6 +555,16 @@
                         "ETL-200001-delete-10": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -498,6 +608,16 @@
                         "ETL-200001-delete-29": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -541,6 +661,16 @@
                         "ETL-200001-delete-47": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -584,6 +714,16 @@
                         "ETL-200001-delete-65": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -627,6 +767,16 @@
                         "ETL-200001-delete-83": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -676,6 +826,16 @@
                         "ETL-200001-delete-11": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -719,6 +879,16 @@
                         "ETL-200001-delete-3": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -762,6 +932,16 @@
                         "ETL-200001-delete-48": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -805,6 +985,16 @@
                         "ETL-200001-delete-66": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -848,6 +1038,16 @@
                         "ETL-200001-delete-84": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -897,6 +1097,16 @@
                         "ETL-200001-delete-12": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -940,6 +1150,16 @@
                         "ETL-200001-delete-30": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -983,6 +1203,16 @@
                         "ETL-200001-delete-49": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1026,6 +1256,16 @@
                         "ETL-200001-delete-67": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1069,6 +1309,16 @@
                         "ETL-200001-delete-85": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1118,6 +1368,16 @@
                         "ETL-200001-delete-13": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1161,6 +1421,16 @@
                         "ETL-200001-delete-31": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1204,6 +1474,16 @@
                         "ETL-200001-delete-5": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1247,6 +1527,16 @@
                         "ETL-200001-delete-68": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1290,6 +1580,16 @@
                         "ETL-200001-delete-86": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1339,6 +1639,16 @@
                         "ETL-200001-delete-14": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1382,6 +1692,16 @@
                         "ETL-200001-delete-32": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1425,6 +1745,16 @@
                         "ETL-200001-delete-50": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1468,6 +1798,16 @@
                         "ETL-200001-delete-69": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1511,6 +1851,16 @@
                         "ETL-200001-delete-87": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1560,6 +1910,16 @@
                         "ETL-200001-delete-15": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1603,6 +1963,16 @@
                         "ETL-200001-delete-33": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1646,6 +2016,16 @@
                         "ETL-200001-delete-51": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1689,6 +2069,16 @@
                         "ETL-200001-delete-7": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1732,6 +2122,16 @@
                         "ETL-200001-delete-88": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1781,6 +2181,16 @@
                         "ETL-200001-delete-16": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1824,6 +2234,16 @@
                         "ETL-200001-delete-34": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1867,6 +2287,16 @@
                         "ETL-200001-delete-52": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1910,6 +2340,16 @@
                         "ETL-200001-delete-70": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -1953,6 +2393,16 @@
                         "ETL-200001-delete-89": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2002,6 +2452,16 @@
                         "ETL-200001-delete-17": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2045,6 +2505,16 @@
                         "ETL-200001-delete-35": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2088,6 +2558,16 @@
                         "ETL-200001-delete-53": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2131,6 +2611,16 @@
                         "ETL-200001-delete-71": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2174,6 +2664,16 @@
                         "ETL-200001-delete-9": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2223,6 +2723,16 @@
                         "ETL-200001-delete-18": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2266,6 +2776,16 @@
                         "ETL-200001-delete-36": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2309,6 +2829,16 @@
                         "ETL-200001-delete-54": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2352,6 +2882,16 @@
                         "ETL-200001-delete-72": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2395,6 +2935,16 @@
                         "ETL-200001-delete-90": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2444,6 +2994,16 @@
                         "ETL-200001-delete-19": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2487,6 +3047,16 @@
                         "ETL-200001-delete-37": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2530,6 +3100,16 @@
                         "ETL-200001-delete-55": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2573,6 +3153,16 @@
                         "ETL-200001-delete-73": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2616,6 +3206,16 @@
                         "ETL-200001-delete-91": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2665,6 +3265,16 @@
                         "ETL-200001-delete-2": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2708,6 +3318,16 @@
                         "ETL-200001-delete-38": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2751,6 +3371,16 @@
                         "ETL-200001-delete-56": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2794,6 +3424,16 @@
                         "ETL-200001-delete-74": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2837,6 +3477,16 @@
                         "ETL-200001-delete-92": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2886,6 +3536,16 @@
                         "ETL-200001-delete-20": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2929,6 +3589,16 @@
                         "ETL-200001-delete-39": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -2972,6 +3642,16 @@
                         "ETL-200001-delete-57": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3015,6 +3695,16 @@
                         "ETL-200001-delete-75": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3058,6 +3748,16 @@
                         "ETL-200001-delete-93": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3107,6 +3807,16 @@
                         "ETL-200001-delete-21": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3150,6 +3860,16 @@
                         "ETL-200001-delete-4": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3193,6 +3913,16 @@
                         "ETL-200001-delete-58": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3236,6 +3966,16 @@
                         "ETL-200001-delete-76": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3279,6 +4019,16 @@
                         "ETL-200001-delete-94": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3328,6 +4078,16 @@
                         "ETL-200001-delete-22": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3371,6 +4131,16 @@
                         "ETL-200001-delete-40": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3414,6 +4184,16 @@
                         "ETL-200001-delete-59": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3457,6 +4237,16 @@
                         "ETL-200001-delete-77": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3500,6 +4290,16 @@
                         "ETL-200001-delete-95": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3549,6 +4349,16 @@
                         "ETL-200001-delete-23": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3592,6 +4402,16 @@
                         "ETL-200001-delete-41": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3635,6 +4455,16 @@
                         "ETL-200001-delete-6": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3678,6 +4508,16 @@
                         "ETL-200001-delete-78": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3721,6 +4561,16 @@
                         "ETL-200001-delete-96": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3770,6 +4620,16 @@
                         "ETL-200001-delete-24": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3813,6 +4673,16 @@
                         "ETL-200001-delete-42": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3856,6 +4726,16 @@
                         "ETL-200001-delete-60": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3899,6 +4779,16 @@
                         "ETL-200001-delete-79": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3942,6 +4832,16 @@
                         "ETL-200001-delete-97": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -3991,6 +4891,16 @@
                         "ETL-200001-delete-25": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4034,6 +4944,16 @@
                         "ETL-200001-delete-43": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4077,6 +4997,16 @@
                         "ETL-200001-delete-61": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4120,6 +5050,16 @@
                         "ETL-200001-delete-8": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4163,6 +5103,16 @@
                         "ETL-200001-delete-98": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4212,6 +5162,16 @@
                         "ETL-200001-delete-26": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4255,6 +5215,16 @@
                         "ETL-200001-delete-44": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4298,6 +5268,16 @@
                         "ETL-200001-delete-62": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4341,6 +5321,16 @@
                         "ETL-200001-delete-80": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
@@ -4384,6 +5374,16 @@
                         "ETL-200001-delete-99": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "ResultPath": null,
                             "Parameters": {
                                 "LaunchType": "FARGATE",
