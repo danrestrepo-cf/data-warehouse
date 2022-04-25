@@ -44,6 +44,33 @@
                     }
                 },
                 {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100013",
+                    "StartAt": "SP-100013_message",
+                    "States": {
+                        "SP-100013_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "borrower_declarations",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100013"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "ResultSelector": {
+                                "StateName": "SP-100013_message",
+                                "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
                     "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100017",
                     "StartAt": "SP-100017_message",
                     "States": {
