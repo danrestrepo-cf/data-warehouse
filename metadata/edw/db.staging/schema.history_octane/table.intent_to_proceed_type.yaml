@@ -27,6 +27,8 @@ step_functions:
         json_output_field: code
         truncate_table: false
         container_memory: 2048
+        next_step_functions:
+        - SP-200019
         input_sql: |-
           --finding records to insert into history_octane.intent_to_proceed_type
           SELECT staging_table.code

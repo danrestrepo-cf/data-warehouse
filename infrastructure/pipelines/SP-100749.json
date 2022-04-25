@@ -4,7 +4,7 @@
     "States": {
         "ETL-100749": {
             "Type": "Task",
-            "Resource": "arn:aws:states:::ecs:runTask.sync",
+            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
                 "LaunchType": "FARGATE",
                 "Cluster": "${ecsClusterARN}",
@@ -41,6 +41,37 @@
                         }
                     ]
                 }
+            },
+            "Next": "Load_type_choice"
+        },
+        "Load_type_choice": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.load_type",
+                    "StringEquals": "NONE",
+                    "Next": "Success"
+                }
+            ],
+            "Default": "SP-200028_message"
+        },
+        "Success": {
+            "Type": "Succeed"
+        },
+        "SP-200028_message": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::sqs:sendMessage",
+            "Parameters": {
+                "QueueUrl": "${fullCheckQueueUrl}",
+                "MessageGroupId": "transaction_aux_govt_programs_dim",
+                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                "MessageAttributes": {
+                    "ProcessId": {
+                        "DataType": "String",
+                        "StringValue": "SP-200028"
+                    }
+                },
+                "MessageBody.$": "States.JsonToString($)"
             },
             "End": true
         }

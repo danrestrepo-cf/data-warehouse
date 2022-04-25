@@ -1,0 +1,226 @@
+name: transaction_aux_construction_dim
+primary_source_table: staging.history_octane.deal
+primary_key:
+- transaction_dwid
+columns:
+  transaction_dwid:
+    data_type: BIGINT
+    update_flag: true
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: true
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: false
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.d_pid
+    update_flag: true
+  active_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_pid
+    update_flag: true
+  financed_property_improvements_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_financed_property_improvements
+    update_flag: true
+  loan_modification_agreement_executed_received_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_loan_modification_agreement_executed_received_datetime
+    update_flag: true
+  adjusted_as_is_value_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_adjusted_as_is_value_amount
+    update_flag: true
+  after_improved_value_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_after_improved_value_amount
+    update_flag: true
+  construction_borrower_contribution_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_construction_borrower_contribution_amount
+    update_flag: true
+  estimated_hard_construction_cost_amount:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_estimated_hard_construction_cost_amount
+    update_flag: true
+  cr_tracker_url:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_cr_tracker_url
+    update_flag: true
+  construction_lot_ownership_status:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_construction_lot_ownership_status_type.columns.value
+    update_flag: true
+  construction_lot_ownership_status_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_construction_lot_ownership_status_type
+    update_flag: true
+  financed_property_improvements_category:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_financed_property_improvements_category_type.columns.value
+    update_flag: true
+  financed_property_improvements_category_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_financed_property_improvements_category_type
+step_functions:
+  SP-200026:
+    etls:
+      ETL-200026:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.transaction_aux_construction_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-300001-insert-update
+        input_sql: |-
+          WITH transaction_aux_construction_dim_incl_new_records AS (
+              SELECT 'deal_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
+              	, COALESCE(CAST(deal.d_pid AS TEXT), '<NULL>') || '~' ||
+              	  COALESCE(CAST(1 AS TEXT), '<NULL>') AS data_source_integration_id
+              	, NOW() AS edw_created_datetime
+              	, NOW() AS edw_modified_datetime
+              	, proposal.data_source_updated_datetime AS data_source_modified_datetime
+              	, transaction_dim.dwid AS transaction_dwid
+                , deal.d_pid AS deal_pid
+              	, proposal.prp_pid AS active_proposal_pid
+              	, proposal.prp_financed_property_improvements AS financed_property_improvements_flag
+              	, proposal.prp_loan_modification_agreement_executed_received_datetime AS loan_modification_agreement_executed_received_datetime
+              	, proposal.prp_adjusted_as_is_value_amount AS adjusted_as_is_value_amount
+              	, proposal.prp_after_improved_value_amount AS after_improved_value_amount
+              	, proposal.prp_construction_borrower_contribution_amount AS construction_borrower_contribution_amount
+              	, proposal.prp_estimated_hard_construction_cost_amount AS estimated_hard_construction_cost_amount
+              	, proposal.prp_cr_tracker_url AS cr_tracker_url
+              	, construction_lot_ownership_status_type.value AS construction_lot_ownership_status
+              	, proposal.prp_construction_lot_ownership_status_type AS construction_lot_ownership_status_code
+              	, financed_property_improvements_category_type.value AS financed_property_improvements_category
+              	, proposal.prp_financed_property_improvements_category_type AS financed_property_improvements_category_code
+              	, GREATEST(deal.etl_end_date_time, proposal.etl_end_date_time, construction_lot_ownership_status_type
+              	    .etl_end_date_time, financed_property_improvements_category_type.etl_end_date_time,
+              	    transaction_dim.etl_end_date_time) AS max_source_etl_end_date_time
+              FROM (
+                  SELECT <<deal_partial_load_condition>> AS include_record
+                  	, deal.*
+                  	, etl_log.etl_end_date_time
+                  FROM history_octane.deal
+                  	LEFT JOIN history_octane.deal AS history_records
+                  		ON deal.d_pid = history_records.d_pid
+                  			AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  	JOIN star_common.etl_log
+                  		ON deal.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.d_pid IS NULL
+          		) AS deal
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<proposal_partial_load_condition>> AS include_record
+                      	, proposal.*
+                      	, etl_log.etl_end_date_time
+                      FROM history_octane.proposal
+                      	LEFT JOIN history_octane.proposal AS history_records
+                      		ON proposal.prp_pid = history_records.prp_pid
+                      			AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      	JOIN star_common.etl_log
+                      		ON proposal.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.prp_pid IS NULL
+          		) AS primary_table
+          	) AS proposal
+              	ON deal.d_active_proposal_pid = proposal.prp_pid
+              LEFT JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<construction_lot_ownership_status_type_partial_load_condition>> AS include_record
+                      	, construction_lot_ownership_status_type.*
+                      	, etl_log.etl_end_date_time
+                      FROM history_octane.construction_lot_ownership_status_type
+                      	LEFT JOIN history_octane.construction_lot_ownership_status_type AS history_records
+                      		ON construction_lot_ownership_status_type.code = history_records.code
+                      			AND construction_lot_ownership_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      	JOIN star_common.etl_log
+                      		ON construction_lot_ownership_status_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+          		) AS primary_table
+          	) AS construction_lot_ownership_status_type
+                  ON proposal.prp_construction_lot_ownership_status_type = construction_lot_ownership_status_type.code
+              JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<financed_property_improvements_category_type_partial_load_condition>> AS include_record
+                      	, financed_property_improvements_category_type.*
+                      	, etl_log.etl_end_date_time
+                      FROM history_octane.financed_property_improvements_category_type
+                      	LEFT JOIN history_octane.financed_property_improvements_category_type AS history_records
+                      		ON financed_property_improvements_category_type.code = history_records.code
+                      			AND financed_property_improvements_category_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      	JOIN star_common.etl_log
+                      		ON financed_property_improvements_category_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+          			) AS primary_table
+          	) AS financed_property_improvements_category_type
+              	ON proposal.prp_financed_property_improvements_category_type = financed_property_improvements_category_type.code
+              JOIN (
+              	SELECT <<transaction_dim_partial_load_condition>> AS include_record
+              		, transaction_dim.*
+              		, etl_log.etl_end_date_time
+              	FROM star_loan.transaction_dim
+                  JOIN star_common.etl_log
+                  	ON transaction_dim.etl_batch_id = etl_log.etl_batch_id
+              ) AS transaction_dim
+              	ON deal.d_pid = transaction_dim.deal_pid
+          	WHERE GREATEST(deal.include_record, proposal.include_record, construction_lot_ownership_status_type
+          		.include_record, financed_property_improvements_category_type.include_record, transaction_dim.include_record) IS TRUE
+          )
+          -- new records that should be inserted
+          SELECT transaction_aux_construction_dim_incl_new_records.*
+          FROM transaction_aux_construction_dim_incl_new_records
+          LEFT JOIN star_loan.transaction_aux_construction_dim
+          	ON transaction_aux_construction_dim_incl_new_records.data_source_integration_id =
+          	   transaction_aux_construction_dim.data_source_integration_id
+          WHERE transaction_aux_construction_dim.transaction_dwid IS NULL
+          UNION ALL
+          -- existing records that need to be updated
+          SELECT transaction_aux_construction_dim_incl_new_records.*
+          FROM transaction_aux_construction_dim_incl_new_records
+          JOIN (
+              SELECT transaction_aux_construction_dim.data_source_integration_id
+              	, etl_log.etl_start_date_time
+              FROM star_loan.transaction_aux_construction_dim
+              JOIN star_common.etl_log
+              	ON transaction_aux_construction_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS transaction_aux_construction_dim_etl_start_times
+          	ON transaction_aux_construction_dim_incl_new_records.data_source_integration_id =
+          	   transaction_aux_construction_dim_etl_start_times.data_source_integration_id
+          		AND transaction_aux_construction_dim_incl_new_records.max_source_etl_end_date_time >=
+          		    transaction_aux_construction_dim_etl_start_times.etl_start_date_time;

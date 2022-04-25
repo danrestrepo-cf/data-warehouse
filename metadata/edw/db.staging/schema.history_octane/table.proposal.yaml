@@ -1007,14 +1007,14 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.prp_pid
-  prp_preapproval_uw_disposition_datetime:
+  prp_preapproval_complete_datetime:
     data_type: TIMESTAMP
     source:
-      field: primary_source_table.columns.prp_preapproval_uw_disposition_datetime
-  prp_preapproval_uw_submit_datetime:
+      field: primary_source_table.columns.prp_preapproval_complete_datetime
+  prp_preapproval_disposition_datetime:
     data_type: TIMESTAMP
     source:
-      field: primary_source_table.columns.prp_preapproval_uw_submit_datetime
+      field: primary_source_table.columns.prp_preapproval_disposition_datetime
   prp_property_acquired_through_ancillary_relief:
     data_type: VARCHAR(128)
     source:
@@ -1454,6 +1454,12 @@ step_functions:
         - SP-200014
         - SP-200019
         - SP-200020
+        - SP-200023
+        - SP-200025
+        - SP-200026
+        - SP-200027
+        - SP-200028
+        - SP-200029
         - SP-300001-delete
         input_sql: |-
           --finding records to insert into history_octane.proposal
@@ -1689,8 +1695,8 @@ step_functions:
                , staging_table.prp_financed_property_improvements
                , staging_table.prp_estimated_hard_construction_cost_amount
                , staging_table.prp_initial_uw_disposition_datetime
-               , staging_table.prp_preapproval_uw_submit_datetime
-               , staging_table.prp_preapproval_uw_disposition_datetime
+               , staging_table.prp_preapproval_complete_datetime
+               , staging_table.prp_preapproval_disposition_datetime
                , staging_table.prp_down_payment_percent
                , staging_table.prp_cash_out_reason_investment_or_business_property
                , staging_table.prp_cash_out_reason_business_debt_or_debt_consolidation
@@ -1939,8 +1945,8 @@ step_functions:
                , history_table.prp_financed_property_improvements
                , history_table.prp_estimated_hard_construction_cost_amount
                , history_table.prp_initial_uw_disposition_datetime
-               , history_table.prp_preapproval_uw_submit_datetime
-               , history_table.prp_preapproval_uw_disposition_datetime
+               , history_table.prp_preapproval_complete_datetime
+               , history_table.prp_preapproval_disposition_datetime
                , history_table.prp_down_payment_percent
                , history_table.prp_cash_out_reason_investment_or_business_property
                , history_table.prp_cash_out_reason_business_debt_or_debt_consolidation

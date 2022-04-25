@@ -52,6 +52,14 @@ foreign_keys:
       - wps_pid
       schema: history_octane
       table: wf_prereq_set
+  fk_wf_step_8:
+    columns:
+    - ws_trustee_pid
+    references:
+      columns:
+      - tru_pid
+      schema: history_octane
+      table: trustee
   fk_ws_step_6:
     columns:
     - ws_smart_doc_set_pid
@@ -231,6 +239,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ws_timeout_time_zone_type
+  ws_trustee_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ws_trustee_pid
   ws_user_step_name:
     data_type: VARCHAR(128)
     source:
@@ -316,6 +328,7 @@ step_functions:
                , staging_table.ws_swappable
                , staging_table.ws_wf_prereq_set_pid
                , staging_table.ws_user_step_name
+               , staging_table.ws_trustee_pid
                , FALSE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM staging_octane.wf_step staging_table
@@ -357,6 +370,7 @@ step_functions:
                , history_table.ws_swappable
                , history_table.ws_wf_prereq_set_pid
                , history_table.ws_user_step_name
+               , history_table.ws_trustee_pid
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (

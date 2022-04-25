@@ -27,6 +27,8 @@ step_functions:
         json_output_field: code
         truncate_table: false
         container_memory: 2048
+        next_step_functions:
+        - SP-200028
         input_sql: |-
           --finding records to insert into history_octane.fha_non_arms_length_ltv_limit_exception_type
           SELECT staging_table.code

@@ -345,6 +345,14 @@ columns:
     data_type: VARCHAR(20)
     source:
       field: primary_source_table.columns.d_mers_min_piggyback
+  d_notice_of_missing_documentation_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.d_notice_of_missing_documentation_date
+  d_notice_of_missing_documentation_due_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.d_notice_of_missing_documentation_due_date
   d_performer_team_pid:
     data_type: BIGINT
     source:
@@ -353,6 +361,14 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.d_pid
+  d_preapproval_decision_due_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.d_preapproval_decision_due_date
+  d_preapproval_received_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.d_preapproval_received_date
   d_realty_agent_scenario_type:
     data_type: VARCHAR(128)
     source:
@@ -408,6 +424,7 @@ step_functions:
         next_step_functions:
         - SP-200019
         - SP-200020
+        - SP-200024
         - SP-300001-delete
         input_sql: |-
           --finding records to insert into history_octane.deal
@@ -471,6 +488,10 @@ step_functions:
                , staging_table.d_ecoa_notice_of_incomplete_date
                , staging_table.d_ecoa_notice_of_incomplete_due_date
                , staging_table.d_ecoa_application_received_date
+               , staging_table.d_notice_of_missing_documentation_date
+               , staging_table.d_notice_of_missing_documentation_due_date
+               , staging_table.d_preapproval_received_date
+               , staging_table.d_preapproval_decision_due_date
                , FALSE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM staging_octane.deal staging_table
@@ -539,6 +560,10 @@ step_functions:
                , history_table.d_ecoa_notice_of_incomplete_date
                , history_table.d_ecoa_notice_of_incomplete_due_date
                , history_table.d_ecoa_application_received_date
+               , history_table.d_notice_of_missing_documentation_date
+               , history_table.d_notice_of_missing_documentation_due_date
+               , history_table.d_preapproval_received_date
+               , history_table.d_preapproval_decision_due_date
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (
