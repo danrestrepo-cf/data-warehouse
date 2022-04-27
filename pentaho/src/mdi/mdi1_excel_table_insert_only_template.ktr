@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>template_excel_to_table</name>
+    <name>mdi1_excel_table_insert_only_template</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -464,13 +464,16 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/02/01 15:43:18.226</modified_date>
+    <modified_date>2022/04/27 12:27:56.244</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
     <notepad>
-      <note>Load data from CSV file
+      <note>Load data from Excel file							
+
+
+
                                                                                                            
 
 
@@ -480,8 +483,8 @@
 </note>
       <xloc>128</xloc>
       <yloc>80</yloc>
-      <width>652</width>
-      <heigth>232</heigth>
+      <width>658</width>
+      <heigth>242</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -726,43 +729,71 @@
   </connection>
   <order>
     <hop>
-      <from>[template_excel_to_table] Add blank field named etl_batch_id to stream</from>
-      <to>[template_excel_to_table] Set field etl_batch_id to parameter etl_batch_id's value</to>
+      <from>[mdi1_excel_table_insert_only_template] Add blank field named etl_batch_id to stream</from>
+      <to>[mdi1_excel_table_insert_only_template] Set field etl_batch_id to parameter etl_batch_id's value</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_excel_to_table] Microsoft Excel input</from>
-      <to>[template_excel_to_table] Add blank field named etl_batch_id to stream</to>
+      <from>[mdi1_excel_table_insert_only_template] Microsoft Excel input</from>
+      <to>[mdi1_excel_table_insert_only_template] Add blank field named etl_batch_id to stream</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_excel_to_table] Table output</from>
-      <to>[template_excel_to_table]  Specify logging fields (non-sensitive)</to>
+      <from>[mdi1_excel_table_insert_only_template] Table output</from>
+      <to>[mdi1_excel_table_insert_only_template] Specify logging fields (non-sensitive)</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_excel_to_table]  Specify logging fields (non-sensitive)</from>
-      <to>[template_excel_to_table] Abort Table Output</to>
+      <from>[mdi1_excel_table_insert_only_template] Specify logging fields (non-sensitive)</from>
+      <to>[mdi1_excel_table_insert_only_template] Abort Table Output</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_excel_to_table] add a blank field for data_source_dwid to valid stream</from>
-      <to>[template_excel_to_table] Set data_source_dwid field value to parameter data_source_dwid</to>
+      <from>[mdi1_excel_table_insert_only_template] add a blank field for data_source_dwid to valid stream</from>
+      <to>[mdi1_excel_table_insert_only_template] Set data_source_dwid field value to parameter data_source_dwid</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_excel_to_table] Set field etl_batch_id to parameter etl_batch_id's value</from>
-      <to>[template_excel_to_table] add a blank field for data_source_dwid to valid stream</to>
+      <from>[mdi1_excel_table_insert_only_template] Set field etl_batch_id to parameter etl_batch_id's value</from>
+      <to>[mdi1_excel_table_insert_only_template] add a blank field for data_source_dwid to valid stream</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_excel_to_table] Set data_source_dwid field value to parameter data_source_dwid</from>
-      <to>[template_excel_to_table] Table output</to>
+      <from>[mdi1_excel_table_insert_only_template] Set data_source_dwid field value to parameter data_source_dwid</from>
+      <to>[mdi1_excel_table_insert_only_template] Table output</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[template_excel_to_table] Abort Table Output</name>
+    <name>[mdi1_excel_table_insert_only_template] Specify logging fields (non-sensitive)</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>976</xloc>
+      <yloc>1088</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[mdi1_excel_table_insert_only_template] Abort Table Output</name>
     <type>Abort</type>
     <description/>
     <distribute>Y</distribute>
@@ -791,7 +822,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_excel_to_table] Add blank field named etl_batch_id to stream</name>
+    <name>[mdi1_excel_table_insert_only_template] Add blank field named etl_batch_id to stream</name>
     <type>Constant</type>
     <description/>
     <distribute>N</distribute>
@@ -830,7 +861,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_excel_to_table] Microsoft Excel input</name>
+    <name>[mdi1_excel_table_insert_only_template] Microsoft Excel input</name>
     <type>ExcelInput</type>
     <description/>
     <distribute>N</distribute>
@@ -900,35 +931,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_excel_to_table]  Specify logging fields (non-sensitive)</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>976</xloc>
-      <yloc>1088</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_excel_to_table] Set data_source_dwid field value to parameter data_source_dwid</name>
+    <name>[mdi1_excel_table_insert_only_template] Set data_source_dwid field value to parameter data_source_dwid</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>N</distribute>
@@ -962,7 +965,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_excel_to_table] Set field etl_batch_id to parameter etl_batch_id's value</name>
+    <name>[mdi1_excel_table_insert_only_template] Set field etl_batch_id to parameter etl_batch_id's value</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>N</distribute>
@@ -996,7 +999,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_excel_to_table] Table output</name>
+    <name>[mdi1_excel_table_insert_only_template] Table output</name>
     <type>TableOutput</type>
     <description/>
     <distribute>N</distribute>
@@ -1040,7 +1043,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_excel_to_table] add a blank field for data_source_dwid to valid stream</name>
+    <name>[mdi1_excel_table_insert_only_template] add a blank field for data_source_dwid to valid stream</name>
     <type>Constant</type>
     <description/>
     <distribute>N</distribute>
@@ -1080,8 +1083,8 @@
   </step>
   <step_error_handling>
     <error>
-      <source_step>[template_excel_to_table] Set field etl_batch_id to parameter etl_batch_id's value</source_step>
-      <target_step>[template_excel_to_table] Abort Table Output</target_step>
+      <source_step>[mdi1_excel_table_insert_only_template] Set field etl_batch_id to parameter etl_batch_id's value</source_step>
+      <target_step>[mdi1_excel_table_insert_only_template] Abort Table Output</target_step>
       <is_enabled>N</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>
@@ -1092,8 +1095,8 @@
       <min_pct_rows/>
     </error>
     <error>
-      <source_step>[template_excel_to_table] Table output</source_step>
-      <target_step>[template_excel_to_table]  Specify logging fields (non-sensitive)</target_step>
+      <source_step>[mdi1_excel_table_insert_only_template] Table output</source_step>
+      <target_step>[mdi1_excel_table_insert_only_template] Specify logging fields (non-sensitive)</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>

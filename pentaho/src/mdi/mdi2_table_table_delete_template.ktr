@@ -469,7 +469,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/11/09 15:15:46.693</modified_date>
+    <modified_date>2022/04/27 16:28:52.550</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -728,43 +728,43 @@
   </connection>
   <order>
     <hop>
-      <from>[template_table_to_table_delete_json]  Specify logging fields (non-sensitive)</from>
-      <to>[template_table_to_table_delete_json]  Abort Table Output</to>
+      <from>[mdi2_table_table_delete_template] Specify logging fields (non-sensitive)</from>
+      <to>[mdi2_table_table_delete_template]  Abort Table Output</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_delete_json] Table input</from>
-      <to>[template_table_to_table_delete_json] Delete</to>
+      <from>[mdi2_table_table_delete_template] Table input</from>
+      <to>[mdi2_table_table_delete_template] Delete</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_delete_json] Input steps metrics</from>
-      <to>[template_table_to_table_delete_json] Set input line stats variables</to>
+      <from>[mdi2_table_table_delete_template] Input steps metrics</from>
+      <to>[mdi2_table_table_delete_template] Set input line stats variables</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_delete_json] Output steps metrics</from>
-      <to>[template_table_to_table_delete_json] add zero constant for unused fields</to>
+      <from>[mdi2_table_table_delete_template] Output steps metrics</from>
+      <to>[mdi2_table_table_delete_template] add zero constant for unused fields</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_delete_json] add zero constant for unused fields</from>
-      <to>[template_table_to_table_delete_json] Set output line stats variables applicable to this process</to>
+      <from>[mdi2_table_table_delete_template] add zero constant for unused fields</from>
+      <to>[mdi2_table_table_delete_template] Set output line stats variables applicable to this process</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_delete_json] Delete</from>
-      <to>[template_table_to_table_insert_json] block error handling until output line stat variables are set</to>
+      <from>[mdi2_table_table_delete_template] Delete</from>
+      <to>[mdi2_table_table_delete_template] block error handling until output line stat variables are set</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json] block error handling until output line stat variables are set</from>
-      <to>[template_table_to_table_delete_json]  Specify logging fields (non-sensitive)</to>
+      <from>[mdi2_table_table_delete_template] block error handling until output line stat variables are set</from>
+      <to>[mdi2_table_table_delete_template] Specify logging fields (non-sensitive)</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[template_table_to_table_delete_json]  Abort Table Output</name>
+    <name>[mdi2_table_table_delete_template]  Abort Table Output</name>
     <type>Abort</type>
     <description/>
     <distribute>Y</distribute>
@@ -793,35 +793,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_delete_json]  Specify logging fields (non-sensitive)</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>304</xloc>
-      <yloc>528</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_delete_json] Delete</name>
+    <name>[mdi2_table_table_delete_template] Delete</name>
     <type>Delete</type>
     <description/>
     <distribute>Y</distribute>
@@ -852,41 +824,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_delete_json] Table input</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Dummy DB Connection</connection>
-    <sql/>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>304</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_delete_json] Input steps metrics</name>
+    <name>[mdi2_table_table_delete_template] Input steps metrics</name>
     <type>StepsMetrics</type>
     <description/>
     <distribute>Y</distribute>
@@ -898,7 +836,7 @@
     </partitioning>
     <steps>
       <step>
-        <name>[template_table_to_table_delete_json] Table input</name>
+        <name>[mdi2_table_table_delete_template] Table input</name>
         <copyNr>0</copyNr>
         <stepRequired>N</stepRequired>
       </step>
@@ -927,7 +865,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_delete_json] Output steps metrics</name>
+    <name>[mdi2_table_table_delete_template] Output steps metrics</name>
     <type>StepsMetrics</type>
     <description/>
     <distribute>Y</distribute>
@@ -939,7 +877,7 @@
     </partitioning>
     <steps>
       <step>
-        <name>[template_table_to_table_delete_json] Delete</name>
+        <name>[mdi2_table_table_delete_template] Delete</name>
         <copyNr>0</copyNr>
         <stepRequired>N</stepRequired>
       </step>
@@ -968,7 +906,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_delete_json] Set input line stats variables</name>
+    <name>[mdi2_table_table_delete_template] Set input line stats variables</name>
     <type>SetVariable</type>
     <description/>
     <distribute>Y</distribute>
@@ -1008,7 +946,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_delete_json] Set output line stats variables applicable to this process</name>
+    <name>[mdi2_table_table_delete_template] Set output line stats variables applicable to this process</name>
     <type>SetVariable</type>
     <description/>
     <distribute>Y</distribute>
@@ -1072,7 +1010,69 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_delete_json] add zero constant for unused fields</name>
+    <name>[mdi2_table_table_delete_template] Specify logging fields (non-sensitive)</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>304</xloc>
+      <yloc>528</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[mdi2_table_table_delete_template] Table input</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Dummy DB Connection</connection>
+    <sql/>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>304</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[mdi2_table_table_delete_template] add zero constant for unused fields</name>
     <type>Constant</type>
     <description/>
     <distribute>Y</distribute>
@@ -1111,7 +1111,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_json] block error handling until output line stat variables are set</name>
+    <name>[mdi2_table_table_delete_template] block error handling until output line stat variables are set</name>
     <type>BlockUntilStepsFinish</type>
     <description/>
     <distribute>Y</distribute>
@@ -1123,7 +1123,7 @@
     </partitioning>
     <steps>
       <step>
-        <name>[template_table_to_table_delete_json] Set output line stats variables applicable to this process</name>
+        <name>[mdi2_table_table_delete_template] Set output line stats variables applicable to this process</name>
         <CopyNr>0</CopyNr>
       </step>
     </steps>
@@ -1143,8 +1143,8 @@
   </step>
   <step_error_handling>
     <error>
-      <source_step>[template_table_to_table_delete_json] Delete</source_step>
-      <target_step>[template_table_to_table_insert_json] block error handling until output line stat variables are set</target_step>
+      <source_step>[mdi2_table_table_delete_template] Delete</source_step>
+      <target_step>[mdi2_table_table_delete_template] block error handling until output line stat variables are set</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>
