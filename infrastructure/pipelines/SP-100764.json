@@ -5,6 +5,16 @@
         "ETL-100764": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+            "Retry": [
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "IntervalSeconds": 10,
+                    "MaxAttempts": 5,
+                    "BackoffRate": 2.0
+                }
+            ],
             "Parameters": {
                 "LaunchType": "FARGATE",
                 "Cluster": "${ecsClusterARN}",
@@ -69,6 +79,16 @@
                         "SP-200009_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "investor_dim",
@@ -92,6 +112,16 @@
                         "SP-200011_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_beneficiary_dim",

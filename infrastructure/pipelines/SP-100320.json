@@ -5,6 +5,16 @@
         "ETL-100320": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+            "Retry": [
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "IntervalSeconds": 10,
+                    "MaxAttempts": 5,
+                    "BackoffRate": 2.0
+                }
+            ],
             "Parameters": {
                 "LaunchType": "FARGATE",
                 "Cluster": "${ecsClusterARN}",
@@ -69,6 +79,16 @@
                         "SP-200012_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_dim",
@@ -92,6 +112,16 @@
                         "SP-200014_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_junk_dim",
@@ -115,6 +145,16 @@
                         "SP-200015_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mortgage_insurance_dim",
@@ -138,6 +178,16 @@
                         "SP-200016_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "product_choice_dim",
@@ -161,6 +211,16 @@
                         "SP-300001-delete_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_fact",
@@ -184,6 +244,16 @@
                         "SP-300001-insert-update_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_fact",

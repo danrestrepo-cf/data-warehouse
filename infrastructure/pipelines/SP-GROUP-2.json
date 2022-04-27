@@ -13,6 +13,16 @@
                         "SP-100012_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "place",
@@ -40,6 +50,16 @@
                         "SP-100017_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "deal_key_roles",
@@ -67,6 +87,16 @@
                         "SP-100030_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "interim_funder",
@@ -94,6 +124,16 @@
                         "SP-100058_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "county",
@@ -121,6 +161,16 @@
                         "SP-100090_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "lender_user",
@@ -148,6 +198,16 @@
                         "SP-100092_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "deal_lender_user",
@@ -175,6 +235,16 @@
                         "SP-100105_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "product",
@@ -202,6 +272,16 @@
                         "SP-100144_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_beneficiary",
@@ -229,6 +309,16 @@
                         "SP-100158_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower_residence",
@@ -256,6 +346,16 @@
                         "SP-100265_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "application",
@@ -283,6 +383,16 @@
                         "SP-100267_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "deal",
@@ -310,6 +420,16 @@
                         "SP-100268_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "investor",
@@ -337,6 +457,16 @@
                         "SP-100271_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "deal_stage",
@@ -364,6 +494,16 @@
                         "SP-100285_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "product_terms",
@@ -391,6 +531,16 @@
                         "SP-100308_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower",
@@ -418,6 +568,16 @@
                         "SP-100317_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "proposal",
@@ -445,6 +605,16 @@
                         "SP-100319_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_funding",
@@ -472,6 +642,16 @@
                         "SP-100320_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan",
@@ -499,6 +679,16 @@
                         "SP-100367_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "org_node",
@@ -526,6 +716,16 @@
                         "SP-100368_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "org_node_lender_user",
@@ -553,6 +753,16 @@
                         "SP-100369_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "org_node_version",
@@ -580,6 +790,16 @@
                         "SP-100386_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "financed_property_improvements_category_type",
@@ -607,6 +827,16 @@
                         "SP-100403_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "applicant_role_type",
@@ -634,6 +864,16 @@
                         "SP-100404_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "application_taken_method_type",
@@ -661,6 +901,16 @@
                         "SP-100405_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "application_type",
@@ -688,6 +938,16 @@
                         "SP-100412_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "arm_index_type",
@@ -715,6 +975,16 @@
                         "SP-100415_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "aus_type",
@@ -742,6 +1012,16 @@
                         "SP-100419_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower_relationship_type",
@@ -769,6 +1049,16 @@
                         "SP-100421_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower_tiny_id_type",
@@ -796,6 +1086,16 @@
                         "SP-100425_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "building_status_type",
@@ -823,6 +1123,16 @@
                         "SP-100427_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "buydown_base_date_type",
@@ -850,6 +1160,16 @@
                         "SP-100428_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "buydown_contributor_type",
@@ -877,6 +1197,16 @@
                         "SP-100429_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "buydown_schedule_type",
@@ -904,6 +1234,16 @@
                         "SP-100430_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "buydown_subsidy_calculation_type",
@@ -931,6 +1271,16 @@
                         "SP-100439_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "citizenship_residency_type",
@@ -958,6 +1308,16 @@
                         "SP-100441_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "community_lending_type",
@@ -985,6 +1345,16 @@
                         "SP-100449_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "construction_lot_ownership_status_type",
@@ -1012,6 +1382,16 @@
                         "SP-100450_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "country_type",
@@ -1039,6 +1419,16 @@
                         "SP-100451_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "courier_type",
@@ -1066,6 +1456,16 @@
                         "SP-100452_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "credit_authorization_method_type",
@@ -1093,6 +1493,16 @@
                         "SP-100453_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "credit_bureau_type",
@@ -1120,6 +1530,16 @@
                         "SP-100471_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "deal_create_type",
@@ -1147,6 +1567,16 @@
                         "SP-100478_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "decision_credit_score_calc_type",
@@ -1174,6 +1604,16 @@
                         "SP-100479_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "delivery_aus_type",
@@ -1201,6 +1641,16 @@
                         "SP-100480_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "disaster_declaration_check_date_type",
@@ -1228,6 +1678,16 @@
                         "SP-100487_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "doc_level_type",
@@ -1255,6 +1715,16 @@
                         "SP-100497_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "effective_property_value_explanation_type",
@@ -1282,6 +1752,16 @@
                         "SP-100498_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "effective_property_value_type",
@@ -1309,6 +1789,16 @@
                         "SP-100508_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fha_non_arms_length_ltv_limit_exception_type",
@@ -1336,6 +1826,16 @@
                         "SP-100513_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fnm_arm_plan_type",
@@ -1363,6 +1863,16 @@
                         "SP-100514_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fnm_community_lending_product_type",
@@ -1390,6 +1900,16 @@
                         "SP-100516_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fnm_mbs_reo_marketing_party_type",
@@ -1417,6 +1937,16 @@
                         "SP-100518_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fre_community_program_type",
@@ -1444,6 +1974,16 @@
                         "SP-100519_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fre_ctp_closing_feature_type",
@@ -1471,6 +2011,16 @@
                         "SP-100524_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "gift_funds_type",
@@ -1498,6 +2048,16 @@
                         "SP-100525_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "gse_version_type",
@@ -1525,6 +2085,16 @@
                         "SP-100526_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "heloc_cancel_fee_applicable_type",
@@ -1552,6 +2122,16 @@
                         "SP-100527_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "hmda_action_type",
@@ -1579,6 +2159,16 @@
                         "SP-100529_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "hmda_hoepa_status_type",
@@ -1606,6 +2196,16 @@
                         "SP-100530_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "hmda_purchaser_of_loan_2017_type",
@@ -1633,6 +2233,16 @@
                         "SP-100531_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "hmda_purchaser_of_loan_2018_type",
@@ -1660,6 +2270,16 @@
                         "SP-100533_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "homeownership_education_type",
@@ -1687,6 +2307,16 @@
                         "SP-100535_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "intent_to_proceed_type",
@@ -1714,6 +2344,16 @@
                         "SP-100536_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "interest_only_type",
@@ -1741,6 +2381,16 @@
                         "SP-100537_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "interim_funder_mers_registration_type",
@@ -1768,6 +2418,16 @@
                         "SP-100540_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "ipc_calc_type",
@@ -1795,6 +2455,16 @@
                         "SP-100541_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "ipc_comparison_operator_type",
@@ -1822,6 +2492,16 @@
                         "SP-100542_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "ipc_property_usage_type",
@@ -1849,6 +2529,16 @@
                         "SP-100549_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "legal_entity_type",
@@ -1876,6 +2566,16 @@
                         "SP-100555_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "lender_user_type",
@@ -1903,6 +2603,16 @@
                         "SP-100564_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "lien_priority_type",
@@ -1930,6 +2640,16 @@
                         "SP-100566_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_amortization_type",
@@ -1957,6 +2677,16 @@
                         "SP-100567_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_benef_transfer_status_type",
@@ -1984,6 +2714,16 @@
                         "SP-100570_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_purpose_type",
@@ -2011,6 +2751,16 @@
                         "SP-100586_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "marital_status_type",
@@ -2038,6 +2788,16 @@
                         "SP-100591_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mers_transfer_status_type",
@@ -2065,6 +2825,16 @@
                         "SP-100592_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_calculated_rate_type",
@@ -2092,6 +2862,16 @@
                         "SP-100593_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_company_name_type",
@@ -2119,6 +2899,16 @@
                         "SP-100595_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_payer_type",
@@ -2146,6 +2936,16 @@
                         "SP-100596_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_payment_type",
@@ -2173,6 +2973,16 @@
                         "SP-100597_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_premium_refundable_type",
@@ -2200,6 +3010,16 @@
                         "SP-100598_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_renewal_calculation_type",
@@ -2227,6 +3047,16 @@
                         "SP-100603_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "partial_payment_policy_type",
@@ -2254,6 +3084,16 @@
                         "SP-100604_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "payment_adjustment_calculation_type",
@@ -2281,6 +3121,16 @@
                         "SP-100605_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "payment_frequency_type",
@@ -2308,6 +3158,16 @@
                         "SP-100609_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "payment_structure_type",
@@ -2335,6 +3195,16 @@
                         "SP-100613_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "prepaid_interest_rate_type",
@@ -2362,6 +3232,16 @@
                         "SP-100614_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "prepay_penalty_schedule_type",
@@ -2389,6 +3269,16 @@
                         "SP-100615_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "prepay_penalty_type",
@@ -2416,6 +3306,16 @@
                         "SP-100617_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "prior_property_title_type",
@@ -2443,6 +3343,16 @@
                         "SP-100619_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "product_appraisal_requirement_type",
@@ -2470,6 +3380,16 @@
                         "SP-100621_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "product_side_type",
@@ -2497,6 +3417,16 @@
                         "SP-100622_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "product_special_program_type",
@@ -2524,6 +3454,16 @@
                         "SP-100624_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "property_category_type",
@@ -2551,6 +3491,16 @@
                         "SP-100625_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "property_repairs_holdback_calc_type",
@@ -2578,6 +3528,16 @@
                         "SP-100626_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "property_repairs_holdback_payer_type",
@@ -2605,6 +3565,16 @@
                         "SP-100627_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "property_repairs_required_type",
@@ -2632,6 +3602,16 @@
                         "SP-100628_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "property_rights_type",
@@ -2659,6 +3639,16 @@
                         "SP-100629_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "property_usage_type",
@@ -2686,6 +3676,16 @@
                         "SP-100630_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "proposal_structure_type",
@@ -2713,6 +3713,16 @@
                         "SP-100631_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "proposal_type",
@@ -2740,6 +3750,16 @@
                         "SP-100636_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "qualified_mortgage_status_type",
@@ -2767,6 +3787,16 @@
                         "SP-100639_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "realty_agent_scenario_type",
@@ -2794,6 +3824,16 @@
                         "SP-100645_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "section_of_act_coarse_type",
@@ -2821,6 +3861,16 @@
                         "SP-100646_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "security_instrument_type",
@@ -2848,6 +3898,16 @@
                         "SP-100650_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "servicing_transfer_type",
@@ -2875,6 +3935,16 @@
                         "SP-100665_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "third_party_community_second_program_eligibility_type",
@@ -2902,6 +3972,16 @@
                         "SP-100666_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "time_zone_type",
@@ -2929,6 +4009,16 @@
                         "SP-100670_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "underwrite_disposition_type",
@@ -2956,6 +4046,16 @@
                         "SP-100671_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "underwrite_method_type",
@@ -2983,6 +4083,16 @@
                         "SP-100672_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "underwrite_risk_assessment_type",
@@ -3010,6 +4120,16 @@
                         "SP-100674_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "usda_rd_single_family_housing_type",
@@ -3037,6 +4157,16 @@
                         "SP-100677_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "va_notice_of_value_source_type",
@@ -3064,6 +4194,16 @@
                         "SP-100678_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "va_past_credit_record_type",
@@ -3091,6 +4231,16 @@
                         "SP-100695_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "yes_no_na_type",
@@ -3118,6 +4268,16 @@
                         "SP-100697_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "org_node_lender_user_type",
@@ -3145,6 +4305,16 @@
                         "SP-100724_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "days_per_year_type",
@@ -3172,6 +4342,16 @@
                         "SP-100726_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "deal_orphan_status_type",
@@ -3199,6 +4379,16 @@
                         "SP-100727_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "deal_stage_type",
@@ -3226,6 +4416,16 @@
                         "SP-100728_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "deal_status_type",
@@ -3253,6 +4453,16 @@
                         "SP-100738_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fha_program_code_type",
@@ -3280,6 +4490,16 @@
                         "SP-100739_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fha_rehab_program_type",
@@ -3307,6 +4527,16 @@
                         "SP-100740_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fha_special_program_type",
@@ -3334,6 +4564,16 @@
                         "SP-100741_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fnm_investor_remittance_type",
@@ -3361,6 +4601,16 @@
                         "SP-100742_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fnm_mbs_loan_default_loss_party_type",
@@ -3388,6 +4638,16 @@
                         "SP-100743_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fund_source_type",
@@ -3415,6 +4675,16 @@
                         "SP-100744_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "funding_status_type",
@@ -3442,6 +4712,16 @@
                         "SP-100745_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "hmda_denial_reason_type",
@@ -3469,6 +4749,16 @@
                         "SP-100747_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "housing_counseling_agency_type",
@@ -3496,6 +4786,16 @@
                         "SP-100748_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "housing_counseling_type",
@@ -3523,6 +4823,16 @@
                         "SP-100749_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "hud_fha_de_approval_type",
@@ -3550,6 +4860,16 @@
                         "SP-100751_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "investor_hmda_purchaser_of_loan_type",
@@ -3577,6 +4897,16 @@
                         "SP-100761_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "lender_user_status_type",
@@ -3604,6 +4934,16 @@
                         "SP-100764_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_file_delivery_method_type",
@@ -3631,6 +4971,16 @@
                         "SP-100769_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "lqa_purchase_eligibility_type",
@@ -3658,6 +5008,16 @@
                         "SP-100771_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_initial_calculation_type",
@@ -3685,6 +5045,16 @@
                         "SP-100772_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_input_type",
@@ -3712,6 +5082,16 @@
                         "SP-100776_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mortgage_type",
@@ -3739,6 +5119,16 @@
                         "SP-100778_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "negative_amortization_type",
@@ -3766,6 +5156,16 @@
                         "SP-100779_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "neighborhood_location_type",
@@ -3793,6 +5193,16 @@
                         "SP-100785_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "qualifying_monthly_payment_type",
@@ -3820,6 +5230,16 @@
                         "SP-100786_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "qualifying_rate_type",
@@ -3847,6 +5267,16 @@
                         "SP-100790_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "rescission_notification_type",
@@ -3874,6 +5304,16 @@
                         "SP-100800_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "state_type",
@@ -3901,6 +5341,16 @@
                         "SP-100813_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "yes_no_na_unknown_type",
@@ -3928,6 +5378,16 @@
                         "SP-100814_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "yes_no_unknown_type",
@@ -3955,6 +5415,16 @@
                         "SP-100825_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "disclosure_action_type",

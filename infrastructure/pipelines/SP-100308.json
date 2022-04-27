@@ -5,6 +5,16 @@
         "ETL-100308": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+            "Retry": [
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "IntervalSeconds": 10,
+                    "MaxAttempts": 5,
+                    "BackoffRate": 2.0
+                }
+            ],
             "Parameters": {
                 "LaunchType": "FARGATE",
                 "Cluster": "${ecsClusterARN}",
@@ -69,6 +79,16 @@
                         "SP-200004_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower_demographics_dim",
@@ -92,6 +112,16 @@
                         "SP-200005-insert-update_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower_dim",
@@ -115,6 +145,16 @@
                         "SP-200006_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower_lending_profile_dim",
@@ -138,6 +178,16 @@
                         "SP-200021_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower_hmda_collection_dim",
@@ -161,6 +211,16 @@
                         "SP-200022-insert_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower_lkup",
@@ -184,6 +244,16 @@
                         "SP-200022-update_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.ALL"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower_lkup",
