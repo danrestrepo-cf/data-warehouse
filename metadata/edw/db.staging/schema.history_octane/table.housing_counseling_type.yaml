@@ -29,6 +29,7 @@ step_functions:
         container_memory: 2048
         next_step_functions:
         - SP-200005-insert-update
+        - SP-200030
         input_sql: |-
           --finding records to insert into history_octane.housing_counseling_type
           SELECT staging_table.code

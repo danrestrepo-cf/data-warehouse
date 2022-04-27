@@ -1,0 +1,400 @@
+name: borrower_finances_declarations_dim
+primary_source_table: staging.history_octane.borrower
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: false
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: false
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  bankruptcy:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_bankruptcy.columns.value
+    update_flag: true
+  bankruptcy_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_bankruptcy
+    update_flag: false
+  outstanding_judgements:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_outstanding_judgements.columns.value
+    update_flag: true
+  outstanding_judgements_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_outstanding_judgements
+    update_flag: false
+  bankruptcy_chapter_7:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  bankruptcy_chapter_7_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  bankruptcy_chapter_11:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  bankruptcy_chapter_11_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  bankruptcy_chapter_12:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  bankruptcy_chapter_12_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  bankruptcy_chapter_13:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  bankruptcy_chapter_13_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  completed_pre_foreclosure_short_sale:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  completed_pre_foreclosure_short_sale_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  conveyed_title_in_lieu_of_foreclosure:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  conveyed_title_in_lieu_of_foreclosure_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  cosigner_undisclosed:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  cosigner_undisclosed_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  currently_delinquent_federal_debt:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  currently_delinquent_federal_debt_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  party_to_lawsuit:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  party_to_lawsuit_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  property_foreclosure:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  property_foreclosure_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+step_functions:
+  SP-200032:
+    etls:
+      ETL-200032:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.borrower_finances_declarations_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-200022-update
+        input_sql: |-
+          WITH borrower_finances_declarations_dim_new_records AS (
+              SELECT 'bankruptcy_code~outstanding_judgements_code~bankruptcy_chapter_7_code~bankruptcy_chapter_11_code~bankruptcy_chapter_12_code~bankruptcy_chapter_13_code~completed_pre_foreclosure_short_sale_code~conveyed_title_in_lieu_of_foreclosure_code~cosigner_undisclosed_code~currently_delinquent_federal_debt_code~party_to_lawsuit_code~property_foreclosure_code~data_source_dwid' AS data_source_integration_columns
+                   , COALESCE( CAST( borrower.b_bankruptcy AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_outstanding_judgements AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_bankruptcy_chapter_7 AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_bankruptcy_chapter_11 AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_bankruptcy_chapter_12 AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_bankruptcy_chapter_13 AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_completed_pre_foreclosure_short_sale AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_conveyed_title_in_lieu_of_foreclosure AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_cosigner_undisclosed AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_currently_delinquent_federal_debt AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_party_to_lawsuit AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_property_foreclosure AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
+                   , NOW( ) AS edw_created_datetime
+                   , NOW( ) AS edw_modified_datetime
+                   , MAX( borrower.data_source_updated_datetime ) AS data_source_modified_datetime
+                   , bankruptcy_type.value AS bankruptcy
+                   , borrower.b_bankruptcy AS bankruptcy_code
+                   , outstanding_judgements_type.value AS outstanding_judgements
+                   , borrower.b_outstanding_judgements AS outstanding_judgements_code
+                   , bankruptcy_chapter_7_type.value AS bankruptcy_chapter_7
+                   , borrower_declarations.bdec_bankruptcy_chapter_7 AS bankruptcy_chapter_7_code
+                   , bankruptcy_chapter_11_type.value AS bankruptcy_chapter_11
+                   , borrower_declarations.bdec_bankruptcy_chapter_11 AS bankruptcy_chapter_11_code
+                   , bankruptcy_chapter_12_type.value AS bankruptcy_chapter_12
+                   , borrower_declarations.bdec_bankruptcy_chapter_12 AS bankruptcy_chapter_12_code
+                   , bankruptcy_chapter_13_type.value AS bankruptcy_chapter_13
+                   , borrower_declarations.bdec_bankruptcy_chapter_13 AS bankruptcy_chapter_13_code
+                   , completed_pre_foreclosure_short_sale_type.value AS completed_pre_foreclosure_short_sale
+                   , borrower_declarations.bdec_completed_pre_foreclosure_short_sale AS completed_pre_foreclosure_short_sale_code
+                   , conveyed_title_in_lieu_of_foreclosure_type.value AS conveyed_title_in_lieu_of_foreclosure
+                   , borrower_declarations.bdec_conveyed_title_in_lieu_of_foreclosure AS conveyed_title_in_lieu_of_foreclosure_code
+                   , cosigner_undisclosed_type.value AS cosigner_undisclosed
+                   , borrower_declarations.bdec_cosigner_undisclosed AS cosigner_undisclosed_code
+                   , currently_delinquent_federal_debt_type.value AS currently_delinquent_federal_debt
+                   , borrower_declarations.bdec_currently_delinquent_federal_debt AS currently_delinquent_federal_debt_code
+                   , party_to_lawsuit_type.value AS party_to_lawsuit
+                   , borrower_declarations.bdec_party_to_lawsuit AS party_to_lawsuit_code
+                   , property_foreclosure_type.value AS property_foreclosure
+                   , borrower_declarations.bdec_property_foreclosure AS property_foreclosure_code
+                   , MAX( GREATEST( bankruptcy_type.etl_end_date_time, outstanding_judgements_type.etl_end_date_time,
+                                    bankruptcy_chapter_7_type.etl_end_date_time, bankruptcy_chapter_11_type.etl_end_date_time,
+                                    bankruptcy_chapter_12_type.etl_end_date_time, bankruptcy_chapter_13_type.etl_end_date_time,
+                                    completed_pre_foreclosure_short_sale_type.etl_end_date_time,
+                                    conveyed_title_in_lieu_of_foreclosure_type.etl_end_date_time, cosigner_undisclosed_type.etl_end_date_time,
+                                    currently_delinquent_federal_debt_type.etl_end_date_time, party_to_lawsuit_type.etl_end_date_time,
+                                    property_foreclosure_type.etl_end_date_time ) ) AS max_source_etl_end_date_time
+              FROM (
+                  SELECT <<borrower_partial_load_condition>> AS include_record
+                       , borrower.*
+                  FROM history_octane.borrower
+                  LEFT JOIN history_octane.borrower AS history_records
+                            ON borrower.b_pid = history_records.b_pid
+                                AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.b_pid IS NULL
+              ) AS borrower
+              LEFT JOIN (
+                  SELECT <<borrower_declarations_partial_load_condition>> AS include_record
+                       , borrower_declarations.*
+                  FROM history_octane.borrower_declarations
+                  LEFT JOIN history_octane.borrower_declarations AS history_records
+                            ON borrower_declarations.bdec_pid = history_records.bdec_pid
+                                AND borrower_declarations.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.bdec_pid IS NULL
+              ) AS borrower_declarations
+                        ON borrower.b_pid = borrower_declarations.bdec_borrower_pid
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS bankruptcy_type
+                        ON borrower.b_bankruptcy = bankruptcy_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS outstanding_judgements_type
+                        ON borrower.b_outstanding_judgements = outstanding_judgements_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS bankruptcy_chapter_7_type
+                        ON borrower_declarations.bdec_bankruptcy_chapter_7 = bankruptcy_chapter_7_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS bankruptcy_chapter_11_type
+                        ON borrower_declarations.bdec_bankruptcy_chapter_11 = bankruptcy_chapter_11_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS bankruptcy_chapter_12_type
+                        ON borrower_declarations.bdec_bankruptcy_chapter_12 = bankruptcy_chapter_12_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS bankruptcy_chapter_13_type
+                        ON borrower_declarations.bdec_bankruptcy_chapter_13 = bankruptcy_chapter_13_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS completed_pre_foreclosure_short_sale_type
+                        ON borrower_declarations.bdec_completed_pre_foreclosure_short_sale = completed_pre_foreclosure_short_sale_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS conveyed_title_in_lieu_of_foreclosure_type
+                        ON borrower_declarations.bdec_conveyed_title_in_lieu_of_foreclosure = conveyed_title_in_lieu_of_foreclosure_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS cosigner_undisclosed_type
+                        ON borrower_declarations.bdec_cosigner_undisclosed = cosigner_undisclosed_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS currently_delinquent_federal_debt_type
+                        ON borrower_declarations.bdec_currently_delinquent_federal_debt = currently_delinquent_federal_debt_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS party_to_lawsuit_type
+                        ON borrower_declarations.bdec_party_to_lawsuit = party_to_lawsuit_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS property_foreclosure_type
+                        ON borrower_declarations.bdec_property_foreclosure = property_foreclosure_type.code
+              WHERE GREATEST( borrower.include_record, borrower_declarations.include_record, bankruptcy_type.include_record,
+                              outstanding_judgements_type.include_record, bankruptcy_chapter_7_type.include_record,
+                              bankruptcy_chapter_11_type.include_record, bankruptcy_chapter_12_type.include_record,
+                              bankruptcy_chapter_13_type.include_record, completed_pre_foreclosure_short_sale_type.include_record,
+                              conveyed_title_in_lieu_of_foreclosure_type.include_record, cosigner_undisclosed_type.include_record,
+                              currently_delinquent_federal_debt_type.include_record, party_to_lawsuit_type.include_record,
+                              property_foreclosure_type.include_record ) IS TRUE
+              GROUP BY bankruptcy_type.value
+                     , borrower.b_bankruptcy
+                     , outstanding_judgements_type.value
+                     , borrower.b_outstanding_judgements
+                     , bankruptcy_chapter_7_type.value
+                     , borrower_declarations.bdec_bankruptcy_chapter_7
+                     , bankruptcy_chapter_11_type.value
+                     , borrower_declarations.bdec_bankruptcy_chapter_11
+                     , bankruptcy_chapter_12_type.value
+                     , borrower_declarations.bdec_bankruptcy_chapter_12
+                     , bankruptcy_chapter_13_type.value
+                     , borrower_declarations.bdec_bankruptcy_chapter_13
+                     , completed_pre_foreclosure_short_sale_type.value
+                     , borrower_declarations.bdec_completed_pre_foreclosure_short_sale
+                     , conveyed_title_in_lieu_of_foreclosure_type.value
+                     , borrower_declarations.bdec_conveyed_title_in_lieu_of_foreclosure
+                     , cosigner_undisclosed_type.value
+                     , borrower_declarations.bdec_cosigner_undisclosed
+                     , currently_delinquent_federal_debt_type.value
+                     , borrower_declarations.bdec_currently_delinquent_federal_debt
+                     , party_to_lawsuit_type.value
+                     , borrower_declarations.bdec_party_to_lawsuit
+                     , property_foreclosure_type.value
+                     , borrower_declarations.bdec_property_foreclosure
+          )
+              --new records that should be inserted
+          SELECT borrower_finances_declarations_dim_new_records.*
+          FROM borrower_finances_declarations_dim_new_records
+          LEFT JOIN star_loan.borrower_finances_declarations_dim
+                    ON borrower_finances_declarations_dim_new_records.data_source_integration_id =
+                       borrower_finances_declarations_dim.data_source_integration_id
+          WHERE borrower_finances_declarations_dim.dwid IS NULL
+          UNION ALL
+          --existing records that need to be updated
+          SELECT borrower_finances_declarations_dim_new_records.*
+          FROM borrower_finances_declarations_dim_new_records
+          JOIN (
+              SELECT borrower_finances_declarations_dim.data_source_integration_id, etl_log.etl_start_date_time
+              FROM star_loan.borrower_finances_declarations_dim
+              JOIN star_common.etl_log
+                   ON borrower_finances_declarations_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_finances_declarations_dim_etl_start_times
+               ON borrower_finances_declarations_dim_new_records.data_source_integration_id =
+                  borrower_finances_declarations_dim_etl_start_times.data_source_integration_id
+                   AND borrower_finances_declarations_dim_new_records.max_source_etl_end_date_time >=
+                       borrower_finances_declarations_dim_etl_start_times.etl_start_date_time;
