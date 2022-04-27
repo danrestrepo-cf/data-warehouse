@@ -236,7 +236,7 @@ step_functions:
                        COALESCE( CAST( borrower.b_domestic_relationship_state_type AS TEXT ), '<NULL>' ) || '~' ||
                        COALESCE( CAST( borrower.b_marital_status_type AS TEXT ), '<NULL>' ) || '~' ||
                        COALESCE( CAST( borrower.b_spousal_homestead AS TEXT ), '<NULL>' ) || '~1' = borrower_relations_dim.data_source_integration_id
-          WHERE GREATEST( borrower.include_record, borrower_dim.include_record, borrower_declarations.include_record );
+          WHERE GREATEST( borrower.include_record, borrower_dim.include_record, borrower_declarations.include_record ) IS TRUE;
   SP-200022-update:
     etls:
       ETL-200022-update:

@@ -391,7 +391,7 @@ WITH insert_rows (process_name, data_source_dwid, sql, connectionname) AS (
         WHERE history_records.code IS NULL
     ) AS housing_counseling_agency_type
          ON borrower.b_housing_counseling_agency_type = housing_counseling_agency_type.code
-    WHERE GREATEST( borrower.include_record, homeownership_education_type.include_record, borrower.include_record,
+    WHERE GREATEST( borrower.include_record, homeownership_education_type.include_record,
                     homeownership_education_agency_type.include_record,
                     housing_counseling_type.include_record, housing_counseling_agency_type.include_record ) IS TRUE
     GROUP BY borrower.b_first_time_home_buyer_auto_compute
@@ -2679,7 +2679,7 @@ LEFT JOIN star_loan.borrower_relations_dim
              COALESCE( CAST( borrower.b_domestic_relationship_state_type AS TEXT ), ''<NULL>'' ) || ''~'' ||
              COALESCE( CAST( borrower.b_marital_status_type AS TEXT ), ''<NULL>'' ) || ''~'' ||
              COALESCE( CAST( borrower.b_spousal_homestead AS TEXT ), ''<NULL>'' ) || ''~1'' = borrower_relations_dim.data_source_integration_id
-WHERE GREATEST( borrower.include_record, borrower_dim.include_record, borrower_declarations.include_record );', 'Staging DB Connection')
+WHERE GREATEST( borrower.include_record, borrower_dim.include_record, borrower_declarations.include_record ) IS TRUE;', 'Staging DB Connection')
          , ('ETL-200022-update', 1, 'SELECT borrower_lkup.data_source_integration_columns
      , borrower_lkup.data_source_integration_id
      , borrower_lkup.edw_created_datetime
