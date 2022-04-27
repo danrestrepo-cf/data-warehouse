@@ -12,6 +12,16 @@ class StateMachineTestCase(unittest.TestCase):
         expected_task_config = {
             'Type': 'Task',
             'Resource': f'arn:aws:states:::ecs:runTask{expected_resource_suffix}',
+            "Retry": [
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "IntervalSeconds": 10,
+                    "MaxAttempts": 5,
+                    "BackoffRate": 2.0
+                }
+            ],
             'Parameters': {
                 'LaunchType': 'FARGATE',
                 'Cluster': '${ecsClusterARN}',
@@ -76,6 +86,16 @@ class StateMachineTestCase(unittest.TestCase):
         expected_message_config = {
             'Type': 'Task',
             'Resource': 'arn:aws:states:::sqs:sendMessage',
+            "Retry": [
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "IntervalSeconds": 10,
+                    "MaxAttempts": 5,
+                    "BackoffRate": 2.0
+                }
+            ],
             'Parameters': {
                 'QueueUrl': '${fullCheckQueueUrl}',
                 'MessageGroupId': expected_target_table,
@@ -750,6 +770,16 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                     "SP-1_message": {
                                         "Type": "Task",
                                         "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Retry": [
+                                            {
+                                                "ErrorEquals": [
+                                                    "States.ALL"
+                                                ],
+                                                "IntervalSeconds": 10,
+                                                "MaxAttempts": 5,
+                                                "BackoffRate": 2.0
+                                            }
+                                        ],
                                         "Parameters": {
                                             "QueueUrl": "${fullCheckQueueUrl}",
                                             "MessageGroupId": "table_1",
@@ -789,6 +819,16 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                     "SP-2_message": {
                                         "Type": "Task",
                                         "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Retry": [
+                                            {
+                                                "ErrorEquals": [
+                                                    "States.ALL"
+                                                ],
+                                                "IntervalSeconds": 10,
+                                                "MaxAttempts": 5,
+                                                "BackoffRate": 2.0
+                                            }
+                                        ],
                                         "Parameters": {
                                             "QueueUrl": "${fullCheckQueueUrl}",
                                             "MessageGroupId": "table_2",
@@ -828,6 +868,16 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                     "SP-3_message": {
                                         "Type": "Task",
                                         "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Retry": [
+                                            {
+                                                "ErrorEquals": [
+                                                    "States.ALL"
+                                                ],
+                                                "IntervalSeconds": 10,
+                                                "MaxAttempts": 5,
+                                                "BackoffRate": 2.0
+                                            }
+                                        ],
                                         "Parameters": {
                                             "QueueUrl": "${fullCheckQueueUrl}",
                                             "MessageGroupId": "table_3",
@@ -867,6 +917,16 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                     "SP-4_message": {
                                         "Type": "Task",
                                         "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Retry": [
+                                            {
+                                                "ErrorEquals": [
+                                                    "States.ALL"
+                                                ],
+                                                "IntervalSeconds": 10,
+                                                "MaxAttempts": 5,
+                                                "BackoffRate": 2.0
+                                            }
+                                        ],
                                         "Parameters": {
                                             "QueueUrl": "${fullCheckQueueUrl}",
                                             "MessageGroupId": "table_4",
@@ -906,6 +966,16 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                     "SP-5_message": {
                                         "Type": "Task",
                                         "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Retry": [
+                                            {
+                                                "ErrorEquals": [
+                                                    "States.ALL"
+                                                ],
+                                                "IntervalSeconds": 10,
+                                                "MaxAttempts": 5,
+                                                "BackoffRate": 2.0
+                                            }
+                                        ],
                                         "Parameters": {
                                             "QueueUrl": "${fullCheckQueueUrl}",
                                             "MessageGroupId": "table_5",
@@ -945,6 +1015,16 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                     "SP-1_message": {
                                         "Type": "Task",
                                         "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Retry": [
+                                            {
+                                                "ErrorEquals": [
+                                                    "States.ALL"
+                                                ],
+                                                "IntervalSeconds": 10,
+                                                "MaxAttempts": 5,
+                                                "BackoffRate": 2.0
+                                            }
+                                        ],
                                         "Parameters": {
                                             "QueueUrl": "${fullCheckQueueUrl}",
                                             "MessageGroupId": "table_1",
@@ -972,6 +1052,16 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                     "SP-4_message": {
                                         "Type": "Task",
                                         "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Retry": [
+                                            {
+                                                "ErrorEquals": [
+                                                    "States.ALL"
+                                                ],
+                                                "IntervalSeconds": 10,
+                                                "MaxAttempts": 5,
+                                                "BackoffRate": 2.0
+                                            }
+                                        ],
                                         "Parameters": {
                                             "QueueUrl": "${fullCheckQueueUrl}",
                                             "MessageGroupId": "table_4",
@@ -1012,6 +1102,16 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                     "SP-5_message": {
                                         "Type": "Task",
                                         "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Retry": [
+                                            {
+                                                "ErrorEquals": [
+                                                    "States.ALL"
+                                                ],
+                                                "IntervalSeconds": 10,
+                                                "MaxAttempts": 5,
+                                                "BackoffRate": 2.0
+                                            }
+                                        ],
                                         "Parameters": {
                                             "QueueUrl": "${fullCheckQueueUrl}",
                                             "MessageGroupId": "table_5",
@@ -1051,6 +1151,16 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                     "SP-2_message": {
                                         "Type": "Task",
                                         "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Retry": [
+                                            {
+                                                "ErrorEquals": [
+                                                    "States.ALL"
+                                                ],
+                                                "IntervalSeconds": 10,
+                                                "MaxAttempts": 5,
+                                                "BackoffRate": 2.0
+                                            }
+                                        ],
                                         "Parameters": {
                                             "QueueUrl": "${fullCheckQueueUrl}",
                                             "MessageGroupId": "table_2",
@@ -1078,6 +1188,16 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                     "SP-3_message": {
                                         "Type": "Task",
                                         "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Retry": [
+                                            {
+                                                "ErrorEquals": [
+                                                    "States.ALL"
+                                                ],
+                                                "IntervalSeconds": 10,
+                                                "MaxAttempts": 5,
+                                                "BackoffRate": 2.0
+                                            }
+                                        ],
                                         "Parameters": {
                                             "QueueUrl": "${fullCheckQueueUrl}",
                                             "MessageGroupId": "table_3",
@@ -1105,6 +1225,16 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                     "SP-4_message": {
                                         "Type": "Task",
                                         "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Retry": [
+                                            {
+                                                "ErrorEquals": [
+                                                    "States.ALL"
+                                                ],
+                                                "IntervalSeconds": 10,
+                                                "MaxAttempts": 5,
+                                                "BackoffRate": 2.0
+                                            }
+                                        ],
                                         "Parameters": {
                                             "QueueUrl": "${fullCheckQueueUrl}",
                                             "MessageGroupId": "table_4",
@@ -1132,6 +1262,16 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                     "SP-5_message": {
                                         "Type": "Task",
                                         "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Retry": [
+                                            {
+                                                "ErrorEquals": [
+                                                    "States.ALL"
+                                                ],
+                                                "IntervalSeconds": 10,
+                                                "MaxAttempts": 5,
+                                                "BackoffRate": 2.0
+                                            }
+                                        ],
                                         "Parameters": {
                                             "QueueUrl": "${fullCheckQueueUrl}",
                                             "MessageGroupId": "table_5",

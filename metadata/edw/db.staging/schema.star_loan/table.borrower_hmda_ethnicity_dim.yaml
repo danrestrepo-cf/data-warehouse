@@ -1,0 +1,110 @@
+name: borrower_hmda_ethnicity_dim
+primary_source_table: staging.history_octane.borrower
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+  data_source_dwid:
+    data_type: BIGINT
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  data_source_integration_columns:
+    data_type: TEXT
+  data_source_integration_id:
+    data_type: TEXT
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+  ethnicity_cuban_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_cuban
+  ethnicity_hispanic_or_latino_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_hispanic_or_latino
+  ethnicity_mexican_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_mexican
+  ethnicity_not_hispanic_or_latino_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_not_hispanic_or_latino
+  ethnicity_other_hispanic_or_latino_description_flag:
+    data_type: BOOLEAN
+    source:
+      calculation:
+        string: $1 <> '' AND $1 IS NOT NULL
+        using:
+        - primary_source_table.columns.b_ethnicity_other_hispanic_or_latino_description
+  ethnicity_other_hispanic_or_latino_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_other_hispanic_or_latino
+  ethnicity_puerto_rican_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_puerto_rican
+step_functions:
+  SP-200033:
+    etls:
+      ETL-200033:
+        input_type: table
+        output_type: insert
+        output_table: staging.star_loan.borrower_hmda_ethnicity_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        truncate_table: false
+        container_memory: 2048
+        next_step_functions:
+        - SP-200022-update
+        input_sql: |-
+          WITH borrower_hmda_ethnicity_dim_new_records AS (
+              SELECT 'ethnicity_cuban_flag~ethnicity_hispanic_or_latino_flag~ethnicity_mexican_flag~ethnicity_not_hispanic_or_latino_flag~ethnicity_other_hispanic_or_latino_description_flag~ethnicity_other_hispanic_or_latino_flag~ethnicity_puerto_rican_flag~data_source_dwid' AS data_source_integration_columns
+                   , COALESCE( CAST( borrower.b_ethnicity_cuban AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_ethnicity_hispanic_or_latino AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_ethnicity_mexican AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_ethnicity_not_hispanic_or_latino AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_ethnicity_other_hispanic_or_latino_description <> '' AND
+                                     borrower.b_ethnicity_other_hispanic_or_latino_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_ethnicity_other_hispanic_or_latino AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_ethnicity_puerto_rican AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
+                   , NOW( ) AS edw_created_datetime
+                   , NOW( ) AS edw_modified_datetime
+                   , MAX( borrower.data_source_updated_datetime ) AS data_source_modified_datetime
+                   , borrower.b_ethnicity_cuban AS ethnicity_cuban_flag
+                   , borrower.b_ethnicity_hispanic_or_latino AS ethnicity_hispanic_or_latino_flag
+                   , borrower.b_ethnicity_mexican AS ethnicity_mexican_flag
+                   , borrower.b_ethnicity_not_hispanic_or_latino AS ethnicity_not_hispanic_or_latino_flag
+                   , borrower.b_ethnicity_other_hispanic_or_latino_description <> '' AND
+                     borrower.b_ethnicity_other_hispanic_or_latino_description IS NOT NULL AS ethnicity_other_hispanic_or_latino_description_flag
+                   , borrower.b_ethnicity_other_hispanic_or_latino AS ethnicity_other_hispanic_or_latino_flag
+                   , borrower.b_ethnicity_puerto_rican AS ethnicity_puerto_rican_flag
+              FROM (
+                  SELECT borrower.*
+                  FROM history_octane.borrower
+                  LEFT JOIN history_octane.borrower AS history_records
+                            ON borrower.b_pid = history_records.b_pid
+                                AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.b_pid IS NULL
+                    AND <<borrower_partial_load_condition>>
+              ) AS borrower
+              GROUP BY borrower.b_ethnicity_cuban
+                     , borrower.b_ethnicity_hispanic_or_latino
+                     , borrower.b_ethnicity_mexican
+                     , borrower.b_ethnicity_not_hispanic_or_latino
+                     , borrower.b_ethnicity_other_hispanic_or_latino_description <> '' AND
+                       borrower.b_ethnicity_other_hispanic_or_latino_description IS NOT NULL
+                     , borrower.b_ethnicity_other_hispanic_or_latino
+                     , borrower.b_ethnicity_puerto_rican
+          )
+          SELECT borrower_hmda_ethnicity_dim_new_records.*
+          FROM borrower_hmda_ethnicity_dim_new_records
+          LEFT JOIN star_loan.borrower_hmda_ethnicity_dim
+                    ON borrower_hmda_ethnicity_dim_new_records.data_source_integration_id = borrower_hmda_ethnicity_dim.data_source_integration_id
+          WHERE borrower_hmda_ethnicity_dim.dwid IS NULL;

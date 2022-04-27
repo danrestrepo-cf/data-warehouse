@@ -30,6 +30,7 @@ step_functions:
         next_step_functions:
         - SP-200006
         - SP-200019
+        - SP-200039
         input_sql: |-
           --finding records to insert into history_octane.state_type
           SELECT staging_table.code

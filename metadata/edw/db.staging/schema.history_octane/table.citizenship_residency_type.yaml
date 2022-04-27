@@ -29,6 +29,7 @@ step_functions:
         container_memory: 2048
         next_step_functions:
         - SP-200006
+        - SP-200036
         input_sql: |-
           --finding records to insert into history_octane.citizenship_residency_type
           SELECT staging_table.code

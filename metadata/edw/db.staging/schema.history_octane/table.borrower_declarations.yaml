@@ -249,6 +249,9 @@ step_functions:
         json_output_field: bdec_pid
         truncate_table: false
         container_memory: 2048
+        next_step_functions:
+        - SP-200032
+        - SP-200038
         input_sql: |-
           --finding records to insert into history_octane.borrower_declarations
           SELECT staging_table.bdec_pid

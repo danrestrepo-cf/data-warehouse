@@ -323,6 +323,16 @@ class ETLStateMachineGenerator:
         task_state = {
             'Type': 'Task',
             'Resource': 'arn:aws:states:::ecs:runTask',
+            'Retry': [
+                {
+                    'ErrorEquals': [
+                        'States.ALL'
+                    ],
+                    'IntervalSeconds': 10,
+                    'MaxAttempts': 5,
+                    'BackoffRate': 2.0
+                }
+            ],
             'ResultPath': None,
             'Parameters': {
                 'LaunchType': 'FARGATE',
@@ -426,6 +436,16 @@ def create_message_state(triggered_step_function: StepFunctionMetadata, include_
     message_config = {
         'Type': 'Task',
         'Resource': 'arn:aws:states:::sqs:sendMessage',
+        'Retry': [
+            {
+                'ErrorEquals': [
+                    'States.ALL'
+                ],
+                'IntervalSeconds': 10,
+                'MaxAttempts': 5,
+                'BackoffRate': 2.0
+            }
+        ],
         'Parameters': {
             'QueueUrl': '${fullCheckQueueUrl}',
             'MessageGroupId': triggered_step_function.primary_target_table.table,

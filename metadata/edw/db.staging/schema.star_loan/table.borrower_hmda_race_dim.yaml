@@ -1,0 +1,226 @@
+name: borrower_hmda_race_dim
+primary_source_table: staging.history_octane.borrower
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+  data_source_dwid:
+    data_type: BIGINT
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  data_source_integration_columns:
+    data_type: TEXT
+  data_source_integration_id:
+    data_type: TEXT
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+  other_race_national_origin_description_flag:
+    data_type: BOOLEAN
+    source:
+      calculation:
+        string: $1 <> '' AND $1 IS NOT NULL
+        using:
+        - primary_source_table.columns.b_other_race_national_origin_description
+  race_american_indian_or_alaska_native_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_american_indian_or_alaska_native
+  race_asian_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_asian
+  race_asian_indian_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_asian_indian
+  race_black_or_african_american_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_black_or_african_american
+  race_chinese_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_chinese
+  race_filipino_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_filipino
+  race_guamanian_or_chamorro_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_guamanian_or_chamorro
+  race_japanese_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_japanese
+  race_korean_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_korean
+  race_native_hawaiian_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_native_hawaiian
+  race_native_hawaiian_or_other_pacific_islander_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_native_hawaiian_or_other_pacific_islander
+  race_not_applicable_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_not_applicable
+  race_other_american_indian_or_alaska_native_description_flag:
+    data_type: BOOLEAN
+    source:
+      calculation:
+        string: $1 <> '' AND $1 IS NOT NULL
+        using:
+        - primary_source_table.columns.b_race_other_american_indian_or_alaska_native_description
+  race_other_asian_description_flag:
+    data_type: BOOLEAN
+    source:
+      calculation:
+        string: $1 <> '' AND $1 IS NOT NULL
+        using:
+        - primary_source_table.columns.b_race_other_asian_description
+  race_other_asian_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_other_asian
+  race_other_pacific_islander_description_flag:
+    data_type: BOOLEAN
+    source:
+      calculation:
+        string: $1 <> '' AND $1 IS NOT NULL
+        using:
+        - primary_source_table.columns.b_race_other_pacific_islander_description
+  race_other_pacific_islander_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_other_pacific_islander
+  race_samoan_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_samoan
+  race_vietnamese_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_vietnamese
+  race_white_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_white
+step_functions:
+  SP-200034:
+    etls:
+      ETL-200034:
+        input_type: table
+        output_type: insert
+        output_table: staging.star_loan.borrower_hmda_race_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        truncate_table: false
+        container_memory: 2048
+        next_step_functions:
+        - SP-200022-update
+        input_sql: |-
+          WITH borrower_hmda_race_dim_new_records AS (
+              SELECT 'other_race_national_origin_description_flag~race_american_indian_or_alaska_native_flag~race_asian_flag~race_asian_indian_flag~race_black_or_african_american_flag~race_chinese_flag~race_filipino_flag~race_guamanian_or_chamorro_flag~race_japanese_flag~race_korean_flag~race_native_hawaiian_flag~race_native_hawaiian_or_other_pacific_islander_flag~race_not_applicable_flag~race_other_american_indian_or_alaska_native_description_flag~race_other_asian_description_flag~race_other_asian_flag~race_other_pacific_islander_description_flag~race_other_pacific_islander_flag~race_samoan_flag~race_vietnamese_flag~race_white_flag~data_source_dwid' AS data_source_integration_columns
+                   , COALESCE( CAST( borrower.b_other_race_national_origin_description <> '' AND
+                                     borrower.b_other_race_national_origin_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_american_indian_or_alaska_native AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_asian AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_asian_indian AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_black_or_african_american AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_chinese AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_filipino AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_guamanian_or_chamorro AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_japanese AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_korean AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_native_hawaiian AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_native_hawaiian_or_other_pacific_islander AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_not_applicable AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_other_american_indian_or_alaska_native_description <> '' AND
+                                     borrower.b_race_other_american_indian_or_alaska_native_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_other_asian_description <> '' AND
+                                     borrower.b_race_other_asian_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_other_asian AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_other_pacific_islander_description <> '' AND
+                                     borrower.b_race_other_pacific_islander_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_other_pacific_islander AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_samoan AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_vietnamese AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_race_white AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
+                   , NOW( ) AS edw_created_datetime
+                   , NOW( ) AS edw_modified_datetime
+                   , MAX( borrower.data_source_updated_datetime ) AS data_source_modified_datetime
+                   , borrower.b_other_race_national_origin_description <> '' AND
+                     borrower.b_other_race_national_origin_description IS NOT NULL AS other_race_national_origin_description_flag
+                   , borrower.b_race_american_indian_or_alaska_native AS race_american_indian_or_alaska_native_flag
+                   , borrower.b_race_asian AS race_asian_flag
+                   , borrower.b_race_asian_indian AS race_asian_indian_flag
+                   , borrower.b_race_black_or_african_american AS race_black_or_african_american_flag
+                   , borrower.b_race_chinese AS race_chinese_flag
+                   , borrower.b_race_filipino AS race_filipino_flag
+                   , borrower.b_race_guamanian_or_chamorro AS race_guamanian_or_chamorro_flag
+                   , borrower.b_race_japanese AS race_japanese_flag
+                   , borrower.b_race_korean AS race_korean_flag
+                   , borrower.b_race_native_hawaiian AS race_native_hawaiian_flag
+                   , borrower.b_race_native_hawaiian_or_other_pacific_islander AS race_native_hawaiian_or_other_pacific_islander_flag
+                   , borrower.b_race_not_applicable AS race_not_applicable_flag
+                   , borrower.b_race_other_american_indian_or_alaska_native_description <> '' AND
+                     borrower.b_race_other_american_indian_or_alaska_native_description IS NOT NULL AS race_other_american_indian_or_alaska_native_description_flag
+                   , borrower.b_race_other_asian_description <> '' AND
+                     borrower.b_race_other_asian_description IS NOT NULL AS race_other_asian_description_flag
+                   , borrower.b_race_other_asian AS race_other_asian_flag
+                   , borrower.b_race_other_pacific_islander_description <> '' AND
+                     borrower.b_race_other_pacific_islander_description IS NOT NULL AS race_other_pacific_islander_description_flag
+                   , borrower.b_race_other_pacific_islander AS race_other_pacific_islander_flag
+                   , borrower.b_race_samoan AS race_samoan_flag
+                   , borrower.b_race_vietnamese AS race_vietnamese_flag
+                   , borrower.b_race_white AS race_white_flag
+              FROM (
+                  SELECT borrower.*
+                  FROM history_octane.borrower
+                  LEFT JOIN history_octane.borrower AS history_records
+                            ON borrower.b_pid = history_records.b_pid
+                                AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.b_pid IS NULL
+                    AND <<borrower_partial_load_condition>>
+              ) AS borrower
+              GROUP BY borrower.b_other_race_national_origin_description <> '' AND
+                       borrower.b_other_race_national_origin_description IS NOT NULL
+                     , borrower.b_race_american_indian_or_alaska_native
+                     , borrower.b_race_asian
+                     , borrower.b_race_asian_indian
+                     , borrower.b_race_black_or_african_american
+                     , borrower.b_race_chinese
+                     , borrower.b_race_filipino
+                     , borrower.b_race_guamanian_or_chamorro
+                     , borrower.b_race_japanese
+                     , borrower.b_race_korean
+                     , borrower.b_race_native_hawaiian
+                     , borrower.b_race_native_hawaiian_or_other_pacific_islander
+                     , borrower.b_race_not_applicable
+                     , borrower.b_race_other_american_indian_or_alaska_native_description <> '' AND
+                       borrower.b_race_other_american_indian_or_alaska_native_description IS NOT NULL
+                     , borrower.b_race_other_asian_description <> '' AND
+                       borrower.b_race_other_asian_description IS NOT NULL
+                     , borrower.b_race_other_asian
+                     , borrower.b_race_other_pacific_islander_description <> '' AND
+                       borrower.b_race_other_pacific_islander_description IS NOT NULL
+                     , borrower.b_race_other_pacific_islander
+                     , borrower.b_race_samoan
+                     , borrower.b_race_vietnamese
+                     , borrower.b_race_white
+          )
+          SELECT borrower_hmda_race_dim_new_records.*
+          FROM borrower_hmda_race_dim_new_records
+          LEFT JOIN star_loan.borrower_hmda_race_dim
+                    ON borrower_hmda_race_dim_new_records.data_source_integration_id = borrower_hmda_race_dim.data_source_integration_id
+          WHERE borrower_hmda_race_dim.dwid IS NULL;
