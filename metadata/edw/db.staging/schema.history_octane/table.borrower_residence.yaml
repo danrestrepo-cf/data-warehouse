@@ -83,6 +83,7 @@ step_functions:
         container_memory: 2048
         next_step_functions:
         - SP-200005-insert-update
+        - SP-200040
         input_sql: |-
           --finding records to insert into history_octane.borrower_residence
           SELECT staging_table.bres_pid
