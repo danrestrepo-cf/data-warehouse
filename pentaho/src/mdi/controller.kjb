@@ -8,7 +8,7 @@
   <created_user>-</created_user>
   <created_date>2020/10/10 07:31:50.634</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2021/12/10 12:51:38.542</modified_date>
+  <modified_date>2022/04/27 12:05:59.810</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -1111,7 +1111,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Abort job</name>
+      <name>[controller] Abort job after MDI-1 failure</name>
       <description/>
       <type>ABORT</type>
       <attributes/>
@@ -1124,7 +1124,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Success</name>
+      <name>[controller] MDI-1 Success</name>
       <description/>
       <type>SUCCESS</type>
       <attributes/>
@@ -1465,7 +1465,7 @@
     </hop>
     <hop>
       <from>[controller] Execute mdi1_csv_table_insert_only_controller</from>
-      <to>Success</to>
+      <to>[controller] MDI-1 Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1474,7 +1474,7 @@
     </hop>
     <hop>
       <from>[controller] Execute mdi1_excel_table_insert_only_controller</from>
-      <to>Success</to>
+      <to>[controller] MDI-1 Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1483,7 +1483,7 @@
     </hop>
     <hop>
       <from>[controller] Execute mdi1_table_table_insert_only_controller</from>
-      <to>Success</to>
+      <to>[controller] MDI-1 Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1492,7 +1492,7 @@
     </hop>
     <hop>
       <from>[controller] Execute mdi1_table_table_insert_update_controller</from>
-      <to>Success</to>
+      <to>[controller] MDI-1 Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1501,7 +1501,7 @@
     </hop>
     <hop>
       <from>[controller] Execute mdi1_csv_table_insert_only_controller</from>
-      <to>Abort job</to>
+      <to>[controller] Abort job after MDI-1 failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1510,7 +1510,7 @@
     </hop>
     <hop>
       <from>[controller] Execute mdi1_excel_table_insert_only_controller</from>
-      <to>Abort job</to>
+      <to>[controller] Abort job after MDI-1 failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1519,7 +1519,7 @@
     </hop>
     <hop>
       <from>[controller] Execute mdi1_table_table_insert_only_controller</from>
-      <to>Abort job</to>
+      <to>[controller] Abort job after MDI-1 failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1528,7 +1528,7 @@
     </hop>
     <hop>
       <from>[controller] Execute mdi1_table_table_insert_update_controller</from>
-      <to>Abort job</to>
+      <to>[controller] Abort job after MDI-1 failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

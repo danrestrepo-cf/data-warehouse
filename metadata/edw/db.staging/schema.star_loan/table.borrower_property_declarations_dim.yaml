@@ -1,0 +1,382 @@
+name: borrower_property_declarations_dim
+primary_source_table: staging.history_octane.borrower
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: false
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: false
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  applying_for_credit_before_closing:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  applying_for_credit_before_closing_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  borrowed_funds_undisclosed:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  borrowed_funds_undisclosed_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  fha_secondary_residence:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  fha_secondary_residence_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  homeowner_past_three_years:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_homeowner_past_three_years.columns.value
+    update_flag: true
+  homeowner_past_three_years_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_homeowner_past_three_years
+    update_flag: false
+  intend_to_occupy:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_intend_to_occupy.columns.value
+    update_flag: true
+  intend_to_occupy_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_intend_to_occupy
+    update_flag: false
+  intend_to_occupy_more_than_14_days:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  intend_to_occupy_more_than_14_days_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  other_mortgage_in_progress_before_closing:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  other_mortgage_in_progress_before_closing_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  prior_property_title:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_prior_property_title_type.columns.value
+    update_flag: true
+  prior_property_title_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_prior_property_title_type
+    update_flag: false
+  prior_property_usage:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_prior_property_usage_type.columns.value
+    update_flag: true
+  prior_property_usage_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_prior_property_usage_type
+    update_flag: false
+  priority_given_to_another_lien:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  priority_given_to_another_lien_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+  relationship_with_seller:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  relationship_with_seller_code:
+    data_type: VARCHAR(128)
+    update_flag: false
+step_functions:
+  SP-200038:
+    etls:
+      ETL-200038:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.borrower_property_declarations_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-200022-update
+        input_sql: |-
+          WITH borrower_property_declarations_dim_new_records AS (
+              SELECT 'applying_for_credit_before_closing_code~borrowed_funds_undisclosed_code~fha_secondary_residence_code~homeowner_past_three_years_code~intend_to_occupy_code~intend_to_occupy_more_than_14_days_code~other_mortgage_in_progress_before_closing_code~prior_property_title_code~prior_property_usage_code~priority_given_to_another_lien_code~relationship_with_seller_code~data_source_dwid' AS data_source_integration_columns
+                   , COALESCE( CAST( borrower_declarations.bdec_applying_for_credit_before_closing AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_borrowed_funds_undisclosed AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_fha_secondary_residence AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_homeowner_past_three_years AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_intend_to_occupy AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_intend_to_occupy_more_than_14_days AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_other_mortgage_in_progress_before_closing AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_prior_property_title_type AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower.b_prior_property_usage_type AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_priority_given_to_another_lien AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( borrower_declarations.bdec_relationship_with_seller AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
+                   , NOW( ) AS edw_created_datetime
+                   , NOW( ) AS edw_modified_datetime
+                   , MAX( borrower.data_source_updated_datetime ) AS data_source_modified_datetime
+                   , applying_for_credit_before_closing_type.value AS applying_for_credit_before_closing
+                   , borrower_declarations.bdec_applying_for_credit_before_closing AS applying_for_credit_before_closing_code
+                   , borrowed_funds_undisclosed_type.value AS borrowed_funds_undisclosed
+                   , borrower_declarations.bdec_borrowed_funds_undisclosed AS borrowed_funds_undisclosed_code
+                   , fha_secondary_residence_type.value AS fha_secondary_residence
+                   , borrower_declarations.bdec_fha_secondary_residence AS fha_secondary_residence_code
+                   , homeowner_past_three_years_type.value AS homeowner_past_three_years
+                   , borrower.b_homeowner_past_three_years AS homeowner_past_three_years_code
+                   , intend_to_occupy_type.value AS intend_to_occupy
+                   , borrower.b_intend_to_occupy AS intend_to_occupy_code
+                   , intend_to_occupy_more_than_14_days_type.value AS intend_to_occupy_more_than_14_days
+                   , borrower_declarations.bdec_intend_to_occupy_more_than_14_days AS intend_to_occupy_more_than_14_days_code
+                   , other_mortgage_in_progress_before_closing_type.value AS other_mortgage_in_progress_before_closing
+                   , borrower_declarations.bdec_other_mortgage_in_progress_before_closing AS other_mortgage_in_progress_before_closing_code
+                   , prior_property_title_type.value AS prior_property_title
+                   , borrower.b_prior_property_title_type AS prior_property_title_code
+                   , property_usage_type.value AS prior_property_usage
+                   , borrower.b_prior_property_usage_type AS prior_property_usage_code
+                   , priority_given_to_another_lien_type.value AS priority_given_to_another_lien
+                   , borrower_declarations.bdec_priority_given_to_another_lien AS priority_given_to_another_lien_code
+                   , relationship_with_seller_type.value AS relationship_with_seller
+                   , borrower_declarations.bdec_relationship_with_seller AS relationship_with_seller_code
+                   , MAX( GREATEST( applying_for_credit_before_closing_type.etl_end_date_time, borrowed_funds_undisclosed_type.etl_end_date_time,
+                                    fha_secondary_residence_type.etl_end_date_time, homeowner_past_three_years_type.etl_end_date_time,
+                                    intend_to_occupy_type.etl_end_date_time, intend_to_occupy_more_than_14_days_type.etl_end_date_time,
+                                    other_mortgage_in_progress_before_closing_type.etl_end_date_time, prior_property_title_type.etl_end_date_time,
+                                    property_usage_type.etl_end_date_time, priority_given_to_another_lien_type.etl_end_date_time,
+                                    relationship_with_seller_type.etl_end_date_time ) ) AS max_source_etl_end_date_time
+              FROM (
+                  SELECT <<borrower_partial_load_condition>> AS include_record
+                       , borrower.*
+                  FROM history_octane.borrower
+                  LEFT JOIN history_octane.borrower AS history_records
+                            ON borrower.b_pid = history_records.b_pid
+                                AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.b_pid IS NULL
+              ) AS borrower
+              LEFT JOIN (
+                  SELECT <<borrower_declarations_partial_load_condition>> AS include_record
+                       , borrower_declarations.*
+                  FROM history_octane.borrower_declarations
+                  LEFT JOIN history_octane.borrower_declarations AS history_records
+                            ON borrower_declarations.bdec_pid = history_records.bdec_pid
+                                AND borrower_declarations.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.bdec_pid IS NULL
+              ) AS borrower_declarations
+                        ON borrower.b_pid = borrower_declarations.bdec_borrower_pid
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS applying_for_credit_before_closing_type
+                        ON borrower_declarations.bdec_applying_for_credit_before_closing = applying_for_credit_before_closing_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS borrowed_funds_undisclosed_type
+                        ON borrower_declarations.bdec_borrowed_funds_undisclosed = borrowed_funds_undisclosed_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS fha_secondary_residence_type
+                        ON borrower_declarations.bdec_fha_secondary_residence = fha_secondary_residence_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS homeowner_past_three_years_type
+                        ON borrower.b_homeowner_past_three_years = homeowner_past_three_years_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS intend_to_occupy_type
+                        ON borrower.b_intend_to_occupy = intend_to_occupy_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS intend_to_occupy_more_than_14_days_type
+                        ON borrower_declarations.bdec_intend_to_occupy_more_than_14_days = intend_to_occupy_more_than_14_days_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS other_mortgage_in_progress_before_closing_type
+                        ON borrower_declarations.bdec_other_mortgage_in_progress_before_closing = other_mortgage_in_progress_before_closing_type.code
+              LEFT JOIN (
+                  SELECT <<prior_property_title_type_partial_load_condition>> AS include_record
+                       , prior_property_title_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.prior_property_title_type
+                  LEFT JOIN history_octane.prior_property_title_type AS history_records
+                            ON prior_property_title_type.code = history_records.code
+                                AND prior_property_title_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON prior_property_title_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS prior_property_title_type
+                        ON borrower.b_prior_property_title_type = prior_property_title_type.code
+              LEFT JOIN (
+                  SELECT <<property_usage_type_partial_load_condition>> AS include_record
+                       , property_usage_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.property_usage_type
+                  LEFT JOIN history_octane.property_usage_type AS history_records
+                            ON property_usage_type.code = history_records.code
+                                AND property_usage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON property_usage_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS property_usage_type
+                        ON borrower.b_prior_property_usage_type = property_usage_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS priority_given_to_another_lien_type
+                        ON borrower_declarations.bdec_priority_given_to_another_lien = priority_given_to_another_lien_type.code
+              LEFT JOIN (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
+              ) AS relationship_with_seller_type
+                        ON borrower_declarations.bdec_relationship_with_seller = relationship_with_seller_type.code
+              WHERE GREATEST( applying_for_credit_before_closing_type.include_record, borrowed_funds_undisclosed_type.include_record,
+                              fha_secondary_residence_type.include_record, homeowner_past_three_years_type.include_record,
+                              intend_to_occupy_type.include_record, intend_to_occupy_more_than_14_days_type.include_record,
+                              other_mortgage_in_progress_before_closing_type.include_record, prior_property_title_type.include_record,
+                              property_usage_type.include_record, borrower.include_record, priority_given_to_another_lien_type.include_record,
+                              relationship_with_seller_type.include_record, borrower_declarations.include_record ) IS TRUE
+              GROUP BY applying_for_credit_before_closing_type.value
+                     , borrower_declarations.bdec_applying_for_credit_before_closing
+                     , borrowed_funds_undisclosed_type.value
+                     , borrower_declarations.bdec_borrowed_funds_undisclosed
+                     , fha_secondary_residence_type.value
+                     , borrower_declarations.bdec_fha_secondary_residence
+                     , homeowner_past_three_years_type.value
+                     , borrower.b_homeowner_past_three_years
+                     , intend_to_occupy_type.value
+                     , borrower.b_intend_to_occupy
+                     , intend_to_occupy_more_than_14_days_type.value
+                     , borrower_declarations.bdec_intend_to_occupy_more_than_14_days
+                     , other_mortgage_in_progress_before_closing_type.value
+                     , borrower_declarations.bdec_other_mortgage_in_progress_before_closing
+                     , prior_property_title_type.value
+                     , borrower.b_prior_property_title_type
+                     , property_usage_type.value
+                     , borrower.b_prior_property_usage_type
+                     , priority_given_to_another_lien_type.value
+                     , borrower_declarations.bdec_priority_given_to_another_lien
+                     , relationship_with_seller_type.value
+                     , borrower_declarations.bdec_relationship_with_seller
+          )
+              --new records that should be inserted
+          SELECT borrower_property_declarations_dim_new_records.*
+          FROM borrower_property_declarations_dim_new_records
+          LEFT JOIN star_loan.borrower_property_declarations_dim
+                    ON borrower_property_declarations_dim_new_records.data_source_integration_id =
+                       borrower_property_declarations_dim.data_source_integration_id
+          WHERE borrower_property_declarations_dim.dwid IS NULL
+          UNION ALL
+          --existing records that need to be updated
+          SELECT borrower_property_declarations_dim_new_records.*
+          FROM borrower_property_declarations_dim_new_records
+          JOIN (
+              SELECT borrower_property_declarations_dim.data_source_integration_id, etl_log.etl_start_date_time
+              FROM star_loan.borrower_property_declarations_dim
+              JOIN star_common.etl_log
+                   ON borrower_property_declarations_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_property_declarations_dim_etl_start_times
+               ON borrower_property_declarations_dim_new_records.data_source_integration_id =
+                  borrower_property_declarations_dim_etl_start_times.data_source_integration_id
+                   AND borrower_property_declarations_dim_new_records.max_source_etl_end_date_time >=
+                       borrower_property_declarations_dim_etl_start_times.etl_start_date_time;

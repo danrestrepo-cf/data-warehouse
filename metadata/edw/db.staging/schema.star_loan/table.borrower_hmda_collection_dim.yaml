@@ -174,99 +174,81 @@ step_functions:
                   WHERE history_records.b_pid IS NULL
               ) AS borrower
               JOIN (
-                  SELECT *
-                  FROM (
-                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
-                           , yes_no_unknown_type.*
-                           , etl_log.etl_end_date_time
-                      FROM history_octane.yes_no_unknown_type
-                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
-                                ON yes_no_unknown_type.code = history_records.code
-                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                      JOIN star_common.etl_log
-                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
-                      WHERE history_records.code IS NULL
-                  ) AS primary_table
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
               ) AS ethnicity_collected_visual_or_surname_type
                    ON borrower.b_ethnicity_collected_visual_or_surname = ethnicity_collected_visual_or_surname_type.code
               JOIN (
-                  SELECT *
-                  FROM (
-                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
-                           , yes_no_unknown_type.*
-                           , etl_log.etl_end_date_time
-                      FROM history_octane.yes_no_unknown_type
-                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
-                                ON yes_no_unknown_type.code = history_records.code
-                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                      JOIN star_common.etl_log
-                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
-                      WHERE history_records.code IS NULL
-                  ) AS primary_table
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
               ) AS ethnicity_refused_type
                    ON borrower.b_ethnicity_refused = ethnicity_refused_type.code
               JOIN (
-                  SELECT *
-                  FROM (
-                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
-                           , yes_no_unknown_type.*
-                           , etl_log.etl_end_date_time
-                      FROM history_octane.yes_no_unknown_type
-                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
-                                ON yes_no_unknown_type.code = history_records.code
-                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                      JOIN star_common.etl_log
-                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
-                      WHERE history_records.code IS NULL
-                  ) AS primary_table
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
               ) AS race_collected_visual_or_surname_type
                    ON borrower.b_race_collected_visual_or_surname = race_collected_visual_or_surname_type.code
               JOIN (
-                  SELECT *
-                  FROM (
-                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
-                           , yes_no_unknown_type.*
-                           , etl_log.etl_end_date_time
-                      FROM history_octane.yes_no_unknown_type
-                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
-                                ON yes_no_unknown_type.code = history_records.code
-                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                      JOIN star_common.etl_log
-                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
-                      WHERE history_records.code IS NULL
-                  ) AS primary_table
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
               ) AS race_refused_type
                    ON borrower.b_race_refused = race_refused_type.code
               JOIN (
-                  SELECT *
-                  FROM (
-                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
-                           , yes_no_unknown_type.*
-                           , etl_log.etl_end_date_time
-                      FROM history_octane.yes_no_unknown_type
-                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
-                                ON yes_no_unknown_type.code = history_records.code
-                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                      JOIN star_common.etl_log
-                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
-                      WHERE history_records.code IS NULL
-                  ) AS primary_table
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
               ) AS sex_collected_visual_or_surname_type
                    ON borrower.b_sex_collected_visual_or_surname = sex_collected_visual_or_surname_type.code
               JOIN (
-                  SELECT *
-                  FROM (
-                      SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
-                           , yes_no_unknown_type.*
-                           , etl_log.etl_end_date_time
-                      FROM history_octane.yes_no_unknown_type
-                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records
-                                ON yes_no_unknown_type.code = history_records.code
-                                    AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                      JOIN star_common.etl_log
-                           ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
-                      WHERE history_records.code IS NULL
-                  ) AS primary_table
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
               ) AS sex_refused_type
                    ON borrower.b_sex_refused = sex_refused_type.code
               WHERE GREATEST( ethnicity_collected_visual_or_surname_type.include_record, borrower.include_record,
@@ -281,7 +263,7 @@ step_functions:
                      , sex_collected_visual_or_surname_type.value, borrower.b_sex_collected_visual_or_surname, borrower.b_sex_not_obtainable
                      , sex_refused_type.value, borrower.b_sex_refused
           )
-          --new records that should be inserted
+              --new records that should be inserted
           SELECT borrower_hmda_collection_dim_new_records.*
           FROM borrower_hmda_collection_dim_new_records
           LEFT JOIN star_loan.borrower_hmda_collection_dim

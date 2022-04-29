@@ -219,6 +219,30 @@ foreign_keys:
       - dwid
       schema: star_loan
       table: borrower_lending_profile_dim
+  fk_loan_fact__b1_borrower_counseling_dwid:
+    columns:
+    - b1_borrower_counseling_dwid
+    references:
+      columns:
+      - dwid
+      schema: star_loan
+      table: borrower_counseling_dim
+  fk_loan_fact__b1_borrower_employee_status_dwid:
+    columns:
+    - b1_borrower_employee_status_dwid
+    references:
+      columns:
+      - dwid
+      schema: star_loan
+      table: borrower_employee_status_dim
+  fk_loan_fact__b1_borrower_finances_declarations_dwid:
+    columns:
+    - b1_borrower_finances_declarations_dwid
+    references:
+      columns:
+      - dwid
+      schema: star_loan
+      table: borrower_finances_declarations_dim
   fk_loan_fact__b1_borrower_hmda_collection_dwid:
     columns:
     - b1_borrower_hmda_collection_dwid
@@ -227,6 +251,62 @@ foreign_keys:
       - dwid
       schema: star_loan
       table: borrower_hmda_collection_dim
+  fk_loan_fact__b1_borrower_hmda_ethnicity_dwid:
+    columns:
+    - b1_borrower_hmda_ethnicity_dwid
+    references:
+      columns:
+      - dwid
+      schema: star_loan
+      table: borrower_hmda_ethnicity_dim
+  fk_loan_fact__b1_borrower_hmda_race_dwid:
+    columns:
+    - b1_borrower_hmda_race_dwid
+    references:
+      columns:
+      - dwid
+      schema: star_loan
+      table: borrower_hmda_race_dim
+  fk_loan_fact__b1_borrower_hmda_sex_dwid:
+    columns:
+    - b1_borrower_hmda_sex_dwid
+    references:
+      columns:
+      - dwid
+      schema: star_loan
+      table: borrower_hmda_sex_dim
+  fk_loan_fact__b1_borrower_junk_dwid:
+    columns:
+    - b1_borrower_junk_dwid
+    references:
+      columns:
+      - dwid
+      schema: star_loan
+      table: borrower_junk_dim
+  fk_loan_fact__b1_borrower_pre_umdp_declarations_dwid:
+    columns:
+    - b1_borrower_pre_umdp_declarations_dwid
+    references:
+      columns:
+      - dwid
+      schema: star_loan
+      table: borrower_pre_umdp_declarations_dim
+  fk_loan_fact__b1_borrower_property_declarations_dwid:
+    columns:
+    - b1_borrower_property_declarations_dwid
+    references:
+      columns:
+      - dwid
+      schema: star_loan
+      table: borrower_property_declarations_dim
+  fk_loan_fact__b1_borrower_relations_dwid:
+    columns:
+    - b1_borrower_relations_dwid
+    references:
+      columns:
+      - dwid
+      schema: star_loan
+      table: borrower_relations_dim
   fk_loan_fact__primary_application_dwid:
     columns:
     - primary_application_dwid
@@ -1029,7 +1109,37 @@ columns:
   b1_borrower_lending_profile_dwid:
     data_type: BIGINT
     update_flag: true
+  b1_borrower_counseling_dwid:
+    data_type: BIGINT
+    update_flag: true
+  b1_borrower_employee_status_dwid:
+    data_type: BIGINT
+    update_flag: true
+  b1_borrower_finances_declarations_dwid:
+    data_type: BIGINT
+    update_flag: true
   b1_borrower_hmda_collection_dwid:
+    data_type: BIGINT
+    update_flag: true
+  b1_borrower_hmda_ethnicity_dwid:
+    data_type: BIGINT
+    update_flag: true
+  b1_borrower_hmda_race_dwid:
+    data_type: BIGINT
+    update_flag: true
+  b1_borrower_hmda_sex_dwid:
+    data_type: BIGINT
+    update_flag: true
+  b1_borrower_junk_dwid:
+    data_type: BIGINT
+    update_flag: true
+  b1_borrower_pre_umdp_declarations_dwid:
+    data_type: BIGINT
+    update_flag: true
+  b1_borrower_property_declarations_dwid:
+    data_type: BIGINT
+    update_flag: true
+  b1_borrower_relations_dwid:
     data_type: BIGINT
     update_flag: true
   primary_application_dwid:
@@ -1409,7 +1519,17 @@ step_functions:
                , loan_fact_incl_new_records.n8_borrower_dwid
                , loan_fact_incl_new_records.b1_borrower_demographics_dwid
                , loan_fact_incl_new_records.b1_borrower_lending_profile_dwid
+               , loan_fact_incl_new_records.b1_borrower_counseling_dwid
+               , loan_fact_incl_new_records.b1_borrower_employee_status_dwid
+               , loan_fact_incl_new_records.b1_borrower_finances_declarations_dwid
                , loan_fact_incl_new_records.b1_borrower_hmda_collection_dwid
+               , loan_fact_incl_new_records.b1_borrower_hmda_ethnicity_dwid
+               , loan_fact_incl_new_records.b1_borrower_hmda_race_dwid
+               , loan_fact_incl_new_records.b1_borrower_hmda_sex_dwid
+               , loan_fact_incl_new_records.b1_borrower_junk_dwid
+               , loan_fact_incl_new_records.b1_borrower_pre_umdp_declarations_dwid
+               , loan_fact_incl_new_records.b1_borrower_property_declarations_dwid
+               , loan_fact_incl_new_records.b1_borrower_relations_dwid
                , loan_fact_incl_new_records.primary_application_dwid
                , loan_fact_incl_new_records.collateral_to_custodian_lender_user_dwid
                , loan_fact_incl_new_records.interim_funder_dwid
@@ -1545,7 +1665,17 @@ step_functions:
                    , COALESCE( borrower_n8_dim.dwid, 0 ) AS n8_borrower_dwid
                    , COALESCE( borrower_demographics_dim.dwid, 0 ) AS b1_borrower_demographics_dwid
                    , COALESCE( borrower_lending_profile_dim.dwid, 0 ) AS b1_borrower_lending_profile_dwid
+                   , COALESCE( b1_borrower_lkup.borrower_counseling_dwid, 0 ) AS b1_borrower_counseling_dwid
+                   , COALESCE( b1_borrower_lkup.borrower_employee_status_dwid, 0 ) AS b1_borrower_employee_status_dwid
+                   , COALESCE( b1_borrower_lkup.borrower_finances_declarations_dwid, 0 ) AS b1_borrower_finances_declarations_dwid
                    , COALESCE( b1_borrower_lkup.borrower_hmda_collection_dwid, 0 ) AS b1_borrower_hmda_collection_dwid
+                   , COALESCE( b1_borrower_lkup.borrower_hmda_ethnicity_dwid, 0 ) AS b1_borrower_hmda_ethnicity_dwid
+                   , COALESCE( b1_borrower_lkup.borrower_hmda_race_dwid, 0 ) AS b1_borrower_hmda_race_dwid
+                   , COALESCE( b1_borrower_lkup.borrower_hmda_sex_dwid, 0 ) AS b1_borrower_hmda_sex_dwid
+                   , COALESCE( b1_borrower_lkup.borrower_junk_dwid, 0 ) AS b1_borrower_junk_dwid
+                   , COALESCE( b1_borrower_lkup.borrower_pre_umdp_declarations_dwid, 0 ) AS b1_borrower_pre_umdp_declarations_dwid
+                   , COALESCE( b1_borrower_lkup.borrower_property_declarations_dwid, 0 ) AS b1_borrower_property_declarations_dwid
+                   , COALESCE( b1_borrower_lkup.borrower_relations_dwid, 0 ) AS b1_borrower_relations_dwid
                    , COALESCE( application_dim.dwid, 0 ) AS primary_application_dwid
                    , COALESCE( collateral_to_custodian.dwid, 0 ) AS collateral_to_custodian_lender_user_dwid
                    , COALESCE( interim_funder_dim.dwid, 0 ) AS interim_funder_dwid
@@ -3242,17 +3372,21 @@ step_functions:
                   LEFT JOIN star_common.date_dim initial_cancel_status_date_dim
                             ON deal.d_initial_cancel_status_date =
                                initial_cancel_status_date_dim.value
-                  LEFT JOIN star_common.date_dim initial_uw_disposition_date_dim ON DATE(proposal
+                  LEFT JOIN star_common.date_dim initial_uw_disposition_date_dim
+                            ON date( proposal
                                 .prp_initial_uw_disposition_datetime ) = initial_uw_disposition_date_dim.value
-                  LEFT JOIN star_common.date_dim initial_uw_submit_date_dim ON DATE(proposal
+                  LEFT JOIN star_common.date_dim initial_uw_submit_date_dim
+                            ON date( proposal
                                 .prp_initial_uw_submit_datetime ) = initial_uw_submit_date_dim.value
                   LEFT JOIN star_common.date_dim note_date_dim
                             ON proposal.prp_note_date = note_date_dim.value
-                  LEFT JOIN star_common.date_dim preapproval_complete_date_dim ON DATE(proposal
+                  LEFT JOIN star_common.date_dim preapproval_complete_date_dim
+                            ON date( proposal
                                 .prp_preapproval_complete_datetime ) = preapproval_complete_date_dim.value
                   LEFT JOIN star_common.date_dim transaction_create_date_dim
                             ON deal.d_deal_create_date = transaction_create_date_dim.value
-                  LEFT JOIN star_common.date_dim transaction_welcome_call_date_dim ON DATE(deal.d_welcome_call_datetime) =
+                  LEFT JOIN star_common.date_dim transaction_welcome_call_date_dim
+                            ON date( deal.d_welcome_call_datetime ) =
                                transaction_welcome_call_date_dim.value
                   LEFT JOIN star_common.date_dim trid_application_date_dim
                             ON deal.d_trid_application_date =
@@ -3341,7 +3475,17 @@ step_functions:
                         AND loan_fact_incl_new_records.n8_borrower_dwid = loan_fact.n8_borrower_dwid
                         AND loan_fact_incl_new_records.b1_borrower_demographics_dwid = loan_fact.b1_borrower_demographics_dwid
                         AND loan_fact_incl_new_records.b1_borrower_lending_profile_dwid = loan_fact.b1_borrower_lending_profile_dwid
+                        AND loan_fact_incl_new_records.b1_borrower_counseling_dwid = loan_fact.b1_borrower_counseling_dwid
+                        AND loan_fact_incl_new_records.b1_borrower_employee_status_dwid = loan_fact.b1_borrower_employee_status_dwid
+                        AND loan_fact_incl_new_records.b1_borrower_finances_declarations_dwid = loan_fact.b1_borrower_finances_declarations_dwid
                         AND loan_fact_incl_new_records.b1_borrower_hmda_collection_dwid = loan_fact.b1_borrower_hmda_collection_dwid
+                        AND loan_fact_incl_new_records.b1_borrower_hmda_ethnicity_dwid = loan_fact.b1_borrower_hmda_ethnicity_dwid
+                        AND loan_fact_incl_new_records.b1_borrower_hmda_race_dwid = loan_fact.b1_borrower_hmda_race_dwid
+                        AND loan_fact_incl_new_records.b1_borrower_hmda_sex_dwid = loan_fact.b1_borrower_hmda_sex_dwid
+                        AND loan_fact_incl_new_records.b1_borrower_junk_dwid = loan_fact.b1_borrower_junk_dwid
+                        AND loan_fact_incl_new_records.b1_borrower_pre_umdp_declarations_dwid = loan_fact.b1_borrower_pre_umdp_declarations_dwid
+                        AND loan_fact_incl_new_records.b1_borrower_property_declarations_dwid = loan_fact.b1_borrower_property_declarations_dwid
+                        AND loan_fact_incl_new_records.b1_borrower_relations_dwid = loan_fact.b1_borrower_relations_dwid
                         AND loan_fact_incl_new_records.primary_application_dwid = loan_fact.primary_application_dwid
                         AND loan_fact_incl_new_records.collateral_to_custodian_lender_user_dwid =
                             loan_fact.collateral_to_custodian_lender_user_dwid
