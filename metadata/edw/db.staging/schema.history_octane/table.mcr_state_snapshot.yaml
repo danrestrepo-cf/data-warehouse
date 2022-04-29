@@ -1,0 +1,103 @@
+name: mcr_state_snapshot
+primary_source_table: staging.staging_octane.mcr_state_snapshot
+primary_key:
+- mcrss_pid
+- mcrss_version
+foreign_keys:
+  fk_mcr_state_snapshot_1:
+    columns:
+    - mcrss_mcr_snapshot_pid
+    references:
+      columns:
+      - mcrs_pid
+      schema: history_octane
+      table: mcr_snapshot
+columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  mcrss_applications_in_process_borrower_loan_amount:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrss_applications_in_process_borrower_loan_amount
+  mcrss_applications_in_process_borrower_loan_count:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrss_applications_in_process_borrower_loan_count
+  mcrss_applications_in_process_third_party_loan_amount:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrss_applications_in_process_third_party_loan_amount
+  mcrss_applications_in_process_third_party_loan_count:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrss_applications_in_process_third_party_loan_count
+  mcrss_mcr_snapshot_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrss_mcr_snapshot_pid
+  mcrss_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrss_pid
+  mcrss_subject_property_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrss_subject_property_state
+  mcrss_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrss_version
+step_functions:
+  SP-100914:
+    etls:
+      ETL-100914:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.mcr_state_snapshot
+        json_output_field: mcrss_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.mcr_state_snapshot
+          SELECT staging_table.mcrss_pid
+               , staging_table.mcrss_version
+               , staging_table.mcrss_mcr_snapshot_pid
+               , staging_table.mcrss_subject_property_state
+               , staging_table.mcrss_applications_in_process_borrower_loan_amount
+               , staging_table.mcrss_applications_in_process_borrower_loan_count
+               , staging_table.mcrss_applications_in_process_third_party_loan_amount
+               , staging_table.mcrss_applications_in_process_third_party_loan_count
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.mcr_state_snapshot staging_table
+          LEFT JOIN history_octane.mcr_state_snapshot history_table
+                    ON staging_table.mcrss_pid = history_table.mcrss_pid
+                        AND staging_table.mcrss_version = history_table.mcrss_version
+          WHERE history_table.mcrss_pid IS NULL
+          UNION ALL
+          SELECT history_table.mcrss_pid
+               , history_table.mcrss_version + 1
+               , history_table.mcrss_mcr_snapshot_pid
+               , history_table.mcrss_subject_property_state
+               , history_table.mcrss_applications_in_process_borrower_loan_amount
+               , history_table.mcrss_applications_in_process_borrower_loan_count
+               , history_table.mcrss_applications_in_process_third_party_loan_amount
+               , history_table.mcrss_applications_in_process_third_party_loan_count
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM (
+              SELECT current_records.*
+              FROM history_octane.mcr_state_snapshot AS current_records
+              LEFT JOIN history_octane.mcr_state_snapshot AS history_records
+                        ON current_records.mcrss_pid = history_records.mcrss_pid
+                            AND current_records.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.data_source_updated_datetime IS NULL
+                AND current_records.data_source_deleted_flag = FALSE
+          ) AS history_table
+          LEFT JOIN staging_octane.mcr_state_snapshot staging_table
+                    ON staging_table.mcrss_pid = history_table.mcrss_pid
+          WHERE staging_table.mcrss_pid IS NULL;
