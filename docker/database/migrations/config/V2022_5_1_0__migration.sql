@@ -553,6 +553,7 @@ FROM borrower_aux_current_residence_dim_incl_new_records
 		, NOW() AS edw_created_datetime
 		, NOW() AS edw_modified_datetime
 		, deal.data_source_updated_datetime AS data_source_modified_datetime
+		, transaction_dim.dwid AS transaction_dwid
 		, deal.d_pid AS deal_pid
 		, proposal.prp_pid AS active_proposal_pid
 		, subject_property.pl_street1 AS street1
