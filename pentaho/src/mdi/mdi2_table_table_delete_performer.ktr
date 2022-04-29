@@ -484,7 +484,7 @@
     <created_user>-</created_user>
     <created_date>2021/02/17 17:15:35.157</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/08/09 14:01:53.396</modified_date>
+    <modified_date>2022/04/27 14:54:22.272</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -633,6 +633,36 @@
       <bordercolorblue>100</bordercolorblue>
       <drawshadow>Y</drawshadow>
     </notepad>
+    <notepad>
+      <note>JSON input						
+
+
+
+
+
+
+
+
+</note>
+      <xloc>576</xloc>
+      <yloc>16</yloc>
+      <width>514</width>
+      <heigth>220</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>128</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>255</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>Config DB Connection</name>
@@ -695,43 +725,43 @@
   </connection>
   <order>
     <hop>
-      <from>[performer_table_to_table_delete_json] Table input</from>
-      <to>[performer_table_to_table_delete_json] Combine table input and JSON input streams</to>
+      <from>[mdi2_table_table_delete_performer] Table input</from>
+      <to>[mdi2_table_table_delete_performer] Combine table input and JSON input streams</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_delete_json] Combine table input and JSON input streams</from>
-      <to>[performer_table_to_table_delete_json] Replace Table input step SQL placeholder</to>
+      <from>[mdi2_table_table_delete_performer] Combine table input and JSON input streams</from>
+      <to>[mdi2_table_table_delete_performer] Replace Table input step SQL placeholder</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_delete_json] Load delete non-sensitive fields</from>
-      <to>[performer_table_to_table_delete_json] ETL metadata injection</to>
+      <from>[mdi2_table_table_delete_performer] Load delete non-sensitive fields</from>
+      <to>[mdi2_table_table_delete_performer] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_delete_json] Load delete key settings</from>
-      <to>[performer_table_to_table_delete_json] ETL metadata injection</to>
+      <from>[mdi2_table_table_delete_performer] Load delete key settings</from>
+      <to>[mdi2_table_table_delete_performer] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_delete_json] Load delete step settings</from>
-      <to>[performer_table_to_table_delete_json] ETL metadata injection</to>
+      <from>[mdi2_table_table_delete_performer] Load delete step settings</from>
+      <to>[mdi2_table_table_delete_performer] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_delete_json] Replace Table input step SQL placeholder</from>
-      <to>[performer_table_to_table_delete_json] ETL metadata injection</to>
+      <from>[mdi2_table_table_delete_performer] Replace Table input step SQL placeholder</from>
+      <to>[mdi2_table_table_delete_performer] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_delete_json]  Get key_field_name</from>
-      <to>[performer_table_to_table_delete_json] Set add_quotes_to_key_values</to>
+      <from>[mdi2_table_table_delete_performer] Get key_field_name</from>
+      <to>[mdi2_table_table_delete_performer] Set add_quotes_to_key_values</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_delete_json] Set add_quotes_to_key_values</from>
-      <to>[performer_table_to_table_delete_json] ETL metadata injection</to>
+      <from>[mdi2_table_table_delete_performer] Set add_quotes_to_key_values</from>
+      <to>[mdi2_table_table_delete_performer] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -741,70 +771,13 @@
     </hop>
     <hop>
       <from>[mdi2_table_table_delete_performer] Write to log</from>
-      <to>[performer_table_to_table_delete_json] Combine table input and JSON input streams</to>
+      <to>[mdi2_table_table_delete_performer] Combine table input and JSON input streams</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[mdi2_table_table_delete_performer] Get rows from result</name>
-    <type>RowsFromResult</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>key_field_name</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>partial_load_condition</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>token_id</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>load_type</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>process_dwid</name>
-        <type>Integer</type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>800</xloc>
-      <yloc>32</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[mdi2_table_table_delete_performer] Write to log</name>
-    <type>WriteToLog</type>
+    <name>[mdi2_table_table_delete_performer] Combine table input and JSON input streams</name>
+    <type>StreamLookup</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -813,28 +786,47 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <loglevel>log_level_debug</loglevel>
-    <displayHeader>Y</displayHeader>
-    <limitRows>N</limitRows>
-    <limitRowsNumber>0</limitRowsNumber>
-    <logmessage/>
-    <fields>
-      <field>
-        <name>key_field_name</name>
-      </field>
-      <field>
-        <name>partial_load_condition</name>
-      </field>
-      <field>
-        <name>token_id</name>
-      </field>
-      <field>
-        <name>load_type</name>
-      </field>
-      <field>
+    <from>[mdi2_table_table_delete_performer] Write to log</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
         <name>process_dwid</name>
-      </field>
-    </fields>
+        <field>process_dwid</field>
+      </key>
+      <value>
+        <name>key_field_name</name>
+        <rename>key_field_name</rename>
+        <default/>
+        <type>None</type>
+      </value>
+      <value>
+        <name>partial_load_condition</name>
+        <rename>partial_load_condition</rename>
+        <default/>
+        <type>None</type>
+      </value>
+      <value>
+        <name>token_id</name>
+        <rename>token_id</rename>
+        <default/>
+        <type>None</type>
+      </value>
+      <value>
+        <name>load_type</name>
+        <rename>load_type</rename>
+        <default/>
+        <type>None</type>
+      </value>
+      <value>
+        <name>process_dwid</name>
+        <rename>process_dwid</rename>
+        <default/>
+        <type>None</type>
+      </value>
+    </lookup>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -845,12 +837,162 @@
     </remotesteps>
     <GUI>
       <xloc>800</xloc>
-      <yloc>160</yloc>
+      <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_delete_json]  Get key_field_name</name>
+    <name>[mdi2_table_table_delete_performer] ETL metadata injection</name>
+    <type>MetaInject</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <specification_method>rep_name</specification_method>
+    <trans_object_id/>
+    <trans_name>mdi2_table_table_delete_template</trans_name>
+    <filename/>
+    <directory_path>${Internal.Entry.Current.Directory}</directory_path>
+    <source_step/>
+    <source_output_fields>    </source_output_fields>
+    <target_file/>
+    <no_execution>N</no_execution>
+    <stream_source_step/>
+    <stream_target_step/>
+    <mappings>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Delete</target_step_name>
+        <target_attribute_key>STREAM_FIELDNAME_2</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Load delete key settings</source_step>
+        <source_field>stream_fieldname_2</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Delete</target_step_name>
+        <target_attribute_key>TARGET_TABLE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Load delete step settings</source_step>
+        <source_field>table_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Specify logging fields (non-sensitive)</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Load delete non-sensitive fields</source_step>
+        <source_field>stream_fieldname_1</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Delete</target_step_name>
+        <target_attribute_key>STREAM_FIELDNAME_1</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Load delete key settings</source_step>
+        <source_field>stream_fieldname_1</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Table input</target_step_name>
+        <target_attribute_key>REPLACE_VARIABLES</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Replace Table input step SQL placeholder</source_step>
+        <source_field>replace_variables</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Delete</target_step_name>
+        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Load delete step settings</source_step>
+        <source_field>commit_size</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Table input</target_step_name>
+        <target_attribute_key>LAZY_CONVERSION</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Replace Table input step SQL placeholder</source_step>
+        <source_field>enable_lazy_conversion</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Delete</target_step_name>
+        <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Load delete key settings</source_step>
+        <source_field>table_name_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Delete</target_step_name>
+        <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Load delete step settings</source_step>
+        <source_field>schema_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Table input</target_step_name>
+        <target_attribute_key>EXECUTE_FOR_EACH_ROW</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Replace Table input step SQL placeholder</source_step>
+        <source_field>execute_for_each_row</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Delete</target_step_name>
+        <target_attribute_key>COMPARATOR</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Load delete key settings</source_step>
+        <source_field>comparator</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Table input</target_step_name>
+        <target_attribute_key>SQL</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Replace Table input step SQL placeholder</source_step>
+        <source_field>sql_for_injection</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Table input</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Replace Table input step SQL placeholder</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Table input</target_step_name>
+        <target_attribute_key>CACHED_ROW_META</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Replace Table input step SQL placeholder</source_step>
+        <source_field>cached_row_meta</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Table input</target_step_name>
+        <target_attribute_key>LIMIT</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Replace Table input step SQL placeholder</source_step>
+        <source_field>limit_size</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[mdi2_table_table_delete_template] Delete</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[mdi2_table_table_delete_performer] Load delete step settings</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+    </mappings>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>800</xloc>
+      <yloc>672</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[mdi2_table_table_delete_performer] Get key_field_name</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -961,57 +1103,48 @@ WHERE process.dwid = ${process_dwid}</sql>
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_delete_json] Combine table input and JSON input streams</name>
-    <type>StreamLookup</type>
+    <name>[mdi2_table_table_delete_performer] Get rows from result</name>
+    <type>RowsFromResult</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>[mdi2_table_table_delete_performer] Write to log</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>process_dwid</name>
-        <field>process_dwid</field>
-      </key>
-      <value>
+    <fields>
+      <field>
         <name>key_field_name</name>
-        <rename>key_field_name</rename>
-        <default/>
-        <type>None</type>
-      </value>
-      <value>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
         <name>partial_load_condition</name>
-        <rename>partial_load_condition</rename>
-        <default/>
-        <type>None</type>
-      </value>
-      <value>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
         <name>token_id</name>
-        <rename>token_id</rename>
-        <default/>
-        <type>None</type>
-      </value>
-      <value>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
         <name>load_type</name>
-        <rename>load_type</rename>
-        <default/>
-        <type>None</type>
-      </value>
-      <value>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
         <name>process_dwid</name>
-        <rename>process_dwid</rename>
-        <default/>
-        <type>None</type>
-      </value>
-    </lookup>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1022,162 +1155,12 @@ WHERE process.dwid = ${process_dwid}</sql>
     </remotesteps>
     <GUI>
       <xloc>800</xloc>
-      <yloc>336</yloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_delete_json] ETL metadata injection</name>
-    <type>MetaInject</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <specification_method>rep_name</specification_method>
-    <trans_object_id/>
-    <trans_name>mdi2_table_table_delete_template</trans_name>
-    <filename/>
-    <directory_path>${Internal.Entry.Current.Directory}</directory_path>
-    <source_step/>
-    <source_output_fields>    </source_output_fields>
-    <target_file/>
-    <no_execution>N</no_execution>
-    <stream_source_step/>
-    <stream_target_step/>
-    <mappings>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Delete</target_step_name>
-        <target_attribute_key>COMPARATOR</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Load delete key settings</source_step>
-        <source_field>comparator</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Table input</target_step_name>
-        <target_attribute_key>CACHED_ROW_META</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Replace Table input step SQL placeholder</source_step>
-        <source_field>cached_row_meta</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Table input</target_step_name>
-        <target_attribute_key>SQL</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Replace Table input step SQL placeholder</source_step>
-        <source_field>sql_for_injection</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Table input</target_step_name>
-        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Replace Table input step SQL placeholder</source_step>
-        <source_field>connectionname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json]  Specify logging fields (non-sensitive)</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Load delete non-sensitive fields</source_step>
-        <source_field>stream_fieldname_1</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Delete</target_step_name>
-        <target_attribute_key>STREAM_FIELDNAME_1</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Load delete key settings</source_step>
-        <source_field>stream_fieldname_1</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Delete</target_step_name>
-        <target_attribute_key>STREAM_FIELDNAME_2</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Load delete key settings</source_step>
-        <source_field>stream_fieldname_2</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Delete</target_step_name>
-        <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Load delete key settings</source_step>
-        <source_field>table_name_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Table input</target_step_name>
-        <target_attribute_key>LIMIT</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Replace Table input step SQL placeholder</source_step>
-        <source_field>limit_size</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Delete</target_step_name>
-        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Load delete step settings</source_step>
-        <source_field>connectionname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Table input</target_step_name>
-        <target_attribute_key>EXECUTE_FOR_EACH_ROW</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Replace Table input step SQL placeholder</source_step>
-        <source_field>execute_for_each_row</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Table input</target_step_name>
-        <target_attribute_key>LAZY_CONVERSION</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Replace Table input step SQL placeholder</source_step>
-        <source_field>enable_lazy_conversion</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Delete</target_step_name>
-        <target_attribute_key>TARGET_TABLE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Load delete step settings</source_step>
-        <source_field>table_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Delete</target_step_name>
-        <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Load delete step settings</source_step>
-        <source_field>schema_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Delete</target_step_name>
-        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Load delete step settings</source_step>
-        <source_field>commit_size</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Table input</target_step_name>
-        <target_attribute_key>REPLACE_VARIABLES</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Replace Table input step SQL placeholder</source_step>
-        <source_field>replace_variables</source_field>
-      </mapping>
-    </mappings>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>800</xloc>
-      <yloc>672</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[performer_table_to_table_delete_json] Load delete key settings</name>
+    <name>[mdi2_table_table_delete_performer] Load delete key settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1222,7 +1205,7 @@ WHERE
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_delete_json] Load delete non-sensitive fields</name>
+    <name>[mdi2_table_table_delete_performer] Load delete non-sensitive fields</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1311,7 +1294,7 @@ WHERE
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_delete_json] Load delete step settings</name>
+    <name>[mdi2_table_table_delete_performer] Load delete step settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1355,7 +1338,7 @@ WHERE
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_delete_json] Replace Table input step SQL placeholder</name>
+    <name>[mdi2_table_table_delete_performer] Replace Table input step SQL placeholder</name>
     <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
@@ -1412,7 +1395,7 @@ if (load_type == "KEY_LOOKUP") {
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_delete_json] Set add_quotes_to_key_values</name>
+    <name>[mdi2_table_table_delete_performer] Set add_quotes_to_key_values</name>
     <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
@@ -1464,7 +1447,7 @@ if (/_pid$|^dwid$|_dwid$|^ais_id$|^dis_id$|^fter_message_id$/.test(fieldname) ==
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_delete_json] Table input</name>
+    <name>[mdi2_table_table_delete_performer] Table input</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1694,6 +1677,53 @@ WHERE
     <GUI>
       <xloc>304</xloc>
       <yloc>336</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[mdi2_table_table_delete_performer] Write to log</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <loglevel>log_level_debug</loglevel>
+    <displayHeader>Y</displayHeader>
+    <limitRows>N</limitRows>
+    <limitRowsNumber>0</limitRowsNumber>
+    <logmessage/>
+    <fields>
+      <field>
+        <name>key_field_name</name>
+      </field>
+      <field>
+        <name>partial_load_condition</name>
+      </field>
+      <field>
+        <name>token_id</name>
+      </field>
+      <field>
+        <name>load_type</name>
+      </field>
+      <field>
+        <name>process_dwid</name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>800</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

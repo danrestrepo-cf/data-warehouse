@@ -459,7 +459,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/07/20 14:01:07.606</modified_date>
+    <modified_date>2022/04/27 12:33:39.684</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -719,43 +719,43 @@
   </connection>
   <order>
     <hop>
-      <from>[template_table_to_table_insert_update] add a blank field for etl_batch_id to valid stream</from>
-      <to>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</to>
+      <from>[mdi1_table_table_insert_update_template] add a blank field for etl_batch_id to valid stream</from>
+      <to>[mdi1_table_table_insert_update_template] Set etl_batch_id field value to parameter etl_batch_id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</from>
-      <to>[template_table_to_table_insert_update]  Abort Table Output</to>
+      <from>[mdi1_table_table_insert_update_template] Specify logging fields (non-sensitive)</from>
+      <to>[mdi1_table_table_insert_update_template] Abort Table Output</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update] add a blank field for data_source_dwid to valid stream</from>
-      <to>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</to>
+      <from>[mdi1_table_table_insert_update_template] add a blank field for data_source_dwid to valid stream</from>
+      <to>[mdi1_table_table_insert_update_template] Set data_source_dwid field value to parameter data_source_dwid</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</from>
-      <to>[template_table_to_table_insert_update] add a blank field for data_source_dwid to valid stream</to>
+      <from>[mdi1_table_table_insert_update_template] Set etl_batch_id field value to parameter etl_batch_id</from>
+      <to>[mdi1_table_table_insert_update_template] add a blank field for data_source_dwid to valid stream</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update] Table input</from>
-      <to>[template_table_to_table_insert_update] add a blank field for etl_batch_id to valid stream</to>
+      <from>[mdi1_table_table_insert_update_template] Table input</from>
+      <to>[mdi1_table_table_insert_update_template] add a blank field for etl_batch_id to valid stream</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</from>
-      <to>[template_table_to_table_insert_update] Insert / update</to>
+      <from>[mdi1_table_table_insert_update_template] Set data_source_dwid field value to parameter data_source_dwid</from>
+      <to>[mdi1_table_table_insert_update_template] Insert / update</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update] Insert / update</from>
-      <to>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</to>
+      <from>[mdi1_table_table_insert_update_template] Insert / update</from>
+      <to>[mdi1_table_table_insert_update_template] Specify logging fields (non-sensitive)</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[template_table_to_table_insert_update]  Abort Table Output</name>
+    <name>[mdi1_table_table_insert_update_template] Abort Table Output</name>
     <type>Abort</type>
     <description/>
     <distribute>Y</distribute>
@@ -784,7 +784,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</name>
+    <name>[mdi1_table_table_insert_update_template] Specify logging fields (non-sensitive)</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -812,7 +812,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update] Insert / update</name>
+    <name>[mdi1_table_table_insert_update_template] Insert / update</name>
     <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
@@ -844,7 +844,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</name>
+    <name>[mdi1_table_table_insert_update_template] Set data_source_dwid field value to parameter data_source_dwid</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>N</distribute>
@@ -878,7 +878,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</name>
+    <name>[mdi1_table_table_insert_update_template] Set etl_batch_id field value to parameter etl_batch_id</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>N</distribute>
@@ -912,7 +912,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update] Table input</name>
+    <name>[mdi1_table_table_insert_update_template] Table input</name>
     <type>TableInput</type>
     <description/>
     <distribute>N</distribute>
@@ -946,7 +946,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update] add a blank field for data_source_dwid to valid stream</name>
+    <name>[mdi1_table_table_insert_update_template] add a blank field for data_source_dwid to valid stream</name>
     <type>Constant</type>
     <description/>
     <distribute>N</distribute>
@@ -985,7 +985,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update] add a blank field for etl_batch_id to valid stream</name>
+    <name>[mdi1_table_table_insert_update_template] add a blank field for etl_batch_id to valid stream</name>
     <type>Constant</type>
     <description/>
     <distribute>N</distribute>
@@ -1025,8 +1025,8 @@
   </step>
   <step_error_handling>
     <error>
-      <source_step>[template_table_to_table_insert_update] Insert / update</source_step>
-      <target_step>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</target_step>
+      <source_step>[mdi1_table_table_insert_update_template] Insert / update</source_step>
+      <target_step>[mdi1_table_table_insert_update_template] Specify logging fields (non-sensitive)</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>
@@ -1037,8 +1037,8 @@
       <min_pct_rows/>
     </error>
     <error>
-      <source_step>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</source_step>
-      <target_step>[template_table_to_table_insert_update]  Abort Table Output</target_step>
+      <source_step>[mdi1_table_table_insert_update_template] Set etl_batch_id field value to parameter etl_batch_id</source_step>
+      <target_step>[mdi1_table_table_insert_update_template] Abort Table Output</target_step>
       <is_enabled>N</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>
