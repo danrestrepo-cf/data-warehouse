@@ -126,13 +126,13 @@ step_functions:
           		, proposal.prp_pid AS active_proposal_pid
           		, subject_property.pl_street1 AS street1
           		, subject_property.pl_street2 AS street2
-          		, subject_property.pl_city subject_property_city
+          		, subject_property.pl_city AS city
           		, subject_property.pl_property_tax_id AS tax_id
           		, subject_property.pl_postal_code AS postal_code
           		, county.c_name AS county_name
           		, subject_property.pl_county_fips AS county_fips
           		, subject_property.pl_state AS state
-          		, subject_property.pl_state_fips subject_property_state_fips
+          		, subject_property.pl_state_fips AS state_fips
           		, subject_property.pl_country AS country_code
           		, country_type.value AS country
           		, subject_property.pl_structure_built_year AS year_built
