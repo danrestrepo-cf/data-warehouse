@@ -29,6 +29,7 @@ step_functions:
         container_memory: 2048
         next_step_functions:
         - SP-200018
+        - SP-200028
         input_sql: |-
           --finding records to insert into history_octane.yes_no_na_unknown_type
           SELECT staging_table.code
