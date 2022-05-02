@@ -140,7 +140,8 @@ step_functions:
           		, GREATEST(deal.etl_end_date_time, proposal.etl_end_date_time, subject_property.etl_end_date_time, county
           		.etl_end_date_time, country_type.etl_end_date_time, property_category_type.etl_end_date_time,
           				   building_status_type.etl_end_date_time, neighborhood_location_type.etl_end_date_time,
-          		    transaction_dim.etl_end_date_time) AS max_source_etl_end_date_time
+          		    transaction_dim.etl_end_date_time, property_rights_type.etl_end_date_time) AS
+          max_source_etl_end_date_time
           	FROM (
           		SELECT <<deal_partial_load_condition>> AS include_record
           			, deal.*
@@ -263,7 +264,7 @@ step_functions:
           	WHERE GREATEST(deal.include_record, proposal.include_record, subject_property.include_record, county
           		.include_record, country_type.include_record, property_category_type.include_record,
           				   building_status_type.include_record, neighborhood_location_type.include_record, transaction_dim
-          				       .include_record) IS TRUE
+          				       .include_record, property_rights_type.include_record) IS TRUE
           )
           -- new records that should be inserted
           SELECT transaction_aux_subject_property_dim_incl_new_records.*

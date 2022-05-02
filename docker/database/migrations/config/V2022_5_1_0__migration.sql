@@ -447,7 +447,7 @@ WITH insert_rows (process_name, data_source_dwid, sql, connectionname) AS (
 		, country_type.value AS country
 		, GREATEST(borrower.etl_end_date_time, current_borrower_residence.etl_end_date_time,
 				   current_borrower_residence_place.etl_end_date_time, county.etl_end_date_time, country_type
-					   .etl_end_date_time) AS max_source_etl_end_date_time
+					   .etl_end_date_time, borrower_dim.etl_end_date_time) AS max_source_etl_end_date_time
 	FROM (
 		SELECT <<borrower_partial_load_condition>> AS include_record
 			, borrower.*
@@ -522,7 +522,8 @@ WITH insert_rows (process_name, data_source_dwid, sql, connectionname) AS (
 		) AS borrower_dim
 			ON borrower.b_pid = borrower_dim.borrower_pid
 	WHERE GREATEST(borrower.include_record, current_borrower_residence.include_record,
-				   current_borrower_residence_place.include_record, county.include_record, country_type.include_record) IS TRUE
+				   current_borrower_residence_place.include_record, county.include_record, country_type
+.include_record, borrower_dim.include_record) IS TRUE
 )
 -- new records that should be inserted
 SELECT borrower_aux_current_residence_dim_incl_new_records.*
@@ -578,7 +579,8 @@ FROM borrower_aux_current_residence_dim_incl_new_records
 		, GREATEST(deal.etl_end_date_time, proposal.etl_end_date_time, subject_property.etl_end_date_time, county
 		.etl_end_date_time, country_type.etl_end_date_time, property_category_type.etl_end_date_time,
 				   building_status_type.etl_end_date_time, neighborhood_location_type.etl_end_date_time,
-		    transaction_dim.etl_end_date_time) AS max_source_etl_end_date_time
+		    transaction_dim.etl_end_date_time, property_rights_type.etl_end_date_time) AS
+max_source_etl_end_date_time
 	FROM (
 		SELECT <<deal_partial_load_condition>> AS include_record
 			, deal.*
@@ -701,7 +703,7 @@ FROM borrower_aux_current_residence_dim_incl_new_records
 	WHERE GREATEST(deal.include_record, proposal.include_record, subject_property.include_record, county
 		.include_record, country_type.include_record, property_category_type.include_record,
 				   building_status_type.include_record, neighborhood_location_type.include_record, transaction_dim
-				       .include_record) IS TRUE
+				       .include_record, property_rights_type.include_record) IS TRUE
 )
 -- new records that should be inserted
 SELECT transaction_aux_subject_property_dim_incl_new_records.*
