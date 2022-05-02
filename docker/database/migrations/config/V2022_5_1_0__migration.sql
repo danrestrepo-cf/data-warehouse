@@ -402,7 +402,6 @@ FROM insert_rows
 WITH insert_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
 	VALUES ('staging', 'star_loan', 'borrower_aux_current_residence_dim', 'borrower_pid', 'BIGINT', 'staging', 'history_octane', 'borrower', 'b_pid')
 		, ('staging', 'star_loan', 'transaction_aux_subject_property_dim', 'deal_pid', 'BIGINT', 'staging', 'history_octane', 'deal', 'd_pid')
-		, ('staging', 'star_loan', 'transaction_aux_subject_property_dim', 'active_proposal_pid', 'BIGINT', 'staging', 'history_octane', 'proposal', 'prp_pid')
 )
 INSERT
 INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
@@ -555,7 +554,6 @@ FROM borrower_aux_current_residence_dim_incl_new_records
 		, deal.data_source_updated_datetime AS data_source_modified_datetime
 		, transaction_dim.dwid AS transaction_dwid
 		, deal.d_pid AS deal_pid
-		, proposal.prp_pid AS active_proposal_pid
 		, subject_property.pl_street1 AS street1
 		, subject_property.pl_street2 AS street2
 		, subject_property.pl_city AS city
@@ -789,7 +787,6 @@ WITH insert_rows (process_name, update_lookup, update_flag) AS (
 		, ('ETL-200041', 'data_source_integration_id', 'N')
 		, ('ETL-200041', 'data_source_modified_datetime', 'Y')
 		, ('ETL-200041', 'deal_pid', 'Y')
-		, ('ETL-200041', 'active_proposal_pid', 'Y')
 		, ('ETL-200041', 'street1', 'Y')
 		, ('ETL-200041', 'street2', 'Y')
 		, ('ETL-200041', 'city', 'Y')

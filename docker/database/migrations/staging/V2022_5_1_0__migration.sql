@@ -53,7 +53,6 @@ CREATE TABLE star_loan.transaction_aux_subject_property_dim (
 	, data_source_integration_id TEXT NOT NULL
 	, data_source_modified_datetime TIMESTAMPTZ
 	, deal_pid BIGINT NOT NULL
-	, active_proposal_pid BIGINT NOT NULL
 	, street1 VARCHAR(128)
 	, street2 VARCHAR(128)
 	, city VARCHAR(128)
@@ -80,17 +79,45 @@ CREATE TABLE star_loan.transaction_aux_subject_property_dim (
 CREATE INDEX idx_transaction_aux_subject_property_dim__etl_batch_id ON star_loan.transaction_aux_subject_property_dim (etl_batch_id);
 CREATE INDEX idx_a7f9335219213095ba4a535bc3ed3566 ON star_loan.transaction_aux_subject_property_dim (data_source_integration_id);
 CREATE INDEX idx_transaction_aux_subject_property_dim__deal_pid ON star_loan.transaction_aux_subject_property_dim (deal_pid);
-CREATE INDEX idx_transaction_aux_subject_property_dim__active_proposal_pid ON star_loan.transaction_aux_subject_property_dim (active_proposal_pid);
 
 INSERT INTO star_loan.transaction_aux_subject_property_dim ( transaction_dwid, data_source_dwid, edw_created_datetime
 														   , edw_modified_datetime, etl_batch_id
 														   , data_source_integration_columns, data_source_integration_id
 														   , data_source_modified_datetime, deal_pid
-														   , active_proposal_pid, street1, street2, city, tax_id
+														   , street1, street2, city, tax_id
 														   , postal_code, county_name, county_fips, state, state_fips
 														   , country_code, country, year_built, property_category_code
 														   , property_category, building_status_code, building_status
 														   , rental_flag, property_rights_code, property_rights
 														   , neighborhood_location_code, neighborhood_location)
-	VALUES (0, 0, NOW(), NOW(), NULL, 'deal_pid~data_source_dwid', '0~0', NOW(), 0, 0, NULL, NULL, NULL, NULL, NULL,
+	VALUES (0, 0, NOW(), NOW(), NULL, 'deal_pid~data_source_dwid', '0~0', NOW(), 0, NULL, NULL, NULL, NULL, NULL,
 	        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+
+ALTER TABLE star_loan.transaction_aux_construction_dim
+	ALTER COLUMN active_proposal_pid DROP NOT NULL;
+
+ALTER TABLE star_loan.transaction_aux_disaster_declaration_dim
+	ALTER COLUMN active_proposal_pid DROP NOT NULL;
+
+ALTER TABLE star_loan.transaction_aux_govt_programs_dim
+	ALTER COLUMN active_proposal_pid DROP NOT NULL;
+
+ALTER TABLE star_loan.transaction_aux_property_repairs_dim
+	ALTER COLUMN active_proposal_pid DROP NOT NULL;
+
+UPDATE star_loan.transaction_aux_construction_dim
+SET active_proposal_pid = NULL
+WHERE transaction_dwid = 0;
+
+UPDATE star_loan.transaction_aux_disaster_declaration_dim
+SET active_proposal_pid = NULL
+WHERE transaction_dwid = 0;
+
+UPDATE star_loan.transaction_aux_govt_programs_dim
+SET active_proposal_pid = NULL
+WHERE transaction_dwid = 0;
+
+UPDATE star_loan.transaction_aux_property_repairs_dim
+SET active_proposal_pid = NULL
+WHERE transaction_dwid = 0;

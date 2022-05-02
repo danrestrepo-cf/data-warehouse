@@ -4,7 +4,7 @@
     "States": {
         "ETL-200026": {
             "Type": "Task",
-            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+            "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Retry": [
                 {
                     "ErrorEquals": [
@@ -51,47 +51,6 @@
                         }
                     ]
                 }
-            },
-            "Next": "Load_type_choice"
-        },
-        "Load_type_choice": {
-            "Type": "Choice",
-            "Choices": [
-                {
-                    "Variable": "$.load_type",
-                    "StringEquals": "NONE",
-                    "Next": "Success"
-                }
-            ],
-            "Default": "SP-300001-insert-update_message"
-        },
-        "Success": {
-            "Type": "Succeed"
-        },
-        "SP-300001-insert-update_message": {
-            "Type": "Task",
-            "Resource": "arn:aws:states:::sqs:sendMessage",
-            "Retry": [
-                {
-                    "ErrorEquals": [
-                        "States.ALL"
-                    ],
-                    "IntervalSeconds": 10,
-                    "MaxAttempts": 5,
-                    "BackoffRate": 2.0
-                }
-            ],
-            "Parameters": {
-                "QueueUrl": "${fullCheckQueueUrl}",
-                "MessageGroupId": "loan_fact",
-                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
-                "MessageAttributes": {
-                    "ProcessId": {
-                        "DataType": "String",
-                        "StringValue": "SP-300001-insert-update"
-                    }
-                },
-                "MessageBody.$": "States.JsonToString($)"
             },
             "End": true
         }
