@@ -60,7 +60,8 @@ def build_staging_octane_metadata(column_metadata: List[dict], foreign_key_metad
         if row['is_primary_key'] == 1:
             tables_dict[row['table_name']]['primary_key'].append(row['column_name'])
         tables_dict[row['table_name']]['columns'][row['column_name']] = {
-            'data_type': map_msql_data_type(row['column_type'])
+            'data_type': map_msql_data_type(row['column_type']),
+            'physical_column_flag': True
         }
 
     for row in foreign_key_metadata:
@@ -152,13 +153,26 @@ def generate_history_octane_metadata(octane_metadata: DataWarehouseMetadata,
         if version_column_name is not None:
             history_table.primary_key.append(version_column_name)
         for staging_column in staging_table.columns:
-            history_column = ColumnMetadata(name=staging_column.name, data_type=staging_column.data_type)
+            history_column = ColumnMetadata(
+                name=staging_column.name,
+                data_type=staging_column.data_type,
+                physical_column_flag=True
+            )
             history_column.source = ColumnSourceComponents(calculation_string=None, foreign_key_paths=[
                 SourceForeignKeyPath(fk_steps=[], column_name=staging_column.name)])
             history_table.add_column(history_column)
-        history_table.add_column(ColumnMetadata(name='data_source_updated_datetime', data_type='TIMESTAMPTZ'))
-        history_table.add_column(ColumnMetadata(name='data_source_deleted_flag', data_type='BOOLEAN'))
-        history_table.add_column(ColumnMetadata(name='etl_batch_id', data_type='TEXT'))
+        history_table.add_column(ColumnMetadata(
+            name='data_source_updated_datetime',
+            data_type='TIMESTAMPTZ',
+            physical_column_flag=True))
+        history_table.add_column(ColumnMetadata(
+            name='data_source_deleted_flag',
+            data_type='BOOLEAN',
+            physical_column_flag=True))
+        history_table.add_column(ColumnMetadata(
+            name='etl_batch_id',
+            data_type='TEXT',
+            physical_column_flag=True))
         for staging_fk in staging_table.foreign_keys:
             foreign_table_path = copy.copy(staging_fk.table)
             foreign_table_path.schema = 'history_octane'
