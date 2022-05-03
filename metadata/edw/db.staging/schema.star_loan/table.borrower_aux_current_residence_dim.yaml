@@ -8,7 +8,7 @@ columns:
     update_flag: true
   data_source_dwid:
     data_type: BIGINT
-    update_flag: true
+    update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
     update_flag: false
@@ -31,6 +31,7 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.b_pid
+    update_flag: false
   street1:
     data_type: VARCHAR(128)
     update_flag: true
