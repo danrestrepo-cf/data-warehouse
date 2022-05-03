@@ -1,0 +1,290 @@
+name: transaction_aux_subject_property_dim
+primary_source_table: staging.history_octane.deal
+primary_key:
+- transaction_dwid
+columns:
+  transaction_dwid:
+    data_type: BIGINT
+    update_flag: true
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: false
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: false
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.d_pid
+    update_flag: false
+  street1:
+    data_type: VARCHAR(128)
+    update_flag: true
+  street2:
+    data_type: VARCHAR(128)
+    update_flag: true
+  city:
+    data_type: VARCHAR(128)
+    update_flag: true
+  tax_id:
+    data_type: VARCHAR(64)
+    update_flag: true
+  postal_code:
+    data_type: VARCHAR(128)
+    update_flag: true
+  county_name:
+    data_type: VARCHAR(128)
+    update_flag: true
+  county_fips:
+    data_type: VARCHAR(16)
+    update_flag: true
+  state:
+    data_type: VARCHAR(128)
+    update_flag: true
+  state_fips:
+    data_type: VARCHAR(32)
+    update_flag: true
+  country_code:
+    data_type: VARCHAR(128)
+    update_flag: true
+  country:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  year_built:
+    data_type: INTEGER
+    update_flag: true
+  property_category_code:
+    data_type: VARCHAR(128)
+    update_flag: true
+  property_category:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  building_status_code:
+    data_type: VARCHAR(128)
+    update_flag: true
+  building_status:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  rental_flag:
+    data_type: BOOLEAN
+    update_flag: true
+  property_rights_code:
+    data_type: VARCHAR(128)
+    update_flag: true
+  property_rights:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  neighborhood_location_code:
+    data_type: VARCHAR(128)
+    update_flag: true
+  neighborhood_location:
+    data_type: VARCHAR(1024)
+    update_flag: true
+step_functions:
+  SP-200041:
+    etls:
+      ETL-200041:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.transaction_aux_subject_property_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        input_sql: |-
+          WITH transaction_aux_subject_property_dim_incl_new_records AS (
+          	SELECT 'deal_pid~data_source_dwid' AS data_source_integration_columns
+          		, COALESCE(CAST(deal.d_pid AS TEXT), '<NULL>') || '~1' AS data_source_integration_id
+          		, NOW() AS edw_created_datetime
+          		, NOW() AS edw_modified_datetime
+          		, deal.data_source_updated_datetime AS data_source_modified_datetime
+          		, transaction_dim.dwid AS transaction_dwid
+          		, deal.d_pid AS deal_pid
+          		, subject_property.pl_street1 AS street1
+          		, subject_property.pl_street2 AS street2
+          		, subject_property.pl_city AS city
+          		, subject_property.pl_property_tax_id AS tax_id
+          		, subject_property.pl_postal_code AS postal_code
+          		, county.c_name AS county_name
+          		, subject_property.pl_county_fips AS county_fips
+          		, subject_property.pl_state AS state
+          		, subject_property.pl_state_fips AS state_fips
+          		, subject_property.pl_country AS country_code
+          		, country_type.value AS country
+          		, subject_property.pl_structure_built_year AS year_built
+          		, subject_property.pl_property_category_type AS property_category_code
+          		, property_category_type.value AS property_category
+          		, subject_property.pl_building_status_type AS building_status_code
+          		, building_status_type.value AS building_status
+          		, subject_property.pl_rental AS rental_flag
+          		, subject_property.pl_property_rights_type AS property_rights_code
+          		, property_rights_type.value AS property_rights
+          		, subject_property.pl_neighborhood_location_type AS neighborhood_location_code
+          		, neighborhood_location_type.value AS neighborhood_location
+          		, GREATEST(deal.etl_end_date_time, proposal.etl_end_date_time, subject_property.etl_end_date_time, county
+          		.etl_end_date_time, country_type.etl_end_date_time, property_category_type.etl_end_date_time,
+          				   building_status_type.etl_end_date_time, neighborhood_location_type.etl_end_date_time,
+          		    transaction_dim.etl_end_date_time, property_rights_type.etl_end_date_time) AS
+          max_source_etl_end_date_time
+          	FROM (
+          		SELECT <<deal_partial_load_condition>> AS include_record
+          			, deal.*
+          			, etl_log.etl_end_date_time
+          		FROM history_octane.deal
+          			LEFT JOIN history_octane.deal AS history_records
+          				ON deal.d_pid = history_records.d_pid
+          					AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+          			JOIN star_common.etl_log
+          				ON deal.etl_batch_id = etl_log.etl_batch_id
+          		WHERE history_records.d_pid IS NULL
+          	) AS deal
+          		JOIN (
+          			SELECT <<proposal_partial_load_condition>> AS include_record
+          				, proposal.*
+          				, etl_log.etl_end_date_time
+          			FROM history_octane.proposal
+          				LEFT JOIN history_octane.proposal AS history_records
+          					ON proposal.prp_pid = history_records.prp_pid
+          						AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+          				JOIN star_common.etl_log
+          					ON proposal.etl_batch_id = etl_log.etl_batch_id
+          			WHERE history_records.prp_pid IS NULL
+          		) AS proposal
+          			ON deal.d_active_proposal_pid = proposal.prp_pid
+          		JOIN (
+          			SELECT <<place_partial_load_condition>> AS include_record
+          				, place.*
+          				, etl_log.etl_end_date_time
+          			FROM history_octane.place
+          				LEFT JOIN history_octane.place AS history_records
+          					ON place.pl_pid = history_records.pl_pid
+          						AND place.data_source_updated_datetime < history_records.data_source_updated_datetime
+          				JOIN star_common.etl_log
+          					ON place.etl_batch_id = etl_log.etl_batch_id
+          			WHERE history_records.pl_pid IS NULL
+          		) AS subject_property
+          			ON proposal.prp_pid = subject_property.pl_proposal_pid
+          				AND subject_property.pl_subject_property IS TRUE
+          		LEFT JOIN (
+          			SELECT <<county_partial_load_condition>> AS include_record
+          				, county.*
+          				, etl_log.etl_end_date_time
+          			FROM history_octane.county
+          				LEFT JOIN history_octane.county AS history_records
+          					ON county.c_pid = history_records.c_pid
+          						AND county.data_source_updated_datetime < history_records.data_source_updated_datetime
+          				JOIN star_common.etl_log
+          					ON county.etl_batch_id = etl_log.etl_batch_id
+          			WHERE history_records.c_pid IS NULL
+          		) AS county ON subject_property.pl_county_pid = county.c_pid
+          		JOIN (
+          			SELECT <<country_type_partial_load_condition>> AS include_record
+          				, country_type.*
+          				, etl_log.etl_end_date_time
+          			FROM history_octane.country_type
+          				LEFT JOIN history_octane.country_type AS history_records
+          					ON country_type.code = history_records.code
+          						AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          				JOIN star_common.etl_log
+          					ON country_type.etl_batch_id = etl_log.etl_batch_id
+          			WHERE history_records.code IS NULL
+          		) AS country_type ON subject_property.pl_country = country_type.code
+          		JOIN (
+          			SELECT <<property_category_type_partial_load_condition>> AS include_record
+          				, property_category_type.*
+          				, etl_log.etl_end_date_time
+          			FROM history_octane.property_category_type
+          				LEFT JOIN history_octane.property_category_type AS history_records
+          					ON property_category_type.code = history_records.code
+          						AND property_category_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          				JOIN star_common.etl_log
+          					ON property_category_type.etl_batch_id = etl_log.etl_batch_id
+          			WHERE history_records.code IS NULL
+          		) AS property_category_type ON subject_property.pl_property_category_type = property_category_type.code
+          		JOIN (
+          			SELECT <<building_status_type_partial_load_condition>> AS include_record
+          				, building_status_type.*
+          				, etl_log.etl_end_date_time
+          			FROM history_octane.building_status_type
+          				LEFT JOIN history_octane.building_status_type AS history_records
+          					ON building_status_type.code = history_records.code
+          						AND building_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          				JOIN star_common.etl_log
+          					ON building_status_type.etl_batch_id = etl_log.etl_batch_id
+          			WHERE history_records.code IS NULL
+          		) AS building_status_type ON subject_property.pl_building_status_type = building_status_type.code
+          		JOIN (
+          			SELECT <<property_rights_type_partial_load_condition>> AS include_record
+          				, property_rights_type.*
+          				, etl_log.etl_end_date_time
+          			FROM history_octane.property_rights_type
+          				LEFT JOIN history_octane.property_rights_type AS history_records
+          					ON property_rights_type.code = history_records.code
+          						AND property_rights_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          				JOIN star_common.etl_log
+          					ON property_rights_type.etl_batch_id = etl_log.etl_batch_id
+          			WHERE history_records.code IS NULL
+          		) AS property_rights_type ON subject_property.pl_property_rights_type = property_rights_type.code
+          		JOIN (
+          			SELECT <<neighborhood_location_type_partial_load_condition>> AS include_record
+          				, neighborhood_location_type.*
+          				, etl_log.etl_end_date_time
+          			FROM history_octane.neighborhood_location_type
+          				LEFT JOIN history_octane.neighborhood_location_type AS history_records
+          					ON neighborhood_location_type.code = history_records.code
+          						AND neighborhood_location_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          				JOIN star_common.etl_log ON neighborhood_location_type.etl_batch_id = etl_log.etl_batch_id
+          			WHERE history_records.code IS NULL
+          		) AS neighborhood_location_type ON subject_property.pl_neighborhood_location_type = neighborhood_location_type.code
+          		JOIN (
+          		    SELECT <<transaction_dim_partial_load_condition>> AS include_record
+          		    	, transaction_dim.*
+          		    	, etl_log.etl_end_date_time
+          		    FROM star_loan.transaction_dim
+          		    	JOIN star_common.etl_log
+          		    		ON transaction_dim.etl_batch_id = etl_log.etl_batch_id
+          			) AS transaction_dim
+          				ON deal.d_pid = transaction_dim.deal_pid
+          	WHERE GREATEST(deal.include_record, proposal.include_record, subject_property.include_record, county
+          		.include_record, country_type.include_record, property_category_type.include_record,
+          				   building_status_type.include_record, neighborhood_location_type.include_record, transaction_dim
+          				       .include_record, property_rights_type.include_record) IS TRUE
+          )
+          -- new records that should be inserted
+          SELECT transaction_aux_subject_property_dim_incl_new_records.*
+          FROM transaction_aux_subject_property_dim_incl_new_records
+          	LEFT JOIN star_loan.transaction_aux_subject_property_dim
+          		ON transaction_aux_subject_property_dim_incl_new_records.data_source_integration_id =
+          		   transaction_aux_subject_property_dim.data_source_integration_id
+          WHERE transaction_aux_subject_property_dim.transaction_dwid IS NULL
+          UNION ALL
+          -- existing records that need to be updated
+          SELECT transaction_aux_subject_property_dim_incl_new_records.*
+          FROM transaction_aux_subject_property_dim_incl_new_records
+          	JOIN (
+          		SELECT transaction_aux_subject_property_dim.data_source_integration_id
+          			, etl_log.etl_start_date_time
+          		FROM star_loan.transaction_aux_subject_property_dim
+          			JOIN star_common.etl_log
+          				ON transaction_aux_subject_property_dim.etl_batch_id = etl_log.etl_batch_id
+          	) AS transaction_aux_subject_property_dim_etl_start_times
+          		ON transaction_aux_subject_property_dim_incl_new_records.data_source_integration_id =
+          		   transaction_aux_subject_property_dim_etl_start_times.data_source_integration_id
+          			AND transaction_aux_subject_property_dim_incl_new_records.max_source_etl_end_date_time >=
+          				transaction_aux_subject_property_dim_etl_start_times.etl_start_date_time;

@@ -1226,6 +1226,8 @@ step_functions:
         next_step_functions:
         - SP-200005-insert-update
         - SP-200019
+        - SP-200040
+        - SP-200041
         input_sql: |-
           --finding records to insert into history_octane.place
           SELECT staging_table.pl_pid
