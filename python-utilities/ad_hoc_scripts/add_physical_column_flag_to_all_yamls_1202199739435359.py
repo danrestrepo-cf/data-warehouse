@@ -1,5 +1,5 @@
 """Add new physical_column_flag attribute to all columns listed in table definition yaml files within the below listed
-schemas per 1202199739435359. Note that
+schemas per 1202199739435359.
 
     - data_mart_business_applications
     - history_octane
