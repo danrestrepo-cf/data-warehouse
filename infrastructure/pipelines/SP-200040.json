@@ -1,8 +1,8 @@
 {
-    "Comment": "SP-200029 - ETL to insert_update records into staging.star_loan.transaction_aux_property_repairs_dim using staging.history_octane.deal as the primary source",
-    "StartAt": "ETL-200029",
+    "Comment": "SP-200040 - ETL to insert_update records into staging.star_loan.borrower_aux_current_residence_dim using staging.history_octane.borrower as the primary source",
+    "StartAt": "ETL-200040",
     "States": {
-        "ETL-200029": {
+        "ETL-200040": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Retry": [
@@ -36,7 +36,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "ETL-200029"
+                                    "Value": "ETL-200040"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

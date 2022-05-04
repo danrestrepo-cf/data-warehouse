@@ -303,8 +303,6 @@ step_functions:
         insert_update_keys:
         - data_source_integration_id
         container_memory: 2048
-        next_step_functions:
-        - SP-300001-insert-update
         input_sql: |-
           WITH transaction_aux_govt_programs_dim_incl_new_records AS (
           	SELECT 'deal_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
@@ -357,7 +355,7 @@ step_functions:
               	, proposal.prp_va_notice_of_value_source_type AS va_notice_of_value_source_code
               	, va_past_credit_record_type.value AS va_past_credit_record
               	, proposal.prp_va_past_credit_record_type AS va_past_credit_record_code
-              	, cema_ynna_type.value AS cema
+              	, cema_ynnau_type.value AS cema
               	, proposal.prp_cema AS cema_code
           	    , fha_eligible_maximum_financing_ynu_type.value AS fha_eligible_maximum_financing
               	, proposal.prp_fha_eligible_maximum_financing AS fha_eligible_maximum_financing_code
@@ -370,7 +368,7 @@ step_functions:
           		, GREATEST(deal.etl_end_date_time, proposal.etl_end_date_time, fha_non_arms_length_ltv_limit_exception_type
           		    .etl_end_date_time, hud_fha_de_approval_type.etl_end_date_time, usda_rd_single_family_housing_type
           		        .etl_end_date_time, va_notice_of_value_source_type.etl_end_date_time, va_past_credit_record_type
-          		            .etl_end_date_time, cema_ynna_type.etl_end_date_time, fha_eligible_maximum_financing_ynu_type
+          		            .etl_end_date_time, cema_ynnau_type.etl_end_date_time, fha_eligible_maximum_financing_ynu_type
           		                .etl_end_date_time, usda_gsa_sam_exclusion_ynu_type.etl_end_date_time,
           		    va_meets_credit_standards_ynu_type.etl_end_date_time, va_monthly_utilities_included_ynu_type
           		        .etl_end_date_time, transaction_dim.etl_end_date_time) AS max_source_etl_end_date_time
@@ -485,19 +483,19 @@ step_functions:
           	    JOIN (
           	        SELECT *
           	        FROM (
-          	            SELECT <<yes_no_na_type_partial_load_condition>> AS include_record
-          	            	, yes_no_na_type.*
+          	            SELECT <<yes_no_na_unknown_type_partial_load_condition>> AS include_record
+          	            	, yes_no_na_unknown_type.*
           	            	, etl_log.etl_end_date_time
-          	            FROM history_octane.yes_no_na_type
-          	            	LEFT JOIN history_octane.yes_no_na_type AS history_records
-          	            		ON yes_no_na_type.code = history_records.code
-          	            			AND yes_no_na_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+          	            FROM history_octane.yes_no_na_unknown_type
+          	            	LEFT JOIN history_octane.yes_no_na_unknown_type AS history_records
+          	            		ON yes_no_na_unknown_type.code = history_records.code
+          	            			AND yes_no_na_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
           	            	JOIN star_common.etl_log
-          	            		ON yes_no_na_type.etl_batch_id = etl_log.etl_batch_id
+          	            		ON yes_no_na_unknown_type.etl_batch_id = etl_log.etl_batch_id
           	            WHERE history_records.code IS NULL
           				) AS primary_table
-          			) AS cema_ynna_type
-          	    		ON proposal.prp_cema = cema_ynna_type.code
+          			) AS cema_ynnau_type
+          	    		ON proposal.prp_cema = cema_ynnau_type.code
           	    JOIN (
           	        SELECT *
           	        FROM (
@@ -574,7 +572,7 @@ step_functions:
               WHERE GREATEST(deal.include_record, proposal.include_record, fha_non_arms_length_ltv_limit_exception_type
           		.include_record, hud_fha_de_approval_type.include_record, usda_rd_single_family_housing_type
           					   .include_record, va_notice_of_value_source_type.include_record, va_past_credit_record_type
-          					   .include_record, cema_ynna_type.include_record, fha_eligible_maximum_financing_ynu_type
+          					   .include_record, cema_ynnau_type.include_record, fha_eligible_maximum_financing_ynu_type
           					   .include_record, usda_gsa_sam_exclusion_ynu_type.include_record,
           				   va_meets_credit_standards_ynu_type.include_record, va_monthly_utilities_included_ynu_type
           					   .include_record, transaction_dim.include_record) IS TRUE
