@@ -75,3 +75,17 @@ class TestYAMLMetadata(unittest.TestCase):
         if bad_etls:
             error_message_etl_list = [f'{etl.process_name} (defined in {etl_parent_files[etl.process_name]})' for etl in bad_etls]
             self.fail(f'Invalid ETL names: {", ".join(error_message_etl_list)}')
+
+    def test_detect_etl_queries_that_contain_tab_characters(self):
+        bad_etl_queries = []
+        for database in self.metadata.databases:
+            for schema in database.schemas:
+                for table in schema.tables:
+                    for step_function in table.step_functions:
+                        for etl in step_function.etls:
+                            if re.search(r'\t', etl.input_sql):
+                                bad_etl_queries.append(f'{table.name}: {etl.process_name}')
+        if bad_etl_queries:
+            bad_etl_queries = '\n'.join(sorted(bad_etl_queries))
+            self.fail(f'Tab characters detected in ETL queries within the following table definition yamls:\n'
+                      f'{bad_etl_queries}')
