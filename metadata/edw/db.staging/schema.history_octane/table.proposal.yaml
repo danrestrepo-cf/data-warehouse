@@ -867,6 +867,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.prp_hud_fha_de_approval_type
+  prp_initial_intent_to_proceed_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prp_initial_intent_to_proceed_date
   prp_initial_uw_disposition_datetime:
     data_type: TIMESTAMP
     source:
@@ -1706,6 +1710,7 @@ step_functions:
                , staging_table.prp_proposed_additional_monthly_payment
                , staging_table.prp_term_borrower_intends_to_retain_property
                , staging_table.prp_loan_modification_agreement_executed_received_datetime
+               , staging_table.prp_initial_intent_to_proceed_date
                , FALSE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM staging_octane.proposal staging_table
@@ -1956,6 +1961,7 @@ step_functions:
                , history_table.prp_proposed_additional_monthly_payment
                , history_table.prp_term_borrower_intends_to_retain_property
                , history_table.prp_loan_modification_agreement_executed_received_datetime
+               , history_table.prp_initial_intent_to_proceed_date
                , TRUE AS data_source_deleted_flag
                , NOW( ) AS data_source_updated_datetime
           FROM (
