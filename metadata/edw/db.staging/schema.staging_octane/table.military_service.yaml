@@ -37,21 +37,31 @@ foreign_keys:
 columns:
   ms_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ms_from_date:
     data_type: DATE
+    physical_column_flag: true
   ms_military_branch_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ms_military_service_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ms_military_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ms_name_used_during_service:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ms_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ms_service_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ms_through_date:
     data_type: DATE
+    physical_column_flag: true
   ms_version:
     data_type: INTEGER
+    physical_column_flag: true

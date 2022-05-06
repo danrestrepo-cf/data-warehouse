@@ -23,54 +23,68 @@ foreign_keys:
 columns:
   cc_circumstance_change_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cc_circumstance_change_type
   cc_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cc_create_datetime
   cc_expiration_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cc_expiration_date
   cc_expired:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cc_expired
   cc_loan_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cc_loan_pid
   cc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cc_pid
   cc_previous_formatted_value:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cc_previous_formatted_value
   cc_source_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cc_source_unparsed_name
   cc_system_added:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cc_system_added
   cc_to_formatted_value:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cc_to_formatted_value
   cc_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cc_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100142:
     etls:

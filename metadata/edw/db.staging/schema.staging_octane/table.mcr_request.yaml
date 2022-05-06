@@ -45,35 +45,52 @@ foreign_keys:
 columns:
   mcrr_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcrr_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   mcrr_csv_input_files_zip_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcrr_end_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   mcrr_error_csv_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcrr_mcr_error_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcrr_mcr_loan_data_csv_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcrr_mcr_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcrr_mcr_xml_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcrr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcrr_quarter_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcrr_request_status_messages:
     data_type: TEXT
+    physical_column_flag: true
   mcrr_request_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcrr_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcrr_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   mcrr_version:
     data_type: INTEGER
+    physical_column_flag: true
   mcrr_year:
     data_type: INTEGER
+    physical_column_flag: true

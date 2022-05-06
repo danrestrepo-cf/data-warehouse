@@ -31,78 +31,98 @@ foreign_keys:
 columns:
   cd_boarded_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_boarded_datetime
   cd_borrower_contribution_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_borrower_contribution_amount
   cd_confirmation_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_confirmation_datetime
   cd_construction_draw_disbursed_at_closing:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_construction_draw_disbursed_at_closing
   cd_construction_draw_notes:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_construction_draw_notes
   cd_construction_draw_number:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_construction_draw_number
   cd_construction_draw_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_construction_draw_status_type
   cd_construction_draw_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_construction_draw_type
   cd_disbursement_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_disbursement_datetime
   cd_inspection_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_inspection_datetime
   cd_lender_contribution_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_lender_contribution_amount
   cd_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_pid
   cd_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_proposal_pid
   cd_scheduled_disbursement_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_scheduled_disbursement_date
   cd_total_draw_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_total_draw_amount
   cd_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_version
   cd_voided_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cd_voided_datetime
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100136:
     etls:

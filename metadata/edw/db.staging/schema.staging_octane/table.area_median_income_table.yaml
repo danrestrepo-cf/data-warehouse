@@ -13,13 +13,19 @@ foreign_keys:
 columns:
   amit_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   amit_from_date:
     data_type: DATE
+    physical_column_flag: true
   amit_pid:
     data_type: BIGINT
+    physical_column_flag: true
   amit_upload_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   amit_uploader_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   amit_version:
     data_type: INTEGER
+    physical_column_flag: true

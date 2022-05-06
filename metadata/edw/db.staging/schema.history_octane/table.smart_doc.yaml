@@ -119,188 +119,238 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   sd_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_account_pid
   sd_action_entities_from_merge_field:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entities_from_merge_field
   sd_action_entity_applicant:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entity_applicant
   sd_action_entity_collateral_underwriter:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entity_collateral_underwriter
   sd_action_entity_correspondent_client_advocate:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entity_correspondent_client_advocate
   sd_action_entity_effective_collateral_underwriter:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entity_effective_collateral_underwriter
   sd_action_entity_government_insurance:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entity_government_insurance
   sd_action_entity_hud_va_lender_officer:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entity_hud_va_lender_officer
   sd_action_entity_non_applicant:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entity_non_applicant
   sd_action_entity_originator:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entity_originator
   sd_action_entity_production_manager:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entity_production_manager
   sd_action_entity_referring_associate:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entity_referring_associate
   sd_action_entity_supplemental_originator:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entity_supplemental_originator
   sd_action_entity_underwriter:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entity_underwriter
   sd_action_entity_underwriting_manager:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entity_underwriting_manager
   sd_action_entity_wholesale_client_advocate:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_action_entity_wholesale_client_advocate
   sd_active:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_active
   sd_auto_approve:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_auto_approve
   sd_auto_include_on_request:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_auto_include_on_request
   sd_borrower_explanation:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_borrower_explanation
   sd_broker_applicable_provider:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_broker_applicable_provider
   sd_custom_form_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_custom_form_pid
   sd_days_before_key_date:
     data_type: INTEGER
+    physical_column_flag: true
   sd_deal_child_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_deal_child_type
   sd_doc_action_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_doc_action_type
   sd_doc_approval_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_doc_approval_type
   sd_doc_borrower_access_mode_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_doc_borrower_access_mode_type
   sd_doc_category_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_doc_category_type
   sd_doc_external_provider_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_doc_external_provider_type
   sd_doc_file_source_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_doc_file_source_type
   sd_doc_fulfill_status_type_default:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_doc_fulfill_status_type_default
   sd_doc_key_date_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sd_doc_name:
     data_type: VARCHAR(767)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_doc_name
   sd_doc_number:
     data_type: NUMERIC(15,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_doc_number
   sd_doc_set_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_doc_set_type
   sd_doc_validity_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sd_document_explanation:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_document_explanation
   sd_document_explanation_reference:
     data_type: VARCHAR(2048)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_document_explanation_reference
   sd_e_delivery:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_e_delivery
   sd_expiration_rule_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sd_key_doc_include_file:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_key_doc_include_file
   sd_key_doc_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_key_doc_type
   sd_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_pid
   sd_poa_applicable:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_poa_applicable
   sd_prior_to_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_prior_to_type
   sd_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sd_version
   sd_warning_days:
     data_type: INTEGER
+    physical_column_flag: true
 step_functions:
   SP-100333:
     etls:

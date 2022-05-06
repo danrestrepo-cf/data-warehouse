@@ -5,15 +5,22 @@ primary_key:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   locnm_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   locnm_location_note_pid:
     data_type: BIGINT
+    physical_column_flag: true
   locnm_pid:
     data_type: BIGINT
+    physical_column_flag: true
   locnm_version:
     data_type: INTEGER
+    physical_column_flag: true

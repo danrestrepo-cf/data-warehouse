@@ -61,47 +61,70 @@ foreign_keys:
 columns:
   ci_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ci_address_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ci_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ci_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ci_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ci_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ci_credit_business_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ci_credit_inquiry_result_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ci_credit_loan_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ci_credit_report_identifier:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ci_credit_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ci_equifax_included:
     data_type: BOOLEAN
+    physical_column_flag: true
   ci_experian_included:
     data_type: BOOLEAN
+    physical_column_flag: true
   ci_explanation_info:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   ci_explanation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ci_inquiry_date:
     data_type: DATE
+    physical_column_flag: true
   ci_inquiry_date_provided:
     data_type: BOOLEAN
+    physical_column_flag: true
   ci_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ci_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ci_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ci_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ci_trans_union_included:
     data_type: BOOLEAN
+    physical_column_flag: true
   ci_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -4,41 +4,61 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   etl_start_date_time:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_end_date_time:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_duration:
     data_type: INTERVAL
+    physical_column_flag: true
   status:
     data_type: TEXT
+    physical_column_flag: true
   process_name:
     data_type: TEXT
+    physical_column_flag: true
   controller_job_batch_id:
     data_type: INTEGER
+    physical_column_flag: true
   input_json:
     data_type: TEXT
+    physical_column_flag: true
   output_json:
     data_type: TEXT
+    physical_column_flag: true
   input_rows_read:
     data_type: BIGINT
+    physical_column_flag: true
   input_step_duration_ms:
     data_type: BIGINT
+    physical_column_flag: true
   input_step_duration:
     data_type: INTERVAL
+    physical_column_flag: true
   output_rows_inserted:
     data_type: BIGINT
+    physical_column_flag: true
   output_rows_updated:
     data_type: BIGINT
+    physical_column_flag: true
   output_rows_deleted:
     data_type: BIGINT
+    physical_column_flag: true
   output_rows_rejected:
     data_type: BIGINT
+    physical_column_flag: true
   output_total_rows:
     data_type: BIGINT
+    physical_column_flag: true
   output_step_duration_ms:
     data_type: BIGINT
+    physical_column_flag: true
   output_step_duration:
     data_type: INTERVAL
+    physical_column_flag: true

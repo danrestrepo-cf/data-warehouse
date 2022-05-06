@@ -13,17 +13,25 @@ foreign_keys:
 columns:
   mcrss_applications_in_process_borrower_loan_amount:
     data_type: BIGINT
+    physical_column_flag: true
   mcrss_applications_in_process_borrower_loan_count:
     data_type: BIGINT
+    physical_column_flag: true
   mcrss_applications_in_process_third_party_loan_amount:
     data_type: BIGINT
+    physical_column_flag: true
   mcrss_applications_in_process_third_party_loan_count:
     data_type: BIGINT
+    physical_column_flag: true
   mcrss_mcr_snapshot_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcrss_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcrss_subject_property_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcrss_version:
     data_type: INTEGER
+    physical_column_flag: true

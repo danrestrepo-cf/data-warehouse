@@ -31,32 +31,41 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   mcrs_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrs_account_pid
   mcrs_mcr_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrs_mcr_request_pid
   mcrs_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrs_pid
   mcrs_quarter_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrs_quarter_type
   mcrs_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrs_version
   mcrs_year:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrs_year
 step_functions:

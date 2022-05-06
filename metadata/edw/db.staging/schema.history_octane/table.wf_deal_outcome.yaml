@@ -31,44 +31,56 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   wdo_borrower_message:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wdo_borrower_message
   wdo_incomplete_outcome:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wdo_incomplete_outcome
   wdo_lender_description:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wdo_lender_description
   wdo_outcome_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wdo_outcome_name
   wdo_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wdo_pid
   wdo_transition_wf_deal_step_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wdo_transition_wf_deal_step_pid
   wdo_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wdo_version
   wdo_wf_deal_step_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wdo_wf_deal_step_pid
   wdo_wf_outcome_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wdo_wf_outcome_type
 step_functions:

@@ -21,9 +21,13 @@ foreign_keys:
 columns:
   bl_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bl_liability_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bl_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bl_version:
     data_type: INTEGER
+    physical_column_flag: true

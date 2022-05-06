@@ -23,70 +23,88 @@ foreign_keys:
 columns:
   chraurs_branch_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_branch_pid
   chraurs_change_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_change_request_pid
   chraurs_channel_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_channel_id
   chraurs_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_email
   chraurs_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_first_name
   chraurs_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_last_name
   chraurs_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_middle_name
   chraurs_office_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_office_phone
   chraurs_office_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_office_phone_extension
   chraurs_parent_org_node_id:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_parent_org_node_id
   chraurs_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_pid
   chraurs_suffix:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_suffix
   chraurs_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_through_date
   chraurs_title:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_title
   chraurs_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraurs_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100911:
     etls:

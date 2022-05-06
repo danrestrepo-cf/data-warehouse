@@ -5,110 +5,135 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   ethnicity_collected_visual_or_surname:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_ethnicity_collected_visual_or_surname.columns.value
     update_flag: true
   ethnicity_collected_visual_or_surname_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_ethnicity_collected_visual_or_surname
     update_flag: false
   ethnicity_not_obtainable_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_ethnicity_not_obtainable
     update_flag: false
   ethnicity_refused:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_ethnicity_refused.columns.value
     update_flag: true
   ethnicity_refused_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_ethnicity_refused
     update_flag: false
   race_collected_visual_or_surname:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_race_collected_visual_or_surname.columns.value
     update_flag: true
   race_collected_visual_or_surname_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_collected_visual_or_surname
     update_flag: false
   race_information_not_provided_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_information_not_provided
     update_flag: false
   race_national_origin_refusal_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_national_origin_refusal
     update_flag: false
   race_not_obtainable_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_not_obtainable
     update_flag: false
   race_refused:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_race_refused.columns.value
     update_flag: true
   race_refused_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_refused
     update_flag: false
   sex_collected_visual_or_surname:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_sex_collected_visual_or_surname.columns.value
     update_flag: true
   sex_collected_visual_or_surname_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_sex_collected_visual_or_surname
     update_flag: false
   sex_not_obtainable_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_sex_not_obtainable
     update_flag: false
   sex_refused:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_sex_refused.columns.value
     update_flag: true
   sex_refused_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_sex_refused
     update_flag: false

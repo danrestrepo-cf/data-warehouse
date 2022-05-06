@@ -23,46 +23,58 @@ foreign_keys:
 columns:
   c_county_fips:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.c_county_fips
   c_defunct:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.c_defunct
   c_mortech_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.c_mortech_name
   c_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.c_name
   c_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.c_pid
   c_recording_district_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.c_recording_district_type
   c_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.c_state_type
   c_torrens_available:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.c_torrens_available
   c_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.c_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100058:
     etls:

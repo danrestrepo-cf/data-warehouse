@@ -31,68 +31,86 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   hrr_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_account_pid
   hrr_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_create_datetime
   hrr_end_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_end_datetime
   hrr_error_limit:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_error_limit
   hrr_error_protection:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_error_protection
   hrr_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_from_date
   hrr_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_pid
   hrr_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_repository_file_pid
   hrr_request_status_messages:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_request_status_messages
   hrr_request_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_request_status_type
   hrr_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_requester_unparsed_name
   hrr_row_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_row_count
   hrr_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_start_datetime
   hrr_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_through_date
   hrr_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.hrr_version
 step_functions:

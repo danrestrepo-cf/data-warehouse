@@ -13,11 +13,16 @@ foreign_keys:
 columns:
   wph_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wph_phase_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   wph_phase_number:
     data_type: INTEGER
+    physical_column_flag: true
   wph_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wph_version:
     data_type: INTEGER
+    physical_column_flag: true

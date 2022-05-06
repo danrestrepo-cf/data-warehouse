@@ -47,60 +47,76 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   luloc_company_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.luloc_company_pid
   luloc_current_licensed_location:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.luloc_current_licensed_location
   luloc_current_physical_location:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.luloc_current_physical_location
   luloc_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.luloc_from_date
   luloc_lender_user_location_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.luloc_lender_user_location_type
   luloc_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.luloc_lender_user_pid
   luloc_location_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.luloc_location_pid
   luloc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.luloc_pid
   luloc_synthetic_unique_current_licensed_location:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.luloc_synthetic_unique_current_licensed_location
   luloc_synthetic_unique_current_physical_location:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.luloc_synthetic_unique_current_physical_location
   luloc_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.luloc_version
   luloc_workspace_code:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.luloc_workspace_code
   luloc_workspace_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.luloc_workspace_type
 step_functions:

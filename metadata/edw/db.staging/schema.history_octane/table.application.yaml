@@ -71,94 +71,118 @@ foreign_keys:
 columns:
   apl_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_address_city
   apl_address_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_address_country
   apl_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_address_postal_code
   apl_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_address_state
   apl_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_address_street1
   apl_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_address_street2
   apl_application_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_application_name
   apl_fha_borrower_certification_more_than_four_dwellings:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_fha_borrower_certification_more_than_four_dwellings
   apl_fha_borrower_certification_mortgage_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_fha_borrower_certification_mortgage_amount
   apl_fha_borrower_certification_own_other_property:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_fha_borrower_certification_own_other_property
   apl_fha_borrower_certification_property_to_be_sold:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_fha_borrower_certification_property_to_be_sold
   apl_fha_borrower_certification_rental:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_fha_borrower_certification_rental
   apl_fha_borrower_certification_rental_explain:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_fha_borrower_certification_rental_explain
   apl_fha_borrower_certification_sales_price_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_fha_borrower_certification_sales_price_amount
   apl_fha_va_bor_cert_sales_price_exceeds_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_fha_va_bor_cert_sales_price_exceeds_type
   apl_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_pid
   apl_primary_application:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_primary_application
   apl_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_proposal_pid
   apl_urla:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_urla
   apl_va_borrower_certification_occupancy_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_va_borrower_certification_occupancy_type
   apl_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.apl_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100265:
     etls:

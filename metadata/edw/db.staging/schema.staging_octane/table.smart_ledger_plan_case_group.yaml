@@ -45,19 +45,28 @@ foreign_keys:
 columns:
   slpcg_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   slpcg_group_id:
     data_type: BIGINT
+    physical_column_flag: true
   slpcg_group_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   slpcg_payer_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
   slpcg_pid:
     data_type: BIGINT
+    physical_column_flag: true
   slpcg_smart_ledger_plan_case_group_calculation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   slpcg_smart_ledger_plan_case_group_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   slpcg_smart_ledger_plan_pid:
     data_type: BIGINT
+    physical_column_flag: true
   slpcg_version:
     data_type: INTEGER
+    physical_column_flag: true

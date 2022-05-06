@@ -31,44 +31,56 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   vde_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vde_account_pid
   vde_create_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vde_create_date
   vde_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vde_create_datetime
   vde_messages:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vde_messages
   vde_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vde_pid
   vde_source_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vde_source_unparsed_name
   vde_vendor_document_event_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vde_vendor_document_event_type
   vde_vendor_document_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vde_vendor_document_repository_file_pid
   vde_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vde_version
 step_functions:

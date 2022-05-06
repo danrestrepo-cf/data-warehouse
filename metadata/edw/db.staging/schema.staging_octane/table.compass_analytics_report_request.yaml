@@ -29,37 +29,55 @@ foreign_keys:
 columns:
   carr_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   carr_cancelled_from_date:
     data_type: DATE
+    physical_column_flag: true
   carr_cancelled_through_date:
     data_type: DATE
+    physical_column_flag: true
   carr_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   carr_end_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   carr_error_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   carr_export_csv_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   carr_exported_deal_count:
     data_type: INTEGER
+    physical_column_flag: true
   carr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   carr_request_status_messages:
     data_type: TEXT
+    physical_column_flag: true
   carr_request_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   carr_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   carr_sold_from_date:
     data_type: DATE
+    physical_column_flag: true
   carr_sold_through_date:
     data_type: DATE
+    physical_column_flag: true
   carr_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   carr_total_deal_count:
     data_type: INTEGER
+    physical_column_flag: true
   carr_use_loan_hedge_data:
     data_type: BOOLEAN
+    physical_column_flag: true
   carr_version:
     data_type: INTEGER
+    physical_column_flag: true

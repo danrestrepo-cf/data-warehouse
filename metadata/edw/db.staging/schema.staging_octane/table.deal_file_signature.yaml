@@ -37,23 +37,34 @@ foreign_keys:
 columns:
   dfs_charge_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   dfs_charge_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dfs_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dfs_deal_signer_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dfs_page_height:
     data_type: NUMERIC(15,7)
+    physical_column_flag: true
   dfs_page_number:
     data_type: INTEGER
+    physical_column_flag: true
   dfs_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dfs_signature_part_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dfs_version:
     data_type: INTEGER
+    physical_column_flag: true
   dfs_x:
     data_type: NUMERIC(15,7)
+    physical_column_flag: true
   dfs_y:
     data_type: NUMERIC(15,7)
+    physical_column_flag: true

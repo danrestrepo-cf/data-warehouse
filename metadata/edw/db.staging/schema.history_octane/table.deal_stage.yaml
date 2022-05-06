@@ -23,50 +23,63 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   dst_business_hours_duration_seconds:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dst_business_hours_duration_seconds
   dst_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dst_deal_pid
   dst_deal_stage_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dst_deal_stage_type
   dst_duration_seconds:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dst_duration_seconds
   dst_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dst_from_date
   dst_from_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dst_from_datetime
   dst_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dst_pid
   dst_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dst_through_date
   dst_through_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dst_through_datetime
   dst_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dst_version
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100271:
     etls:

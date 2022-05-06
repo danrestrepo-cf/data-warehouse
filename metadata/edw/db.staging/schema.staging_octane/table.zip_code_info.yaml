@@ -4,11 +4,16 @@ primary_key:
 columns:
   zci_latitude:
     data_type: NUMERIC(9,6)
+    physical_column_flag: true
   zci_longitude:
     data_type: NUMERIC(9,6)
+    physical_column_flag: true
   zci_pid:
     data_type: BIGINT
+    physical_column_flag: true
   zci_version:
     data_type: INTEGER
+    physical_column_flag: true
   zci_zip_code:
     data_type: VARCHAR(5)
+    physical_column_flag: true

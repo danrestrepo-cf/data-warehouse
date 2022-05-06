@@ -103,238 +103,301 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   lc_account_charge_ordinal:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_account_charge_ordinal
   lc_advance_amount_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_advance_amount_warning
   lc_advance_obligation_compute_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_advance_obligation_compute_warning
   lc_aggregate_adjustment_compute_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_aggregate_adjustment_compute_warning
   lc_amount_exceeds_cap_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_amount_exceeds_cap_warning
   lc_apr:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_apr
   lc_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_auto_compute
   lc_base_amount:
     data_type: NUMERIC(16,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_base_amount
   lc_charge_input_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_charge_input_type
   lc_charge_input_type_base_amount:
     data_type: NUMERIC(16,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_charge_input_type_base_amount
   lc_charge_input_type_currency:
     data_type: NUMERIC(16,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_charge_input_type_currency
   lc_charge_input_type_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_charge_input_type_percent
   lc_charge_payee_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_charge_payee_type
   lc_charge_payer_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lc_charge_source_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_charge_source_type
   lc_charge_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_charge_type
   lc_charge_wire_action_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
   lc_charge_wire_action_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lc_configured_charge_payee_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_configured_charge_payee_type
   lc_configured_charge_payer_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_configured_charge_payer_type
   lc_configured_financed:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_configured_financed
   lc_configured_paid_by:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_configured_paid_by
   lc_configured_paid_to:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_configured_paid_to
   lc_configured_poc:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_configured_poc
   lc_configured_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_configured_total_amount
   lc_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_days
   lc_escrow_obligation_compute_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_escrow_obligation_compute_warning
   lc_excess_financing_concession_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_excess_financing_concession_warning
   lc_fha_mip_refund_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_fha_mip_refund_warning
   lc_financed:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_financed
   lc_financed_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_financed_amount
   lc_financed_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_financed_auto_compute
   lc_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_from_date
   lc_hud_line_number:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_hud_line_number
   lc_hud_section_number:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_hud_section_number
   lc_lender_insurance_exceeds_owner_insurance_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_lender_insurance_exceeds_owner_insurance_warning
   lc_loan_position_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_loan_position_type
   lc_manual_circumstance_change_type_1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_manual_circumstance_change_type_1
   lc_manual_circumstance_change_type_2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_manual_circumstance_change_type_2
   lc_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_months
   lc_months_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_months_auto_compute
   lc_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_name
   lc_obligation_charge_input_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_obligation_charge_input_type
   lc_obligation_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_obligation_pid
   lc_paid_by:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lc_paid_to:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_paid_to
   lc_per_diem_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_per_diem_amount
   lc_per_diem_rate:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_per_diem_rate
   lc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_pid
   lc_poc:
     data_type: BOOLEAN
+    physical_column_flag: true
   lc_poc_applicable:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_poc_applicable
   lc_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_proposal_pid
   lc_reduction_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_reduction_amount
   lc_reduction_amount_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_reduction_amount_warning
   lc_smart_charge_config_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_smart_charge_config_warning
   lc_subtract_lenders_title_insurance_amount:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_subtract_lenders_title_insurance_amount
   lc_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_through_date
   lc_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_total_amount
   lc_user_defined:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_user_defined
   lc_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lc_version
 step_functions:

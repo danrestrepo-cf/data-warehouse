@@ -111,166 +111,208 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   dur_aus_cash_from_borrower_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_aus_cash_from_borrower_amount
   dur_aus_request_number:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_aus_request_number
   dur_cash_from_borrower_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_cash_from_borrower_amount
   dur_cltv_ratio_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_cltv_ratio_percent
   dur_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_create_datetime
   dur_credit_bureau_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_credit_bureau_type
   dur_debt_ratio_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_debt_ratio_percent
   dur_du_casefile_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_du_casefile_id
   dur_du_cltv_ratio_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_du_cltv_ratio_percent
   dur_du_debt_ratio_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_du_debt_ratio_percent
   dur_du_housing_ratio_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_du_housing_ratio_percent
   dur_du_ltv_ratio_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_du_ltv_ratio_percent
   dur_du_recommendation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_du_recommendation_type
   dur_du_request_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_du_request_status_type
   dur_du_submission_number:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_du_submission_number
   dur_du_version:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_du_version
   dur_globally_unique_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_globally_unique_id
   dur_gse_version_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_gse_version_type
   dur_housing_ratio_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_housing_ratio_percent
   dur_initial_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_initial_note_rate_percent
   dur_initial_pi_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_initial_pi_amount
   dur_loan_amount:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_loan_amount
   dur_ltv_ratio_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_ltv_ratio_percent
   dur_mismo_version_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_mismo_version_type
   dur_mp_status_log:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_mp_status_log
   dur_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_note_rate_percent
   dur_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_pid
   dur_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_proposal_pid
   dur_proposal_snapshot_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_proposal_snapshot_pid
   dur_requester_agent_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_requester_agent_type
   dur_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_requester_lender_user_pid
   dur_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_requester_unparsed_name
   dur_response_deal_system_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_response_deal_system_file_pid
   dur_status_message:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_status_message
   dur_uw_analysis_html_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_uw_analysis_html_deal_file_pid
   dur_uw_findings_html_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_uw_findings_html_deal_file_pid
   dur_uw_findings_pdf_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_uw_findings_pdf_deal_file_pid
   dur_uw_findings_xml_provided:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_uw_findings_xml_provided
   dur_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dur_version
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100305:
     etls:

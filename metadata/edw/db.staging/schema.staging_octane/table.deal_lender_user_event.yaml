@@ -13,15 +13,22 @@ foreign_keys:
 columns:
   dlue_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dlue_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dlue_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dlue_role_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dlue_subject_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dlue_unparsed_text:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   dlue_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -13,9 +13,13 @@ foreign_keys:
 columns:
   wps_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wps_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wps_version:
     data_type: INTEGER
+    physical_column_flag: true
   wps_wf_prereq_set_name:
     data_type: VARCHAR(256)
+    physical_column_flag: true

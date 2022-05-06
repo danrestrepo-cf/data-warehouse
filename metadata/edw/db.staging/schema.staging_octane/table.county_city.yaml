@@ -13,9 +13,13 @@ foreign_keys:
 columns:
   cci_city_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cci_county_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cci_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cci_version:
     data_type: INTEGER
+    physical_column_flag: true

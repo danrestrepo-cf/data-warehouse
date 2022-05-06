@@ -69,35 +69,52 @@ foreign_keys:
 columns:
   prpre_completed_proposal_snapshot_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpre_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prpre_decision_by_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpre_decision_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prpre_decision_summary:
     data_type: TEXT
+    physical_column_flag: true
   prpre_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpre_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpre_proposal_review_request_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpre_proposal_review_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpre_request_by_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpre_request_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prpre_request_id:
     data_type: INTEGER
+    physical_column_flag: true
   prpre_request_summary:
     data_type: TEXT
+    physical_column_flag: true
   prpre_requested_proposal_snapshot_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpre_scenario_proposal_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpre_scenario_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpre_version:
     data_type: INTEGER
+    physical_column_flag: true

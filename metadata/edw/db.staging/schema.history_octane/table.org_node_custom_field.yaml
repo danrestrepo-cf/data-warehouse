@@ -47,52 +47,66 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   oncf_custom_field_choice_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.oncf_custom_field_choice_pid
   oncf_custom_field_setting_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.oncf_custom_field_setting_pid
   oncf_excluded:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.oncf_excluded
   oncf_field_value:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.oncf_field_value
   oncf_org_lineage_tracker_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.oncf_org_lineage_tracker_pid
   oncf_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.oncf_org_node_pid
   oncf_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.oncf_pid
   oncf_propagated:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.oncf_propagated
   oncf_propagator:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.oncf_propagator
   oncf_propagator_org_node_custom_field_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.oncf_propagator_org_node_custom_field_pid
   oncf_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.oncf_version
 step_functions:

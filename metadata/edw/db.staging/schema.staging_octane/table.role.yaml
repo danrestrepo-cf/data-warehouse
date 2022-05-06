@@ -21,17 +21,25 @@ foreign_keys:
 columns:
   r_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   r_borrower_viewable:
     data_type: BOOLEAN
+    physical_column_flag: true
   r_internal:
     data_type: BOOLEAN
+    physical_column_flag: true
   r_loan_access_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   r_pid:
     data_type: BIGINT
+    physical_column_flag: true
   r_role_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   r_training_applicable:
     data_type: BOOLEAN
+    physical_column_flag: true
   r_version:
     data_type: INTEGER
+    physical_column_flag: true

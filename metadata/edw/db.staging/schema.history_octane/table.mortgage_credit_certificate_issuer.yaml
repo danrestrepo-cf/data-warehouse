@@ -15,80 +15,101 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   mcci_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_account_pid
   mcci_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_address_city
   mcci_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_address_postal_code
   mcci_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_address_state
   mcci_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_address_street1
   mcci_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_address_street2
   mcci_contact_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_contact_email
   mcci_contact_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_contact_name
   mcci_contact_phone:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_contact_phone
   mcci_credit_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_credit_rate_percent
   mcci_ein:
     data_type: VARCHAR(10)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_ein
   mcci_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_from_date
   mcci_issuer_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_issuer_name
   mcci_notes:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_notes
   mcci_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_pid
   mcci_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_through_date
   mcci_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_version
   mcci_web_url:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcci_web_url
 step_functions:

@@ -23,50 +23,63 @@ foreign_keys:
 columns:
   cae_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cae_account_pid
   cae_company_admin_event_entity_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cae_company_admin_event_entity_type
   cae_diff_list:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cae_diff_list
   cae_event_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cae_event_date
   cae_event_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cae_event_datetime
   cae_message:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cae_message
   cae_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cae_pid
   cae_target_entity_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cae_target_entity_pid
   cae_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cae_unparsed_name
   cae_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cae_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100022:
     etls:

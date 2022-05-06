@@ -21,13 +21,19 @@ foreign_keys:
 columns:
   slp_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   slp_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
   slp_pid:
     data_type: BIGINT
+    physical_column_flag: true
   slp_plan_id:
     data_type: BIGINT
+    physical_column_flag: true
   slp_plan_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   slp_version:
     data_type: INTEGER
+    physical_column_flag: true

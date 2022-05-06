@@ -29,31 +29,46 @@ foreign_keys:
 columns:
   dmlog_bcc_recipients:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   dmlog_cc_recipients:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   dmlog_cover_letter_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dmlog_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dmlog_delivery_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dmlog_email_body:
     data_type: TEXT
+    physical_column_flag: true
   dmlog_email_reply_to:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   dmlog_email_subject:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   dmlog_name:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   dmlog_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dmlog_plain_text:
     data_type: BOOLEAN
+    physical_column_flag: true
   dmlog_sent_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dmlog_sent_securely:
     data_type: BOOLEAN
+    physical_column_flag: true
   dmlog_to_recipients:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   dmlog_version:
     data_type: INTEGER
+    physical_column_flag: true

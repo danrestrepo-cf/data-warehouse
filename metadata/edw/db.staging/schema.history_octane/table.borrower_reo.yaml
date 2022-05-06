@@ -23,30 +23,38 @@ foreign_keys:
 columns:
   breo_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.breo_borrower_pid
   breo_ownership_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.breo_ownership_percent
   breo_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.breo_pid
   breo_place_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.breo_place_pid
   breo_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.breo_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100157:
     etls:

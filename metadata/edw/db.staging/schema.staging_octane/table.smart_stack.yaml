@@ -13,9 +13,13 @@ foreign_keys:
 columns:
   ss_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ss_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ss_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ss_version:
     data_type: INTEGER
+    physical_column_flag: true

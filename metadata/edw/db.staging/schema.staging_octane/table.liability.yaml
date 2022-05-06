@@ -61,67 +61,100 @@ foreign_keys:
 columns:
   lia_account_opened_date:
     data_type: DATE
+    physical_column_flag: true
   lia_aggregate_description:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lia_bankruptcy_exception_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lia_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lia_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lia_credit_limit_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   lia_credit_request_liability_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lia_description:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lia_energy_related_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lia_high_balance_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lia_holder_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   lia_holder_fax:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   lia_holder_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lia_holder_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   lia_holder_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   lia_liability_disposition_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lia_liability_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lia_monthly_payment_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lia_note:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   lia_past_due_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lia_payoff_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lia_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lia_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lia_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lia_remaining_term_months:
     data_type: INTEGER
+    physical_column_flag: true
   lia_report_value_overridden:
     data_type: BOOLEAN
+    physical_column_flag: true
   lia_snapshotted_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lia_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lia_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lia_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lia_terms_months_count:
     data_type: INTEGER
+    physical_column_flag: true
   lia_unpaid_balance_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lia_version:
     data_type: INTEGER
+    physical_column_flag: true

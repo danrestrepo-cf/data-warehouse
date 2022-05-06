@@ -15,40 +15,51 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   pmip_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pmip_from_date
   pmip_loan_amount_max:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pmip_loan_amount_max
   pmip_loan_amount_min:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pmip_loan_amount_min
   pmip_maximum_includes_srp:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pmip_maximum_includes_srp
   pmip_maximum_investor_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pmip_maximum_investor_price_percent
   pmip_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pmip_pid
   pmip_product_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pmip_product_pid
   pmip_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pmip_version
 step_functions:

@@ -101,61 +101,91 @@ foreign_keys:
 columns:
   coc_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
   coc_calculated_construction_cost_months:
     data_type: INTEGER
+    physical_column_flag: true
   coc_calculated_construction_cost_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   coc_category_type_label:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   coc_charge_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   coc_construction_cost_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   coc_construction_cost_calculation_percent_override_reason:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   coc_construction_cost_calculation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   coc_construction_cost_category_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   coc_construction_cost_funding_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   coc_construction_cost_months_override_reason:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   coc_construction_cost_notes:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   coc_construction_cost_payee_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   coc_construction_cost_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   coc_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   coc_draw_discrepancy_text:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   coc_effective_construction_cost_calculation_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   coc_effective_construction_cost_months:
     data_type: INTEGER
+    physical_column_flag: true
   coc_impeding_draw_discrepancy:
     data_type: BOOLEAN
+    physical_column_flag: true
   coc_overridden_construction_cost_months:
     data_type: INTEGER
+    physical_column_flag: true
   coc_overridden_construction_cost_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   coc_payee_other_description:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   coc_payee_other_selected:
     data_type: BOOLEAN
+    physical_column_flag: true
   coc_permit_pid:
     data_type: BIGINT
+    physical_column_flag: true
   coc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   coc_proposal_contractor_pid:
     data_type: BIGINT
+    physical_column_flag: true
   coc_proposal_hud_consultant_pid:
     data_type: BIGINT
+    physical_column_flag: true
   coc_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   coc_title_company_pid:
     data_type: BIGINT
+    physical_column_flag: true
   coc_version:
     data_type: INTEGER
+    physical_column_flag: true

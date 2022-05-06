@@ -13,9 +13,13 @@ foreign_keys:
 columns:
   ltk_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ltk_next_los_loan_id:
     data_type: BIGINT
+    physical_column_flag: true
   ltk_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ltk_version:
     data_type: INTEGER
+    physical_column_flag: true

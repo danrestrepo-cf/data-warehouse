@@ -21,15 +21,22 @@ foreign_keys:
 columns:
   prpdss_deal_signer_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpdss_esign_complete:
     data_type: BOOLEAN
+    physical_column_flag: true
   prpdss_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpdss_proposal_doc_set_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpdss_received_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prpdss_signed_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prpdss_version:
     data_type: INTEGER
+    physical_column_flag: true

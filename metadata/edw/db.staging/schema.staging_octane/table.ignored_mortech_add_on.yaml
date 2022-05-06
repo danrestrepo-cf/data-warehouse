@@ -4,11 +4,16 @@ primary_key:
 columns:
   ima_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ima_add_on_name:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   ima_notes:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   ima_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ima_version:
     data_type: INTEGER
+    physical_column_flag: true

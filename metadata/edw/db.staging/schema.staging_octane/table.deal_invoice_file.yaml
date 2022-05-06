@@ -29,13 +29,19 @@ foreign_keys:
 columns:
   dif_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dif_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dif_deal_invoice_file_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dif_deal_invoice_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dif_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dif_version:
     data_type: INTEGER
+    physical_column_flag: true

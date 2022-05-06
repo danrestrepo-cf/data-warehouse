@@ -13,13 +13,19 @@ foreign_keys:
 columns:
   lsmr_branch_supplemental_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   lsmr_company_supplemental_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   lsmr_lead_supplemental_margin_table_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lsmr_over_anchor_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   lsmr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lsmr_version:
     data_type: INTEGER
+    physical_column_flag: true

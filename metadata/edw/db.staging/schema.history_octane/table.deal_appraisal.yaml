@@ -47,78 +47,98 @@ foreign_keys:
 columns:
   dappr_appraisal_entry_contact_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_appraisal_entry_contact_type
   dappr_appraisal_hold_reason_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_appraisal_hold_reason_type
   dappr_appraisal_hold_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_appraisal_hold_type
   dappr_appraisal_required:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_appraisal_required
   dappr_borrower_requires_appraisal:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_borrower_requires_appraisal
   dappr_calculated_appraisal_required:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_calculated_appraisal_required
   dappr_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_deal_pid
   dappr_door_lock_combination:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_door_lock_combination
   dappr_hold_release_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_hold_release_date
   dappr_lender_requires_appraisal:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_lender_requires_appraisal
   dappr_override_calculated_appraisal_required:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_override_calculated_appraisal_required
   dappr_override_calculated_appraisal_required_reason:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_override_calculated_appraisal_required_reason
   dappr_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_pid
   dappr_product_requires_appraisal:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_product_requires_appraisal
   dappr_rush_request:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_rush_request
   dappr_transfer_specified:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_transfer_specified
   dappr_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dappr_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100008:
     etls:

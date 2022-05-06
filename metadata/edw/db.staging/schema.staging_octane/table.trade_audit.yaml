@@ -29,13 +29,19 @@ foreign_keys:
 columns:
   ta_lender_lock_major_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ta_message:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   ta_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ta_trade_audit_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ta_trade_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ta_version:
     data_type: INTEGER
+    physical_column_flag: true

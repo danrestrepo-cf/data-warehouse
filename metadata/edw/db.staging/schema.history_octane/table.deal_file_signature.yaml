@@ -39,54 +39,68 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   dfs_charge_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfs_charge_amount
   dfs_charge_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfs_charge_type
   dfs_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfs_deal_file_pid
   dfs_deal_signer_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfs_deal_signer_pid
   dfs_page_height:
     data_type: NUMERIC(15,7)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfs_page_height
   dfs_page_number:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfs_page_number
   dfs_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfs_pid
   dfs_signature_part_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfs_signature_part_type
   dfs_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfs_version
   dfs_x:
     data_type: NUMERIC(15,7)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfs_x
   dfs_y:
     data_type: NUMERIC(15,7)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfs_y
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100297:
     etls:

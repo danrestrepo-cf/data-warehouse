@@ -29,17 +29,25 @@ foreign_keys:
 columns:
   wdpr_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wdpr_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   wdpr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wdpr_process_complete_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   wdpr_process_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   wdpr_version:
     data_type: INTEGER
+    physical_column_flag: true
   wdpr_wf_deal_process_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   wdpr_wf_process_pid:
     data_type: BIGINT
+    physical_column_flag: true

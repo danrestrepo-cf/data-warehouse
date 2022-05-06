@@ -21,19 +21,28 @@ foreign_keys:
 columns:
   c_county_fips:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   c_defunct:
     data_type: BOOLEAN
+    physical_column_flag: true
   c_mortech_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   c_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   c_pid:
     data_type: BIGINT
+    physical_column_flag: true
   c_recording_district_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   c_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   c_torrens_available:
     data_type: BOOLEAN
+    physical_column_flag: true
   c_version:
     data_type: INTEGER
+    physical_column_flag: true

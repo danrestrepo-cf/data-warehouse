@@ -31,40 +31,51 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   smrca_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrca_from_date
   smrca_maximum_renewal_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrca_maximum_renewal_rate_percent
   smrca_mi_payer_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrca_mi_payer_type
   smrca_mi_payment_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrca_mi_payment_type
   smrca_minimum_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrca_minimum_rate_percent
   smrca_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrca_pid
   smrca_smart_mi_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrca_smart_mi_pid
   smrca_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrca_version
 step_functions:

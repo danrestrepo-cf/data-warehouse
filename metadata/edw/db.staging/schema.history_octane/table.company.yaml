@@ -55,150 +55,188 @@ foreign_keys:
 columns:
   cm_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_account_pid
   cm_borrower_app_company_enabled:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_borrower_app_company_enabled
   cm_borrower_app_company_host:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_borrower_app_company_host
   cm_borrower_app_company_ip_address:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_borrower_app_company_ip_address
   cm_borrower_user_email_from:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_borrower_user_email_from
   cm_broker_participating_lender_1:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_broker_participating_lender_1
   cm_broker_participating_lender_2:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_broker_participating_lender_2
   cm_broker_participating_lender_3:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_broker_participating_lender_3
   cm_broker_participating_with_less_than_four_lenders:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_broker_participating_with_less_than_four_lenders
   cm_casual_company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_casual_company_name
   cm_company_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_company_address_city
   cm_company_address_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_company_address_country
   cm_company_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_company_address_postal_code
   cm_company_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_company_address_state
   cm_company_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_company_address_street1
   cm_company_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_company_address_street2
   cm_company_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_company_id
   cm_company_legal_entity_organization_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_company_legal_entity_organization_state_type
   cm_company_legal_entity_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_company_legal_entity_type
   cm_company_mailing_address_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_company_mailing_address_name
   cm_company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_company_name
   cm_company_name_for_header_and_footer:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_company_name_for_header_and_footer
   cm_company_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_company_phone
   cm_correspondent_investor_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_correspondent_investor_pid
   cm_customer_service_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_customer_service_email
   cm_customer_service_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_customer_service_phone
   cm_customer_service_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_customer_service_phone_extension
   cm_federal_tax_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_federal_tax_id
   cm_mers_mom:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_mers_mom
   cm_mers_org_id:
     data_type: VARCHAR(7)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_mers_org_id
   cm_nmls_company_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_nmls_company_id
   cm_origination_source_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_origination_source_type
   cm_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_pid
   cm_total_expert_account_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_total_expert_account_type
   cm_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cm_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100074:
     etls:

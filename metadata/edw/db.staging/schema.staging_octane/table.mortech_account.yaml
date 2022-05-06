@@ -13,11 +13,16 @@ foreign_keys:
 columns:
   ma_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ma_mortech_customer_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ma_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ma_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ma_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -37,25 +37,37 @@ foreign_keys:
 columns:
   cml_company_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cml_company_state_legal_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cml_company_state_license_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cml_from_date:
     data_type: DATE
+    physical_column_flag: true
   cml_license_number:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cml_license_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cml_note:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   cml_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cml_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cml_through_date:
     data_type: DATE
+    physical_column_flag: true
   cml_use_state_specific_company_name:
     data_type: BOOLEAN
+    physical_column_flag: true
   cml_version:
     data_type: INTEGER
+    physical_column_flag: true

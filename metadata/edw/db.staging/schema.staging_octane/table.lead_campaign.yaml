@@ -21,15 +21,22 @@ foreign_keys:
 columns:
   ldc_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ldc_campaign_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ldc_campaign_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ldc_lead_source_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ldc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ldc_velocify_campaign_title:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ldc_version:
     data_type: INTEGER
+    physical_column_flag: true

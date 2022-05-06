@@ -31,72 +31,91 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   dmlog_attachment_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dmlog_bcc_recipients:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_bcc_recipients
   dmlog_cc_recipients:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_cc_recipients
   dmlog_cover_letter_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_cover_letter_deal_file_pid
   dmlog_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_deal_pid
   dmlog_delivery_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_delivery_type
   dmlog_email_body:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_email_body
   dmlog_email_reply_to:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_email_reply_to
   dmlog_email_subject:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_email_subject
   dmlog_name:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_name
   dmlog_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_pid
   dmlog_plain_text:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_plain_text
   dmlog_sent_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_sent_datetime
   dmlog_sent_securely:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_sent_securely
   dmlog_to_recipients:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_to_recipients
   dmlog_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dmlog_version
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100300:
     etls:

@@ -21,15 +21,22 @@ foreign_keys:
 columns:
   bpn_author_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bpn_author_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   bpn_bid_pool_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bpn_content:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   bpn_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   bpn_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bpn_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -29,11 +29,16 @@ foreign_keys:
 columns:
   aprfm_appraisal_form_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   aprfm_appraisal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   aprfm_appraisal_source_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   aprfm_pid:
     data_type: BIGINT
+    physical_column_flag: true
   aprfm_version:
     data_type: INTEGER
+    physical_column_flag: true

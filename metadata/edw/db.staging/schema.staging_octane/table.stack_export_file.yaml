@@ -29,11 +29,16 @@ foreign_keys:
 columns:
   sef_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sef_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sef_stack_export_file_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sef_stack_export_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sef_version:
     data_type: INTEGER
+    physical_column_flag: true

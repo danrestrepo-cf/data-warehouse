@@ -47,244 +47,306 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   ob_amount_input_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_amount_input_type
   ob_annual_payment_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_annual_payment_amount
   ob_escrow_waiver:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_escrow_waiver
   ob_factor_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_factor_percent
   ob_factor_percent_base_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_factor_percent_base_amount
   ob_insurance_transferred:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_insurance_transferred
   ob_monthly_payment_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_monthly_payment_amount
   ob_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_name
   ob_obligation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_obligation_type
   ob_payment_amount_1:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_amount_1
   ob_payment_amount_1_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_amount_1_warning
   ob_payment_amount_2:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_amount_2
   ob_payment_amount_2_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_amount_2_warning
   ob_payment_amount_3:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_amount_3
   ob_payment_amount_3_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_amount_3_warning
   ob_payment_amount_4:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_amount_4
   ob_payment_amount_4_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_amount_4_warning
   ob_payment_amount_5:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_amount_5
   ob_payment_amount_5_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_amount_5_warning
   ob_payment_amount_6:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_amount_6
   ob_payment_amount_6_warning:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_amount_6_warning
   ob_payment_date_1:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_date_1
   ob_payment_date_2:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_date_2
   ob_payment_date_3:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_date_3
   ob_payment_date_4:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_date_4
   ob_payment_date_5:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_date_5
   ob_payment_date_6:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_payment_date_6
   ob_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_pid
   ob_policy_deductible_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_policy_deductible_amount
   ob_policy_dwelling_coverage_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_policy_dwelling_coverage_amount
   ob_policy_effective_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_policy_effective_date
   ob_policy_expiration_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_policy_expiration_date
   ob_policy_extended_coverage_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_policy_extended_coverage_amount
   ob_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_proposal_pid
   ob_pte_annual_exemption_free_estimated_tax_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_pte_annual_exemption_free_estimated_tax_amount
   ob_pte_annual_homeowner_occupied_estimated_tax_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_pte_annual_homeowner_occupied_estimated_tax_amount
   ob_pte_annual_preferred_tax_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_pte_annual_preferred_tax_amount
   ob_pte_annual_tax_installment_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_pte_annual_tax_installment_amount
   ob_tax_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_tax_auto_compute
   ob_total_dated_payment_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_total_dated_payment_amount
   ob_vendor_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_city
   ob_vendor_company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_company_name
   ob_vendor_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_country
   ob_vendor_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_email
   ob_vendor_fax:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_fax
   ob_vendor_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_first_name
   ob_vendor_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_last_name
   ob_vendor_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_middle_name
   ob_vendor_mobile_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_mobile_phone
   ob_vendor_name_suffix:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_name_suffix
   ob_vendor_office_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_office_phone
   ob_vendor_office_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_office_phone_extension
   ob_vendor_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_postal_code
   ob_vendor_reference_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_reference_id
   ob_vendor_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_state
   ob_vendor_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_street1
   ob_vendor_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_street2
   ob_vendor_title:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_vendor_title
   ob_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ob_version
 step_functions:

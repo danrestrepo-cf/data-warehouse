@@ -101,79 +101,118 @@ foreign_keys:
 columns:
   il_buydown_schedule_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   il_cancel_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   il_cancel_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   il_cancel_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   il_commitment_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   il_confirm_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   il_confirm_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   il_confirm_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   il_effective_commitment_expiration_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   il_effective_duration_days:
     data_type: INTEGER
+    physical_column_flag: true
   il_hedging:
     data_type: BOOLEAN
+    physical_column_flag: true
   il_initial_commitment_expiration_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   il_initial_duration_days:
     data_type: INTEGER
+    physical_column_flag: true
   il_interest_only_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   il_investor_base_arm_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   il_investor_base_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   il_investor_base_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   il_investor_commitment_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   il_investor_loan_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   il_investor_lock_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   il_lender_lock_major_pid:
     data_type: BIGINT
+    physical_column_flag: true
   il_lock_arm_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   il_lock_commitment_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   il_lock_initial_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   il_lock_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   il_lock_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   il_lock_price_raw_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   il_maximum_rebate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   il_mortgage_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   il_notes:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   il_pid:
     data_type: BIGINT
+    physical_column_flag: true
   il_prepay_penalty_schedule_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   il_product_terms_pid:
     data_type: BIGINT
+    physical_column_flag: true
   il_request_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   il_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   il_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   il_required_delivery_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   il_trade_pid:
     data_type: BIGINT
+    physical_column_flag: true
   il_version:
     data_type: INTEGER
+    physical_column_flag: true

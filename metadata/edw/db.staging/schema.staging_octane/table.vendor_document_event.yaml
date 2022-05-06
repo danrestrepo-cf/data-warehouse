@@ -29,19 +29,28 @@ foreign_keys:
 columns:
   vde_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   vde_create_date:
     data_type: DATE
+    physical_column_flag: true
   vde_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   vde_messages:
     data_type: TEXT
+    physical_column_flag: true
   vde_pid:
     data_type: BIGINT
+    physical_column_flag: true
   vde_source_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   vde_vendor_document_event_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   vde_vendor_document_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   vde_version:
     data_type: INTEGER
+    physical_column_flag: true

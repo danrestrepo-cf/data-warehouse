@@ -37,29 +37,43 @@ foreign_keys:
 columns:
   lur_assignment_gap_minutes:
     data_type: INTEGER
+    physical_column_flag: true
   lur_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lur_daily_cap:
     data_type: INTEGER
+    physical_column_flag: true
   lur_for_training_only:
     data_type: BOOLEAN
+    physical_column_flag: true
   lur_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lur_notes:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   lur_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lur_queue_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   lur_queue_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lur_role_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lur_secondary_role:
     data_type: BOOLEAN
+    physical_column_flag: true
   lur_subscribe_smart_messages:
     data_type: BOOLEAN
+    physical_column_flag: true
   lur_version:
     data_type: INTEGER
+    physical_column_flag: true
   lur_workload_cap:
     data_type: INTEGER
+    physical_column_flag: true

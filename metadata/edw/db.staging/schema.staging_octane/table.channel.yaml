@@ -21,13 +21,19 @@ foreign_keys:
 columns:
   ch_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ch_channel_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ch_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ch_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ch_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ch_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -45,407 +45,610 @@ foreign_keys:
 columns:
   bui_borrower_income_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   bui_borrower_income_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bui_borrower_title_other_description:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   bui_borrower_title_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   bui_business_disposition_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   bui_business_income_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   bui_calc_method_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   bui_common_year1_annual_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_common_year1_from_date:
     data_type: DATE
+    physical_column_flag: true
   bui_common_year1_monthly_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_common_year1_months:
     data_type: NUMERIC(4,2)
+    physical_column_flag: true
   bui_common_year1_through_date:
     data_type: DATE
+    physical_column_flag: true
   bui_common_year1_year:
     data_type: INTEGER
+    physical_column_flag: true
   bui_common_year1_year_include:
     data_type: BOOLEAN
+    physical_column_flag: true
   bui_common_year2_annual_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_common_year2_from_date:
     data_type: DATE
+    physical_column_flag: true
   bui_common_year2_monthly_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_common_year2_months:
     data_type: NUMERIC(4,2)
+    physical_column_flag: true
   bui_common_year2_through_date:
     data_type: DATE
+    physical_column_flag: true
   bui_common_year2_year:
     data_type: INTEGER
+    physical_column_flag: true
   bui_common_year2_year_include:
     data_type: BOOLEAN
+    physical_column_flag: true
   bui_common_year3_annual_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_common_year3_from_date:
     data_type: DATE
+    physical_column_flag: true
   bui_common_year3_monthly_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_common_year3_months:
     data_type: NUMERIC(4,2)
+    physical_column_flag: true
   bui_common_year3_through_date:
     data_type: DATE
+    physical_column_flag: true
   bui_common_year3_year:
     data_type: INTEGER
+    physical_column_flag: true
   bui_common_year3_year_include:
     data_type: BOOLEAN
+    physical_column_flag: true
   bui_company_ein:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   bui_corp_year1_annual_subtotal:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year1_annual_subtotal_ownership_applied:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year1_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year1_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year1_dividends_paid_to_borrower:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year1_domestic_production_activities:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year1_gain_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year1_meals_exclusion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year1_net_operating_loss_special_deductions:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year1_notes_payable_less_one_year:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year1_other_deductions:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year1_other_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year1_ownership_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   bui_corp_year1_taxable_income:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year1_total_tax:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year2_annual_subtotal:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year2_annual_subtotal_ownership_applied:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year2_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year2_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year2_dividends_paid_to_borrower:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year2_domestic_production_activities:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year2_gain_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year2_meals_exclusion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year2_net_operating_loss_special_deductions:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year2_notes_payable_less_one_year:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year2_other_deductions:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year2_other_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year2_ownership_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   bui_corp_year2_taxable_income:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year2_total_tax:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year3_annual_subtotal:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year3_annual_subtotal_ownership_applied:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year3_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year3_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year3_dividends_paid_to_borrower:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year3_domestic_production_activities:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year3_gain_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year3_meals_exclusion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year3_net_operating_loss_special_deductions:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year3_notes_payable_less_one_year:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year3_other_deductions:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year3_other_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year3_ownership_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   bui_corp_year3_taxable_income:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_corp_year3_total_tax:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_estimated_mode:
     data_type: BOOLEAN
+    physical_column_flag: true
   bui_estimated_net_income_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_form_1065_available:
     data_type: BOOLEAN
+    physical_column_flag: true
   bui_form_1120s_available:
     data_type: BOOLEAN
+    physical_column_flag: true
   bui_monthly_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year1_amortization_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year1_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year1_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year1_form_1065_subtotal:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year1_form_1065_total:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year1_form_k_1_total:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year1_guaranteed_payments:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year1_meals_exclusion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year1_net_rental_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year1_notes_payable_less_year:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year1_ordinary_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year1_other_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year1_ownership_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   bui_partner_year2_amortization_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year2_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year2_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year2_form_1065_subtotal:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year2_form_1065_total:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year2_form_k_1_total:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year2_guaranteed_payments:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year2_meals_exclusion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year2_net_rental_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year2_notes_payable_less_year:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year2_ordinary_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year2_other_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year2_ownership_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   bui_partner_year3_amortization_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year3_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year3_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year3_form_1065_subtotal:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year3_form_1065_total:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year3_form_k_1_total:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year3_guaranteed_payments:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year3_meals_exclusion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year3_net_rental_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year3_notes_payable_less_year:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year3_ordinary_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year3_other_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_partner_year3_ownership_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   bui_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bui_sch_f_year1_amortization_loss_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sch_f_year1_business_use_home:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sch_f_year1_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sch_f_year1_nonrecurring_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sch_f_year1_specific_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sch_f_year2_amortization_loss_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sch_f_year2_business_use_home:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sch_f_year2_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sch_f_year2_nonrecurring_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sch_f_year2_specific_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sch_f_year3_amortization_loss_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sch_f_year3_business_use_home:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sch_f_year3_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sch_f_year3_nonrecurring_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sch_f_year3_specific_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year1_amortization_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year1_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year1_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year1_form_1120s_subtotal:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year1_form_1120s_total:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year1_form_k_1_total:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year1_meals_exclusion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year1_net_rental_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year1_notes_payable_less_year:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year1_ordinary_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year1_other_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year1_ownership_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   bui_scorp_year2_amortization_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year2_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year2_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year2_form_1120s_subtotal:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year2_form_1120s_total:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year2_form_k_1_total:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year2_meals_exclusion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year2_net_rental_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year2_notes_payable_less_year:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year2_ordinary_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year2_other_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year2_ownership_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   bui_scorp_year3_amortization_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year3_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year3_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year3_form_1120s_subtotal:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year3_form_1120s_total:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year3_form_k_1_total:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year3_meals_exclusion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year3_net_rental_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year3_notes_payable_less_year:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year3_ordinary_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year3_other_income_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_scorp_year3_ownership_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   bui_sole_year1_amortization_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year1_business_miles:
     data_type: INTEGER
+    physical_column_flag: true
   bui_sole_year1_business_use_home:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year1_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year1_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year1_depreciation_mile:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   bui_sole_year1_gross_receipts:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year1_meal_exclusions:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year1_mileage_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year1_other_income_loss_exp:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year2_amortization_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year2_business_miles:
     data_type: INTEGER
+    physical_column_flag: true
   bui_sole_year2_business_use_home:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year2_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year2_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year2_depreciation_mile:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   bui_sole_year2_gross_receipts:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year2_meal_exclusions:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year2_mileage_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year2_other_income_loss_exp:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year3_amortization_loss:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year3_business_miles:
     data_type: INTEGER
+    physical_column_flag: true
   bui_sole_year3_business_use_home:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year3_depletion:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year3_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year3_depreciation_mile:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   bui_sole_year3_gross_receipts:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year3_meal_exclusions:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year3_mileage_depreciation:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_sole_year3_other_income_loss_exp:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bui_underwriter_comments:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   bui_version:
     data_type: INTEGER
+    physical_column_flag: true
   bui_worksheet_monthly_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true

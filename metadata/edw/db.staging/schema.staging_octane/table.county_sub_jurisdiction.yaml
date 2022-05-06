@@ -13,9 +13,13 @@ foreign_keys:
 columns:
   csju_county_pid:
     data_type: BIGINT
+    physical_column_flag: true
   csju_pid:
     data_type: BIGINT
+    physical_column_flag: true
   csju_sub_jurisdiction_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   csju_version:
     data_type: INTEGER
+    physical_column_flag: true

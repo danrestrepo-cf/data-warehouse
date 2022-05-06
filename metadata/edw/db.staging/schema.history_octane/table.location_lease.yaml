@@ -15,40 +15,51 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   locl_cubicle_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.locl_cubicle_count
   locl_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.locl_from_date
   locl_location_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.locl_location_pid
   locl_monthly_lease_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.locl_monthly_lease_amount
   locl_office_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.locl_office_count
   locl_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.locl_pid
   locl_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.locl_through_date
   locl_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.locl_version
 step_functions:

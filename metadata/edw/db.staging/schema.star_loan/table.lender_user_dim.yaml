@@ -5,300 +5,363 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_pid
     update_flag: true
   create_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_create_date
     update_flag: true
   about_me:
     data_type: VARCHAR(2000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_about_me
     update_flag: true
   city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_city
     update_flag: true
   company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_company_name
     update_flag: true
   company_user_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_company_user_id
     update_flag: true
   default_credit_bureau:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_lu_default_credit_bureau_type.columns.value
     update_flag: true
   default_credit_bureau_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_default_credit_bureau_type
     update_flag: true
   email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_email
     update_flag: true
   fax:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_fax
     update_flag: true
   fha_chums_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_fha_chums_id
     update_flag: true
   first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_first_name
     update_flag: true
   hire_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_hire_date
     update_flag: true
   account_owner_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_account_owner
     update_flag: true
   address_use_branch_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_address_use_branch
     update_flag: true
   allow_external_ip_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_allow_external_ip
     update_flag: true
   esign_by_email_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_esign_by_email
     update_flag: true
   fax_use_branch_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_fax_use_branch
     update_flag: true
   force_password_change_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_force_password_change
     update_flag: true
   hub_directory_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_hub_directory
     update_flag: true
   office_phone_use_branch_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_office_phone_use_branch
     update_flag: true
   smart_app_enabled_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_smart_app_enabled
     update_flag: true
   training_mode_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_training_mode
     update_flag: true
   last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_last_name
     update_flag: true
   last_password_change_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_last_password_change_date
     update_flag: true
   middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_middle_name
     update_flag: true
   name_qualifier:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_name_qualifier
     update_flag: true
   name_suffix:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_name_suffix
     update_flag: true
   nickname:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_nickname
     update_flag: true
   nmls_loan_originator_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_nmls_loan_originator_id
     update_flag: true
   office_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_office_phone
     update_flag: true
   office_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_office_phone_extension
     update_flag: true
   originator_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_originator_id
     update_flag: true
   postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_postal_code
     update_flag: true
   preferred_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_preferred_first_name
     update_flag: true
   schedule_once_booking_page_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_schedule_once_booking_page_id
     update_flag: true
   search_text:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_search_text
     update_flag: true
   state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_state
     update_flag: true
   status:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_lu_lender_user_status_type.columns.value
     update_flag: true
   status_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_lender_user_status_type
     update_flag: true
   street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_street1
     update_flag: true
   street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_street2
     update_flag: true
   time_zone:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_lu_time_zone.columns.value
     update_flag: true
   time_zone_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_time_zone
     update_flag: true
   title:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_title
     update_flag: true
   total_workload_cap:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_total_workload_cap
     update_flag: true
   type:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_lu_lender_user_type.columns.value
     update_flag: true
   type_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_lender_user_type
     update_flag: true
   unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_unparsed_name
     update_flag: true
   username:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_username
     update_flag: true
   va_agent_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_va_agent_id
     update_flag: true
   start_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_start_date
     update_flag: true
   through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_through_date
     update_flag: true
   marketing_details_enabled:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_marketing_details_enabled
     update_flag: true
   marketing_details_featured_review:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_marketing_details_featured_review
     update_flag: true

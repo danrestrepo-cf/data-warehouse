@@ -21,15 +21,22 @@ foreign_keys:
 columns:
   dnc_author_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dnc_author_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dnc_content:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   dnc_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dnc_deal_note_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dnc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dnc_version:
     data_type: INTEGER
+    physical_column_flag: true

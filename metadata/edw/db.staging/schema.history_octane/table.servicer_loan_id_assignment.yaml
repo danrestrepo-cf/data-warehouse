@@ -39,40 +39,51 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   slia_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slia_account_pid
   slia_assigned_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slia_assigned_datetime
   slia_loan_servicer_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slia_loan_servicer_pid
   slia_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slia_pid
   slia_servicer_loan_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slia_servicer_loan_id
   slia_servicer_loan_id_assign_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slia_servicer_loan_id_assign_type
   slia_servicer_loan_id_import_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slia_servicer_loan_id_import_request_pid
   slia_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slia_version
 step_functions:

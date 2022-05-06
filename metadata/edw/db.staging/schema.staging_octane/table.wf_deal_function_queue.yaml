@@ -13,13 +13,19 @@ foreign_keys:
 columns:
   wdfq_halted:
     data_type: BOOLEAN
+    physical_column_flag: true
   wdfq_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wdfq_retry_count:
     data_type: INTEGER
+    physical_column_flag: true
   wdfq_version:
     data_type: INTEGER
+    physical_column_flag: true
   wdfq_wf_deal_step_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wdfq_worker_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true

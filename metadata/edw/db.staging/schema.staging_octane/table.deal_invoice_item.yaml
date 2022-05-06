@@ -21,15 +21,22 @@ foreign_keys:
 columns:
   dii_adjustment:
     data_type: BOOLEAN
+    physical_column_flag: true
   dii_charge_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dii_deal_invoice_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dii_item_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   dii_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dii_smart_item:
     data_type: BOOLEAN
+    physical_column_flag: true
   dii_version:
     data_type: INTEGER
+    physical_column_flag: true

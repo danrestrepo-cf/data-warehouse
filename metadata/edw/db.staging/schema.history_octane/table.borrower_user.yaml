@@ -39,98 +39,123 @@ foreign_keys:
 columns:
   bu_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_account_pid
   bu_activation_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_activation_datetime
   bu_borrower_activation_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_borrower_activation_id
   bu_borrower_user_account_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_borrower_user_account_status_type
   bu_challenge_question_answer:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_challenge_question_answer
   bu_challenge_question_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_challenge_question_type
   bu_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_create_datetime
   bu_create_sap_on_activation:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_create_sap_on_activation
   bu_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_email
   bu_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_first_name
   bu_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_last_name
   bu_last_sign_on_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_last_sign_on_datetime
   bu_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_middle_name
   bu_name_suffix:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_name_suffix
   bu_nickname:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_nickname
   bu_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_pid
   bu_plain_text_email:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_plain_text_email
   bu_preferred_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_preferred_first_name
   bu_public_quote_request_cache_id:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_public_quote_request_cache_id
   bu_time_zone:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_time_zone
   bu_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_unparsed_name
   bu_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bu_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100065:
     etls:

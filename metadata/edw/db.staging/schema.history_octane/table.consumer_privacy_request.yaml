@@ -63,86 +63,108 @@ foreign_keys:
 columns:
   cpr_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_account_pid
   cpr_borrower_last_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_borrower_last_name
   cpr_delete_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_delete_datetime
   cpr_delete_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_delete_repository_file_pid
   cpr_know_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_know_datetime
   cpr_know_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_know_repository_file_pid
   cpr_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_pid
   cpr_received_date:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_received_date
   cpr_receiver_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_receiver_lender_user_pid
   cpr_request_id:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_request_id
   cpr_request_todo:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_request_todo
   cpr_request_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_request_type
   cpr_searched_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_searched_email
   cpr_searched_los_loan_id:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_searched_los_loan_id
   cpr_searched_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_searched_phone
   cpr_searched_subject_property_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_searched_subject_property_city
   cpr_searched_subject_property_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_searched_subject_property_state_type
   cpr_searched_subject_property_street:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_searched_subject_property_street
   cpr_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cpr_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100114:
     etls:

@@ -45,67 +45,100 @@ foreign_keys:
 columns:
   t_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   t_actual_delivery_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   t_average_loan_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   t_buy_down_multiple:
     data_type: INTEGER
+    physical_column_flag: true
   t_buy_up_multiple:
     data_type: INTEGER
+    physical_column_flag: true
   t_commitment_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   t_commitment_amount_tolerance_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   t_commitment_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   t_commitment_expiration_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   t_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   t_create_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   t_early_delivery_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   t_investor_commitment_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   t_investor_pid:
     data_type: BIGINT
+    physical_column_flag: true
   t_investor_trade_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   t_lender_trade_id:
     data_type: VARCHAR(11)
+    physical_column_flag: true
   t_loans_delivered_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   t_maximum_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   t_minimum_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   t_pid:
     data_type: BIGINT
+    physical_column_flag: true
   t_purchase_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   t_required_delivery_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   t_total_loan_amount:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
   t_trade_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   t_trade_pricing_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   t_trade_same_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   t_trade_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   t_version:
     data_type: INTEGER
+    physical_column_flag: true
   t_weighted_average_decision_credit_score:
     data_type: INTEGER
+    physical_column_flag: true
   t_weighted_average_investor_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   t_weighted_average_lender_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   t_weighted_average_net_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   t_weighted_average_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true

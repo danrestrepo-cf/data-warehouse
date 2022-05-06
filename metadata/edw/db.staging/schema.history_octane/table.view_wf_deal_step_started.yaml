@@ -71,112 +71,141 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   wds_allow_check_override:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_allow_check_override
   wds_complete_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_complete_datetime
   wds_completing_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_completing_user_pid
   wds_deal_stage_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_deal_stage_pid
   wds_description:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_description
   wds_expected_complete_minutes:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_expected_complete_minutes
   wds_function_error_list:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_function_error_list
   wds_materialized_view_trash:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_materialized_view_trash
   wds_performer_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_performer_user_pid
   wds_phase_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_phase_name
   wds_phase_number:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_phase_number
   wds_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_pid
   wds_polling_interval_offset:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_polling_interval_offset
   wds_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_start_datetime
   wds_step_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_step_name
   wds_step_number:
     data_type: NUMERIC(17,5)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_step_number
   wds_step_number_formatted:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_step_number_formatted
   wds_step_number_name_formatted:
     data_type: VARCHAR(145)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_step_number_name_formatted
   wds_timeout_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_timeout_datetime
   wds_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_version
   wds_visit_number:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_visit_number
   wds_wf_deal_process_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_wf_deal_process_pid
   wds_wf_deal_step_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_wf_deal_step_status_type
   wds_wf_step_function_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_wf_step_function_type
   wds_wf_step_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_wf_step_pid
   wds_wf_step_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wds_wf_step_type
 step_functions:

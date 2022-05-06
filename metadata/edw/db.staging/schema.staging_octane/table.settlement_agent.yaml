@@ -13,17 +13,25 @@ foreign_keys:
 columns:
   sa_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sa_active:
     data_type: BOOLEAN
+    physical_column_flag: true
   sa_admin_lock:
     data_type: BOOLEAN
+    physical_column_flag: true
   sa_company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sa_license_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sa_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sa_preferred_vendor:
     data_type: BOOLEAN
+    physical_column_flag: true
   sa_version:
     data_type: INTEGER
+    physical_column_flag: true

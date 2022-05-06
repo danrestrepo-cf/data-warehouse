@@ -6,64 +6,81 @@ primary_key:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   qmrst_effective_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmrst_effective_date
   qmrst_first_lien_high_loan_amount_threshold:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmrst_first_lien_high_loan_amount_threshold
   qmrst_first_lien_low_loan_amount_threshold:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmrst_first_lien_low_loan_amount_threshold
   qmrst_first_lien_manufactured_loan_amount_threshold:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmrst_first_lien_manufactured_loan_amount_threshold
   qmrst_first_lien_manufactured_max_rate_spread_over_threshold:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmrst_first_lien_manufactured_max_rate_spread_over_threshold
   qmrst_first_lien_manufactured_max_rate_spread_under_threshold:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmrst_first_lien_manufactured_max_rate_spread_under_threshold
   qmrst_first_lien_max_rate_spread_over_high_threshold:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmrst_first_lien_max_rate_spread_over_high_threshold
   qmrst_first_lien_max_rate_spread_under_high_over_low_threshold:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmrst_first_lien_max_rate_spread_under_high_over_low_threshold
   qmrst_first_lien_max_rate_spread_under_low_threshold:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmrst_first_lien_max_rate_spread_under_low_threshold
   qmrst_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmrst_pid
   qmrst_subordinate_lien_loan_amount_threshold:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmrst_subordinate_lien_loan_amount_threshold
   qmrst_subordinate_lien_max_rate_spread_over_threshold:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmrst_subordinate_lien_max_rate_spread_over_threshold
   qmrst_subordinate_lien_max_rate_spread_under_threshold:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmrst_subordinate_lien_max_rate_spread_under_threshold
   qmrst_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmrst_version
 step_functions:

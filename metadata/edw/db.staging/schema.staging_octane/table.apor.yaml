@@ -13,13 +13,19 @@ foreign_keys:
 columns:
   ap_apor_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ap_as_of_date:
     data_type: DATE
+    physical_column_flag: true
   ap_loan_amortization_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ap_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ap_term_years:
     data_type: INTEGER
+    physical_column_flag: true
   ap_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -21,11 +21,16 @@ foreign_keys:
 columns:
   cf_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cf_merge_form:
     data_type: BOOLEAN
+    physical_column_flag: true
   cf_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cf_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cf_version:
     data_type: INTEGER
+    physical_column_flag: true

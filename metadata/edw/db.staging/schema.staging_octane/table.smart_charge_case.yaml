@@ -45,43 +45,64 @@ foreign_keys:
 columns:
   scc_amount_description:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   scc_base_amount:
     data_type: NUMERIC(16,3)
+    physical_column_flag: true
   scc_case_label:
     data_type: VARCHAR(108)
+    physical_column_flag: true
   scc_case_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   scc_charge_input_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   scc_charge_input_type_currency:
     data_type: NUMERIC(16,3)
+    physical_column_flag: true
   scc_charge_input_type_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   scc_charge_payee_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   scc_charge_payer_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   scc_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
   scc_financed:
     data_type: BOOLEAN
+    physical_column_flag: true
   scc_financed_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
   scc_ordinal:
     data_type: INTEGER
+    physical_column_flag: true
   scc_paid_by:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   scc_paid_to:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   scc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   scc_poc:
     data_type: BOOLEAN
+    physical_column_flag: true
   scc_reduction_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   scc_smart_charge_group_case_pid:
     data_type: BIGINT
+    physical_column_flag: true
   scc_subtract_lenders_title_insurance_amount:
     data_type: BOOLEAN
+    physical_column_flag: true
   scc_version:
     data_type: INTEGER
+    physical_column_flag: true

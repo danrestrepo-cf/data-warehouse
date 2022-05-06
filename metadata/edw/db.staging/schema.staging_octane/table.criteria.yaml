@@ -13,17 +13,25 @@ foreign_keys:
 columns:
   cr_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cr_criteria_owner_instance_name:
     data_type: VARCHAR(2048)
+    physical_column_flag: true
   cr_criteria_source:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   cr_criteria_source_html:
     data_type: TEXT
+    physical_column_flag: true
   cr_criteria_source_pretty_text:
     data_type: TEXT
+    physical_column_flag: true
   cr_criteria_sql:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   cr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cr_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -31,46 +31,58 @@ foreign_keys:
 columns:
   bres_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bres_borrower_pid
   bres_borrower_residency_basis_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bres_borrower_residency_basis_type
   bres_current:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bres_current
   bres_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bres_from_date
   bres_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bres_pid
   bres_place_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bres_place_pid
   bres_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bres_through_date
   bres_verification_required:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bres_verification_required
   bres_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bres_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100158:
     etls:

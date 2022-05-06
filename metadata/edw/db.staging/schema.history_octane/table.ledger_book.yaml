@@ -47,60 +47,76 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   lbk_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lbk_account_pid
   lbk_closed_by_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lbk_closed_by_lender_user_pid
   lbk_closed_by_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lbk_closed_by_unparsed_name
   lbk_ledger_book_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lbk_ledger_book_id
   lbk_ledger_book_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lbk_ledger_book_status_type
   lbk_ledger_book_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lbk_ledger_book_type
   lbk_payroll_pay_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lbk_payroll_pay_date
   lbk_period_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lbk_period_from_date
   lbk_period_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lbk_period_through_date
   lbk_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lbk_pid
   lbk_processed_by_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lbk_processed_by_lender_user_pid
   lbk_processed_by_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lbk_processed_by_unparsed_name
   lbk_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lbk_version
 step_functions:

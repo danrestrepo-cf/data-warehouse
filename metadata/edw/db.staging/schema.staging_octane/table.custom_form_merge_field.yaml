@@ -21,9 +21,13 @@ foreign_keys:
 columns:
   cfmf_custom_form_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cfmf_field_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cfmf_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cfmf_version:
     data_type: INTEGER
+    physical_column_flag: true

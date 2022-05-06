@@ -85,51 +85,76 @@ foreign_keys:
 columns:
   slpcv_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   slpcv_active:
     data_type: BOOLEAN
+    physical_column_flag: true
   slpcv_base_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   slpcv_basis_points:
     data_type: INTEGER
+    physical_column_flag: true
   slpcv_case_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   slpcv_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
   slpcv_from_date:
     data_type: DATE
+    physical_column_flag: true
   slpcv_last_modified_by:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   slpcv_last_modified_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   slpcv_ledger_basis_points_input_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   slpcv_max_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   slpcv_measure_criteria_from_date:
     data_type: DATE
+    physical_column_flag: true
   slpcv_measure_criteria_through_date:
     data_type: DATE
+    physical_column_flag: true
   slpcv_min_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   slpcv_payer_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
   slpcv_pid:
     data_type: BIGINT
+    physical_column_flag: true
   slpcv_smart_ledger_pay_frequency_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   slpcv_smart_ledger_plan_case_level_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   slpcv_smart_ledger_plan_case_measure_source_date_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   slpcv_smart_ledger_plan_case_measure_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   slpcv_smart_ledger_plan_case_pid:
     data_type: BIGINT
+    physical_column_flag: true
   slpcv_smart_ledger_plan_case_population_period_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   slpcv_synthetic_unique:
     data_type: BIGINT
+    physical_column_flag: true
   slpcv_through_date:
     data_type: DATE
+    physical_column_flag: true
   slpcv_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -13,9 +13,13 @@ foreign_keys:
 columns:
   sms_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sms_from_date:
     data_type: DATE
+    physical_column_flag: true
   sms_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sms_version:
     data_type: INTEGER
+    physical_column_flag: true

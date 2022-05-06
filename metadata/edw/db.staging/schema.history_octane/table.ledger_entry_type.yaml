@@ -5,20 +5,26 @@ primary_key:
 columns:
   code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.code
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   general_ledger_code:
     data_type: VARCHAR(8)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.general_ledger_code
   value:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.value
 step_functions:

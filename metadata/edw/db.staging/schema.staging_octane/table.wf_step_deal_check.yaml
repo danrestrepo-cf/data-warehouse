@@ -29,11 +29,16 @@ foreign_keys:
 columns:
   wsdc_deal_check_severity_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   wsdc_deal_check_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   wsdc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wsdc_version:
     data_type: INTEGER
+    physical_column_flag: true
   wsdc_wf_step_pid:
     data_type: BIGINT
+    physical_column_flag: true

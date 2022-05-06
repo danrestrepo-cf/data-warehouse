@@ -13,13 +13,19 @@ foreign_keys:
 columns:
   rsr_arm_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   rsr_available:
     data_type: BOOLEAN
+    physical_column_flag: true
   rsr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rsr_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   rsr_rate_sheet_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rsr_version:
     data_type: INTEGER
+    physical_column_flag: true

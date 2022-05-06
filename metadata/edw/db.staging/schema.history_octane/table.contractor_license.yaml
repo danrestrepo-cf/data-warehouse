@@ -23,42 +23,53 @@ foreign_keys:
 columns:
   ctrl_contractor_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ctrl_contractor_pid
   ctrl_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ctrl_from_date
   ctrl_license_number:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ctrl_license_number
   ctrl_note:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ctrl_note
   ctrl_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ctrl_pid
   ctrl_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ctrl_state_type
   ctrl_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ctrl_through_date
   ctrl_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ctrl_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100063:
     etls:

@@ -47,140 +47,176 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   t_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_account_pid
   t_actual_delivery_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_actual_delivery_datetime
   t_average_loan_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_average_loan_amount
   t_buy_down_multiple:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_buy_down_multiple
   t_buy_up_multiple:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_buy_up_multiple
   t_commitment_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_commitment_amount
   t_commitment_amount_tolerance_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_commitment_amount_tolerance_percent
   t_commitment_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_commitment_datetime
   t_commitment_expiration_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_commitment_expiration_datetime
   t_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_create_datetime
   t_create_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_create_lender_user_pid
   t_early_delivery_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_early_delivery_datetime
   t_investor_commitment_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_investor_commitment_id
   t_investor_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_investor_pid
   t_investor_trade_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_investor_trade_id
   t_lender_trade_id:
     data_type: VARCHAR(11)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_lender_trade_id
   t_loans_delivered_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_loans_delivered_percent
   t_maximum_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_maximum_note_rate_percent
   t_minimum_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_minimum_note_rate_percent
   t_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_pid
   t_purchase_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_purchase_datetime
   t_required_delivery_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_required_delivery_datetime
   t_total_loan_amount:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_total_loan_amount
   t_trade_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_trade_name
   t_trade_pricing_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_trade_pricing_type
   t_trade_same_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_trade_same_price_percent
   t_trade_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_trade_status_type
   t_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_version
   t_weighted_average_decision_credit_score:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_weighted_average_decision_credit_score
   t_weighted_average_investor_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_weighted_average_investor_price_percent
   t_weighted_average_lender_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_weighted_average_lender_price_percent
   t_weighted_average_net_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_weighted_average_net_price_percent
   t_weighted_average_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.t_weighted_average_note_rate_percent
 step_functions:

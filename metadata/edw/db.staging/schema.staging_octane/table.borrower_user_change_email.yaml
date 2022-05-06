@@ -21,15 +21,22 @@ foreign_keys:
 columns:
   buce_borrower_user_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   buce_borrower_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   buce_change_email_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   buce_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   buce_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   buce_pid:
     data_type: BIGINT
+    physical_column_flag: true
   buce_version:
     data_type: INTEGER
+    physical_column_flag: true

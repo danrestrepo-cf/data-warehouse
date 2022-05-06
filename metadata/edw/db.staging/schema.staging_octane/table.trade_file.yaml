@@ -21,9 +21,13 @@ foreign_keys:
 columns:
   tf_pid:
     data_type: BIGINT
+    physical_column_flag: true
   tf_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   tf_trade_pid:
     data_type: BIGINT
+    physical_column_flag: true
   tf_version:
     data_type: INTEGER
+    physical_column_flag: true

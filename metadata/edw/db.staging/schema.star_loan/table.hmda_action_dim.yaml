@@ -5,75 +5,93 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   hmda_action:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_d_hmda_action_type.columns.value
     update_flag: true
   hmda_action_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_hmda_action_type
     update_flag: false
   hmda_denial_reason_1:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_d_hmda_denial_reason_type_1.columns.value
     update_flag: true
   hmda_denial_reason_2:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_d_hmda_denial_reason_type_2.columns.value
     update_flag: true
   hmda_denial_reason_3:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_d_hmda_denial_reason_type_3.columns.value
     update_flag: true
   hmda_denial_reason_4:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_d_hmda_denial_reason_type_4.columns.value
     update_flag: true
   hmda_denial_reason_code_1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_hmda_denial_reason_type_1
     update_flag: false
   hmda_denial_reason_code_2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_hmda_denial_reason_type_2
     update_flag: false
   hmda_denial_reason_code_3:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_hmda_denial_reason_type_3
     update_flag: false
   hmda_denial_reason_code_4:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_hmda_denial_reason_type_4
     update_flag: false

@@ -21,17 +21,25 @@ foreign_keys:
 columns:
   cl_credit_limit_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   cl_credit_limit_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cl_credit_limit_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cl_from_date:
     data_type: DATE
+    physical_column_flag: true
   cl_interim_funder_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cl_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cl_through_date:
     data_type: DATE
+    physical_column_flag: true
   cl_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -101,39 +101,58 @@ foreign_keys:
 columns:
   lip_creditor_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lip_liability_financing_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lip_liability_foreclosure_exception_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lip_liability_mi_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lip_liability_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lip_lien_priority_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lip_mortgage_delinquency_exception_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lip_original_loan_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   lip_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lip_place_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lip_property_insurance_escrowed:
     data_type: BOOLEAN
+    physical_column_flag: true
   lip_property_taxes_escrowed:
     data_type: BOOLEAN
+    physical_column_flag: true
   lip_senior_lien_restriction_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   lip_senior_lien_restriction_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lip_texas_equity:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lip_texas_equity_conversion:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lip_texas_equity_locked:
     data_type: BOOLEAN
+    physical_column_flag: true
   lip_third_party_community_second_program_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lip_version:
     data_type: INTEGER
+    physical_column_flag: true

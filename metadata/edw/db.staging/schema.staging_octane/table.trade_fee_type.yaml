@@ -13,9 +13,13 @@ foreign_keys:
 columns:
   tft_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   tft_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   tft_pid:
     data_type: BIGINT
+    physical_column_flag: true
   tft_version:
     data_type: INTEGER
+    physical_column_flag: true

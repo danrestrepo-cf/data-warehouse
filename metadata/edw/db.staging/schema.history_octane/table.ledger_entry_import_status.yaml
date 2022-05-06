@@ -31,56 +31,71 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   leis_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.leis_account_pid
   leis_batch_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.leis_batch_id
   leis_batch_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.leis_batch_name
   leis_complete_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.leis_complete_datetime
   leis_entry_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.leis_entry_count
   leis_failure_info:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.leis_failure_info
   leis_ledger_entry_import_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.leis_ledger_entry_import_status_type
   leis_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.leis_pid
   leis_raw_header_row:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.leis_raw_header_row
   leis_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.leis_requester_lender_user_pid
   leis_submit_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.leis_submit_datetime
   leis_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.leis_version
 step_functions:

@@ -13,9 +13,13 @@ foreign_keys:
 columns:
   ptm_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ptm_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ptm_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ptm_version:
     data_type: INTEGER
+    physical_column_flag: true

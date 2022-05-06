@@ -37,23 +37,34 @@ foreign_keys:
 columns:
   brml_branch_pid:
     data_type: BIGINT
+    physical_column_flag: true
   brml_company_pid:
     data_type: BIGINT
+    physical_column_flag: true
   brml_from_date:
     data_type: DATE
+    physical_column_flag: true
   brml_license_number:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   brml_license_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   brml_location_pid:
     data_type: BIGINT
+    physical_column_flag: true
   brml_note:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   brml_pid:
     data_type: BIGINT
+    physical_column_flag: true
   brml_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   brml_through_date:
     data_type: DATE
+    physical_column_flag: true
   brml_version:
     data_type: INTEGER
+    physical_column_flag: true

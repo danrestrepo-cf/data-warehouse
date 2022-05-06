@@ -21,15 +21,22 @@ foreign_keys:
 columns:
   lern_author_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lern_author_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lern_content:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   lern_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   lern_ledger_entry_review_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lern_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lern_version:
     data_type: INTEGER
+    physical_column_flag: true

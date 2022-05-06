@@ -29,15 +29,22 @@ foreign_keys:
 columns:
   wpr_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wpr_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wpr_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   wpr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wpr_version:
     data_type: INTEGER
+    physical_column_flag: true
   wpr_wf_process_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   wpr_wf_process_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true

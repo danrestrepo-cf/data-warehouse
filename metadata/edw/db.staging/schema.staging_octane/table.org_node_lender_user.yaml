@@ -29,15 +29,22 @@ foreign_keys:
 columns:
   onlu_from_date:
     data_type: DATE
+    physical_column_flag: true
   onlu_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   onlu_org_node_lender_user_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   onlu_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
   onlu_pid:
     data_type: BIGINT
+    physical_column_flag: true
   onlu_through_date:
     data_type: DATE
+    physical_column_flag: true
   onlu_version:
     data_type: INTEGER
+    physical_column_flag: true

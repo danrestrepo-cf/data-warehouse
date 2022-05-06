@@ -29,25 +29,37 @@ foreign_keys:
 columns:
   dwer_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dwer_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dwer_end_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dwer_export_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   dwer_exported_deal_count:
     data_type: INTEGER
+    physical_column_flag: true
   dwer_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dwer_request_status_messages:
     data_type: TEXT
+    physical_column_flag: true
   dwer_request_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dwer_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dwer_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dwer_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dwer_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -39,58 +39,73 @@ foreign_keys:
 columns:
   cml_company_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cml_company_pid
   cml_company_state_legal_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cml_company_state_legal_name
   cml_company_state_license_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cml_company_state_license_type
   cml_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cml_from_date
   cml_license_number:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cml_license_number
   cml_license_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cml_license_type
   cml_note:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cml_note
   cml_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cml_pid
   cml_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cml_state_type
   cml_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cml_through_date
   cml_use_state_specific_company_name:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cml_use_state_specific_company_name
   cml_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cml_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100266:
     etls:

@@ -23,24 +23,31 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   smaa_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smaa_pid
   smaa_smart_doc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smaa_smart_doc_pid
   smaa_smart_message_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smaa_smart_message_pid
   smaa_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smaa_version
 step_functions:

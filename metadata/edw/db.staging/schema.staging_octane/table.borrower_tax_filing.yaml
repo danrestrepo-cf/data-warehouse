@@ -29,23 +29,34 @@ foreign_keys:
 columns:
   btf_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
   btf_joint_filer_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   btf_joint_filer_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   btf_joint_filer_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   btf_joint_filer_suffix:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   btf_joint_is_coborrower:
     data_type: BOOLEAN
+    physical_column_flag: true
   btf_pid:
     data_type: BIGINT
+    physical_column_flag: true
   btf_place_pid:
     data_type: BIGINT
+    physical_column_flag: true
   btf_tax_filing_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   btf_version:
     data_type: INTEGER
+    physical_column_flag: true
   btf_year:
     data_type: INTEGER
+    physical_column_flag: true

@@ -301,309 +301,463 @@ foreign_keys:
 columns:
   ps_any_borrower_self_employed:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_any_escrow_waived:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_any_first_time_home_buyer:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_any_grant_program:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_any_hoa_certification_fee:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_any_lender_employee_borrower:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_any_mortgage_credit_certificate:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_any_third_party_community_second:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_applicant_count:
     data_type: SMALLINT
+    physical_column_flag: true
   ps_asset_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_b1_birth_date:
     data_type: DATE
+    physical_column_flag: true
   ps_b1_citizenship_residency_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_b1_decision_credit_score:
     data_type: INTEGER
+    physical_column_flag: true
   ps_b1_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_b1_gender_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_b1_has_business_income:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_b1_hmda_ethnicity_2017_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_b1_hmda_race_2017_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_b1_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_b1_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_b1_monthly_income:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_b1_preferred_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_b2_citizenship_residency_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_b2_decision_credit_score:
     data_type: INTEGER
+    physical_column_flag: true
   ps_b2_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_b2_gender_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_b2_has_business_income:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_b2_hmda_ethnicity_2017_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_b2_hmda_race_2017_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_b2_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_b2_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_b2_monthly_income:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_b2_preferred_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_base_loan_amount_main:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
   ps_base_loan_amount_piggyback:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
   ps_c1_birth_date:
     data_type: DATE
+    physical_column_flag: true
   ps_c1_citizenship_residency_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_c1_decision_credit_score:
     data_type: INTEGER
+    physical_column_flag: true
   ps_c1_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_c1_gender_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_c1_has_business_income:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_c1_hmda_ethnicity_2017_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_c1_hmda_race_2017_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_c1_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_c1_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_c1_monthly_income:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_c1_preferred_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_cash_from_borrower_amount_signed:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_cltv_ratio_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ps_current_servicer_investor_loan_id_main:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_current_servicer_investor_loan_id_piggyback:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_debt_ratio_excluding_mi_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ps_debt_ratio_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ps_early_wire_total_charge_amount_main:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_early_wire_total_charge_amount_piggyback:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_effective_agency_case_id_assigned_date_main:
     data_type: DATE
+    physical_column_flag: true
   ps_effective_agency_case_id_assigned_date_piggyback:
     data_type: DATE
+    physical_column_flag: true
   ps_effective_agency_case_id_main:
     data_type: VARCHAR(64)
+    physical_column_flag: true
   ps_effective_agency_case_id_piggyback:
     data_type: VARCHAR(64)
+    physical_column_flag: true
   ps_fha_section_of_act_coarse_type_main:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_fha_section_of_act_coarse_type_piggyback:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_fha_special_program_type_main:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_fha_special_program_type_piggyback:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_fund_source_type_main:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_fund_source_type_piggyback:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_funding_date_main:
     data_type: DATE
+    physical_column_flag: true
   ps_funding_date_piggyback:
     data_type: DATE
+    physical_column_flag: true
   ps_funding_scheduled_release_date_auto_compute_main:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_funding_scheduled_release_date_auto_compute_piggyback:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_funding_scheduled_release_date_main:
     data_type: DATE
+    physical_column_flag: true
   ps_funding_scheduled_release_date_piggyback:
     data_type: DATE
+    physical_column_flag: true
   ps_hcltv_applicable:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_hcltv_ratio_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ps_household_income_guideline_percent:
     data_type: NUMERIC(22,9)
+    physical_column_flag: true
   ps_housing_ratio_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ps_income_monthly_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_initial_loan_estimate_loan_amount_main:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
   ps_initial_loan_estimate_loan_amount_piggyback:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
   ps_initial_note_rate_percent_main:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ps_initial_note_rate_percent_piggyback:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ps_initial_rate_adjustment_date_main:
     data_type: DATE
+    physical_column_flag: true
   ps_initial_rate_adjustment_date_piggyback:
     data_type: DATE
+    physical_column_flag: true
   ps_initial_servicer_investor_loan_id_main:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_initial_servicer_investor_loan_id_piggyback:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_interest_rate_fee_amount_signed:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_interest_rate_fee_amount_signed_main:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_interest_rate_fee_amount_signed_piggyback:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_interim_funder_company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_interim_funder_mers_org_id:
     data_type: VARCHAR(7)
+    physical_column_flag: true
   ps_investor_loan_id_main:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_investor_loan_id_piggyback:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_investor_pid_main:
     data_type: BIGINT
+    physical_column_flag: true
   ps_investor_pid_piggyback:
     data_type: BIGINT
+    physical_column_flag: true
   ps_liability_monthly_payment_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_liability_unpaid_balance_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_liquid_asset_total_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_loan_amount_main:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
   ps_loan_amount_piggyback:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
   ps_loan_maturity_date_main:
     data_type: DATE
+    physical_column_flag: true
   ps_loan_maturity_date_piggyback:
     data_type: DATE
+    physical_column_flag: true
   ps_ltv_ratio_percent_main:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ps_ltv_ratio_percent_piggyback:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ps_monthly_pitia_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_mortgage_credit_certificate_issuer_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ps_mortgage_type_main:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_mortgage_type_piggyback:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_net_origination_charge_main:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_net_origination_charge_piggyback:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_non_primary_housing_expense_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_note_rate_percent_main:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ps_note_rate_percent_piggyback:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ps_offering_id_main:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_offering_id_piggyback:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_origination_fees_amount_signed:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_origination_fees_amount_signed_main:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_origination_fees_amount_signed_piggyback:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ps_primary_application_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_primary_housing_expense_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_product_fnm_community_lending_product_type_main:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_product_fnm_community_lending_product_type_piggyback:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_product_fre_community_program_type_main:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_product_fre_community_program_type_piggyback:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_product_pid_main:
     data_type: BIGINT
+    physical_column_flag: true
   ps_product_pid_piggyback:
     data_type: BIGINT
+    physical_column_flag: true
   ps_product_special_program_type_main:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_product_special_program_type_piggyback:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_property_category_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ps_proposal_structure_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_proposed_monthly_housing_and_debt_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_subject_property_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_subject_property_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_subject_property_existing_subordinate_2nd:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_subject_property_existing_subordinate_3rd:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_subject_property_new_subordinate_2nd:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_subject_property_new_subordinate_3rd:
     data_type: BOOLEAN
+    physical_column_flag: true
   ps_subject_property_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_subject_property_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_subject_property_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_subject_property_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ps_subject_property_subordinate_2nd_creditor_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ps_subject_property_subordinate_3rd_creditor_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ps_tolerance_cure_amount_signed:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_tolerance_cure_amount_signed_main:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_tolerance_cure_amount_signed_piggyback:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_total_debt_payoff_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_total_grant_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_total_monthly_solar_lease_payments_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_total_new_subordinate_financing_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ps_upfront_mi_percent_main:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ps_upfront_mi_percent_piggyback:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ps_uuts_aus_recommendation_description:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ps_version:
     data_type: INTEGER
+    physical_column_flag: true

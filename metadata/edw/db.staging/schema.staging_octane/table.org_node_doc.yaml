@@ -21,15 +21,22 @@ foreign_keys:
 columns:
   ond_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ond_description:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   ond_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ond_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ond_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ond_url:
     data_type: VARCHAR(2048)
+    physical_column_flag: true
   ond_version:
     data_type: INTEGER
+    physical_column_flag: true

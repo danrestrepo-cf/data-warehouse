@@ -37,39 +37,58 @@ foreign_keys:
 columns:
   lsv_delinquent_payments_over_past_twelve_months_count:
     data_type: INTEGER
+    physical_column_flag: true
   lsv_from_date:
     data_type: DATE
+    physical_column_flag: true
   lsv_initial:
     data_type: BOOLEAN
+    physical_column_flag: true
   lsv_investor_loan_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   lsv_investor_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lsv_last_paid_installment_due_date:
     data_type: DATE
+    physical_column_flag: true
   lsv_loan_acquisition_scheduled_upb_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lsv_loan_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lsv_mers_transfer_batch_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lsv_mers_transfer_creation_date:
     data_type: DATE
+    physical_column_flag: true
   lsv_mers_transfer_override:
     data_type: BOOLEAN
+    physical_column_flag: true
   lsv_mers_transfer_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lsv_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lsv_release_notification_date:
     data_type: DATE
+    physical_column_flag: true
   lsv_retain_notification_date:
     data_type: DATE
+    physical_column_flag: true
   lsv_servicing_data_sent_date:
     data_type: DATE
+    physical_column_flag: true
   lsv_servicing_docs_sent_date:
     data_type: DATE
+    physical_column_flag: true
   lsv_upb_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lsv_version:
     data_type: INTEGER
+    physical_column_flag: true

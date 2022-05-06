@@ -13,11 +13,16 @@ foreign_keys:
 columns:
   ig_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ig_lender_group:
     data_type: BOOLEAN
+    physical_column_flag: true
   ig_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ig_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ig_version:
     data_type: INTEGER
+    physical_column_flag: true

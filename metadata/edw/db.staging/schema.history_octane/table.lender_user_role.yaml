@@ -39,64 +39,81 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   lur_assignment_gap_minutes:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lur_assignment_gap_minutes
   lur_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lur_criteria_pid
   lur_daily_cap:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lur_daily_cap
   lur_for_training_only:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lur_for_training_only
   lur_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lur_lender_user_pid
   lur_notes:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lur_notes
   lur_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lur_pid
   lur_queue_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lur_queue_datetime
   lur_queue_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lur_queue_type
   lur_role_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lur_role_pid
   lur_secondary_role:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lur_secondary_role
   lur_subscribe_smart_messages:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lur_subscribe_smart_messages
   lur_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lur_version
   lur_workload_cap:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lur_workload_cap
 step_functions:

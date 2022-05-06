@@ -13,23 +13,34 @@ foreign_keys:
 columns:
   bd_age:
     data_type: INTEGER
+    physical_column_flag: true
   bd_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bd_disabled:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   bd_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   bd_full_time_student:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   bd_income_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   bd_income_source:
     data_type: TEXT
+    physical_column_flag: true
   bd_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   bd_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bd_receives_income:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   bd_version:
     data_type: INTEGER
+    physical_column_flag: true

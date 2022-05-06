@@ -95,272 +95,341 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   lu_about_me:
     data_type: VARCHAR(2000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_about_me
   lu_account_owner:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_account_owner
   lu_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_account_pid
   lu_address_use_branch:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_address_use_branch
   lu_allow_external_ip:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_allow_external_ip
   lu_branch_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_branch_pid
   lu_challenge_question_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_challenge_question_type
   lu_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_city
   lu_company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_company_name
   lu_company_user_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_company_user_id
   lu_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_country
   lu_create_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_create_date
   lu_default_credit_bureau_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_default_credit_bureau_type
   lu_default_lead_source_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_default_lead_source_pid
   lu_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_email
   lu_email_signature_title:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_email_signature_title
   lu_esign_by_email:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_esign_by_email
   lu_fax:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_fax
   lu_fax_use_branch:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_fax_use_branch
   lu_fha_chums_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_fha_chums_id
   lu_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_first_name
   lu_force_password_change:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_force_password_change
   lu_hire_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_hire_date
   lu_hub_directory:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_hub_directory
   lu_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_last_name
   lu_last_password_change_date:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_last_password_change_date
   lu_lender_user_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_lender_user_status_type
   lu_lender_user_suspend_reason_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_lender_user_suspend_reason_type
   lu_lender_user_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_lender_user_type
   lu_marketing_details_enabled:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_marketing_details_enabled
   lu_marketing_details_featured_review:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_marketing_details_featured_review
   lu_mercury_client_group_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_mercury_client_group_pid
   lu_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_middle_name
   lu_name_qualifier:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_name_qualifier
   lu_name_suffix:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_name_suffix
   lu_nickname:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_nickname
   lu_nmls_loan_originator_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_nmls_loan_originator_id
   lu_office_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_office_phone
   lu_office_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_office_phone_extension
   lu_office_phone_use_branch:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_office_phone_use_branch
   lu_originator_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_originator_id
   lu_performer_team_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_performer_team_pid
   lu_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_pid
   lu_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_postal_code
   lu_preferred_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_preferred_first_name
   lu_schedule_once_booking_page_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_schedule_once_booking_page_id
   lu_search_text:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_search_text
   lu_smart_app_enabled:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_smart_app_enabled
   lu_start_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_start_date
   lu_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_state
   lu_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_street1
   lu_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_street2
   lu_suspend_date_time:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_suspend_date_time
   lu_suspend_reason_other_description:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_suspend_reason_other_description
   lu_suspended:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_suspended
   lu_termination_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_termination_date
   lu_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_through_date
   lu_time_zone:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_time_zone
   lu_title:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_title
   lu_total_workload_cap:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_total_workload_cap
   lu_training_mode:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_training_mode
   lu_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_unparsed_name
   lu_username:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_username
   lu_va_agent_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_va_agent_id
   lu_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lu_version
   lu_work_step_start_notices_enabled:
     data_type: BOOLEAN
+    physical_column_flag: true
 step_functions:
   SP-100090:
     etls:

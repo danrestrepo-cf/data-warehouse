@@ -47,128 +47,161 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   lf_collateral_courier_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_collateral_courier_type
   lf_collateral_sent_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_collateral_sent_date
   lf_collateral_tracking_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_collateral_tracking_number
   lf_confirmed_release_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_confirmed_release_datetime
   lf_disbursement_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_disbursement_date
   lf_early_wire_charge_day_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_early_wire_charge_day_count
   lf_early_wire_daily_charge_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_early_wire_daily_charge_amount
   lf_early_wire_request:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_early_wire_request
   lf_early_wire_total_charge_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_early_wire_total_charge_amount
   lf_funding_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_funding_date
   lf_funding_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_funding_status_type
   lf_funds_authorization_code:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_funds_authorization_code
   lf_funds_authorized_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_funds_authorized_datetime
   lf_interim_funder_fee_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_interim_funder_fee_amount
   lf_interim_funder_loan_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_interim_funder_loan_id
   lf_interim_funder_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_interim_funder_pid
   lf_loan_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_loan_pid
   lf_net_wire_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_net_wire_amount
   lf_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_pid
   lf_post_wire_adjustment_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_post_wire_adjustment_amount
   lf_proposal_snapshot_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_proposal_snapshot_pid
   lf_release_wire_federal_reference_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_release_wire_federal_reference_number
   lf_requested_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_requested_date
   lf_return_confirmed_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_return_confirmed_date
   lf_return_request_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_return_request_date
   lf_scheduled_release_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_scheduled_release_date
   lf_scheduled_release_date_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_scheduled_release_date_auto_compute
   lf_synthetic_unique_active:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_synthetic_unique_active
   lf_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_version
   lf_wire_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lf_wire_amount
 step_functions:
