@@ -156,7 +156,7 @@ def generate_history_octane_metadata(octane_metadata: DataWarehouseMetadata,
             history_column = ColumnMetadata(
                 name=staging_column.name,
                 data_type=staging_column.data_type,
-                physical_column_flag=True
+                physical_column_flag=staging_column.physical_column_flag
             )
             history_column.source = ColumnSourceComponents(calculation_string=None, foreign_key_paths=[
                 SourceForeignKeyPath(fk_steps=[], column_name=staging_column.name)])
