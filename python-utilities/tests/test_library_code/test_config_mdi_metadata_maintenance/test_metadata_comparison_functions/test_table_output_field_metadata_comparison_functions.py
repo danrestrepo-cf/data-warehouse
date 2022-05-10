@@ -58,6 +58,10 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
                                             't1_col3': {
                                                 'data_type': 'TEXT',
                                                 'physical_column_flag': True,
+                                            },
+                                            't1_col4': {
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': False,
                                             }
                                         },
                                         'step_functions': {
@@ -138,6 +142,10 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
                                             'etl_batch_id': {
                                                 'data_type': 'TEXT',
                                                 'physical_column_flag': True,
+                                            },
+                                            'non_physical_column': {
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': False,
                                             }
                                         },
                                         'step_functions': {

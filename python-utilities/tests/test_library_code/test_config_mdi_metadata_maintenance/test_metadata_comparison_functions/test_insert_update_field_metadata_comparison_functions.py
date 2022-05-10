@@ -65,6 +65,10 @@ class TestInsertUpdateFieldMetadataComparisonFunctions(unittest.TestCase):
                                                 'data_type': 'TEXT',
                                                 'physical_column_flag': True,
                                                 'update_flag': True
+                                            },
+                                            't1_col4': {
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': False,
                                             }
                                         },
                                         'step_functions': {

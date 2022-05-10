@@ -71,6 +71,10 @@ class TestEDWFieldDefinitionMetadataComparisonFunctions(unittest.TestCase):
                                             'c2': {
                                                 'data_type': 'INT',
                                                 'physical_column_flag': True
+                                            },
+                                            'c3': {
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': False
                                             }
                                         }
                                     }
