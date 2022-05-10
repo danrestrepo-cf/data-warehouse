@@ -70,7 +70,8 @@ class TestInclusiveMetadataFilterer(unittest.TestCase):
                                         'name': 't2',
                                         'columns': {
                                             'c1': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     },
@@ -78,7 +79,8 @@ class TestInclusiveMetadataFilterer(unittest.TestCase):
                                         'name': 't3',
                                         'columns': {
                                             'c1': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             }
                                         },
                                         'foreign_keys': {
@@ -109,7 +111,8 @@ class TestInclusiveMetadataFilterer(unittest.TestCase):
                                         'name': 't2',
                                         'columns': {
                                             'c2': {
-                                                'data_type': 'INT'
+                                                'data_type': 'INT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }
@@ -174,7 +177,8 @@ class TestExclusiveMetadataFilterer(unittest.TestCase):
                                         'name': 't2',
                                         'columns': {
                                             'c1': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     },
@@ -182,7 +186,8 @@ class TestExclusiveMetadataFilterer(unittest.TestCase):
                                         'name': 't3',
                                         'columns': {
                                             'c1': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }
@@ -203,7 +208,8 @@ class TestExclusiveMetadataFilterer(unittest.TestCase):
                                         'name': 't2',
                                         'columns': {
                                             'c2': {
-                                                'data_type': 'INT'
+                                                'data_type': 'INT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }

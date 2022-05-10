@@ -282,7 +282,9 @@ class TestGenerateDataWarehouseWithFullYAMLFile(MetadataDirectoryTestCase):
         table2_metadata = {
             'name': 'table2',
             'columns': {
-                'col0': {}
+                'col0': {
+                    'physical_column_flag': True
+                }
             },
             'step_functions': {
                 'SP-100': {
@@ -304,7 +306,7 @@ class TestGenerateDataWarehouseWithFullYAMLFile(MetadataDirectoryTestCase):
         self.table2_metadata = self.metadata.get_database('db1').get_schema('sch1').get_table('table2')
 
     def test_translates_missing_keys_into_null_values(self):
-        expected_cols = [ColumnMetadata(name='col0', data_type=None, physical_column_flag=None, source=None)]
+        expected_cols = [ColumnMetadata(name='col0', data_type=None, physical_column_flag=True, source=None)]
         expected_step_functions = [
             StepFunctionMetadata(
                 name='SP-100',
@@ -557,24 +559,29 @@ class TestWriteDataWarehouseMetadataToYAML_NoExistingDirectoryStructure(Metadata
                                         'columns': {
                                             'col1': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.foreign_keys.fk3.foreign_keys.fk67.columns.col1'
                                                 }
                                             },
                                             'col2': {
                                                 'data_type': 'INT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.col2'
                                                 }
                                             },
                                             'col3': {
-                                                'data_type': 'INT'
+                                                'data_type': 'INT',
+                                                'physical_column_flag': True
                                             },
                                             'col4': {
-                                                'data_type': 'INT'
+                                                'data_type': 'INT',
+                                                'physical_column_flag': True
                                             },
                                             'col5': {
                                                 'data_type': 'BOOLEAN',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'calculation': {
                                                         'string': '$1 IS NOT NULL',
@@ -584,6 +591,7 @@ class TestWriteDataWarehouseMetadataToYAML_NoExistingDirectoryStructure(Metadata
                                             },
                                             'col6': {
                                                 'data_type': 'BOOLEAN',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'calculation': {
                                                         'string': '$1 IS NOT NULL AND $2 IS NOT NULL',
@@ -655,12 +663,14 @@ class TestWriteDataWarehouseMetadataToYAML_NoExistingDirectoryStructure(Metadata
                                         'columns': {
                                             'col2': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.col2'
                                                 }
                                             },
                                             'col1': {
                                                 'data_type': 'INT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.col1'
                                                 }
@@ -704,12 +714,14 @@ class TestWriteDataWarehouseMetadataToYAML_NoExistingDirectoryStructure(Metadata
                                         'columns': {
                                             'col1': {
                                                 'data_type': 'INT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.col1'
                                                 }
                                             },
                                             'col2': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.col2'
                                                 }

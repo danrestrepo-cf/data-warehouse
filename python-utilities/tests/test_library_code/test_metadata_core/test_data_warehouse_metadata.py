@@ -537,18 +537,21 @@ class TestTableMetadataCanGetColumnSourcePaths(unittest.TestCase):
                                         'columns': {
                                             'column_with_source': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.source_column'
                                                 }
                                             },
                                             'column_with_distant_source': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.foreign_keys.fk_1.foreign_keys.fk_2.foreign_keys.fk_3.columns.distant_source_column'
                                                 }
                                             },
                                             'column_with_single_column_calculated_source': {
                                                 'data_type': 'BOOLEAN',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'calculation': {
                                                         'string': '$1 IS NOT NULL',
@@ -559,6 +562,7 @@ class TestTableMetadataCanGetColumnSourcePaths(unittest.TestCase):
                                             },
                                             'column_with_multi_column_calculated_source': {
                                                 'data_type': 'BOOLEAN',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'calculation': {
                                                         'string': '$1 IS NOT NULL AND $2 IS NOT NULL',
@@ -578,10 +582,12 @@ class TestTableMetadataCanGetColumnSourcePaths(unittest.TestCase):
                                         'name': 'source_table',
                                         'columns': {
                                             'source_column': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             },
                                             'fk_col': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             }
                                         },
                                         'foreign_keys': {
@@ -604,7 +610,8 @@ class TestTableMetadataCanGetColumnSourcePaths(unittest.TestCase):
                                         'name': 'other_table_1',
                                         'columns': {
                                             'fk_col': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             }
                                         },
                                         'foreign_keys': {
@@ -622,7 +629,8 @@ class TestTableMetadataCanGetColumnSourcePaths(unittest.TestCase):
                                         'name': 'other_table_2',
                                         'columns': {
                                             'fk_col': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             }
                                         },
                                         'foreign_keys': {
@@ -640,7 +648,8 @@ class TestTableMetadataCanGetColumnSourcePaths(unittest.TestCase):
                                         'name': 'distant_source_table',
                                         'columns': {
                                             'distant_source_column': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }

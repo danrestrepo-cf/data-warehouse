@@ -279,12 +279,16 @@ class DictToMetadataBuilder:
                 ))
         if 'columns' in table_dict:
             for column_name, column_data in table_dict['columns'].items():
-                column_metadata = ColumnMetadata(
-                    name=column_name,
-                    data_type=column_data.get('data_type'),
-                    update_flag=column_data.get('update_flag'),
-                    physical_column_flag=column_data.get('physical_column_flag')
-                )
+                if column_data.get('physical_column_flag') is not None:
+                    column_metadata = ColumnMetadata(
+                        name=column_name,
+                        data_type=column_data.get('data_type'),
+                        update_flag=column_data.get('update_flag'),
+                        physical_column_flag=column_data.get('physical_column_flag')
+                    )
+                else:
+                    raise self.InvalidColumnMetadataException(f'Column "{column_name}" is missing the required '
+                                                              f'physical_column_flag attribute')
                 if 'source' in column_data:
                     column_metadata.source = self.parse_column_source_components(column_data['source'])
                 table.add_column(column_metadata)
@@ -477,6 +481,9 @@ class DictToMetadataBuilder:
                 schema=parsed_path_components[1],
                 table=parsed_path_components[2]
             )
+
+    class InvalidColumnMetadataException(Exception):
+        pass
 
     class InvalidTableMetadataException(Exception):
         pass

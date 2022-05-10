@@ -26,6 +26,7 @@ class TestEDWFieldDefinitionMetadataComparisonFunctions(unittest.TestCase):
                                         'columns': {
                                             'c1': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.c1_src'
                                                 }
@@ -38,6 +39,7 @@ class TestEDWFieldDefinitionMetadataComparisonFunctions(unittest.TestCase):
                                         'columns': {
                                             'c1_src': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.c1_src_src'
                                                 }
@@ -48,7 +50,8 @@ class TestEDWFieldDefinitionMetadataComparisonFunctions(unittest.TestCase):
                                         'name': 't1_src_src',
                                         'columns': {
                                             'c1_src_src': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }
@@ -66,7 +69,8 @@ class TestEDWFieldDefinitionMetadataComparisonFunctions(unittest.TestCase):
                                         'name': 't2',
                                         'columns': {
                                             'c2': {
-                                                'data_type': 'INT'
+                                                'data_type': 'INT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }

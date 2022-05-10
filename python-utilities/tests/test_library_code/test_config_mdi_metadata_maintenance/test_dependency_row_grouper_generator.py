@@ -256,18 +256,21 @@ class TestFieldInsertNodeLineageTracer(unittest.TestCase):
                                         'columns': {
                                             'column_with_source': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.source_field'
                                                 }
                                             },
                                             'column_with_distant_source': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.foreign_keys.fk_1.columns.distant_source_field'
                                                 }
                                             },
                                             'column_with_single_column_calculated_source': {
                                                 'data_type': 'BOOLEAN',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'calculation': {
                                                         'string': '$1 IS NOT NULL',
@@ -277,6 +280,7 @@ class TestFieldInsertNodeLineageTracer(unittest.TestCase):
                                             },
                                             'column_with_multi_column_calculated_source': {
                                                 'data_type': 'BOOLEAN',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'calculation': {
                                                         'string': '$1 IS NOT NULL AND $2 IS NOT NULL',
@@ -297,10 +301,12 @@ class TestFieldInsertNodeLineageTracer(unittest.TestCase):
                                         'name': 'source_table',
                                         'columns': {
                                             'source_field': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             },
                                             'fk_col': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             }
                                         },
                                         'foreign_keys': {
@@ -323,10 +329,12 @@ class TestFieldInsertNodeLineageTracer(unittest.TestCase):
                                         'name': 'distant_source_table',
                                         'columns': {
                                             'fk_col': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             },
                                             'distant_source_field': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }

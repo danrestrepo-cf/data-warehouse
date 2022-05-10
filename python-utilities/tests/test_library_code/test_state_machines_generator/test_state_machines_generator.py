@@ -557,10 +557,12 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                         ],
                                         'columns': {
                                             'column_1': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             },
                                             'column_2': {
-                                                'data_type': 'INT'
+                                                'data_type': 'INT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }
@@ -578,6 +580,7 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                         'columns': {
                                             'column_1': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.column_1'
                                                 }
@@ -614,6 +617,7 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                         'columns': {
                                             'column_1': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.column_1'
                                                 }
@@ -646,6 +650,7 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                         'columns': {
                                             'column_1': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.column_1'
                                                 }
@@ -678,6 +683,7 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                         'columns': {
                                             'column_1': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.column_1'
                                                 }
@@ -709,6 +715,7 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                         'columns': {
                                             'column_1': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.column_1'
                                                 }

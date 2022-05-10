@@ -46,7 +46,8 @@ class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
                         for etl in step_function.etls:
                             if etl.output_type == ETLOutputType.INSERT:
                                 for column in table.columns:
-                                    if column.source is not None or column.name in temp_sourceless_fields:
+                                    if column.physical_column_flag is True and (column.source is not None or
+                                                                                column.name in temp_sourceless_fields):
                                         metadata_table.add_row({
                                             'process_name': etl.process_name,
                                             'database_field_name': column.name
