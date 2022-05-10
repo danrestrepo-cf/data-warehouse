@@ -4,11 +4,16 @@ primary_key:
 columns:
   code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   value:
     data_type: VARCHAR(1024)
+    physical_column_flag: true

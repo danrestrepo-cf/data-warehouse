@@ -45,29 +45,43 @@ foreign_keys:
 columns:
   p_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   p_description:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   p_fnm_product_name:
     data_type: VARCHAR(15)
+    physical_column_flag: true
   p_from_date:
     data_type: DATE
+    physical_column_flag: true
   p_fund_source_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   p_investor_pid:
     data_type: BIGINT
+    physical_column_flag: true
   p_investor_product_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   p_investor_product_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   p_lock_auto_confirm:
     data_type: BOOLEAN
+    physical_column_flag: true
   p_parent_product_pid:
     data_type: BIGINT
+    physical_column_flag: true
   p_pid:
     data_type: BIGINT
+    physical_column_flag: true
   p_product_side_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   p_through_date:
     data_type: DATE
+    physical_column_flag: true
   p_version:
     data_type: INTEGER
+    physical_column_flag: true

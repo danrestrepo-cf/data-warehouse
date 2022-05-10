@@ -5,27 +5,40 @@ primary_key:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   lcd_dsi_closing_document_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lcd_dsi_doc_code:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   lcd_dsi_fatal_messages:
     data_type: TEXT
+    physical_column_flag: true
   lcd_dsi_transaction_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lcd_dsi_warning_messages:
     data_type: TEXT
+    physical_column_flag: true
   lcd_dsi_websheet_number:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   lcd_loan_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lcd_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lcd_unsigned_closing_doc_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lcd_version:
     data_type: INTEGER
+    physical_column_flag: true

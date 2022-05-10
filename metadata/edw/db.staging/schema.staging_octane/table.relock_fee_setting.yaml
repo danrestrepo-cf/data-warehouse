@@ -13,11 +13,16 @@ foreign_keys:
 columns:
   rfs_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rfs_from_date:
     data_type: DATE
+    physical_column_flag: true
   rfs_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rfs_relock_fee_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   rfs_version:
     data_type: INTEGER
+    physical_column_flag: true

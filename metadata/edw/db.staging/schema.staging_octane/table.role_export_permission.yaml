@@ -21,9 +21,13 @@ foreign_keys:
 columns:
   rep_export_permission_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rep_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rep_role_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rep_version:
     data_type: INTEGER
+    physical_column_flag: true

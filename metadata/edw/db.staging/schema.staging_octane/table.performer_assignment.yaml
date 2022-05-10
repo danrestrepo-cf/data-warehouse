@@ -21,11 +21,16 @@ foreign_keys:
 columns:
   pa_last_assign_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   pa_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pa_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pa_role_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pa_version:
     data_type: INTEGER
+    physical_column_flag: true

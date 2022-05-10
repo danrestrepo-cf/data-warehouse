@@ -63,68 +63,86 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   prpdv_criteria_html:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_criteria_html
   prpdv_days_before_key_date:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_days_before_key_date
   prpdv_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_deal_pid
   prpdv_doc_key_date_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_doc_key_date_type
   prpdv_doc_validity_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_doc_validity_type
   prpdv_expiration_calendar_rule_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_expiration_calendar_rule_type
   prpdv_key_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_key_date
   prpdv_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_pid
   prpdv_proposal_doc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_proposal_doc_pid
   prpdv_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_proposal_pid
   prpdv_smart_doc_validity_date_case_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_smart_doc_validity_date_case_pid
   prpdv_valid_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_valid_from_date
   prpdv_valid_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_valid_through_date
   prpdv_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_version
   prpdv_warning_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdv_warning_days
 step_functions:

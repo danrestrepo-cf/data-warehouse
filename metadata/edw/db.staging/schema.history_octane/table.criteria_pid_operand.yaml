@@ -215,122 +215,153 @@ foreign_keys:
 columns:
   crpo_account_grant_program_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_account_grant_program_pid
   crpo_branch_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_branch_pid
   crpo_channel_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_channel_pid
   crpo_company_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_company_pid
   crpo_county_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_county_pid
   crpo_creditor_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_creditor_pid
   crpo_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_criteria_pid
   crpo_criteria_pid_operand_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_criteria_pid_operand_type
   crpo_criteria_snippet_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_criteria_snippet_pid
   crpo_deal_tag_definition_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_deal_tag_definition_pid
   crpo_interim_funder_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_interim_funder_pid
   crpo_investor_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_investor_pid
   crpo_lead_source_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_lead_source_pid
   crpo_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_lender_user_pid
   crpo_mortgage_credit_certificate_issuer_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_mortgage_credit_certificate_issuer_pid
   crpo_offering_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_offering_pid
   crpo_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_org_node_pid
   crpo_performer_team_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_performer_team_pid
   crpo_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_pid
   crpo_product_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_product_pid
   crpo_role_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_role_pid
   crpo_settlement_agent_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_settlement_agent_pid
   crpo_smart_doc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_smart_doc_pid
   crpo_third_party_community_second_program_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_third_party_community_second_program_pid
   crpo_trustee_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_trustee_pid
   crpo_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_version
   crpo_wf_phase_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_wf_phase_pid
   crpo_wf_step_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crpo_wf_step_pid
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100365:
     etls:

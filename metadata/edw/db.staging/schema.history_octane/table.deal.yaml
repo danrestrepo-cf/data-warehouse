@@ -151,266 +151,333 @@ foreign_keys:
 columns:
   d_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_account_pid
   d_active_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_active_proposal_pid
   d_application_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_application_type
   d_borrower_esign:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_borrower_esign
   d_branch_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_branch_pid
   d_calyx_loan_guid:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_calyx_loan_guid
   d_charges_enabled_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_charges_enabled_date
   d_company_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_company_pid
   d_copy_source_los_loan_id_main:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_copy_source_los_loan_id_main
   d_copy_source_los_loan_id_piggyback:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_copy_source_los_loan_id_piggyback
   d_credit_bureau_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_credit_bureau_type
   d_deal_create_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_deal_create_date
   d_deal_create_date_time:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_deal_create_date_time
   d_deal_create_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_deal_create_type
   d_deal_orphan_earliest_check_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_deal_orphan_earliest_check_date
   d_deal_orphan_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_deal_orphan_status_type
   d_deal_status_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_deal_status_date
   d_deal_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_deal_status_type
   d_early_wire_request:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_early_wire_request
   d_ecoa_application_complete_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_ecoa_application_complete_date
   d_ecoa_application_received_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_ecoa_application_received_date
   d_ecoa_decision_due_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_ecoa_decision_due_date
   d_ecoa_notice_of_incomplete_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_ecoa_notice_of_incomplete_date
   d_ecoa_notice_of_incomplete_due_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_ecoa_notice_of_incomplete_due_date
   d_effective_hmda_action_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_effective_hmda_action_date
   d_enable_electronic_transaction:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_enable_electronic_transaction
   d_external_loan_id_main:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_external_loan_id_main
   d_external_loan_id_piggyback:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_external_loan_id_piggyback
   d_hmda_action_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_hmda_action_date
   d_hmda_action_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_hmda_action_type
   d_hmda_denial_reason_other_description:
     data_type: VARCHAR(255)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_hmda_denial_reason_other_description
   d_hmda_denial_reason_type_1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_hmda_denial_reason_type_1
   d_hmda_denial_reason_type_2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_hmda_denial_reason_type_2
   d_hmda_denial_reason_type_3:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_hmda_denial_reason_type_3
   d_hmda_denial_reason_type_4:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_hmda_denial_reason_type_4
   d_hmda_universal_loan_id_main:
     data_type: VARCHAR(45)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_hmda_universal_loan_id_main
   d_hmda_universal_loan_id_piggyback:
     data_type: VARCHAR(45)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_hmda_universal_loan_id_piggyback
   d_initial_cancel_status_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_initial_cancel_status_date
   d_invoices_enabled:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_invoices_enabled
   d_invoices_enabled_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_invoices_enabled_date
   d_lead_reference_id:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_lead_reference_id
   d_lead_source_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_lead_source_pid
   d_lead_tracking_id:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_lead_tracking_id
   d_lead_zillow_zq:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_lead_zillow_zq
   d_location_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_location_pid
   d_los_loan_id_main:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_los_loan_id_main
   d_los_loan_id_piggyback:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_los_loan_id_piggyback
   d_mers_min_main:
     data_type: VARCHAR(20)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_mers_min_main
   d_mers_min_piggyback:
     data_type: VARCHAR(20)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_mers_min_piggyback
   d_notice_of_missing_documentation_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_notice_of_missing_documentation_date
   d_notice_of_missing_documentation_due_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_notice_of_missing_documentation_due_date
   d_performer_team_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_performer_team_pid
   d_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_pid
   d_preapproval_decision_due_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_preapproval_decision_due_date
   d_preapproval_received_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_preapproval_received_date
   d_realty_agent_scenario_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_realty_agent_scenario_type
   d_referred_by_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_referred_by_name
   d_sap_deal:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_sap_deal
   d_test_loan:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_test_loan
   d_training_loan:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_training_loan
   d_trid_application_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_trid_application_date
   d_velocify_lead_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_velocify_lead_id
   d_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_version
   d_welcome_call_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_welcome_call_datetime
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100267:
     etls:

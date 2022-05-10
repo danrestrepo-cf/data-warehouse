@@ -45,61 +45,91 @@ foreign_keys:
 columns:
   lf_collateral_courier_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lf_collateral_sent_date:
     data_type: DATE
+    physical_column_flag: true
   lf_collateral_tracking_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   lf_confirmed_release_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   lf_disbursement_date:
     data_type: DATE
+    physical_column_flag: true
   lf_early_wire_charge_day_count:
     data_type: INTEGER
+    physical_column_flag: true
   lf_early_wire_daily_charge_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lf_early_wire_request:
     data_type: BOOLEAN
+    physical_column_flag: true
   lf_early_wire_total_charge_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lf_funding_date:
     data_type: DATE
+    physical_column_flag: true
   lf_funding_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lf_funds_authorization_code:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   lf_funds_authorized_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   lf_interim_funder_fee_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lf_interim_funder_loan_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   lf_interim_funder_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lf_loan_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lf_net_wire_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lf_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lf_post_wire_adjustment_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lf_proposal_snapshot_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lf_release_wire_federal_reference_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   lf_requested_date:
     data_type: DATE
+    physical_column_flag: true
   lf_return_confirmed_date:
     data_type: DATE
+    physical_column_flag: true
   lf_return_request_date:
     data_type: DATE
+    physical_column_flag: true
   lf_scheduled_release_date:
     data_type: DATE
+    physical_column_flag: true
   lf_scheduled_release_date_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
   lf_synthetic_unique_active:
     data_type: BOOLEAN
+    physical_column_flag: true
   lf_version:
     data_type: INTEGER
+    physical_column_flag: true
   lf_wire_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true

@@ -95,136 +95,171 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   lb_approved_with_conditions_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_approved_with_conditions_date
   lb_collateral_courier_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_collateral_courier_type
   lb_collateral_tracking_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_collateral_tracking_number
   lb_current:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_current
   lb_delivery_aus_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_delivery_aus_type
   lb_early_funding:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_early_funding
   lb_early_funding_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_early_funding_date
   lb_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_from_date
   lb_initial:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_initial
   lb_investor_loan_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_investor_loan_id
   lb_investor_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_investor_pid
   lb_loan_benef_transfer_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_loan_benef_transfer_status_type
   lb_loan_file_courier_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_loan_file_courier_type
   lb_loan_file_delivery_method_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_loan_file_delivery_method_type
   lb_loan_file_ship_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_loan_file_ship_date
   lb_loan_file_tracking_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_loan_file_tracking_number
   lb_loan_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_loan_pid
   lb_mbs_final_purchaser_investor_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_mbs_final_purchaser_investor_pid
   lb_mers_mom:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_mers_mom
   lb_mers_transfer_batch_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_mers_transfer_batch_pid
   lb_mers_transfer_creation_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_mers_transfer_creation_date
   lb_mers_transfer_override:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_mers_transfer_override
   lb_mers_transfer_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_mers_transfer_status_type
   lb_pending_wire_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_pending_wire_date
   lb_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_pid
   lb_pool_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_pool_id
   lb_purchase_advice_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_purchase_advice_amount
   lb_rejected_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_rejected_date
   lb_synthetic_unique_current:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_synthetic_unique_current
   lb_synthetic_unique_initial:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_synthetic_unique_initial
   lb_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_through_date
   lb_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_version
 step_functions:

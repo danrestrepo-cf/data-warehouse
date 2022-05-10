@@ -23,42 +23,53 @@ foreign_keys:
 columns:
   cl_credit_limit_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cl_credit_limit_amount
   cl_credit_limit_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cl_credit_limit_name
   cl_credit_limit_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cl_credit_limit_type
   cl_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cl_from_date
   cl_interim_funder_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cl_interim_funder_pid
   cl_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cl_pid
   cl_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cl_through_date
   cl_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cl_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100031:
     etls:

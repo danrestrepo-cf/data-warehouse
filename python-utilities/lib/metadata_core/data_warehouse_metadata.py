@@ -295,21 +295,24 @@ class ColumnMetadata:
     Attributes:
         name: the column name
         data_type: the column's data type
+        physical_column_flag: an indicator as to whether the column physically exists within the table
         source: a ColumnSourceComponents object that indicates whether the column is sourced from another column,
         or is sourced from a calculation involving one or more columns
-        update_flag: an indicator as to whether the field is updatable; only used for columns that are maintained by
-        insert/update ETLs
+        update_flag: an indicator as to whether the column's value is updatable; only used for columns that are
+        maintained by insert/update ETLs
     """
     name: str
     data_type: Optional[str] = None
+    physical_column_flag: Optional[bool] = None
     source: Optional[ColumnSourceComponents] = None
     update_flag: Optional[bool] = None
 
-    def __init__(self, name: str, data_type: Optional[str] = None, source: Optional[ColumnSourceComponents] = None,
-                 update_flag: Optional[bool] = None):
+    def __init__(self, name: str, data_type: Optional[str] = None, physical_column_flag: Optional[bool] = None,
+                 source: Optional[ColumnSourceComponents] = None, update_flag: Optional[bool] = None):
         self.name = name
         self.path = ColumnPath(database=None, schema=None, table=None, column=name)
         self.data_type = data_type
+        self.physical_column_flag = physical_column_flag
         self.source = source
         self.update_flag = update_flag
 

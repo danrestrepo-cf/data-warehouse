@@ -69,53 +69,79 @@ foreign_keys:
 columns:
   wds_allow_check_override:
     data_type: BOOLEAN
+    physical_column_flag: true
   wds_complete_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   wds_completing_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wds_deal_stage_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wds_description:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   wds_expected_complete_minutes:
     data_type: INTEGER
+    physical_column_flag: true
   wds_function_error_list:
     data_type: TEXT
+    physical_column_flag: true
   wds_materialized_view_trash:
     data_type: BOOLEAN
+    physical_column_flag: true
   wds_performer_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wds_phase_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   wds_phase_number:
     data_type: INTEGER
+    physical_column_flag: true
   wds_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wds_polling_interval_offset:
     data_type: INTEGER
+    physical_column_flag: true
   wds_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   wds_step_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   wds_step_number:
     data_type: NUMERIC(17,5)
+    physical_column_flag: true
   wds_step_number_formatted:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   wds_step_number_name_formatted:
     data_type: VARCHAR(145)
+    physical_column_flag: true
   wds_timeout_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   wds_version:
     data_type: INTEGER
+    physical_column_flag: true
   wds_visit_number:
     data_type: INTEGER
+    physical_column_flag: true
   wds_wf_deal_process_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wds_wf_deal_step_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   wds_wf_step_function_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   wds_wf_step_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wds_wf_step_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true

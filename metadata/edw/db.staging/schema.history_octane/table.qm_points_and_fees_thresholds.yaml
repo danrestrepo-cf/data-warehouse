@@ -6,56 +6,71 @@ primary_key:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   qmpaft_ceiling_points_and_fees_threshold_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmpaft_ceiling_points_and_fees_threshold_percent
   qmpaft_effective_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmpaft_effective_date
   qmpaft_first_points_and_fees_threshold_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmpaft_first_points_and_fees_threshold_percent
   qmpaft_first_total_loan_amount_threshold:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmpaft_first_total_loan_amount_threshold
   qmpaft_fourth_points_and_fees_threshold_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmpaft_fourth_points_and_fees_threshold_amount
   qmpaft_fourth_total_loan_amount_threshold:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmpaft_fourth_total_loan_amount_threshold
   qmpaft_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmpaft_pid
   qmpaft_second_points_and_fees_threshold_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmpaft_second_points_and_fees_threshold_amount
   qmpaft_second_total_loan_amount_threshold:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmpaft_second_total_loan_amount_threshold
   qmpaft_third_points_and_fees_threshold_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmpaft_third_points_and_fees_threshold_percent
   qmpaft_third_total_loan_amount_threshold:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmpaft_third_total_loan_amount_threshold
   qmpaft_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.qmpaft_version
 step_functions:

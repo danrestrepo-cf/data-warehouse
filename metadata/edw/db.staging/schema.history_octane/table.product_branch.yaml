@@ -23,36 +23,46 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   pbr_branch_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pbr_branch_pid
   pbr_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pbr_from_date
   pbr_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pbr_pid
   pbr_price_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pbr_price_adjustment_percent
   pbr_product_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pbr_product_pid
   pbr_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pbr_through_date
   pbr_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pbr_version
 step_functions:

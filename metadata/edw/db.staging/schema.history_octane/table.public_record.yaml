@@ -55,124 +55,156 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   pr_attorney_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_attorney_name
   pr_bankruptcy_assets_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_bankruptcy_assets_amount
   pr_bankruptcy_exception_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_bankruptcy_exception_type
   pr_bankruptcy_exempt_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_bankruptcy_exempt_amount
   pr_bankruptcy_liabilities_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_bankruptcy_liabilities_amount
   pr_comment:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_comment
   pr_court_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_court_name
   pr_credit_report_identifier:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_credit_report_identifier
   pr_credit_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_credit_request_pid
   pr_defendant_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_defendant_name
   pr_disposition_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_disposition_date
   pr_docket_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_docket_id
   pr_equifax_included:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_equifax_included
   pr_experian_included:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_experian_included
   pr_filed_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_filed_date
   pr_legal_obligation_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_legal_obligation_amount
   pr_note:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_note
   pr_paid_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_paid_date
   pr_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_pid
   pr_plaintiff_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_plaintiff_name
   pr_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_proposal_pid
   pr_public_record_disposition_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_public_record_disposition_type
   pr_public_record_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_public_record_type
   pr_public_record_type_other_description:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_public_record_type_other_description
   pr_report_public_record_disposition_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_report_public_record_disposition_type
   pr_reported_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_reported_date
   pr_settled_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_settled_date
   pr_trans_union_included:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_trans_union_included
   pr_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pr_version
 step_functions:

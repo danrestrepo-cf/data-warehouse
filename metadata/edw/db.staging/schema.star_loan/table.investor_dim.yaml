@@ -5,480 +5,579 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   investor_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_pid
     update_flag: true
   allonge_transfer_to_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_allonge_transfer_to_name
     update_flag: true
   allows_weekend_holiday_locks_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_allow_weekend_holiday_locks
     update_flag: true
   beneficiary_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_beneficiary_city
     update_flag: true
   beneficiary_country:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_i_beneficiary_country.columns.value
     update_flag: true
   beneficiary_country_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_beneficiary_country
     update_flag: true
   beneficiary_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_beneficiary_name
     update_flag: true
   beneficiary_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_beneficiary_postal_code
     update_flag: true
   beneficiary_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_beneficiary_state
     update_flag: true
   beneficiary_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_beneficiary_street1
     update_flag: true
   beneficiary_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_beneficiary_street2
     update_flag: true
   ein:
     data_type: VARCHAR(10)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_ein
     update_flag: true
   file_delivery_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_file_delivery_address_city
     update_flag: true
   file_delivery_address_country:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_i_file_delivery_address_country.columns.value
     update_flag: true
   file_delivery_address_country_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_file_delivery_address_country
     update_flag: true
   file_delivery_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_file_delivery_address_postal_code
     update_flag: true
   file_delivery_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_file_delivery_address_state
     update_flag: true
   file_delivery_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_file_delivery_address_street1
     update_flag: true
   file_delivery_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_file_delivery_address_street2
     update_flag: true
   file_delivery_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_file_delivery_name
     update_flag: true
   fnm_investor_remittance:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_i_fnm_investor_remittance_type.columns.value
     update_flag: true
   fnm_investor_remittance_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_fnm_investor_remittance_type
     update_flag: true
   fnm_mbs_investor_remittance_day_of_month:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_fnm_mbs_investor_remittance_day_of_month
     update_flag: true
   fnm_mbs_loan_default_loss_party:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_i_fnm_mbs_loan_default_loss_party_type.columns.value
     update_flag: true
   fnm_mbs_loan_default_loss_party_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_fnm_mbs_loan_default_loss_party_type
     update_flag: true
   fnm_mbs_reo_marketing_party:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_i_fnm_mbs_reo_marketing_party_type.columns.value
     update_flag: true
   fnm_mbs_reo_marketing_party_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_fnm_mbs_reo_marketing_party_type
     update_flag: true
   fnma_servicer_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_fnma_servicer_id
     update_flag: true
   investor_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_investor_city
     update_flag: true
   investor_country:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_i_investor_country.columns.value
     update_flag: true
   investor_country_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_investor_country
     update_flag: true
   investor_hmda_purchaser_of_loan:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_i_investor_hmda_purchaser_of_loan_type.columns.value
     update_flag: true
   investor_hmda_purchaser_of_loan_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_investor_hmda_purchaser_of_loan_type
     update_flag: true
   investor_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_investor_id
     update_flag: true
   investor_lock_disable_time:
     data_type: TIMETZ
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_lock_disable_time
     update_flag: true
   investor_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_investor_name
     update_flag: true
   investor_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_investor_postal_code
     update_flag: true
   investor_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_investor_state
     update_flag: true
   investor_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_investor_street1
     update_flag: true
   investor_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_investor_street2
     update_flag: true
   initial_beneficiary_candidate_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_initial_beneficiary_candidate
     update_flag: true
   initial_servicer_candidate_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_initial_servicer_candidate
     update_flag: true
   mbs_investor_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_mbs_investor
     update_flag: true
   loan_file_delivery_method:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_i_loan_file_delivery_method_type.columns.value
     update_flag: true
   loan_file_delivery_method_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_loan_file_delivery_method_type
     update_flag: true
   lock_expiration_delivery_subtrahend_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_lock_expiration_delivery_subtrahend_days
     update_flag: true
   loss_payee_assignee_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_loss_payee_assignee_name
     update_flag: true
   loss_payee_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_loss_payee_city
     update_flag: true
   loss_payee_country:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_i_loss_payee_country.columns.value
     update_flag: true
   loss_payee_country_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_loss_payee_country
     update_flag: true
   loss_payee_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_loss_payee_name
     update_flag: true
   loss_payee_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_loss_payee_postal_code
     update_flag: true
   loss_payee_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_loss_payee_state
     update_flag: true
   loss_payee_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_loss_payee_street1
     update_flag: true
   loss_payee_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_loss_payee_street2
     update_flag: true
   maximum_lock_extension_days_allowed:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_maximum_lock_extension_days_allowed
     update_flag: true
   maximum_lock_extensions_allowed:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_maximum_lock_extensions_allowed
     update_flag: true
   mers_org_id:
     data_type: VARCHAR(7)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_mers_org_id
     update_flag: true
   mers_org_member:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_mers_org_member
     update_flag: true
   mortech_investor_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_mortech_investor_id
     update_flag: true
   nmls_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_nmls_id
     update_flag: true
   nmls_id_applicable:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_nmls_id_applicable
     update_flag: true
   offers_secondary_financing_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_offers_secondary_financing
     update_flag: true
   secondary_financing_source:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_i_secondary_financing_source_type.columns.value
     update_flag: true
   secondary_financing_source_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_secondary_financing_source_type
     update_flag: true
   servicer_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_servicer_address_city
     update_flag: true
   servicer_address_country:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_i_servicer_address_country.columns.value
     update_flag: true
   servicer_address_country_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_servicer_address_country
     update_flag: true
   servicer_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_servicer_address_postal_code
     update_flag: true
   servicer_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_servicer_address_state
     update_flag: true
   servicer_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_servicer_address_street1
     update_flag: true
   servicer_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_servicer_address_street2
     update_flag: true
   servicer_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_servicer_name
     update_flag: true
   sub_servicer_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_sub_servicer_address_city
     update_flag: true
   sub_servicer_address_country:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_i_sub_servicer_address_country.columns.value
     update_flag: true
   sub_servicer_address_country_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_sub_servicer_address_country
     update_flag: true
   sub_servicer_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_sub_servicer_address_postal_code
     update_flag: true
   sub_servicer_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_sub_servicer_address_state
     update_flag: true
   sub_servicer_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_sub_servicer_address_street1
     update_flag: true
   sub_servicer_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_sub_servicer_address_street2
     update_flag: true
   sub_servicer_mers_org_id:
     data_type: VARCHAR(7)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_sub_servicer_mers_org_id
     update_flag: true
   sub_servicer_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_sub_servicer_name
     update_flag: true
   website_url:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_website_url
     update_flag: true
   when_recorded_mail_to_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_when_recorded_mail_to_city
     update_flag: true
   when_recorded_mail_to_country:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_i_when_recorded_mail_to_country.columns.value
     update_flag: true
   when_recorded_mail_to_country_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_when_recorded_mail_to_country
     update_flag: true
   when_recorded_mail_to_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_when_recorded_mail_to_name
     update_flag: true
   when_recorded_mail_to_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_when_recorded_mail_to_postal_code
     update_flag: true
   when_recorded_mail_to_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_when_recorded_mail_to_state
     update_flag: true
   when_recorded_mail_to_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_when_recorded_mail_to_street1
     update_flag: true
   when_recorded_mail_to_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.i_when_recorded_mail_to_street2
     update_flag: true

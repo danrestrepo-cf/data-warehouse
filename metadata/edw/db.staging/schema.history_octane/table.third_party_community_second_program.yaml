@@ -55,68 +55,86 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   tpcsp_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_account_pid
   tpcsp_deed_page_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_deed_page_count
   tpcsp_fnm_community_lending_product_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_fnm_community_lending_product_type
   tpcsp_fnm_community_seconds_repayment_structure_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_fnm_community_seconds_repayment_structure_type
   tpcsp_fre_community_program_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_fre_community_program_type
   tpcsp_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_from_date
   tpcsp_investor_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_investor_pid
   tpcsp_notes:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_notes
   tpcsp_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_pid
   tpcsp_program_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_program_id
   tpcsp_program_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_program_name
   tpcsp_security_instrument_page_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_security_instrument_page_count
   tpcsp_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_through_date
   tpcsp_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_version
   tpcsp_wire_action_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tpcsp_wire_action_type
 step_functions:

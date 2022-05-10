@@ -37,27 +37,40 @@ foreign_keys:
 columns:
   lds_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lds_active:
     data_type: BOOLEAN
+    physical_column_flag: true
   lds_channel_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lds_compensation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lds_lead_id_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   lds_lead_source_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   lds_lead_source_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lds_mortech_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lds_mortech_lead_source_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   lds_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lds_training_only:
     data_type: BOOLEAN
+    physical_column_flag: true
   lds_version:
     data_type: INTEGER
+    physical_column_flag: true
   lds_zero_margin_allowed:
     data_type: BOOLEAN
+    physical_column_flag: true

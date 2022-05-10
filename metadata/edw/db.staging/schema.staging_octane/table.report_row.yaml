@@ -21,15 +21,22 @@ foreign_keys:
 columns:
   rprw_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rprw_description:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   rprw_formula_row:
     data_type: BOOLEAN
+    physical_column_flag: true
   rprw_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rprw_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rprw_report_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rprw_version:
     data_type: INTEGER
+    physical_column_flag: true

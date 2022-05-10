@@ -111,192 +111,241 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   llmn_apor_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_apor_date
   llmn_aus_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_aus_type
   llmn_base_arm_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_base_arm_margin_percent
   llmn_base_loan_amount:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_base_loan_amount
   llmn_base_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_base_note_rate_percent
   llmn_base_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_base_price_percent
   llmn_buydown_schedule_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_buydown_schedule_type
   llmn_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_create_datetime
   llmn_created_historic_price_delta:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_created_historic_price_delta
   llmn_creator_agent_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_creator_agent_type
   llmn_creator_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_creator_lender_user_pid
   llmn_creator_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_creator_unparsed_name
   llmn_effective_duration_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_effective_duration_days
   llmn_effective_lock_expiration_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_effective_lock_expiration_datetime
   llmn_effective_rate_sheet_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_effective_rate_sheet_datetime
   llmn_high_balance_hit_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_high_balance_hit_percent
   llmn_interest_only_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_interest_only_type
   llmn_investor_base_arm_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_investor_base_arm_margin_percent
   llmn_investor_base_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_investor_base_note_rate_percent
   llmn_investor_base_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_investor_base_price_percent
   llmn_latest_version:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_latest_version
   llmn_lender_lock_major_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_lender_lock_major_pid
   llmn_lender_lock_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_lender_lock_status_type
   llmn_loan_amount:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_loan_amount
   llmn_lock_arm_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_lock_arm_margin_percent
   llmn_lock_commitment_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_lock_commitment_type
   llmn_lock_initial_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_lock_initial_note_rate_percent
   llmn_lock_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_lock_note_rate_percent
   llmn_lock_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_lock_price_percent
   llmn_lock_price_raw_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_lock_price_raw_percent
   llmn_maximum_investor_price_includes_srp:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_maximum_investor_price_includes_srp
   llmn_maximum_investor_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_maximum_investor_price_percent
   llmn_maximum_rebate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_maximum_rebate_percent
   llmn_minor_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_minor_version
   llmn_mortgage_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_mortgage_type
   llmn_new_york_payup_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_new_york_payup_percent
   llmn_num_extensions:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_num_extensions
   llmn_offering_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_offering_pid
   llmn_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_pid
   llmn_prepay_penalty_schedule_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_prepay_penalty_schedule_type
   llmn_pricing_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_pricing_datetime
   llmn_product_terms_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_product_terms_pid
   llmn_profit_table_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_profit_table_name
   llmn_proposal_snapshot_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_proposal_snapshot_pid
   llmn_total_profit_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_total_profit_margin_percent
   llmn_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.llmn_version
 step_functions:

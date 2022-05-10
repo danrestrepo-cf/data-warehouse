@@ -5,62 +5,81 @@ primary_key:
 columns:
   borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_pid
     update_flag: false
   street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: true
   street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: true
   city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: true
   postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: true
   county_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: true
   county_fips:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     update_flag: true
   state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: true
   state_fips:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     update_flag: true
   country_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: true
   country:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
 step_functions:
   SP-200040:

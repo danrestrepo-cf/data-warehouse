@@ -29,27 +29,40 @@ foreign_keys:
 columns:
   lla_account_price_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   lla_arm_margin_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   lla_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   lla_creator_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lla_creator_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lla_investor_price_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   lla_lender_lock_minor_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lla_lock_add_on_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lla_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lla_price_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   lla_rate_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   lla_summary:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   lla_version:
     data_type: INTEGER
+    physical_column_flag: true

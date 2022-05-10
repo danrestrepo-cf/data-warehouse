@@ -37,21 +37,31 @@ foreign_keys:
 columns:
   dfr_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dfr_loan_safe_collateral_risk_score:
     data_type: INTEGER
+    physical_column_flag: true
   dfr_loan_safe_fraud_risk_score:
     data_type: INTEGER
+    physical_column_flag: true
   dfr_loan_safe_product_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dfr_loan_safe_risk_manager_html_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dfr_loan_safe_risk_manager_order_number:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dfr_loan_safe_risk_manager_pdf_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dfr_loan_safe_risk_manager_status_messages:
     data_type: TEXT
+    physical_column_flag: true
   dfr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dfr_version:
     data_type: INTEGER
+    physical_column_flag: true

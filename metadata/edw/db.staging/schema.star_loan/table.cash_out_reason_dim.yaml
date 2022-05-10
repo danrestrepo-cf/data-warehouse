@@ -5,80 +5,99 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   cash_out_reason_business_debt_or_debt_consolidation_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prp_cash_out_reason_business_debt_or_debt_consolidation
     update_flag: false
   cash_out_reason_debt_or_debt_consolidation_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prp_cash_out_reason_debt_or_debt_consolidation
     update_flag: false
   cash_out_reason_future_investment_not_under_contract_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prp_cash_out_reason_future_investment_not_under_contract
     update_flag: false
   cash_out_reason_future_investment_under_contract_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prp_cash_out_reason_future_investment_under_contract
     update_flag: false
   cash_out_reason_home_improvement_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prp_cash_out_reason_home_improvement
     update_flag: false
   cash_out_reason_investment_or_business_property_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prp_cash_out_reason_investment_or_business_property
     update_flag: false
   cash_out_reason_other_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prp_cash_out_reason_other
     update_flag: false
   cash_out_reason_personal_use_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prp_cash_out_reason_personal_use
     update_flag: false
   cash_out_reason_student_loans_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prp_cash_out_reason_student_loans
     update_flag: false
   non_business_cash_out_reason_acknowledged:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_prp_non_business_cash_out_reason_acknowledged.columns.value
     update_flag: true
   non_business_cash_out_reason_acknowledged_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prp_non_business_cash_out_reason_acknowledged
     update_flag: false

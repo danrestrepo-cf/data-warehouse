@@ -5,90 +5,111 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   product_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_pid
     update_flag: true
   investor_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_investor_pid
     update_flag: true
   investor_product_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_investor_product_id
     update_flag: true
   description:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_description
     update_flag: true
   fnm_product_name:
     data_type: VARCHAR(15)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_fnm_product_name
     update_flag: true
   fund_source:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_p_fund_source_type.columns.value
     update_flag: true
   fund_source_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_fund_source_type
     update_flag: true
   investor_product_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_investor_product_name
     update_flag: true
   lock_auto_confirm_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_lock_auto_confirm
     update_flag: true
   product_side:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_p_product_side_type.columns.value
     update_flag: true
   product_side_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_product_side_type
     update_flag: true
   from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_from_date
     update_flag: true
   through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_through_date
     update_flag: true

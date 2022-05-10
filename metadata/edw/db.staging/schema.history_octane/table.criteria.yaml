@@ -15,42 +15,53 @@ foreign_keys:
 columns:
   cr_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cr_account_pid
   cr_criteria_owner_instance_name:
     data_type: VARCHAR(2048)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cr_criteria_owner_instance_name
   cr_criteria_source:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cr_criteria_source
   cr_criteria_source_html:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cr_criteria_source_html
   cr_criteria_source_pretty_text:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cr_criteria_source_pretty_text
   cr_criteria_sql:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cr_criteria_sql
   cr_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cr_pid
   cr_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cr_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100024:
     etls:

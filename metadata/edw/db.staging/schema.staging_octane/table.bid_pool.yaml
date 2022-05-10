@@ -21,13 +21,19 @@ foreign_keys:
 columns:
   bp_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bp_bid_pool_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   bp_bid_pool_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   bp_create_datetime:
     data_type: DATE
+    physical_column_flag: true
   bp_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bp_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -29,15 +29,22 @@ foreign_keys:
 columns:
   aorf_appraisal_order_request_file_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   aorf_appraisal_order_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
   aorf_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   aorf_pid:
     data_type: BIGINT
+    physical_column_flag: true
   aorf_vendor_document_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   aorf_vendor_document_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   aorf_version:
     data_type: INTEGER
+    physical_column_flag: true

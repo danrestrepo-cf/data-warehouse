@@ -29,13 +29,19 @@ foreign_keys:
 columns:
   lpf_finding_result:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lpf_finding_value:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lpf_lp_finding_message_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lpf_lp_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lpf_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lpf_version:
     data_type: INTEGER
+    physical_column_flag: true

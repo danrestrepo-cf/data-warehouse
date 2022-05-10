@@ -63,66 +63,84 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   sdvdc_active:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdvdc_active
   sdvdc_criteria_html:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   sdvdc_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdvdc_criteria_pid
   sdvdc_days_before_key_date:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdvdc_days_before_key_date
   sdvdc_deal_child_relationship_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdvdc_deal_child_relationship_type
   sdvdc_deal_child_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdvdc_deal_child_type
   sdvdc_doc_key_date_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdvdc_doc_key_date_type
   sdvdc_doc_validity_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdvdc_doc_validity_type
   sdvdc_else_case:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdvdc_else_case
   sdvdc_expiration_calendar_rule_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdvdc_expiration_calendar_rule_type
   sdvdc_ordinal:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdvdc_ordinal
   sdvdc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdvdc_pid
   sdvdc_smart_doc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdvdc_smart_doc_pid
   sdvdc_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdvdc_version
   sdvdc_warning_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdvdc_warning_days
 step_functions:

@@ -13,11 +13,16 @@ foreign_keys:
 columns:
   rc_city_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rc_recording_city_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rc_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rc_version:
     data_type: INTEGER
+    physical_column_flag: true

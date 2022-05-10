@@ -21,15 +21,22 @@ foreign_keys:
 columns:
   po_from_date:
     data_type: DATE
+    physical_column_flag: true
   po_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   po_pid:
     data_type: BIGINT
+    physical_column_flag: true
   po_price_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   po_product_pid:
     data_type: BIGINT
+    physical_column_flag: true
   po_through_date:
     data_type: DATE
+    physical_column_flag: true
   po_version:
     data_type: INTEGER
+    physical_column_flag: true

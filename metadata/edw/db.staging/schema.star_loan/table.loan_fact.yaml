@@ -1006,470 +1006,617 @@ foreign_keys:
 columns:
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   loan_pid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   loan_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   loan_junk_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   product_choice_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   transaction_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   transaction_junk_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   current_loan_beneficiary_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   active_loan_funding_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b1_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b2_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b3_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b4_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b5_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   c1_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   c2_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   c3_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   c4_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   c5_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   n1_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   n2_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   n3_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   n4_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   n5_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   n6_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   n7_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   n8_borrower_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b1_borrower_demographics_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b1_borrower_lending_profile_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b1_borrower_counseling_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b1_borrower_employee_status_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b1_borrower_finances_declarations_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b1_borrower_hmda_collection_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b1_borrower_hmda_ethnicity_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b1_borrower_hmda_race_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b1_borrower_hmda_sex_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b1_borrower_junk_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b1_borrower_pre_umdp_declarations_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b1_borrower_property_declarations_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   b1_borrower_relations_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   primary_application_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   collateral_to_custodian_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   interim_funder_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   product_terms_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   product_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   product_investor_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   hmda_purchaser_of_loan_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   apr:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_apr
     update_flag: true
   base_loan_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_base_loan_amount
     update_flag: true
   financed_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_financed_amount
     update_flag: true
   loan_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_loan_amount
     update_flag: true
   ltv_ratio_percent:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_ltv_ratio_percent
     update_flag: true
   note_rate_percent:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_note_rate_percent
     update_flag: true
   purchase_advice_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     update_flag: true
   finance_charge_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_finance_charge_amount
     update_flag: true
   hoepa_fees_dollar_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_hoepa_fees_dollar_amount
     update_flag: true
   interest_rate_fee_change_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_interest_rate_fee_change_amount
     update_flag: true
   principal_curtailment_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_principal_curtailment_amount
     update_flag: true
   qualifying_pi_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_qualifying_pi_amount
     update_flag: true
   target_cash_out_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_target_cash_out_amount
     update_flag: true
   heloc_maximum_balance_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_heloc_maximum_balance_amount
     update_flag: true
   agency_case_id_assigned_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   apor_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   application_signed_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   approved_with_conditions_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   beneficiary_from_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   beneficiary_through_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   collateral_sent_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   disbursement_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   early_funding_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   effective_funding_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   fha_endorsement_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   estimated_funding_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   intent_to_proceed_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   funding_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   funding_requested_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   loan_file_ship_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   mers_transfer_creation_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   pending_wire_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   rejected_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   return_confirmed_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   return_request_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   scheduled_release_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   usda_guarantee_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   va_guaranty_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   account_executive_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   closing_doc_specialist_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   closing_scheduler_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   collateral_to_investor_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   collateral_underwriter_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   correspondent_client_advocate_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   final_documents_to_investor_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   flood_insurance_specialist_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   funder_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   government_insurance_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   ho6_specialist_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   hoa_specialist_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   hoi_specialist_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   hud_va_lender_officer_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   internal_construction_manager_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   investor_conditions_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   investor_stack_to_investor_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   loan_officer_assistant_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   loan_payoff_specialist_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   originator_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   processor_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   project_underwriter_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   subordination_specialist_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   supplemental_originator_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   title_specialist_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   transaction_assistant_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   underwriter_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   underwriting_manager_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   va_specialist_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   verbal_voe_specialist_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   voe_specialist_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   wholesale_client_advocate_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   wire_specialist_lender_user_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   initial_beneficiary_investor_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   first_beneficiary_after_initial_investor_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   most_recent_purchasing_beneficiary_investor_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   current_beneficiary_investor_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   current_transaction_stage_from_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   cd_clear_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   charges_enabled_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   effective_earliest_allowed_consummation_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   effective_hmda_action_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   effective_note_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   hmda_action_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   initial_cancel_status_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   initial_uw_disposition_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   initial_uw_submit_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   note_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   preapproval_complete_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   transaction_create_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   transaction_welcome_call_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   trid_application_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   underwrite_publish_date_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   cash_out_reason_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   hmda_action_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   underwrite_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
 step_functions:
   SP-300001-insert-update:

@@ -31,62 +31,78 @@ foreign_keys:
 columns:
   cmloc_company_location_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cmloc_company_location_type
   cmloc_company_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cmloc_company_pid
   cmloc_fax:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cmloc_fax
   cmloc_fha_branch_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cmloc_fha_branch_id
   cmloc_fha_branch_id_qualified:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cmloc_fha_branch_id_qualified
   cmloc_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cmloc_from_date
   cmloc_location_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cmloc_location_pid
   cmloc_nmls_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cmloc_nmls_id
   cmloc_office_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cmloc_office_phone
   cmloc_office_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cmloc_office_phone_extension
   cmloc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cmloc_pid
   cmloc_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cmloc_through_date
   cmloc_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cmloc_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100852:
     etls:

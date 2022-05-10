@@ -333,235 +333,352 @@ foreign_keys:
 columns:
   pt_allow_loan_amount_cents:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_always_current_market_price:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_amortization_term_months:
     data_type: INTEGER
+    physical_column_flag: true
   pt_arm_convertible:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_arm_convertible_from_month:
     data_type: INTEGER
+    physical_column_flag: true
   pt_arm_convertible_through_month:
     data_type: INTEGER
+    physical_column_flag: true
   pt_arm_floor_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_arm_index_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_arm_lookback_period_days:
     data_type: INTEGER
+    physical_column_flag: true
   pt_arm_payment_adjustment_calculation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_assumable:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_buydown_base_date_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_buydown_subsidy_calculation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_community_lending_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_conditions_to_assumability:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_credit_qualifying:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_days_per_year_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_decision_credit_score_calc_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_deed_page_count:
     data_type: INTEGER
+    physical_column_flag: true
   pt_deferred_payment_months:
     data_type: INTEGER
+    physical_column_flag: true
   pt_demand_feature:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_du_risk_assessment_accepted:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_due_in_term_months:
     data_type: INTEGER
+    physical_column_flag: true
   pt_escrow_cushion_months:
     data_type: INTEGER
+    physical_column_flag: true
   pt_escrow_waiver_allowed:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_external_fha_underwrite_accepted:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_external_investor_underwrite_accepted:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_external_usda_underwrite_accepted:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_external_va_underwrite_accepted:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_family_advantage:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_fha_rehab_program_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_fha_special_program_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_fnm_arm_plan_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_fnm_community_lending_product_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_fre_community_program_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_from_date:
     data_type: DATE
+    physical_column_flag: true
   pt_gpm_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_gpm_adjustment_years:
     data_type: INTEGER
+    physical_column_flag: true
   pt_heloc_cancel_fee_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pt_heloc_cancel_fee_applicable_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_heloc_cancel_fee_period_months:
     data_type: INTEGER
+    physical_column_flag: true
   pt_heloc_draw_period_months:
     data_type: INTEGER
+    physical_column_flag: true
   pt_heloc_maximum_initial_draw:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_heloc_maximum_initial_draw_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   pt_heloc_minimum_draw:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_heloc_minimum_draw_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   pt_heloc_repayment_period_duration_months:
     data_type: INTEGER
+    physical_column_flag: true
   pt_high_balance:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_initial_payment_adjustment_term_months:
     data_type: INTEGER
+    physical_column_flag: true
   pt_initial_rate_adjustment_cap_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_initial_rate_adjustment_term_months:
     data_type: INTEGER
+    physical_column_flag: true
   pt_internal_underwrite_accepted:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_ipc_calc_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_ipc_cltv_ratio_percent1:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_ipc_cltv_ratio_percent2:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_ipc_cltv_ratio_percent3:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_ipc_cltv_ratio_percent4:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_ipc_comparison_operator_type1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_ipc_comparison_operator_type2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_ipc_comparison_operator_type3:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_ipc_comparison_operator_type4:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_ipc_limit_percent1:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_ipc_limit_percent2:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_ipc_limit_percent3:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_ipc_limit_percent4:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_ipc_property_usage_type1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_ipc_property_usage_type2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_ipc_property_usage_type3:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_ipc_property_usage_type4:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_lender_hazard_insurance_available:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_lender_hazard_insurance_premium_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pt_lender_hazard_insurance_term_months:
     data_type: INTEGER
+    physical_column_flag: true
   pt_lien_priority_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_loan_amortization_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_loan_requires_hazard_insurance:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_lp_risk_assessment_accepted:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_manual_risk_assessment_accepted:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_maximum_number_of_construction_draws:
     data_type: INTEGER
+    physical_column_flag: true
   pt_minimum_payment_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_minimum_rate_term_months:
     data_type: INTEGER
+    physical_column_flag: true
   pt_mortgage_credit_certificate_eligible:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_mortgage_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_negative_amortization_limit_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_negative_amortization_recast_period_months:
     data_type: INTEGER
+    physical_column_flag: true
   pt_negative_amortization_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_new_york:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_no_mi_product:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_non_conforming:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_partial_payment_policy_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_payment_adjustment_lifetime_cap_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_payment_adjustment_periodic_cap:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_payment_frequency_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_payment_structure_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pt_prepaid_interest_rate_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_prepay_penalty_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_prepayment_finance_charge_refund:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_product_appraisal_requirement_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_product_category:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_product_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pt_product_special_program_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_qualifying_monthly_payment_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_qualifying_rate_input_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_qualifying_rate_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_rate_adjustment_lifetime_cap_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_rate_protect:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_section_of_act_coarse_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_security_instrument_page_count:
     data_type: INTEGER
+    physical_column_flag: true
   pt_servicing_transfer_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_subsequent_payment_adjustment_term_months:
     data_type: INTEGER
+    physical_column_flag: true
   pt_subsequent_rate_adjustment_cap_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pt_subsequent_rate_adjustment_term_months:
     data_type: INTEGER
+    physical_column_flag: true
   pt_texas_veterans_land_board:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_third_party_community_second_program_eligibility_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pt_third_party_grant_eligible:
     data_type: BOOLEAN
+    physical_column_flag: true
   pt_version:
     data_type: INTEGER
+    physical_column_flag: true
   pt_zero_note_rate:
     data_type: BOOLEAN
+    physical_column_flag: true

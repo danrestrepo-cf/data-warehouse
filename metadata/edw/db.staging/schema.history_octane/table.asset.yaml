@@ -87,194 +87,243 @@ foreign_keys:
 columns:
   as_aggregate_description:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_aggregate_description
   as_application_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_application_pid
   as_asset_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_asset_type
   as_automobile_make_description:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_automobile_make_description
   as_automobile_model_year:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_automobile_model_year
   as_available_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_available_amount
   as_cash_or_market_value_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_cash_or_market_value_amount
   as_closing_costs_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_closing_costs_amount
   as_deposit_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_deposit_date
   as_description:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_description
   as_donor_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_donor_city
   as_donor_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_donor_country
   as_donor_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_donor_postal_code
   as_donor_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_donor_state
   as_donor_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_donor_street1
   as_donor_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_donor_street2
   as_down_payment_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_down_payment_amount
   as_earnest_money_deposit_is_gift:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_earnest_money_deposit_is_gift
   as_earnest_money_deposit_source_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_earnest_money_deposit_source_pid
   as_gift_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_gift_amount
   as_gift_funds_account_holder_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_gift_funds_account_holder_type
   as_gift_funds_depository_asset_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_gift_funds_depository_asset_pid
   as_gift_funds_donor_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_gift_funds_donor_phone
   as_gift_funds_donor_relationship:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_gift_funds_donor_relationship
   as_gift_funds_donor_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_gift_funds_donor_unparsed_name
   as_gift_funds_ein:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_gift_funds_ein
   as_gift_funds_other_type_description:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_gift_funds_other_type_description
   as_gift_funds_source_account_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_gift_funds_source_account_type
   as_gift_funds_source_holder_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_gift_funds_source_holder_name
   as_gift_funds_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_gift_funds_type
   as_holder_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_holder_city
   as_holder_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_holder_country
   as_holder_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_holder_name
   as_holder_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_holder_postal_code
   as_holder_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_holder_state
   as_holder_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_holder_street1
   as_holder_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_holder_street2
   as_life_insurance_face_value_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_life_insurance_face_value_amount
   as_liquid_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_liquid_amount
   as_liquid_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_liquid_percent
   as_penalty_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_penalty_amount
   as_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_pid
   as_snapshotted_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_snapshotted_pid
   as_source_verification_required:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_source_verification_required
   as_stock_bond_mutual_fund_share_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_stock_bond_mutual_fund_share_count
   as_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.as_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100070:
     etls:

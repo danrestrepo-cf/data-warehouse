@@ -35,7 +35,7 @@ class InsertUpdateFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
                         for etl in step_function.etls:
                             if etl.output_type == ETLOutputType.INSERT_UPDATE:
                                 for column in table.columns:
-                                    if column.name != 'dwid':
+                                    if column.name != 'dwid' and column.physical_column_flag is True:
                                         metadata_table.add_row({
                                             'process_name': etl.process_name,
                                             'update_lookup': column.name,

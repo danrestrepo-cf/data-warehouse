@@ -13,9 +13,13 @@ foreign_keys:
 columns:
   lsmt_effective_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   lsmt_lead_source_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lsmt_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lsmt_version:
     data_type: INTEGER
+    physical_column_flag: true

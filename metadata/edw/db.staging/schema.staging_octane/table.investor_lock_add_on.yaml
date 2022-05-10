@@ -21,21 +21,31 @@ foreign_keys:
 columns:
   ila_arm_margin_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ila_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   ila_creator_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ila_creator_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ila_investor_lock_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ila_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ila_price_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ila_rate_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ila_summary:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   ila_version:
     data_type: INTEGER
+    physical_column_flag: true

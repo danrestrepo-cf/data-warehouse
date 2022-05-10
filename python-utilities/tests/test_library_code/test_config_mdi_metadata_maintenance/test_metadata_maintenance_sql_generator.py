@@ -99,7 +99,8 @@ class TestGenerateTableMaintenanceSQL(unittest.TestCase):
                                         'name': 'table1',
                                         'columns': {
                                             'col1': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }
@@ -134,10 +135,12 @@ class TestGenerateTableMaintenanceSQL(unittest.TestCase):
                                         'name': 'table1',
                                         'columns': {
                                             'col1': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             },
                                             'col2': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }
@@ -172,13 +175,16 @@ class TestGenerateTableMaintenanceSQL(unittest.TestCase):
                                         'name': 'table1',
                                         'columns': {
                                             'col1': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             },
                                             'col2': {
-                                                'data_type': 'INT'
+                                                'data_type': 'INT',
+                                                'physical_column_flag': True
                                             },
                                             'col3': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }
@@ -217,10 +223,12 @@ class TestGenerateTableMaintenanceSQL(unittest.TestCase):
                                         'name': 'table1',
                                         'columns': {
                                             'col1': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             },
                                             'col2': {
-                                                'data_type': 'INT'
+                                                'data_type': 'INT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }
@@ -426,10 +434,12 @@ class TestGenerateAllMetadataMaintenanceSQL(unittest.TestCase):
                                         'name': 'table1',
                                         'columns': {
                                             'col1': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             },
                                             'col2': {
-                                                'data_type': 'INT'
+                                                'data_type': 'INT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }
@@ -465,10 +475,12 @@ class TestGenerateAllMetadataMaintenanceSQL(unittest.TestCase):
                                         'name': 'table1',
                                         'columns': {
                                             'col1': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             },
                                             'col3': {
-                                                'data_type': 'INT'
+                                                'data_type': 'INT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }
@@ -525,10 +537,12 @@ class TestGenerateAllMetadataMaintenanceSQL(unittest.TestCase):
                                         'name': 'table1',
                                         'columns': {
                                             'col1': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True
                                             },
                                             'col3': {
-                                                'data_type': 'INT'
+                                                'data_type': 'INT',
+                                                'physical_column_flag': True
                                             }
                                         }
                                     }

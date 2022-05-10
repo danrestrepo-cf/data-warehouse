@@ -29,15 +29,22 @@ foreign_keys:
 columns:
   sdst_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sdst_active:
     data_type: BOOLEAN
+    physical_column_flag: true
   sdst_doc_set_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sdst_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sdst_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sdst_smart_stack_doc_set_include_option_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sdst_version:
     data_type: INTEGER
+    physical_column_flag: true

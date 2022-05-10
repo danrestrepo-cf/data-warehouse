@@ -47,44 +47,56 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   slpcg_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcg_account_pid
   slpcg_group_id:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcg_group_id
   slpcg_group_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcg_group_name
   slpcg_payer_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcg_payer_org_node_pid
   slpcg_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcg_pid
   slpcg_smart_ledger_plan_case_group_calculation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcg_smart_ledger_plan_case_group_calculation_type
   slpcg_smart_ledger_plan_case_group_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcg_smart_ledger_plan_case_group_type
   slpcg_smart_ledger_plan_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcg_smart_ledger_plan_pid
   slpcg_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcg_version
 step_functions:

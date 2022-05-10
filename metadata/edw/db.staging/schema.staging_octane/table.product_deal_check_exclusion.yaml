@@ -21,9 +21,13 @@ foreign_keys:
 columns:
   pdce_deal_check_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pdce_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pdce_product_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pdce_version:
     data_type: INTEGER
+    physical_column_flag: true

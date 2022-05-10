@@ -31,82 +31,103 @@ foreign_keys:
 columns:
   carr_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_account_pid
   carr_cancelled_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_cancelled_from_date
   carr_cancelled_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_cancelled_through_date
   carr_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_create_datetime
   carr_end_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_end_datetime
   carr_error_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_error_file_pid
   carr_export_csv_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_export_csv_repository_file_pid
   carr_exported_deal_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_exported_deal_count
   carr_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_pid
   carr_request_status_messages:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_request_status_messages
   carr_request_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_request_status_type
   carr_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_requester_unparsed_name
   carr_sold_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_sold_from_date
   carr_sold_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_sold_through_date
   carr_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_start_datetime
   carr_total_deal_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_total_deal_count
   carr_use_loan_hedge_data:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_use_loan_hedge_data
   carr_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.carr_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100293:
     etls:

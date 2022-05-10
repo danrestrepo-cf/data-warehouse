@@ -29,11 +29,16 @@ foreign_keys:
 columns:
   kp_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   kp_key_package_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   kp_pid:
     data_type: BIGINT
+    physical_column_flag: true
   kp_smart_doc_set_pid:
     data_type: BIGINT
+    physical_column_flag: true
   kp_version:
     data_type: INTEGER
+    physical_column_flag: true

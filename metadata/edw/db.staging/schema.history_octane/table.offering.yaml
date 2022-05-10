@@ -23,48 +23,61 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   of_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.of_account_pid
   of_adverse_action_offering:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.of_adverse_action_offering
   of_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.of_from_date
   of_mortech_product_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.of_mortech_product_id
   of_offering_group_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.of_offering_group_pid
   of_offering_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.of_offering_id
   of_offering_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.of_offering_name
   of_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.of_pid
   of_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.of_through_date
   of_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.of_version
 step_functions:

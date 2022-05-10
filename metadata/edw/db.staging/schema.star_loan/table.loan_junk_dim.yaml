@@ -5,85 +5,105 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   buydown_contributor:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_l_buydown_contributor_type.columns.value
     update_flag: true
   buydown_contributor_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_buydown_contributor_type
     update_flag: false
   fha_program:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_l_fha_program_code_type.columns.value
     update_flag: true
   fha_program_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_fha_program_code_type
     update_flag: false
   hmda_hoepa_status:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_l_hmda_hoepa_status_type.columns.value
     update_flag: true
   hmda_hoepa_status_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_hmda_hoepa_status_type
     update_flag: false
   durp_eligibility_opt_out_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_durp_eligibility_opt_out
     update_flag: false
   fha_principal_write_down_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_fha_principal_write_down
     update_flag: false
   hpml_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_hpml
     update_flag: false
   lender_concession_candidate_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_lender_concession_candidate
     update_flag: false
   mi_required_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_loan_1.columns.prp_mi_required
     update_flag: false
   piggyback_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       calculation:
         string: |-
@@ -97,81 +117,97 @@ columns:
     update_flag: false
   qm_eligible_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_qm_eligible
     update_flag: false
   qualified_mortgage_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_qualified_mortgage
     update_flag: false
   secondary_clear_to_commit_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_secondary_clear_to_commit
     update_flag: false
   student_loan_cash_out_refinance_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_student_loan_cash_out_refinance
     update_flag: false
   lien_priority:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_l_lien_priority_type.columns.value
     update_flag: true
   lien_priority_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_lien_priority_type
     update_flag: false
   lqa_purchase_eligibility:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_l_lqa_purchase_eligibility_type.columns.value
     update_flag: true
   lqa_purchase_eligibility_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_lqa_purchase_eligibility_type
     update_flag: false
   qualified_mortgage_status:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_l_qualified_mortgage_status_type.columns.value
     update_flag: true
   qualified_mortgage_status_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_qualified_mortgage_status_type
     update_flag: false
   qualifying_rate:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_l_qualifying_rate_type.columns.value
     update_flag: true
   qualifying_rate_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_qualifying_rate_type
     update_flag: false
   texas_equity:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_l_texas_equity.columns.value
     update_flag: true
   texas_equity_auto:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_l_texas_equity_auto.columns.value
     update_flag: true
   texas_equity_auto_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_texas_equity_auto
     update_flag: false
   texas_equity_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.l_texas_equity
     update_flag: false

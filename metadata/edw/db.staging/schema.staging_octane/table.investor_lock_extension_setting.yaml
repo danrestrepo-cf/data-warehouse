@@ -13,17 +13,25 @@ foreign_keys:
 columns:
   iles_auto_confirm:
     data_type: BOOLEAN
+    physical_column_flag: true
   iles_extension_days:
     data_type: INTEGER
+    physical_column_flag: true
   iles_from_date:
     data_type: DATE
+    physical_column_flag: true
   iles_investor_pid:
     data_type: BIGINT
+    physical_column_flag: true
   iles_pid:
     data_type: BIGINT
+    physical_column_flag: true
   iles_price_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   iles_through_date:
     data_type: DATE
+    physical_column_flag: true
   iles_version:
     data_type: INTEGER
+    physical_column_flag: true

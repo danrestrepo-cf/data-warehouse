@@ -29,19 +29,28 @@ foreign_keys:
 columns:
   wdo_borrower_message:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   wdo_incomplete_outcome:
     data_type: BOOLEAN
+    physical_column_flag: true
   wdo_lender_description:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   wdo_outcome_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   wdo_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wdo_transition_wf_deal_step_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wdo_version:
     data_type: INTEGER
+    physical_column_flag: true
   wdo_wf_deal_step_pid:
     data_type: BIGINT
+    physical_column_flag: true
   wdo_wf_outcome_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true

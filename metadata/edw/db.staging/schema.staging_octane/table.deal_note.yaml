@@ -61,27 +61,40 @@ foreign_keys:
 columns:
   dn_author_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dn_author_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dn_category_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dn_content:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   dn_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dn_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dn_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dn_proposal_doc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dn_proposal_review_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dn_scope_name:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   dn_scope_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dn_version:
     data_type: INTEGER
+    physical_column_flag: true
   dn_wf_deal_step_pid:
     data_type: BIGINT
+    physical_column_flag: true

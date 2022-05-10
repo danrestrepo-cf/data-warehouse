@@ -61,33 +61,49 @@ foreign_keys:
 columns:
   ser_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ser_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   ser_description:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   ser_end_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   ser_exported_deal_count:
     data_type: INTEGER
+    physical_column_flag: true
   ser_file_name_format_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ser_loan_export_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ser_loan_name_format_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ser_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ser_request_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ser_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ser_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ser_smart_stack_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ser_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   ser_total_deal_count:
     data_type: INTEGER
+    physical_column_flag: true
   ser_version:
     data_type: INTEGER
+    physical_column_flag: true

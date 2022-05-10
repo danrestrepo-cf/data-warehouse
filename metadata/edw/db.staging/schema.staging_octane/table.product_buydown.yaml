@@ -21,9 +21,13 @@ foreign_keys:
 columns:
   pbd_buydown_schedule_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pbd_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pbd_product_terms_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pbd_version:
     data_type: INTEGER
+    physical_column_flag: true

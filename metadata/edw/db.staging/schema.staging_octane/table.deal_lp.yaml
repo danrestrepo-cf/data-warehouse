@@ -13,11 +13,16 @@ foreign_keys:
 columns:
   dlp_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dlp_lp_key_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   dlp_lp_loan_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   dlp_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dlp_version:
     data_type: INTEGER
+    physical_column_flag: true

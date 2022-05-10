@@ -5,109 +5,139 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   applying_for_credit_before_closing:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   applying_for_credit_before_closing_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   borrowed_funds_undisclosed:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   borrowed_funds_undisclosed_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   fha_secondary_residence:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   fha_secondary_residence_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   homeowner_past_three_years:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_homeowner_past_three_years.columns.value
     update_flag: true
   homeowner_past_three_years_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_homeowner_past_three_years
     update_flag: false
   intend_to_occupy:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_intend_to_occupy.columns.value
     update_flag: true
   intend_to_occupy_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_intend_to_occupy
     update_flag: false
   intend_to_occupy_more_than_14_days:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   intend_to_occupy_more_than_14_days_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   other_mortgage_in_progress_before_closing:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   other_mortgage_in_progress_before_closing_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   prior_property_title:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_prior_property_title_type.columns.value
     update_flag: true
   prior_property_title_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_prior_property_title_type
     update_flag: false
   prior_property_usage:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_prior_property_usage_type.columns.value
     update_flag: true
   prior_property_usage_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_prior_property_usage_type
     update_flag: false
   priority_given_to_another_lien:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   priority_given_to_another_lien_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   relationship_with_seller:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   relationship_with_seller_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
 step_functions:
   SP-200038:

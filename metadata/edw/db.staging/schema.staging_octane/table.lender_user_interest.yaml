@@ -21,9 +21,13 @@ foreign_keys:
 columns:
   lui_lender_user_interest_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lui_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lui_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lui_version:
     data_type: INTEGER
+    physical_column_flag: true

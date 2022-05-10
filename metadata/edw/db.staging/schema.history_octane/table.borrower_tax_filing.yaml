@@ -31,54 +31,68 @@ foreign_keys:
 columns:
   btf_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.btf_borrower_pid
   btf_joint_filer_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.btf_joint_filer_first_name
   btf_joint_filer_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.btf_joint_filer_last_name
   btf_joint_filer_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.btf_joint_filer_middle_name
   btf_joint_filer_suffix:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.btf_joint_filer_suffix
   btf_joint_is_coborrower:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.btf_joint_is_coborrower
   btf_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.btf_pid
   btf_place_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.btf_place_pid
   btf_tax_filing_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.btf_tax_filing_status_type
   btf_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.btf_version
   btf_year:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.btf_year
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100159:
     etls:

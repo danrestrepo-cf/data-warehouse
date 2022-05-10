@@ -13,11 +13,16 @@ foreign_keys:
 columns:
   nlo_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   nlo_add_on_description:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   nlo_add_on_prefix:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   nlo_pid:
     data_type: BIGINT
+    physical_column_flag: true
   nlo_version:
     data_type: INTEGER
+    physical_column_flag: true

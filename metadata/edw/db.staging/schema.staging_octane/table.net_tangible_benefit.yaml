@@ -21,9 +21,13 @@ foreign_keys:
 columns:
   ntb_net_tangible_benefit_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ntb_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ntb_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ntb_version:
     data_type: INTEGER
+    physical_column_flag: true

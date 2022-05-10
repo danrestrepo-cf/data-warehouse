@@ -13,19 +13,28 @@ foreign_keys:
 columns:
   sqr_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sqr_due_in_term_months_string_list:
     data_type: TEXT
+    physical_column_flag: true
   sqr_include_arm:
     data_type: BOOLEAN
+    physical_column_flag: true
   sqr_include_conventional:
     data_type: BOOLEAN
+    physical_column_flag: true
   sqr_include_fha:
     data_type: BOOLEAN
+    physical_column_flag: true
   sqr_include_fixed_rate:
     data_type: BOOLEAN
+    physical_column_flag: true
   sqr_include_va:
     data_type: BOOLEAN
+    physical_column_flag: true
   sqr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sqr_version:
     data_type: INTEGER
+    physical_column_flag: true

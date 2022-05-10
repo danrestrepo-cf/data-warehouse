@@ -45,17 +45,25 @@ foreign_keys:
 columns:
   rerc_county_city_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rerc_county_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rerc_ernst_page_rec:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   rerc_ernst_page_rec_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rerc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rerc_recording_district_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rerc_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rerc_version:
     data_type: INTEGER
+    physical_column_flag: true

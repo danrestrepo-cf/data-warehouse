@@ -13,13 +13,19 @@ foreign_keys:
 columns:
   mcg_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcg_active:
     data_type: BOOLEAN
+    physical_column_flag: true
   mcg_mercury_client_group_id:
     data_type: INTEGER
+    physical_column_flag: true
   mcg_mercury_client_group_name:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   mcg_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcg_version:
     data_type: INTEGER
+    physical_column_flag: true

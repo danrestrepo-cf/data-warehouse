@@ -50,25 +50,26 @@ class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
             for schema in database.schemas:
                 for table in schema.tables:
                     for column in table.columns:
-                        row = {
-                            'database_name': database.name,
-                            'schema_name': schema.name,
-                            'table_name': table.name,
-                            'field_name': column.name,
-                            'data_type': column.data_type
-                        }
-                        if column.source is None or column.source.calculation_string is not None:
-                            row['source_database_name'] = None
-                            row['source_schema_name'] = None
-                            row['source_table_name'] = None
-                            row['source_field_name'] = None
-                        else:
-                            source_column_path = table.get_source_column_paths(column.name, data_warehouse_metadata)[0]
-                            row['source_database_name'] = source_column_path.database
-                            row['source_schema_name'] = source_column_path.schema
-                            row['source_table_name'] = source_column_path.table
-                            row['source_field_name'] = source_column_path.column
-                        metadata_table.add_row(row)
+                        if column.physical_column_flag is True:
+                            row = {
+                                'database_name': database.name,
+                                'schema_name': schema.name,
+                                'table_name': table.name,
+                                'field_name': column.name,
+                                'data_type': column.data_type
+                            }
+                            if column.source is None or column.source.calculation_string is not None:
+                                row['source_database_name'] = None
+                                row['source_schema_name'] = None
+                                row['source_table_name'] = None
+                                row['source_field_name'] = None
+                            else:
+                                source_column_path = table.get_source_column_paths(column.name, data_warehouse_metadata)[0]
+                                row['source_database_name'] = source_column_path.database
+                                row['source_schema_name'] = source_column_path.schema
+                                row['source_table_name'] = source_column_path.table
+                                row['source_field_name'] = source_column_path.column
+                            metadata_table.add_row(row)
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:

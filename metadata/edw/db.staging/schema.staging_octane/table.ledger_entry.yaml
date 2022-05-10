@@ -109,55 +109,82 @@ foreign_keys:
 columns:
   le_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   le_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   le_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   le_entry_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   le_estimate:
     data_type: BOOLEAN
+    physical_column_flag: true
   le_expense_date:
     data_type: DATE
+    physical_column_flag: true
   le_ledger_book_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   le_ledger_entry_decision_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   le_ledger_entry_source_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   le_ledger_entry_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   le_loan_position_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   le_los_loan_id:
     data_type: BIGINT
+    physical_column_flag: true
   le_monthly_ledger_book_pid:
     data_type: BIGINT
+    physical_column_flag: true
   le_notes:
     data_type: TEXT
+    physical_column_flag: true
   le_org_lineage_source_date:
     data_type: DATE
+    physical_column_flag: true
   le_passthrough:
     data_type: BOOLEAN
+    physical_column_flag: true
   le_payee_org_lineage_pid:
     data_type: BIGINT
+    physical_column_flag: true
   le_payee_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
   le_payroll_ledger_book_pid:
     data_type: BIGINT
+    physical_column_flag: true
   le_pid:
     data_type: BIGINT
+    physical_column_flag: true
   le_reversal:
     data_type: BOOLEAN
+    physical_column_flag: true
   le_smart_adjustment:
     data_type: BOOLEAN
+    physical_column_flag: true
   le_smart_ledger_plan_case_version_pid:
     data_type: BIGINT
+    physical_column_flag: true
   le_source_org_lineage_pid:
     data_type: BIGINT
+    physical_column_flag: true
   le_source_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
   le_synthetic_unique:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   le_version:
     data_type: INTEGER
+    physical_column_flag: true

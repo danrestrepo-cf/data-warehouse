@@ -13,37 +13,55 @@ foreign_keys:
 columns:
   mcci_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcci_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcci_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcci_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcci_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcci_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcci_contact_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   mcci_contact_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcci_contact_phone:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcci_credit_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   mcci_ein:
     data_type: VARCHAR(10)
+    physical_column_flag: true
   mcci_from_date:
     data_type: DATE
+    physical_column_flag: true
   mcci_issuer_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcci_notes:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   mcci_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcci_through_date:
     data_type: DATE
+    physical_column_flag: true
   mcci_version:
     data_type: INTEGER
+    physical_column_flag: true
   mcci_web_url:
     data_type: VARCHAR(256)
+    physical_column_flag: true

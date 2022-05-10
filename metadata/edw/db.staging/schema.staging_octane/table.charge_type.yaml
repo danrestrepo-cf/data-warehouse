@@ -13,7 +13,10 @@ foreign_keys:
 columns:
   code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ct_respa_section_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   value:
     data_type: VARCHAR(1024)
+    physical_column_flag: true

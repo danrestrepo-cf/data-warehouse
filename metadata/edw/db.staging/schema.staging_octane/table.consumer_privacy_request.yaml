@@ -61,39 +61,58 @@ foreign_keys:
 columns:
   cpr_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cpr_borrower_last_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cpr_delete_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   cpr_delete_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cpr_know_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   cpr_know_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cpr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cpr_received_date:
     data_type: TIMESTAMP
+    physical_column_flag: true
   cpr_receiver_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cpr_request_id:
     data_type: INTEGER
+    physical_column_flag: true
   cpr_request_todo:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cpr_request_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cpr_searched_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   cpr_searched_los_loan_id:
     data_type: BIGINT
+    physical_column_flag: true
   cpr_searched_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   cpr_searched_subject_property_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cpr_searched_subject_property_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cpr_searched_subject_property_street:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cpr_version:
     data_type: INTEGER
+    physical_column_flag: true

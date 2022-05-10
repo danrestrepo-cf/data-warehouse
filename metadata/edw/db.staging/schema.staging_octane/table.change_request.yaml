@@ -37,17 +37,25 @@ foreign_keys:
 columns:
   chr_change_request_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   chr_change_request_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   chr_completing_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   chr_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   chr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   chr_request_by_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   chr_resolved_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   chr_version:
     data_type: INTEGER
+    physical_column_flag: true

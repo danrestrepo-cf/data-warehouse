@@ -5,90 +5,111 @@ primary_key:
 columns:
   transaction_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_pid
     update_flag: true
   active_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_pid
     update_flag: true
   financed_property_improvements_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_financed_property_improvements
     update_flag: true
   loan_modification_agreement_executed_received_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_loan_modification_agreement_executed_received_datetime
     update_flag: true
   adjusted_as_is_value_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_adjusted_as_is_value_amount
     update_flag: true
   after_improved_value_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_after_improved_value_amount
     update_flag: true
   construction_borrower_contribution_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_construction_borrower_contribution_amount
     update_flag: true
   estimated_hard_construction_cost_amount:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_estimated_hard_construction_cost_amount
     update_flag: true
   cr_tracker_url:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_cr_tracker_url
     update_flag: true
   construction_lot_ownership_status:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_construction_lot_ownership_status_type.columns.value
     update_flag: true
   construction_lot_ownership_status_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_construction_lot_ownership_status_type
     update_flag: true
   financed_property_improvements_category:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_financed_property_improvements_category_type.columns.value
     update_flag: true
   financed_property_improvements_category_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_financed_property_improvements_category_type
 step_functions:

@@ -15,34 +15,43 @@ foreign_keys:
 columns:
   amit_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.amit_account_pid
   amit_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.amit_from_date
   amit_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.amit_pid
   amit_upload_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.amit_upload_datetime
   amit_uploader_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.amit_uploader_unparsed_name
   amit_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.amit_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100021:
     etls:

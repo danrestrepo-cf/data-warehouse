@@ -255,188 +255,237 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   prpr_application_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_application_pid
   prpr_appraisal_form_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_appraisal_form_pid
   prpr_appraisal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_appraisal_pid
   prpr_asset_large_deposit_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_asset_large_deposit_pid
   prpr_asset_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_asset_pid
   prpr_borrower_access:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_borrower_access
   prpr_borrower_associated_address_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_borrower_associated_address_pid
   prpr_borrower_income_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_borrower_income_pid
   prpr_borrower_job_gap_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_borrower_job_gap_pid
   prpr_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_borrower_pid
   prpr_borrower_residence_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_borrower_residence_pid
   prpr_business_income_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_business_income_pid
   prpr_construction_cost_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_construction_cost_pid
   prpr_construction_draw_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_construction_draw_pid
   prpr_credit_inquiry_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_credit_inquiry_pid
   prpr_deal_child_name:
     data_type: VARCHAR(767)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_deal_child_name
   prpr_deal_child_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_deal_child_type
   prpr_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_deal_pid
   prpr_decision_status_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_decision_status_datetime
   prpr_decision_status_reason:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   prpr_decision_status_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_decision_status_unparsed_name
   prpr_fulfill_status_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_fulfill_status_datetime
   prpr_fulfill_status_reason:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   prpr_fulfill_status_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_fulfill_status_unparsed_name
   prpr_job_income_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_job_income_pid
   prpr_liability_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_liability_pid
   prpr_loan_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_loan_pid
   prpr_other_income_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_other_income_pid
   prpr_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_pid
   prpr_property_place_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_property_place_pid
   prpr_proposal_contractor_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_proposal_contractor_pid
   prpr_proposal_doc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_proposal_doc_pid
   prpr_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_proposal_pid
   prpr_proposal_review_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_proposal_review_pid
   prpr_rental_income_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_rental_income_pid
   prpr_reo_place_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_reo_place_pid
   prpr_req_decision_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_req_decision_status_type
   prpr_req_fulfill_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_req_fulfill_status_type
   prpr_req_id:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_req_id
   prpr_req_name:
     data_type: VARCHAR(767)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_req_name
   prpr_residence_place_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_residence_place_pid
   prpr_smart_req:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_smart_req
   prpr_smart_req_criteria_html:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_smart_req_criteria_html
   prpr_tax_transcript_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_tax_transcript_request_pid
   prpr_trash:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_trash
   prpr_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpr_version
 step_functions:

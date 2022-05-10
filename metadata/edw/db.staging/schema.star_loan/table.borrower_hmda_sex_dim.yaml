@@ -5,26 +5,36 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   sex_female_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_sex_female
   sex_male_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_sex_male
 step_functions:

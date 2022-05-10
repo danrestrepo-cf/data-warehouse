@@ -47,76 +47,96 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   mcrr_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_account_pid
   mcrr_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_create_datetime
   mcrr_csv_input_files_zip_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_csv_input_files_zip_pid
   mcrr_end_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_end_datetime
   mcrr_error_csv_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_error_csv_file_pid
   mcrr_mcr_error_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_mcr_error_status_type
   mcrr_mcr_loan_data_csv_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_mcr_loan_data_csv_file_pid
   mcrr_mcr_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_mcr_status_type
   mcrr_mcr_xml_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_mcr_xml_file_pid
   mcrr_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_pid
   mcrr_quarter_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_quarter_type
   mcrr_request_status_messages:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_request_status_messages
   mcrr_request_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_request_status_type
   mcrr_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_requester_unparsed_name
   mcrr_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_start_datetime
   mcrr_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_version
   mcrr_year:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mcrr_year
 step_functions:

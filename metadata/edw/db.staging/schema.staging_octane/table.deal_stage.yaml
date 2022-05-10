@@ -21,21 +21,31 @@ foreign_keys:
 columns:
   dst_business_hours_duration_seconds:
     data_type: BIGINT
+    physical_column_flag: true
   dst_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dst_deal_stage_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dst_duration_seconds:
     data_type: BIGINT
+    physical_column_flag: true
   dst_from_date:
     data_type: DATE
+    physical_column_flag: true
   dst_from_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dst_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dst_through_date:
     data_type: DATE
+    physical_column_flag: true
   dst_through_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dst_version:
     data_type: INTEGER
+    physical_column_flag: true

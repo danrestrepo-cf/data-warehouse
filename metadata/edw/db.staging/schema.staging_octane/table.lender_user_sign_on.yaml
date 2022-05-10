@@ -13,9 +13,13 @@ foreign_keys:
 columns:
   luso_last_sign_on_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   luso_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   luso_pid:
     data_type: BIGINT
+    physical_column_flag: true
   luso_version:
     data_type: INTEGER
+    physical_column_flag: true

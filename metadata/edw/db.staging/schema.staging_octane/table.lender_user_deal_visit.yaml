@@ -21,11 +21,16 @@ foreign_keys:
 columns:
   ludv_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ludv_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ludv_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ludv_version:
     data_type: INTEGER
+    physical_column_flag: true
   ludv_visited_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true

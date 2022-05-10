@@ -29,13 +29,19 @@ foreign_keys:
 columns:
   mcrs_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcrs_mcr_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcrs_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mcrs_quarter_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mcrs_version:
     data_type: INTEGER
+    physical_column_flag: true
   mcrs_year:
     data_type: INTEGER
+    physical_column_flag: true

@@ -3,7 +3,7 @@ import unittest
 from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging_octane_metadata,
                                                                    map_msql_data_type,
                                                                    generate_history_octane_metadata,
-                                                                   add_deleted_tables_and_columns_to_history_octane_metadata,
+                                                                   restore_non_generated_objects_to_history_octane_metadata,
                                                                    remove_deleted_column_metadata_from_column)
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 from lib.metadata_core.data_warehouse_metadata import ColumnMetadata
@@ -90,10 +90,12 @@ class TestBuildStagingOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'c1': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'c2': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 },
@@ -102,7 +104,8 @@ class TestBuildStagingOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['c1'],
                                     'columns': {
                                         'c1': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -176,16 +179,24 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
         self.wide_table_history_columns_dict = {}
 
         # add pid and version columns to wide_table staging and history dicts
-        self.wide_table_staging_columns_dict['wt_pid'] = {'data_type': 'INTEGER'}
+        self.wide_table_staging_columns_dict['wt_pid'] = {
+            'data_type': 'INTEGER',
+            'physical_column_flag': True
+        }
         self.wide_table_history_columns_dict['wt_pid'] = {
             'data_type': 'INTEGER',
+            'physical_column_flag': True,
             'source': {
                 'field': 'primary_source_table.columns.wt_pid'
             }
         }
-        self.wide_table_staging_columns_dict['wt_version'] = {'data_type': 'INTEGER'}
+        self.wide_table_staging_columns_dict['wt_version'] = {
+            'data_type': 'INTEGER',
+            'physical_column_flag': True
+        }
         self.wide_table_history_columns_dict['wt_version'] = {
             'data_type': 'INTEGER',
+            'physical_column_flag': True,
             'source': {
                 'field': 'primary_source_table.columns.wt_version'
             }
@@ -194,9 +205,13 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
         # add 100 columns to staging and history versions of wide_table
         wide_table_column_counter = 1
         while wide_table_column_counter < 101:
-            self.wide_table_staging_columns_dict['wt_column_{}'.format(wide_table_column_counter)] = {'data_type': 'TEXT'}
+            self.wide_table_staging_columns_dict['wt_column_{}'.format(wide_table_column_counter)] = {
+                'data_type': 'TEXT',
+                'physical_column_flag': True
+            }
             self.wide_table_history_columns_dict['wt_column_{}'.format(wide_table_column_counter)] = {
                 'data_type': 'TEXT',
+                'physical_column_flag': True,
                 'source': {
                     'field': 'primary_source_table.columns.wt_column_{}'.format(wide_table_column_counter)
                 }
@@ -204,9 +219,18 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
             wide_table_column_counter += 1
 
         # add standard history_octane columns to wide_table_history_columns_dict
-        self.wide_table_history_columns_dict['data_source_updated_datetime'] = {'data_type': 'TIMESTAMPTZ'}
-        self.wide_table_history_columns_dict['data_source_deleted_flag'] = {'data_type': 'BOOLEAN'}
-        self.wide_table_history_columns_dict['etl_batch_id'] = {'data_type': 'TEXT'}
+        self.wide_table_history_columns_dict['data_source_updated_datetime'] = {
+            'data_type': 'TIMESTAMPTZ',
+            'physical_column_flag': True
+        }
+        self.wide_table_history_columns_dict['data_source_deleted_flag'] = {
+            'data_type': 'BOOLEAN',
+            'physical_column_flag': True
+        }
+        self.wide_table_history_columns_dict['etl_batch_id'] = {
+            'data_type': 'TEXT',
+            'physical_column_flag': True
+        }
 
         self.metadata_dict = {
             'name': 'edw',
@@ -240,16 +264,20 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'a_pid': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'a_fk_col_1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'a_fk_col_2': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'a_version': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 },
@@ -258,10 +286,12 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['code'],
                                     'columns': {
                                         'code': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'value': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 },
@@ -271,10 +301,12 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['code'],
                                     'columns': {
                                         'code': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'value': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 },
@@ -283,10 +315,12 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['code'],
                                     'columns': {
                                         'code': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'value': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 },
@@ -377,36 +411,43 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                     'columns': {
                         'a_pid': {
                             'data_type': 'BIGINT',
+                            'physical_column_flag': True,
                             'source': {
                                 'field': 'primary_source_table.columns.a_pid'
                             }
                         },
                         'a_fk_col_1': {
                             'data_type': 'INTEGER',
+                            'physical_column_flag': True,
                             'source': {
                                 'field': 'primary_source_table.columns.a_fk_col_1'
                             }
                         },
                         'a_fk_col_2': {
                             'data_type': 'INTEGER',
+                            'physical_column_flag': True,
                             'source': {
                                 'field': 'primary_source_table.columns.a_fk_col_2'
                             }
                         },
                         'a_version': {
                             'data_type': 'INTEGER',
+                            'physical_column_flag': True,
                             'source': {
                                 'field': 'primary_source_table.columns.a_version'
                             }
                         },
                         'data_source_updated_datetime': {
-                            'data_type': 'TIMESTAMPTZ'
+                            'data_type': 'TIMESTAMPTZ',
+                            'physical_column_flag': True
                         },
                         'data_source_deleted_flag': {
-                            'data_type': 'BOOLEAN'
+                            'data_type': 'BOOLEAN',
+                            'physical_column_flag': True
                         },
                         'etl_batch_id': {
-                            'data_type': 'TEXT'
+                            'data_type': 'TEXT',
+                            'physical_column_flag': True
                         }
                     },
                     'step_functions': {
@@ -463,24 +504,29 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                     'columns': {
                         'code': {
                             'data_type': 'TEXT',
+                            'physical_column_flag': True,
                             'source': {
                                 'field': 'primary_source_table.columns.code'
                             }
                         },
                         'value': {
                             'data_type': 'TEXT',
+                            'physical_column_flag': True,
                             'source': {
                                 'field': 'primary_source_table.columns.value'
                             }
                         },
                         'data_source_updated_datetime': {
-                            'data_type': 'TIMESTAMPTZ'
+                            'data_type': 'TIMESTAMPTZ',
+                            'physical_column_flag': True
                         },
                         'data_source_deleted_flag': {
-                            'data_type': 'BOOLEAN'
+                            'data_type': 'BOOLEAN',
+                            'physical_column_flag': True
                         },
                         'etl_batch_id': {
-                            'data_type': 'TEXT'
+                            'data_type': 'TEXT',
+                            'physical_column_flag': True
                         }
                     },
                     'step_functions': {
@@ -516,24 +562,29 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                     'columns': {
                         'code': {
                             'data_type': 'TEXT',
+                            'physical_column_flag': True,
                             'source': {
                                 'field': 'primary_source_table.columns.code'
                             }
                         },
                         'value': {
                             'data_type': 'TEXT',
+                            'physical_column_flag': True,
                             'source': {
                                 'field': 'primary_source_table.columns.value'
                             }
                         },
                         'data_source_updated_datetime': {
-                            'data_type': 'TIMESTAMPTZ'
+                            'data_type': 'TIMESTAMPTZ',
+                            'physical_column_flag': True
                         },
                         'data_source_deleted_flag': {
-                            'data_type': 'BOOLEAN'
+                            'data_type': 'BOOLEAN',
+                            'physical_column_flag': True
                         },
                         'etl_batch_id': {
-                            'data_type': 'TEXT'
+                            'data_type': 'TEXT',
+                            'physical_column_flag': True
                         }
                     },
                     'step_functions': {
@@ -568,24 +619,29 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                     'columns': {
                         'code': {
                             'data_type': 'TEXT',
+                            'physical_column_flag': True,
                             'source': {
                                 'field': 'primary_source_table.columns.code'
                             }
                         },
                         'value': {
                             'data_type': 'TEXT',
+                            'physical_column_flag': True,
                             'source': {
                                 'field': 'primary_source_table.columns.value'
                             }
                         },
                         'data_source_updated_datetime': {
-                            'data_type': 'TIMESTAMPTZ'
+                            'data_type': 'TIMESTAMPTZ',
+                            'physical_column_flag': True
                         },
                         'data_source_deleted_flag': {
-                            'data_type': 'BOOLEAN'
+                            'data_type': 'BOOLEAN',
+                            'physical_column_flag': True
                         },
                         'etl_batch_id': {
-                            'data_type': 'TEXT'
+                            'data_type': 'TEXT',
+                            'physical_column_flag': True
                         }
                     },
                     'step_functions': {
@@ -877,11 +933,13 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
     def test_remove_deleted_column_metadata_from_column(self):
         source_column = ColumnMetadata(name='c1'
                                        , data_type='TEXT'
+                                       , physical_column_flag=True
                                        , source=None
                                        , update_flag=True)
 
         expected_column = ColumnMetadata(name='c1'
                                          , data_type='TEXT'
+                                         , physical_column_flag=True
                                          , source=None
                                          , update_flag=None)
 
@@ -902,16 +960,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['pk1'],
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3_rename': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -935,16 +997,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3_rename': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -969,16 +1035,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['pk1'],
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 },
@@ -997,16 +1067,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     },
                                     'next_etls': ['SP-1'],
@@ -1032,16 +1106,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1066,16 +1144,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['pk1'],
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3_rename': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1099,19 +1181,24 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3_rename': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1123,7 +1210,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
         })
 
         self.assertEqual(expected_datawarehouse_metadata,
-                         add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
+                         restore_non_generated_objects_to_history_octane_metadata(octane_metadata, yaml_metadata))
 
     def test_renaming_table_in_staging_octane_schema(self):
         octane_metadata = construct_data_warehouse_metadata_from_dict({
@@ -1140,16 +1227,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['pk1'],
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1173,16 +1264,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1207,16 +1302,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['pk1'],
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1240,16 +1339,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1274,16 +1377,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['pk1'],
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1297,16 +1404,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['pk1'],
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 },
@@ -1325,16 +1436,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     },
                                     'next_etls': []
@@ -1347,7 +1462,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
         })
 
         self.assertEqual(expected_datawarehouse_metadata,
-                         add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
+                         restore_non_generated_objects_to_history_octane_metadata(octane_metadata, yaml_metadata))
 
     def test_adding_field_to_staging_octane_schema(self):
         octane_metadata = construct_data_warehouse_metadata_from_dict({
@@ -1364,19 +1479,24 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['pk1'],
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f4': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1408,19 +1528,24 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f4': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1445,16 +1570,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['pk1'],
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1486,16 +1615,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1520,19 +1653,24 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['pk1'],
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f4': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1564,19 +1702,24 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f4': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1588,7 +1731,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
         })
 
         self.assertEqual(expected_datawarehouse_metadata,
-                         add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
+                         restore_non_generated_objects_to_history_octane_metadata(octane_metadata, yaml_metadata))
 
     def test_removing_field_from_staging_octane_schema(self):
         octane_metadata = construct_data_warehouse_metadata_from_dict({
@@ -1605,13 +1748,16 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['pk1'],
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1635,13 +1781,16 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1666,16 +1815,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['pk1'],
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1699,16 +1852,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 },
@@ -1727,18 +1884,22 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
                                             'data_type': 'TEXT',
+                                            'physical_column_flag': True,
                                             'source': 'test',
                                             'update_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1763,13 +1924,16 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['pk1'],
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1793,16 +1957,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     },
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 },
@@ -1811,16 +1979,20 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     'primary_key': ['pk1'],
                                     'columns': {
                                         'pk1': {
-                                            'data_type': 'BIGINT'
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
                                         },
                                         'f1': {
-                                            'data_type': 'INTEGER'
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
                                         },
                                         'f2': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         },
                                         'f3': {
-                                            'data_type': 'TEXT'
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
                                         }
                                     }
                                 }
@@ -1831,8 +2003,269 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
 
-        self.assertEqual(add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata),
-                         expected_datawarehouse_metadata)
+        self.assertEqual(expected_datawarehouse_metadata, restore_non_generated_objects_to_history_octane_metadata(
+            octane_metadata, yaml_metadata))
+
+    def test_preserve_non_physical_column_in_history_octane_metadata(self):
+        octane_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        },
+                                        'fk2': {
+                                            'columns': ['f2'],
+                                            'references': {
+                                                'columns': ['f2'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+
+        yaml_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        },
+                                        'fk2': {
+                                            'columns': ['f2'],
+                                            'references': {
+                                                'columns': ['f2'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
+                                        },
+                                        'v1': {
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': False
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+
+        expected_datawarehouse_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        },
+                                        'fk2': {
+                                            'columns': ['f2'],
+                                            'references': {
+                                                'columns': ['f2'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT',
+                                            'physical_column_flag': True
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER',
+                                            'physical_column_flag': True
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': True
+                                        },
+                                        'v1': {
+                                            'data_type': 'TEXT',
+                                            'physical_column_flag': False
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+
+        self.assertEqual(expected_datawarehouse_metadata,
+                         restore_non_generated_objects_to_history_octane_metadata(octane_metadata, yaml_metadata))
 
 
 if __name__ == '__main__':

@@ -45,35 +45,52 @@ foreign_keys:
 columns:
   dappr_appraisal_entry_contact_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dappr_appraisal_hold_reason_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dappr_appraisal_hold_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dappr_appraisal_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   dappr_borrower_requires_appraisal:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dappr_calculated_appraisal_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   dappr_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dappr_door_lock_combination:
     data_type: BOOLEAN
+    physical_column_flag: true
   dappr_hold_release_date:
     data_type: DATE
+    physical_column_flag: true
   dappr_lender_requires_appraisal:
     data_type: BOOLEAN
+    physical_column_flag: true
   dappr_override_calculated_appraisal_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   dappr_override_calculated_appraisal_required_reason:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   dappr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dappr_product_requires_appraisal:
     data_type: BOOLEAN
+    physical_column_flag: true
   dappr_rush_request:
     data_type: BOOLEAN
+    physical_column_flag: true
   dappr_transfer_specified:
     data_type: BOOLEAN
+    physical_column_flag: true
   dappr_version:
     data_type: INTEGER
+    physical_column_flag: true

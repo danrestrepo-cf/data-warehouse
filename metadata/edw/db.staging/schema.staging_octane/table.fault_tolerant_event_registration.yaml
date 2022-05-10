@@ -4,11 +4,16 @@ primary_key:
 columns:
   fter_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   fter_event_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   fter_message_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   fter_processed_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   fter_queue_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true

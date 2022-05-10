@@ -325,431 +325,646 @@ foreign_keys:
 columns:
   pl_abbreviated_legal_description:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   pl_acquisition_cost_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   pl_acquisition_cost_amount_verified:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_acquisition_date:
     data_type: DATE
+    physical_column_flag: true
   pl_acquisition_date_verified:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_additional_building_area_square_feet:
     data_type: INTEGER
+    physical_column_flag: true
   pl_annual_property_insurance_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_annual_property_tax_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_auto_geocode:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_auto_geocode_exception:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   pl_bathroom_count_unit_1:
     data_type: INTEGER
+    physical_column_flag: true
   pl_bathroom_count_unit_2:
     data_type: INTEGER
+    physical_column_flag: true
   pl_bathroom_count_unit_3:
     data_type: INTEGER
+    physical_column_flag: true
   pl_bathroom_count_unit_4:
     data_type: INTEGER
+    physical_column_flag: true
   pl_bedroom_count_unit_1:
     data_type: INTEGER
+    physical_column_flag: true
   pl_bedroom_count_unit_2:
     data_type: INTEGER
+    physical_column_flag: true
   pl_bedroom_count_unit_3:
     data_type: INTEGER
+    physical_column_flag: true
   pl_bedroom_count_unit_4:
     data_type: INTEGER
+    physical_column_flag: true
   pl_building_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_calculated_lead_inspection_required:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_census_tract:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_community_land_trust:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_construction_conversion:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_coop_apartment_unit:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_coop_assignment_lease_date:
     data_type: DATE
+    physical_column_flag: true
   pl_coop_attorney_in_fact:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_coop_building_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_coop_company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_coop_existing_company_laws_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_coop_proprietary_lease_date:
     data_type: DATE
+    physical_column_flag: true
   pl_coop_shares_being_purchased:
     data_type: INTEGER
+    physical_column_flag: true
   pl_coop_stock_certificate_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_coop_vacant_units:
     data_type: INTEGER
+    physical_column_flag: true
   pl_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_county_fips:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_county_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pl_cpm_project_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_financed_units_count:
     data_type: INTEGER
+    physical_column_flag: true
   pl_geocode_service_disabled:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_geocode_system_error:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_gross_building_area_square_feet:
     data_type: INTEGER
+    physical_column_flag: true
   pl_gross_living_area_square_feet_unit_1:
     data_type: INTEGER
+    physical_column_flag: true
   pl_gross_living_area_square_feet_unit_2:
     data_type: INTEGER
+    physical_column_flag: true
   pl_gross_living_area_square_feet_unit_3:
     data_type: INTEGER
+    physical_column_flag: true
   pl_gross_living_area_square_feet_unit_4:
     data_type: INTEGER
+    physical_column_flag: true
   pl_hud_reo:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_hvac_inspection_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_inclusionary_zoning:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_land_estimated_value_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   pl_land_original_cost_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   pl_landlord_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_landlord_company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_landlord_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_landlord_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   pl_landlord_fax:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_landlord_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_landlord_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_landlord_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_landlord_mobile_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_landlord_name_suffix:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_landlord_office_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_landlord_office_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   pl_landlord_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_landlord_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_landlord_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_landlord_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_landlord_title:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_lava_zone_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_lead_inspection_required:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_lease_number:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_leasehold_begin_date:
     data_type: DATE
+    physical_column_flag: true
   pl_leasehold_expiration_date:
     data_type: DATE
+    physical_column_flag: true
   pl_legal_block:
     data_type: VARCHAR(64)
+    physical_column_flag: true
   pl_legal_block_na:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_legal_description:
     data_type: VARCHAR(32000)
+    physical_column_flag: true
   pl_legal_description_confirmed:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_legal_description_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_legal_lot:
     data_type: VARCHAR(64)
+    physical_column_flag: true
   pl_legal_lot_na:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_legal_section:
     data_type: VARCHAR(64)
+    physical_column_flag: true
   pl_legal_section_na:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_listed_for_sale_in_last_6_months:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_living_unit_count:
     data_type: INTEGER
+    physical_column_flag: true
   pl_management_agent_federal_tax_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_management_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_management_company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_management_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_management_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   pl_management_fax:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_management_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_management_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_management_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_management_mobile_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_management_name_suffix:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_management_office_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_management_office_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   pl_management_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_management_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_management_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_management_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_management_title:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_mh_anchored:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_mh_certificate_of_title_issued:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_mh_certificate_of_title_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_mh_certificate_of_title_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_mh_hud_label_number:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_mh_leasehold__property_interest_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_mh_length:
     data_type: INTEGER
+    physical_column_flag: true
   pl_mh_loan_purpose_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_mh_make:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_mh_manufacturer:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_mh_manufacturer_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_mh_manufacturer_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_mh_manufacturer_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   pl_mh_manufacturer_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_mh_manufacturer_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_mh_manufacturer_street_1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_mh_manufacturer_street_2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_mh_model:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_mh_serial_number:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_mh_width:
     data_type: INTEGER
+    physical_column_flag: true
   pl_mixed_use:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_mixed_use_area_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pl_mixed_use_area_square_feet:
     data_type: INTEGER
+    physical_column_flag: true
   pl_mixed_use_area_square_feet_verified:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_mixed_use_verified:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_monthly_hoa_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_monthly_lease_ground_rent_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_monthly_mi_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_monthly_obligation_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_monthly_property_insurance_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_monthly_property_tax_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_monthly_rent_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_msa_code:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_native_american_lands_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_neighborhood_location_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_pest_inspection_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_pest_inspection_required_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pl_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_power_purchase_agreement:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_previous_title_manner_held_description:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   pl_prior_lenders_title:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_prior_lenders_title_policy_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_prior_lenders_title_policy_effective_date:
     data_type: DATE
+    physical_column_flag: true
   pl_prior_owners_title:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_prior_owners_title_policy_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_prior_owners_title_policy_effective_date:
     data_type: DATE
+    physical_column_flag: true
   pl_project_classification_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_project_design_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_project_dwelling_units_sold_count:
     data_type: INTEGER
+    physical_column_flag: true
   pl_project_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_property_category_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_property_in_borrower_trust:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_property_inspection_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_property_insurance_amount_input_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_property_rights_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_property_tax_amount_input_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_property_tax_id:
     data_type: VARCHAR(64)
+    physical_column_flag: true
   pl_property_tax_id_verified:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_property_usage_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_property_value_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   pl_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pl_radon_inspection_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_recording_city_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_recording_district_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_remaining_economic_life_years:
     data_type: INTEGER
+    physical_column_flag: true
   pl_rent_amount_unit_1:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_rent_amount_unit_2:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_rent_amount_unit_3:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_rent_amount_unit_4:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pl_rental:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_reo_disposition_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_road_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_sanitation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_seller_acquired_date:
     data_type: DATE
+    physical_column_flag: true
   pl_seller_acquired_date_verified:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_seller_original_cost_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   pl_seller_original_cost_amount_verified:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_septic_inspection_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_site_area:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   pl_snapshotted_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pl_solar_panel_provider_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_solar_panels_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_state_fips:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pl_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_street_tbd:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_structural_inspection_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_structure_built_month:
     data_type: INTEGER
+    physical_column_flag: true
   pl_structure_built_year:
     data_type: INTEGER
+    physical_column_flag: true
   pl_sub_jurisdiction_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_subject_property:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_survey_required:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_title_manner_held_description:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   pl_title_manner_held_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_total_room_count_unit_1:
     data_type: INTEGER
+    physical_column_flag: true
   pl_total_room_count_unit_2:
     data_type: INTEGER
+    physical_column_flag: true
   pl_total_room_count_unit_3:
     data_type: INTEGER
+    physical_column_flag: true
   pl_total_room_count_unit_4:
     data_type: INTEGER
+    physical_column_flag: true
   pl_tribe_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_trust_classification_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_underwriter_comments:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   pl_unique_dwelling_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_unit_count:
     data_type: INTEGER
+    physical_column_flag: true
   pl_use_proposed_property_usage:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_va_guaranteed_reo:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_va_loan_date:
     data_type: DATE
+    physical_column_flag: true
   pl_verified_geocode:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_version:
     data_type: INTEGER
+    physical_column_flag: true
   pl_vesting_confirmed:
     data_type: BOOLEAN
+    physical_column_flag: true
   pl_water_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pl_water_well_inspection_required:
     data_type: BOOLEAN
+    physical_column_flag: true

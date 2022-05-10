@@ -87,108 +87,136 @@ foreign_keys:
 columns:
   aprq_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_address_city
   aprq_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_address_postal_code
   aprq_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_address_state
   aprq_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_address_street1
   aprq_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_address_street2
   aprq_appraisal_fee_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   aprq_appraisal_import_warnings:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_appraisal_import_warnings
   aprq_appraisal_management_company_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_appraisal_management_company_type
   aprq_appraisal_order_coarse_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_appraisal_order_coarse_status_type
   aprq_appraisal_order_request_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_appraisal_order_request_type
   aprq_appraisal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_appraisal_pid
   aprq_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_deal_pid
   aprq_mercury_network_status_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_mercury_network_status_request_pid
   aprq_mismo_xml_deal_system_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_mismo_xml_deal_system_file_pid
   aprq_order_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_order_id
   aprq_order_instructions:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_order_instructions
   aprq_order_request_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_order_request_date
   aprq_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_pid
   aprq_requester_agent_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_requester_agent_type
   aprq_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_requester_lender_user_pid
   aprq_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_requester_unparsed_name
   aprq_response_xml_deal_system_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_response_xml_deal_system_file_pid
   aprq_status_check_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_status_check_datetime
   aprq_vendor_status_unique_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_vendor_status_unique_id
   aprq_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aprq_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100302:
     etls:

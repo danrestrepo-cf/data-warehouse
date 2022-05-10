@@ -5,107 +5,139 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   bankruptcy:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_bankruptcy.columns.value
     update_flag: true
   bankruptcy_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_bankruptcy
     update_flag: false
   outstanding_judgements:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_outstanding_judgements.columns.value
     update_flag: true
   outstanding_judgements_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_outstanding_judgements
     update_flag: false
   bankruptcy_chapter_7:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   bankruptcy_chapter_7_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   bankruptcy_chapter_11:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   bankruptcy_chapter_11_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   bankruptcy_chapter_12:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   bankruptcy_chapter_12_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   bankruptcy_chapter_13:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   bankruptcy_chapter_13_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   completed_pre_foreclosure_short_sale:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   completed_pre_foreclosure_short_sale_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   conveyed_title_in_lieu_of_foreclosure:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   conveyed_title_in_lieu_of_foreclosure_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   cosigner_undisclosed:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   cosigner_undisclosed_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   currently_delinquent_federal_debt:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   currently_delinquent_federal_debt_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   party_to_lawsuit:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   party_to_lawsuit_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
   property_foreclosure:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     update_flag: true
   property_foreclosure_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     update_flag: false
 step_functions:
   SP-200032:

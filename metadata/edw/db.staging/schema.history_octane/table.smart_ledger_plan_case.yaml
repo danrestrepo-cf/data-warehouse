@@ -23,32 +23,41 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   slpc_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpc_account_pid
   slpc_case_id:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpc_case_id
   slpc_ordinal:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpc_ordinal
   slpc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpc_pid
   slpc_smart_ledger_plan_case_group_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpc_smart_ledger_plan_case_group_pid
   slpc_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpc_version
 step_functions:

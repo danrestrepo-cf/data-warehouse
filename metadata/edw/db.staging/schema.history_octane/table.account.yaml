@@ -15,188 +15,238 @@ foreign_keys:
 columns:
   a_account_borrower_site_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_account_borrower_site_id
   a_account_destroy_mode:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_account_destroy_mode
   a_account_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_account_from_date
   a_account_id:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_account_id
   a_account_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_account_name
   a_account_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_account_status_type
   a_account_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_account_through_date
   a_advance_period_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_advance_period_days
   a_allonge_representative_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   a_allonge_representative_title:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   a_borrower_job_gap_lookback_years:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_borrower_job_gap_lookback_years
   a_borrower_job_gap_minimum_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_borrower_job_gap_minimum_days
   a_company_borrower_site_enabled:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_company_borrower_site_enabled
   a_conditional_commitment_expiration_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_conditional_commitment_expiration_days
   a_disclosure_action_required_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_disclosure_action_required_days
   a_disclosure_change_threshold_cash_to_close:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_disclosure_change_threshold_cash_to_close
   a_disclosure_change_threshold_monthly_payment:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_disclosure_change_threshold_monthly_payment
   a_disclosure_max_arm_apr_change_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_disclosure_max_arm_apr_change_percent
   a_disclosure_max_non_arm_apr_change_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_disclosure_max_non_arm_apr_change_percent
   a_discount_included_in_origination_fee:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_discount_included_in_origination_fee
   a_gfe_interest_rate_expiration_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_gfe_interest_rate_expiration_days
   a_gfe_lock_before_settlement_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_gfe_lock_before_settlement_days
   a_gfe_lock_duration_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_gfe_lock_duration_days
   a_initial_le_delivered_mailed_seasoning_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_initial_le_delivered_mailed_seasoning_days
   a_initial_los_loan_id:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_initial_los_loan_id
   a_le_to_cd_seasoning_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_le_to_cd_seasoning_days
   a_lender_app_host:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_lender_app_host
   a_lender_app_ip_address:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_lender_app_ip_address
   a_lender_user_password_expire_days:
     data_type: INTEGER
+    physical_column_flag: true
   a_lender_user_password_minimum_change_days:
     data_type: INTEGER
+    physical_column_flag: true
   a_lender_user_previous_password_ban:
     data_type: INTEGER
+    physical_column_flag: true
   a_originator_borrower_sites_enabled:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_originator_borrower_sites_enabled
   a_paid_through_current_month_required_day_of_month:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_paid_through_current_month_required_day_of_month
   a_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_pid
   a_proposal_expiration_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_proposal_expiration_days
   a_revised_le_delivered_mailed_seasoning_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_revised_le_delivered_mailed_seasoning_days
   a_revised_le_received_signed_seasoning_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_revised_le_received_signed_seasoning_days
   a_significant_cd_delivered_mailed_seasoning_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_significant_cd_delivered_mailed_seasoning_days
   a_significant_cd_received_signed_seasoning_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_significant_cd_received_signed_seasoning_days
   a_supported_states:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_supported_states
   a_uuts_master_contact_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_uuts_master_contact_name
   a_uuts_master_contact_title:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_uuts_master_contact_title
   a_uuts_master_office_phone:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_uuts_master_office_phone
   a_uuts_master_office_phone_extension:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_uuts_master_office_phone_extension
   a_uuts_use_master_contact:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_uuts_use_master_contact
   a_uw_expiration_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_uw_expiration_days
   a_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.a_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100019:
     etls:

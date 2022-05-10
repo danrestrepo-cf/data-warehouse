@@ -45,33 +45,49 @@ foreign_keys:
 columns:
   rf_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rf_client_filename:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rf_delete_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   rf_description:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   rf_file_checksum:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rf_file_size:
     data_type: BIGINT
+    physical_column_flag: true
   rf_mime_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rf_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rf_repository_filename:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rf_repository_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rf_upload_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   rf_uploader_agent_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rf_uploader_borrower_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rf_uploader_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rf_uploader_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rf_version:
     data_type: INTEGER
+    physical_column_flag: true

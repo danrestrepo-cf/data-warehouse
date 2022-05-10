@@ -141,205 +141,307 @@ foreign_keys:
 columns:
   apr_appraisal_condition_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraisal_id:
     data_type: INTEGER
+    physical_column_flag: true
   apr_appraisal_invoice_amount:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
   apr_appraisal_order_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   apr_appraisal_order_instructions:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   apr_appraisal_order_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraisal_purpose_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraisal_reference_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   apr_appraisal_source_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraisal_underwriter_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraised_value_amount:
     data_type: BIGINT
+    physical_column_flag: true
   apr_appraiser_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraiser_address_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraiser_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraiser_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraiser_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraiser_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraiser_company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraiser_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   apr_appraiser_fax:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   apr_appraiser_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   apr_appraiser_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   apr_appraiser_license_number:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraiser_license_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraiser_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   apr_appraiser_mobile_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   apr_appraiser_name_suffix:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   apr_appraiser_office_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   apr_appraiser_office_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   apr_appraiser_supervisory_license_number:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_appraiser_title:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_bathroom_count_unit_1:
     data_type: INTEGER
+    physical_column_flag: true
   apr_bathroom_count_unit_2:
     data_type: INTEGER
+    physical_column_flag: true
   apr_bathroom_count_unit_3:
     data_type: INTEGER
+    physical_column_flag: true
   apr_bathroom_count_unit_4:
     data_type: INTEGER
+    physical_column_flag: true
   apr_bedroom_count_unit_1:
     data_type: INTEGER
+    physical_column_flag: true
   apr_bedroom_count_unit_2:
     data_type: INTEGER
+    physical_column_flag: true
   apr_bedroom_count_unit_3:
     data_type: INTEGER
+    physical_column_flag: true
   apr_bedroom_count_unit_4:
     data_type: INTEGER
+    physical_column_flag: true
   apr_cost_to_build_new:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   apr_cu_risk_score:
     data_type: NUMERIC(10,2)
+    physical_column_flag: true
   apr_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   apr_decision_appraisal:
     data_type: BOOLEAN
+    physical_column_flag: true
   apr_deficient_economic_life_explanation:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   apr_due_date:
     data_type: DATE
+    physical_column_flag: true
   apr_effective_date:
     data_type: DATE
+    physical_column_flag: true
   apr_exclude:
     data_type: BOOLEAN
+    physical_column_flag: true
   apr_gross_living_area_square_feet_unit_1:
     data_type: INTEGER
+    physical_column_flag: true
   apr_gross_living_area_square_feet_unit_2:
     data_type: INTEGER
+    physical_column_flag: true
   apr_gross_living_area_square_feet_unit_3:
     data_type: INTEGER
+    physical_column_flag: true
   apr_gross_living_area_square_feet_unit_4:
     data_type: INTEGER
+    physical_column_flag: true
   apr_hud_provided:
     data_type: BOOLEAN
+    physical_column_flag: true
   apr_hve_confidence_level_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_hve_excessive_value_message:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   apr_hve_forecast_standard_deviation_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   apr_hve_point_value_estimate_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   apr_hve_variance_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   apr_inspection_date:
     data_type: DATE
+    physical_column_flag: true
   apr_license_expiration_date:
     data_type: DATE
+    physical_column_flag: true
   apr_monthly_hoa_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   apr_mortgage_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_neighborhood_location_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_obtained_from_transfer:
     data_type: BOOLEAN
+    physical_column_flag: true
   apr_order_appraisal:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_order_date:
     data_type: DATE
+    physical_column_flag: true
   apr_payment_received_date:
     data_type: DATE
+    physical_column_flag: true
   apr_payment_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   apr_project_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_property_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_property_address_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_property_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_property_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_property_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_property_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_property_category_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_property_county_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_property_tax_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_remaining_economic_life_years:
     data_type: INTEGER
+    physical_column_flag: true
   apr_road_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_sale_price_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   apr_sanitation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_second_decision_appraisal:
     data_type: BOOLEAN
+    physical_column_flag: true
   apr_site_area:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   apr_structure_built_month:
     data_type: INTEGER
+    physical_column_flag: true
   apr_structure_built_year:
     data_type: INTEGER
+    physical_column_flag: true
   apr_supervisor_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   apr_supervisory_appraiser_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   apr_supervisory_appraiser_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   apr_supervisory_appraiser_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   apr_supervisory_appraiser_name_suffix:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   apr_supervisory_license_expiration_date:
     data_type: DATE
+    physical_column_flag: true
   apr_supervisory_license_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   apr_synthetic_unique:
     data_type: BOOLEAN
+    physical_column_flag: true
   apr_total_room_count_unit_1:
     data_type: INTEGER
+    physical_column_flag: true
   apr_total_room_count_unit_2:
     data_type: INTEGER
+    physical_column_flag: true
   apr_total_room_count_unit_3:
     data_type: INTEGER
+    physical_column_flag: true
   apr_total_room_count_unit_4:
     data_type: INTEGER
+    physical_column_flag: true
   apr_ucdp_doc_file_id:
     data_type: VARCHAR(10)
+    physical_column_flag: true
   apr_ucdp_ssr_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   apr_version:
     data_type: INTEGER
+    physical_column_flag: true
   apr_water_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true

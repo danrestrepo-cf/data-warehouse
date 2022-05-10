@@ -13,9 +13,13 @@ foreign_keys:
 columns:
   pao_from_date:
     data_type: DATE
+    physical_column_flag: true
   pao_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pao_product_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pao_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -29,35 +29,52 @@ foreign_keys:
 columns:
   cd_boarded_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   cd_borrower_contribution_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   cd_confirmation_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   cd_construction_draw_disbursed_at_closing:
     data_type: BOOLEAN
+    physical_column_flag: true
   cd_construction_draw_notes:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   cd_construction_draw_number:
     data_type: INTEGER
+    physical_column_flag: true
   cd_construction_draw_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cd_construction_draw_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cd_disbursement_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   cd_inspection_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   cd_lender_contribution_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   cd_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cd_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cd_scheduled_disbursement_date:
     data_type: DATE
+    physical_column_flag: true
   cd_total_draw_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   cd_version:
     data_type: INTEGER
+    physical_column_flag: true
   cd_voided_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true

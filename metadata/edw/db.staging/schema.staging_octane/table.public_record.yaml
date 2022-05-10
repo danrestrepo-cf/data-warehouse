@@ -53,59 +53,88 @@ foreign_keys:
 columns:
   pr_attorney_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pr_bankruptcy_assets_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pr_bankruptcy_exception_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pr_bankruptcy_exempt_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pr_bankruptcy_liabilities_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pr_comment:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   pr_court_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pr_credit_report_identifier:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pr_credit_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pr_defendant_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pr_disposition_date:
     data_type: DATE
+    physical_column_flag: true
   pr_docket_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pr_equifax_included:
     data_type: BOOLEAN
+    physical_column_flag: true
   pr_experian_included:
     data_type: BOOLEAN
+    physical_column_flag: true
   pr_filed_date:
     data_type: DATE
+    physical_column_flag: true
   pr_legal_obligation_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   pr_note:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   pr_paid_date:
     data_type: DATE
+    physical_column_flag: true
   pr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pr_plaintiff_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pr_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pr_public_record_disposition_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pr_public_record_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pr_public_record_type_other_description:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   pr_report_public_record_disposition_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   pr_reported_date:
     data_type: DATE
+    physical_column_flag: true
   pr_settled_date:
     data_type: DATE
+    physical_column_flag: true
   pr_trans_union_included:
     data_type: BOOLEAN
+    physical_column_flag: true
   pr_version:
     data_type: INTEGER
+    physical_column_flag: true

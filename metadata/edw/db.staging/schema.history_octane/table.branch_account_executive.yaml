@@ -23,30 +23,38 @@ foreign_keys:
 columns:
   brae_branch_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.brae_branch_pid
   brae_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.brae_from_date
   brae_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.brae_lender_user_pid
   brae_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.brae_pid
   brae_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.brae_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100276:
     etls:

@@ -31,64 +31,81 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   rp_accessible_only:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rp_accessible_only
   rp_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rp_account_pid
   rp_allow_excel_export:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rp_allow_excel_export
   rp_allow_view:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rp_allow_view
   rp_analysis_report:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rp_analysis_report
   rp_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rp_criteria_pid
   rp_description:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rp_description
   rp_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rp_name
   rp_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rp_pid
   rp_publish:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rp_publish
   rp_report_row_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rp_report_row_pid
   rp_report_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rp_report_type
   rp_test_data_report:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rp_test_data_report
   rp_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rp_version
 step_functions:

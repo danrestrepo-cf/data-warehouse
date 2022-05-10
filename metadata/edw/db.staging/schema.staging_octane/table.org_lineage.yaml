@@ -21,11 +21,16 @@ foreign_keys:
 columns:
   ol_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ol_org_lineage_pretty_text:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   ol_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ol_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ol_version:
     data_type: INTEGER
+    physical_column_flag: true

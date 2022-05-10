@@ -117,61 +117,91 @@ foreign_keys:
 columns:
   prpds_affects_earliest_allowed_consummation_date:
     data_type: BOOLEAN
+    physical_column_flag: true
   prpds_canceled_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prpds_canceled_reason:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   prpds_canceled_reason_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpds_canceler_agent_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpds_canceler_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpds_canceler_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpds_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prpds_creator_agent_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpds_creator_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpds_creator_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpds_delivered_or_mailed_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prpds_delivery_method_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpds_doc_package_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpds_docs_last_updated_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prpds_docusign_package_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpds_esign_evidence_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpds_esign_vendor_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpds_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpds_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpds_proposal_doc_set_id:
     data_type: INTEGER
+    physical_column_flag: true
   prpds_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpds_requested_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prpds_requester_agent_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpds_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpds_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpds_signed_date:
     data_type: DATE
+    physical_column_flag: true
   prpds_smart_doc_set_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpds_tracking_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   prpds_version:
     data_type: INTEGER
+    physical_column_flag: true

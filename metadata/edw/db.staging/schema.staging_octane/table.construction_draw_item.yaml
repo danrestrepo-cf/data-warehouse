@@ -29,17 +29,25 @@ foreign_keys:
 columns:
   cdi_construction_cost_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cdi_construction_draw_item_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   cdi_construction_draw_item_borrower_contribution_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   cdi_construction_draw_item_lender_contribution_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   cdi_construction_draw_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cdi_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cdi_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cdi_version:
     data_type: INTEGER
+    physical_column_flag: true

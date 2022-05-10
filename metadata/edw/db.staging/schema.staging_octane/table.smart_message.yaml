@@ -61,33 +61,49 @@ foreign_keys:
 columns:
   smsg_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   smsg_allow_ad_hoc:
     data_type: BOOLEAN
+    physical_column_flag: true
   smsg_allow_custom_text:
     data_type: BOOLEAN
+    physical_column_flag: true
   smsg_delivery_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   smsg_email_closing_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   smsg_email_subject:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   smsg_id_num:
     data_type: INTEGER
+    physical_column_flag: true
   smsg_message_body:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   smsg_message_source_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   smsg_name:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   smsg_pid:
     data_type: BIGINT
+    physical_column_flag: true
   smsg_reply_to_role_pid:
     data_type: BIGINT
+    physical_column_flag: true
   smsg_send_securely:
     data_type: BOOLEAN
+    physical_column_flag: true
   smsg_smart_doc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   smsg_smart_stack_pid:
     data_type: BIGINT
+    physical_column_flag: true
   smsg_version:
     data_type: INTEGER
+    physical_column_flag: true

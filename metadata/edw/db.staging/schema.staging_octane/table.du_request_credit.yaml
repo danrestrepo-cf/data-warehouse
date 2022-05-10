@@ -45,25 +45,37 @@ foreign_keys:
 columns:
   durc_aus_credit_service_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   durc_borrower_1_borrower_tiny_id_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   durc_borrower_2_borrower_tiny_id_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   durc_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   durc_credit_bureau_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   durc_credit_report_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   durc_credit_report_identifier:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   durc_credit_report_name:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   durc_du_casefile_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   durc_du_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
   durc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   durc_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -21,11 +21,16 @@ foreign_keys:
 columns:
   cln_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cln_creditor_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cln_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   cln_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cln_version:
     data_type: INTEGER
+    physical_column_flag: true

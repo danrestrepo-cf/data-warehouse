@@ -13,11 +13,16 @@ foreign_keys:
 columns:
   cfc_choice_label:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   cfc_custom_field_setting_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cfc_disabled:
     data_type: BOOLEAN
+    physical_column_flag: true
   cfc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cfc_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -21,17 +21,25 @@ foreign_keys:
 columns:
   mrir_household_size:
     data_type: INTEGER
+    physical_column_flag: true
   mrir_loan_amount_max:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   mrir_loan_amount_min:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   mrir_minimum_required_residual_income_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   mrir_minimum_required_residual_income_table_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mrir_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mrir_state_type:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   mrir_version:
     data_type: INTEGER
+    physical_column_flag: true

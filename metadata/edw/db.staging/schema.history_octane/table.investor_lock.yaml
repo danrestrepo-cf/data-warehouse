@@ -103,164 +103,206 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   il_buydown_schedule_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_buydown_schedule_type
   il_cancel_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_cancel_datetime
   il_cancel_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_cancel_lender_user_pid
   il_cancel_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_cancel_unparsed_name
   il_commitment_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_commitment_datetime
   il_confirm_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_confirm_datetime
   il_confirm_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_confirm_lender_user_pid
   il_confirm_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_confirm_unparsed_name
   il_effective_commitment_expiration_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_effective_commitment_expiration_datetime
   il_effective_duration_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_effective_duration_days
   il_hedging:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_hedging
   il_initial_commitment_expiration_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_initial_commitment_expiration_datetime
   il_initial_duration_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_initial_duration_days
   il_interest_only_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_interest_only_type
   il_investor_base_arm_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_investor_base_arm_margin_percent
   il_investor_base_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_investor_base_note_rate_percent
   il_investor_base_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_investor_base_price_percent
   il_investor_commitment_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_investor_commitment_id
   il_investor_loan_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_investor_loan_id
   il_investor_lock_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_investor_lock_status_type
   il_lender_lock_major_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_lender_lock_major_pid
   il_lock_arm_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_lock_arm_margin_percent
   il_lock_commitment_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_lock_commitment_type
   il_lock_initial_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_lock_initial_note_rate_percent
   il_lock_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_lock_note_rate_percent
   il_lock_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_lock_price_percent
   il_lock_price_raw_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_lock_price_raw_percent
   il_maximum_rebate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_maximum_rebate_percent
   il_mortgage_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_mortgage_type
   il_notes:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_notes
   il_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_pid
   il_prepay_penalty_schedule_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_prepay_penalty_schedule_type
   il_product_terms_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_product_terms_pid
   il_request_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_request_datetime
   il_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_requester_lender_user_pid
   il_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_requester_unparsed_name
   il_required_delivery_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_required_delivery_datetime
   il_trade_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_trade_pid
   il_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.il_version
 step_functions:

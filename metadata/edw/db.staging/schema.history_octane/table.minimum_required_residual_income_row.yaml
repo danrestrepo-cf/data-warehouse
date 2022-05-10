@@ -23,40 +23,51 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   mrir_household_size:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mrir_household_size
   mrir_loan_amount_max:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mrir_loan_amount_max
   mrir_loan_amount_min:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mrir_loan_amount_min
   mrir_minimum_required_residual_income_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mrir_minimum_required_residual_income_amount
   mrir_minimum_required_residual_income_table_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mrir_minimum_required_residual_income_table_pid
   mrir_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mrir_pid
   mrir_state_type:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mrir_state_type
   mrir_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mrir_version
 step_functions:

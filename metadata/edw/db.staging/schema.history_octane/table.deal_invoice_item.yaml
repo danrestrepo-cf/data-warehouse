@@ -23,38 +23,48 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   dii_adjustment:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dii_adjustment
   dii_charge_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dii_charge_type
   dii_deal_invoice_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dii_deal_invoice_pid
   dii_item_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dii_item_amount
   dii_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dii_pid
   dii_smart_item:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dii_smart_item
   dii_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dii_version
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100082:
     etls:
