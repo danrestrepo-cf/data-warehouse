@@ -13,11 +13,16 @@ foreign_keys:
 columns:
   air_arm_index_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   air_effective_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   air_pid:
     data_type: BIGINT
+    physical_column_flag: true
   air_rate:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   air_version:
     data_type: INTEGER
+    physical_column_flag: true

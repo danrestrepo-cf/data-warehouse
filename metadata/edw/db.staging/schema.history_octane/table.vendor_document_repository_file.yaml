@@ -47,52 +47,66 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   vdrf_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vdrf_account_pid
   vdrf_client_filename:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vdrf_client_filename
   vdrf_client_filepath:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vdrf_client_filepath
   vdrf_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vdrf_deal_pid
   vdrf_document_import_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vdrf_document_import_status_type
   vdrf_document_import_vendor_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vdrf_document_import_vendor_type
   vdrf_file_checksum:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vdrf_file_checksum
   vdrf_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vdrf_pid
   vdrf_processed_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vdrf_processed_datetime
   vdrf_vendor_import_document_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vdrf_vendor_import_document_type
   vdrf_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.vdrf_version
 step_functions:

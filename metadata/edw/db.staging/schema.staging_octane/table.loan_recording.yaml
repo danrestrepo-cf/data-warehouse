@@ -21,35 +21,52 @@ foreign_keys:
 columns:
   lr_loan_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lr_mers_registration_date:
     data_type: DATE
+    physical_column_flag: true
   lr_mers_registration_errors:
     data_type: TEXT
+    physical_column_flag: true
   lr_mers_registration_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lr_mers_registration_warnings:
     data_type: TEXT
+    physical_column_flag: true
   lr_mers_transfer_errors:
     data_type: TEXT
+    physical_column_flag: true
   lr_mers_transfer_warnings:
     data_type: TEXT
+    physical_column_flag: true
   lr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lr_re_recording:
     data_type: BOOLEAN
+    physical_column_flag: true
   lr_recording_book_number:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   lr_recording_date:
     data_type: DATE
+    physical_column_flag: true
   lr_recording_instrument_number:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   lr_recording_jurisdiction_name:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   lr_recording_page_number:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   lr_recording_volume_number:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   lr_recording_witness_unparsed_name:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   lr_version:
     data_type: INTEGER
+    physical_column_flag: true

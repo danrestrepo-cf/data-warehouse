@@ -39,50 +39,63 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   dfr_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfr_deal_pid
   dfr_loan_safe_collateral_risk_score:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfr_loan_safe_collateral_risk_score
   dfr_loan_safe_fraud_risk_score:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfr_loan_safe_fraud_risk_score
   dfr_loan_safe_product_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfr_loan_safe_product_type
   dfr_loan_safe_risk_manager_html_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfr_loan_safe_risk_manager_html_deal_file_pid
   dfr_loan_safe_risk_manager_order_number:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfr_loan_safe_risk_manager_order_number
   dfr_loan_safe_risk_manager_pdf_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfr_loan_safe_risk_manager_pdf_deal_file_pid
   dfr_loan_safe_risk_manager_status_messages:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfr_loan_safe_risk_manager_status_messages
   dfr_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfr_pid
   dfr_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dfr_version
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100298:
     etls:

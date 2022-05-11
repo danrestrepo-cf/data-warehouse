@@ -87,110 +87,139 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   slpcv_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_account_pid
   slpcv_active:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_active
   slpcv_base_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_base_amount
   slpcv_basis_points:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_basis_points
   slpcv_case_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_case_name
   slpcv_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_criteria_pid
   slpcv_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_from_date
   slpcv_last_modified_by:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_last_modified_by
   slpcv_last_modified_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_last_modified_datetime
   slpcv_ledger_basis_points_input_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_ledger_basis_points_input_type
   slpcv_max_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_max_amount
   slpcv_measure_criteria_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_measure_criteria_from_date
   slpcv_measure_criteria_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_measure_criteria_through_date
   slpcv_min_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_min_amount
   slpcv_payer_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_payer_org_node_pid
   slpcv_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_pid
   slpcv_smart_ledger_pay_frequency_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_smart_ledger_pay_frequency_type
   slpcv_smart_ledger_plan_case_level_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_smart_ledger_plan_case_level_type
   slpcv_smart_ledger_plan_case_measure_source_date_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_smart_ledger_plan_case_measure_source_date_type
   slpcv_smart_ledger_plan_case_measure_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_smart_ledger_plan_case_measure_type
   slpcv_smart_ledger_plan_case_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_smart_ledger_plan_case_pid
   slpcv_smart_ledger_plan_case_population_period_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_smart_ledger_plan_case_population_period_type
   slpcv_smart_ledger_plan_case_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   slpcv_synthetic_unique:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_synthetic_unique
   slpcv_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_through_date
   slpcv_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slpcv_version
 step_functions:

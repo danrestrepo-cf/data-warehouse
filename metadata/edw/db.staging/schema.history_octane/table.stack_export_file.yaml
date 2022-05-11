@@ -31,28 +31,36 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   sef_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sef_pid
   sef_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sef_repository_file_pid
   sef_stack_export_file_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sef_stack_export_file_type
   sef_stack_export_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sef_stack_export_request_pid
   sef_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sef_version
 step_functions:

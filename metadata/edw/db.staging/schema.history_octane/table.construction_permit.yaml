@@ -31,118 +31,148 @@ foreign_keys:
 columns:
   cop_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_address_city
   cop_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_address_postal_code
   cop_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_address_state
   cop_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_address_street1
   cop_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_address_street2
   cop_amount:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_amount
   cop_application_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_application_date
   cop_building_department_contact_url:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_building_department_contact_url
   cop_building_department_name:
     data_type: VARCHAR(64)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_building_department_name
   cop_closed_out_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_closed_out_date
   cop_construction_permit_requested_by_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_construction_permit_requested_by_type
   cop_construction_permit_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_construction_permit_type
   cop_construction_permit_type_other_description:
     data_type: VARCHAR(64)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_construction_permit_type_other_description
   cop_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_email
   cop_expiration_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_expiration_date
   cop_fax:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_fax
   cop_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_first_name
   cop_issued_by:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_issued_by
   cop_issued_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_issued_date
   cop_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_last_name
   cop_mobile_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_mobile_phone
   cop_office_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_office_phone
   cop_office_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_office_phone_extension
   cop_permit_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_permit_number
   cop_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_pid
   cop_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_proposal_pid
   cop_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cop_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100378:
     etls:

@@ -31,86 +31,108 @@ foreign_keys:
 columns:
   agp_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_account_pid
   agp_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_address_city
   agp_address_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_address_country
   agp_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_address_postal_code
   agp_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_address_state
   agp_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_address_street1
   agp_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_address_street2
   agp_donor_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_donor_name
   agp_donor_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_donor_phone
   agp_ein:
     data_type: VARCHAR(10)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_ein
   agp_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_from_date
   agp_notes:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_notes
   agp_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_pid
   agp_program_funds_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_program_funds_type
   agp_program_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_program_id
   agp_program_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_program_name
   agp_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_through_date
   agp_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_version
   agp_wire_action_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.agp_wire_action_type
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100028:
     etls:

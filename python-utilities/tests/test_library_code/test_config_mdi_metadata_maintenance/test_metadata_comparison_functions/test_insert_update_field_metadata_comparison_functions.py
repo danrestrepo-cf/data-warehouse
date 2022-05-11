@@ -43,9 +43,11 @@ class TestInsertUpdateFieldMetadataComparisonFunctions(unittest.TestCase):
                                         'columns': {
                                             'dwid': {
                                                 'data_type': 'BIGINT',
+                                                'physical_column_flag': True
                                             },
                                             't1_col1': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.t1_col1_src'
                                                 },
@@ -53,6 +55,7 @@ class TestInsertUpdateFieldMetadataComparisonFunctions(unittest.TestCase):
                                             },
                                             't1_col2': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.t1_col2_src'
                                                 },
@@ -60,7 +63,12 @@ class TestInsertUpdateFieldMetadataComparisonFunctions(unittest.TestCase):
                                             },
                                             't1_col3': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'update_flag': True
+                                            },
+                                            't1_col4': {
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': False,
                                             }
                                         },
                                         'step_functions': {
@@ -80,10 +88,12 @@ class TestInsertUpdateFieldMetadataComparisonFunctions(unittest.TestCase):
                                         'primary_source_table': 'staging.history_octane.table2',
                                         'columns': {
                                             'dwid': {
-                                                'data_type': 'BIGINT'
+                                                'data_type': 'BIGINT',
+                                                'physical_column_flag': True
                                             },
                                             't2_col1': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.t2_col1_src'
                                                 },

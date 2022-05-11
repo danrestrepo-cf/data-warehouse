@@ -85,33 +85,49 @@ foreign_keys:
 columns:
   dipm_configured_payer_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dipm_deal_invoice_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dipm_payer_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dipm_payer_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dipm_payment_completed_date:
     data_type: DATE
+    physical_column_flag: true
   dipm_payment_fulfill_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dipm_payment_processing_company_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dipm_payment_submission_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dipm_payment_transfer_los_loan_id_main:
     data_type: BIGINT
+    physical_column_flag: true
   dipm_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dipm_requester_agent_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dipm_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dipm_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dipm_stripe_payment_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dipm_stripe_payment_refund_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dipm_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -23,24 +23,31 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   rlot_loans_toolbox_permission_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rlot_loans_toolbox_permission_type
   rlot_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rlot_pid
   rlot_role_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rlot_role_pid
   rlot_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rlot_version
 step_functions:

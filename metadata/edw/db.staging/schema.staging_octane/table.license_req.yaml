@@ -29,11 +29,16 @@ foreign_keys:
 columns:
   mlr_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mlr_license_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mlr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mlr_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mlr_version:
     data_type: INTEGER
+    physical_column_flag: true

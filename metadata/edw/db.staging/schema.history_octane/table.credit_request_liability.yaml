@@ -71,128 +71,161 @@ foreign_keys:
 columns:
   crl_account_reported_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_account_reported_date
   crl_consumer_dispute:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_consumer_dispute
   crl_credit_report_identifier:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_credit_report_identifier
   crl_credit_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_credit_request_pid
   crl_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_deal_pid
   crl_derogatory_data:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_derogatory_data
   crl_equifax_included:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_equifax_included
   crl_experian_included:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_experian_included
   crl_last_activity_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_last_activity_date
   crl_late_30_days_count:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_late_30_days_count
   crl_late_60_days_count:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_late_60_days_count
   crl_late_90_days_count:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_late_90_days_count
   crl_months_reviewed_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_months_reviewed_count
   crl_most_recent_adverse_rating_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_most_recent_adverse_rating_date
   crl_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_pid
   crl_report_account_opened_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_report_account_opened_date
   crl_report_credit_limit_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_report_credit_limit_amount
   crl_report_holder_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_report_holder_name
   crl_report_liability_account_ownership_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_report_liability_account_ownership_type
   crl_report_liability_account_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_report_liability_account_status_type
   crl_report_liability_current_rating_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_report_liability_current_rating_type
   crl_report_liability_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_report_liability_type
   crl_report_monthly_payment_amount:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_report_monthly_payment_amount
   crl_report_past_due_amount:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_report_past_due_amount
   crl_report_remaining_term_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_report_remaining_term_months
   crl_report_terms_months_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_report_terms_months_count
   crl_report_unpaid_balance_amount:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_report_unpaid_balance_amount
   crl_temp_liability_pid:
     data_type: BIGINT
+    physical_column_flag: true
   crl_trans_union_included:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_trans_union_included
   crl_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crl_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100821:
     etls:

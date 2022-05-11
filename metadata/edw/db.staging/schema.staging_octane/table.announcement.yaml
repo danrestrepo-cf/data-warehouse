@@ -4,13 +4,19 @@ primary_key:
 columns:
   ann_borrower_text:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   ann_from_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   ann_lender_text:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   ann_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ann_to_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   ann_version:
     data_type: INTEGER
+    physical_column_flag: true

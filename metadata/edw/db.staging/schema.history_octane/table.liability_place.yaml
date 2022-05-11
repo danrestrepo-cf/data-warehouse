@@ -103,84 +103,106 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   lip_creditor_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_creditor_pid
   lip_liability_financing_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_liability_financing_type
   lip_liability_foreclosure_exception_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_liability_foreclosure_exception_type
   lip_liability_mi_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_liability_mi_type
   lip_liability_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_liability_pid
   lip_lien_priority_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_lien_priority_type
   lip_mortgage_delinquency_exception_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_mortgage_delinquency_exception_type
   lip_original_loan_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_original_loan_amount
   lip_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_pid
   lip_place_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_place_pid
   lip_property_insurance_escrowed:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_property_insurance_escrowed
   lip_property_taxes_escrowed:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_property_taxes_escrowed
   lip_senior_lien_restriction_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_senior_lien_restriction_amount
   lip_senior_lien_restriction_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_senior_lien_restriction_type
   lip_texas_equity:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_texas_equity
   lip_texas_equity_conversion:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_texas_equity_conversion
   lip_texas_equity_locked:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_texas_equity_locked
   lip_third_party_community_second_program_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_third_party_community_second_program_pid
   lip_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lip_version
 step_functions:

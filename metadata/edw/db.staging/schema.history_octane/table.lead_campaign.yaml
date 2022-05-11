@@ -23,36 +23,46 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   ldc_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ldc_account_pid
   ldc_campaign_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ldc_campaign_id
   ldc_campaign_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ldc_campaign_name
   ldc_lead_source_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ldc_lead_source_pid
   ldc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ldc_pid
   ldc_velocify_campaign_title:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ldc_velocify_campaign_title
   ldc_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ldc_version
 step_functions:

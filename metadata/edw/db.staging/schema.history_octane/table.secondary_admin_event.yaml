@@ -23,48 +23,61 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   sae_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sae_account_pid
   sae_diff_list:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sae_diff_list
   sae_event_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sae_event_date
   sae_event_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sae_event_datetime
   sae_message:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sae_message
   sae_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sae_pid
   sae_secondary_admin_event_entity_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sae_secondary_admin_event_entity_type
   sae_target_entity_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sae_target_entity_pid
   sae_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sae_unparsed_name
   sae_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sae_version
 step_functions:

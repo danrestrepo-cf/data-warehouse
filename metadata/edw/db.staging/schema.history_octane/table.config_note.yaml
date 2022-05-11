@@ -71,74 +71,95 @@ foreign_keys:
 columns:
   cn_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cn_account_pid
   cn_author_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cn_author_lender_user_pid
   cn_author_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cn_author_unparsed_name
   cn_change_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cn_change_request_pid
   cn_config_note_scope_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cn_config_note_scope_type
   cn_content:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cn_content
   cn_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cn_create_datetime
   cn_location_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cn_location_pid
   cn_old_location_note_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cn_old_smart_doc_note_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cn_old_wf_process_note_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cn_old_wf_step_note_pid:
     data_type: BIGINT
+    physical_column_flag: true
   cn_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cn_pid
   cn_scope_name:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cn_scope_name
   cn_smart_doc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cn_smart_doc_pid
   cn_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cn_version
   cn_wf_process_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cn_wf_process_pid
   cn_wf_step_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cn_wf_step_pid
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100901:
     etls:

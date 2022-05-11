@@ -39,48 +39,61 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   ms_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ms_borrower_pid
   ms_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ms_from_date
   ms_military_branch_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ms_military_branch_type
   ms_military_service_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ms_military_service_type
   ms_military_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ms_military_status_type
   ms_name_used_during_service:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ms_name_used_during_service
   ms_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ms_pid
   ms_service_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ms_service_number
   ms_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ms_through_date
   ms_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ms_version
 step_functions:

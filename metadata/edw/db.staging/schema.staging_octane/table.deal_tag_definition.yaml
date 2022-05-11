@@ -29,13 +29,19 @@ foreign_keys:
 columns:
   dtd_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dtd_deal_tag_access_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dtd_deal_tag_level_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dtd_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dtd_tag_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   dtd_version:
     data_type: INTEGER
+    physical_column_flag: true

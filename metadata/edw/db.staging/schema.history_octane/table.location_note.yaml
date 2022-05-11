@@ -5,21 +5,31 @@ primary_key:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   locn_author_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   locn_author_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   locn_content:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   locn_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   locn_location_pid:
     data_type: BIGINT
+    physical_column_flag: true
   locn_pid:
     data_type: BIGINT
+    physical_column_flag: true
   locn_version:
     data_type: INTEGER
+    physical_column_flag: true

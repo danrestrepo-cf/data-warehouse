@@ -15,40 +15,51 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   sa_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sa_account_pid
   sa_active:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sa_active
   sa_admin_lock:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sa_admin_lock
   sa_company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sa_company_name
   sa_license_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sa_license_id
   sa_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sa_pid
   sa_preferred_vendor:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sa_preferred_vendor
   sa_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sa_version
 step_functions:

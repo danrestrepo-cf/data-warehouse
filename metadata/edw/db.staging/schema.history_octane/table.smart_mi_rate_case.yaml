@@ -23,66 +23,84 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   smrc_amount_description:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrc_amount_description
   smrc_coverage_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrc_coverage_percent
   smrc_criteria_html:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   smrc_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrc_criteria_pid
   smrc_else_case:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrc_else_case
   smrc_initial_duration_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrc_initial_duration_months
   smrc_initial_monthly_payment_annual_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrc_initial_monthly_payment_annual_percent
   smrc_ltv_cutoff_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrc_ltv_cutoff_percent
   smrc_midpoint_cutoff_required:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrc_midpoint_cutoff_required
   smrc_ordinal:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrc_ordinal
   smrc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrc_pid
   smrc_required_monthly_payment_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrc_required_monthly_payment_count
   smrc_smart_mi_rate_card_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrc_smart_mi_rate_card_pid
   smrc_upfront_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrc_upfront_percent
   smrc_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.smrc_version
 step_functions:

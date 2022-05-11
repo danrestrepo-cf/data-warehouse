@@ -15,42 +15,53 @@ foreign_keys:
 columns:
   aue_admin_user_event_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aue_admin_user_event_type
   aue_client_agent:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aue_client_agent
   aue_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aue_create_datetime
   aue_detail:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aue_detail
   aue_ip_address:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aue_ip_address
   aue_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aue_pid
   aue_source_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aue_source_unparsed_name
   aue_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.aue_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100020:
     etls:

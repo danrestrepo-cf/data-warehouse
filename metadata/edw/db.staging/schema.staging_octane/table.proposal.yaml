@@ -461,487 +461,730 @@ foreign_keys:
 columns:
   prp_adjusted_as_is_value_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   prp_after_improved_value_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   prp_anti_steering_lowest_cost_option_fee_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_anti_steering_lowest_cost_option_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   prp_anti_steering_lowest_rate_option_fee_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_anti_steering_lowest_rate_option_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   prp_anti_steering_lowest_rate_wo_neg_option_fee_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_anti_steering_lowest_rate_wo_neg_option_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   prp_any_disaster_declaration:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_any_disaster_declaration_after_appraisal:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_any_disaster_declaration_before_appraisal:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_any_vesting_changes:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_area_median_income:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_arms_length:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_calculated_earliest_allowed_consummation_date:
     data_type: DATE
+    physical_column_flag: true
   prp_cash_out_reason_business_debt_or_debt_consolidation:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_cash_out_reason_debt_or_debt_consolidation:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_cash_out_reason_future_investment_not_under_contract:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_cash_out_reason_future_investment_under_contract:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_cash_out_reason_home_improvement:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_cash_out_reason_investment_or_business_property:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_cash_out_reason_other:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_cash_out_reason_other_text:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_cash_out_reason_personal_use:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_cash_out_reason_student_loans:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_cd_clear_date:
     data_type: DATE
+    physical_column_flag: true
   prp_cema:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_cema_borrower_savings:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_charges_updated_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prp_closing_document_sign_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prp_construction_borrower_contribution_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_construction_lot_ownership_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_cr_tracker_url:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   prp_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prp_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prp_decision_appraised_value_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   prp_decision_credit_score:
     data_type: INTEGER
+    physical_column_flag: true
   prp_decision_credit_score_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prp_decision_du_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prp_decision_lp_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prp_decision_veteran_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prp_deed_taxes_applicable:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_deed_taxes_applicable_explanation:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   prp_deed_taxes_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_deed_taxes_auto_compute_override_reason:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   prp_delayed_financing_exception_guidelines_applicable:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_delayed_financing_exception_verified:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_description:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   prp_disaster_declaration_check_date:
     data_type: DATE
+    physical_column_flag: true
   prp_disaster_declaration_check_date_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_disclosure_action_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_doc_level_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_docs_enabled_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prp_down_payment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   prp_down_payment_percent_mode:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_earliest_allowed_consummation_date_override_reason:
     data_type: TEXT
+    physical_column_flag: true
   prp_early_first_payment:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_earthquake_insurance_applicable:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_effective_credit_score:
     data_type: INTEGER
+    physical_column_flag: true
   prp_effective_earliest_allowed_consummation_date:
     data_type: DATE
+    physical_column_flag: true
   prp_effective_funding_date:
     data_type: DATE
+    physical_column_flag: true
   prp_effective_note_date:
     data_type: DATE
+    physical_column_flag: true
   prp_effective_property_value_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   prp_effective_property_value_explanation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_effective_property_value_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_effective_signing_location_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_effective_signing_location_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_escrow_cushion_months:
     data_type: INTEGER
+    physical_column_flag: true
   prp_escrow_cushion_months_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_estimated_credit_score:
     data_type: INTEGER
+    physical_column_flag: true
   prp_estimated_funding_date:
     data_type: DATE
+    physical_column_flag: true
   prp_estimated_hard_construction_cost_amount:
     data_type: BIGINT
+    physical_column_flag: true
   prp_estimated_property_value_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   prp_fha_eligible_maximum_financing:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_fha_mip_refund_request_input_error:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_fha_non_arms_length_ltv_exception_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_fha_non_arms_length_ltv_exception_verified:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_fha_prior_agency_case_endorsement_date:
     data_type: DATE
+    physical_column_flag: true
   prp_fha_prior_agency_case_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   prp_fha_refinance_authorization_expiration_date:
     data_type: DATE
+    physical_column_flag: true
   prp_fha_refinance_authorization_number:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   prp_fha_va_reasonable_value_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   prp_fhac_refinance_authorization_messages:
     data_type: TEXT
+    physical_column_flag: true
   prp_financed_property_improvements:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_financed_property_improvements_category_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_first_payment_date:
     data_type: DATE
+    physical_column_flag: true
   prp_first_payment_date_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_flood_insurance_applicable:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_fre_ctp_closing_feature_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_fre_ctp_first_payment_due_date:
     data_type: DATE
+    physical_column_flag: true
   prp_gfe_interest_rate_expiration_date:
     data_type: DATE
+    physical_column_flag: true
   prp_gfe_lock_before_settlement_days:
     data_type: INTEGER
+    physical_column_flag: true
   prp_gfe_lock_duration_days:
     data_type: INTEGER
+    physical_column_flag: true
   prp_gse_version_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_hazard_insurance_applicable:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_household_income_exclusive_edit:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_household_size_count:
     data_type: INTEGER
+    physical_column_flag: true
   prp_hud_consultant:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_hud_fha_de_approval_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_initial_intent_to_proceed_date:
     data_type: DATE
+    physical_column_flag: true
   prp_initial_uw_disposition_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prp_initial_uw_submit_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prp_intent_to_proceed_date:
     data_type: DATE
+    physical_column_flag: true
   prp_intent_to_proceed_obtainer_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_intent_to_proceed_provided:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_intent_to_proceed_provider_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_intent_to_proceed_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_ipc_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_ipc_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_ipc_financing_concession_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_ipc_limit_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   prp_ipc_maximum_amount_allowed:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_ipc_non_cash_concession_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_ipc_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   prp_land_acquisition_price:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   prp_land_acquisition_transaction_date:
     data_type: DATE
+    physical_column_flag: true
   prp_last_corrective_disclosure_processed_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prp_last_requested_disclosure_date:
     data_type: DATE
+    physical_column_flag: true
   prp_lender_escrow_loan_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_lender_escrow_loan_due_date:
     data_type: DATE
+    physical_column_flag: true
   prp_loan_modification_agreement_executed_received_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prp_loan_purpose_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_mi_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_minimum_household_income_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_minimum_residual_income_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_minimum_residual_income_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_mortgagee_builder_seller_relationship:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_non_business_cash_out_reason_acknowledged:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_note_date:
     data_type: DATE
+    physical_column_flag: true
   prp_other_lender_requires_appraisal:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_other_lender_requires_appraisal_reason:
     data_type: TEXT
+    physical_column_flag: true
   prp_overridden_earliest_allowed_consummation_date:
     data_type: DATE
+    physical_column_flag: true
   prp_owner_occupancy_not_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prp_preapproval_complete_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prp_preapproval_disposition_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prp_property_acquired_through_ancillary_relief:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_property_acquired_through_inheritance:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_property_repairs_completed_notification_date:
     data_type: DATE
+    physical_column_flag: true
   prp_property_repairs_cost_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_property_repairs_description:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   prp_property_repairs_funds_released_contractor_date:
     data_type: DATE
+    physical_column_flag: true
   prp_property_repairs_holdback_administrator:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_property_repairs_holdback_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_property_repairs_holdback_calc_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_property_repairs_holdback_payer_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_property_repairs_holdback_required_completion_date:
     data_type: DATE
+    physical_column_flag: true
   prp_property_repairs_inspection_completed_date:
     data_type: DATE
+    physical_column_flag: true
   prp_property_repairs_inspection_ordered_date:
     data_type: DATE
+    physical_column_flag: true
   prp_property_repairs_required_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_property_tax_request_error_messages:
     data_type: TEXT
+    physical_column_flag: true
   prp_property_taxes_request_input_error:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_property_usage_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_proposal_expiration_date:
     data_type: DATE
+    physical_column_flag: true
   prp_proposal_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_proposed_additional_monthly_payment:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
   prp_publish:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_publish_date:
     data_type: DATE
+    physical_column_flag: true
   prp_purchase_contract_date:
     data_type: DATE
+    physical_column_flag: true
   prp_purchase_contract_financing_contingency_date:
     data_type: DATE
+    physical_column_flag: true
   prp_purchase_contract_funding_date:
     data_type: DATE
+    physical_column_flag: true
   prp_purchase_contract_received_date:
     data_type: DATE
+    physical_column_flag: true
   prp_recording_fees_request_input_error:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_request_fha_mip_refund_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_request_property_taxes_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_request_recording_fees_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_rescission_applicable:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_rescission_effective_date:
     data_type: DATE
+    physical_column_flag: true
   prp_rescission_notification_by:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   prp_rescission_notification_date:
     data_type: DATE
+    physical_column_flag: true
   prp_rescission_notification_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_rescission_through_date:
     data_type: DATE
+    physical_column_flag: true
   prp_reserves_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_reserves_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_reserves_months:
     data_type: INTEGER
+    physical_column_flag: true
   prp_sale_price_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   prp_sar_significant_adjustments:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_scheduled_closing_document_sign_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prp_security_instrument_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_separate_transaction_for_land_acquisition:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_signed_closing_doc_received_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prp_smart_charges_enabled:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_smart_docs_enabled:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_structure_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_taxes_escrowed:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_term_borrower_intends_to_retain_property:
     data_type: INTEGER
+    physical_column_flag: true
   prp_texas_equity_conversion_determ_datetime_override_reason:
     data_type: TEXT
+    physical_column_flag: true
   prp_texas_equity_conversion_determination_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prp_texas_equity_conversion_determination_datetime_override:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_texas_equity_determination_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   prp_texas_equity_determination_datetime_override:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_texas_equity_determination_datetime_override_reason:
     data_type: TEXT
+    physical_column_flag: true
   prp_total_income_to_ami_ratio:
     data_type: NUMERIC(14,9)
+    physical_column_flag: true
   prp_trustee_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_trustee_address_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_trustee_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_trustee_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_trustee_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_trustee_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_trustee_mers_org_id:
     data_type: VARCHAR(7)
+    physical_column_flag: true
   prp_trustee_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_trustee_phone_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   prp_trustee_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prp_underwrite_disposition_note:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   prp_underwrite_disposition_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_underwrite_expiration_date:
     data_type: DATE
+    physical_column_flag: true
   prp_underwrite_method_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_underwrite_publish_date:
     data_type: DATE
+    physical_column_flag: true
   prp_underwrite_risk_assessment_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_underwriting_comments:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   prp_usda_gsa_sam_checked_date:
     data_type: DATE
+    physical_column_flag: true
   prp_usda_gsa_sam_exclusion:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_usda_rd_single_family_housing_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_user_entered_note_date:
     data_type: DATE
+    physical_column_flag: true
   prp_uuts_master_contact_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_uuts_master_contact_title:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_uuts_master_office_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   prp_uuts_master_office_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   prp_va_actual_guaranty_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_va_amount_used_to_calculate_maximum_guaranty:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_va_energy_efficient_improvements_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_va_guaranty_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   prp_va_maintenance_utilities_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
   prp_va_maintenance_utilities_per_square_feet_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_va_maximum_base_loan_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_va_maximum_funding_fee_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_va_maximum_total_loan_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_va_meets_credit_standards:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_va_monthly_maintenance_utilities_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_va_monthly_utilities_included:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_va_notice_of_value_date:
     data_type: DATE
+    physical_column_flag: true
   prp_va_notice_of_value_estimated_reasonable_value_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   prp_va_notice_of_value_source_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_va_past_credit_record_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_va_prior_paid_in_full_loan_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   prp_va_required_cash_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_va_required_guaranty_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   prp_version:
     data_type: INTEGER
+    physical_column_flag: true
   prp_vesting_change_titleholder_added:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_vesting_change_titleholder_name_change:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_vesting_change_titleholder_removed:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prp_windstorm_insurance_applicable:
     data_type: VARCHAR(128)
+    physical_column_flag: true

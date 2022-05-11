@@ -63,72 +63,91 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   ser_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_account_pid
   ser_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_create_datetime
   ser_description:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_description
   ser_end_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_end_datetime
   ser_exported_deal_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_exported_deal_count
   ser_file_name_format_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_file_name_format_type
   ser_loan_export_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_loan_export_type
   ser_loan_name_format_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_loan_name_format_type
   ser_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_pid
   ser_request_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_request_status_type
   ser_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_requester_lender_user_pid
   ser_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_requester_unparsed_name
   ser_smart_stack_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_smart_stack_pid
   ser_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_start_datetime
   ser_total_deal_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_total_deal_count
   ser_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ser_version
 step_functions:

@@ -4,19 +4,28 @@ primary_key:
 columns:
   ht_effective_date:
     data_type: DATE
+    physical_column_flag: true
   ht_first_lien_rate_spread_threshold:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ht_max_points_and_fees_percent_over_threshold:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ht_max_points_and_fees_percent_under_threshold:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ht_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ht_points_and_fees_threshold_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   ht_subordinate_lien_rate_spread_threshold:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   ht_total_loan_amount_threshold:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   ht_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -29,23 +29,34 @@ foreign_keys:
 columns:
   gse_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   gse_control_sheet_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   gse_cron_expression:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   gse_export_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   gse_format_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   gse_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   gse_pid:
     data_type: BIGINT
+    physical_column_flag: true
   gse_results_sheet_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   gse_spreadsheet_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   gse_stored_query_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   gse_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -39,36 +39,46 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   prpdf_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdf_deal_file_pid
   prpdf_included_file:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdf_included_file
   prpdf_key_doc:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdf_key_doc
   prpdf_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdf_pid
   prpdf_proposal_doc_file_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdf_proposal_doc_file_type
   prpdf_proposal_doc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdf_proposal_doc_pid
   prpdf_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdf_version
 step_functions:

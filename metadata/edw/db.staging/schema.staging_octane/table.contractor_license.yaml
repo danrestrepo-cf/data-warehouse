@@ -21,17 +21,25 @@ foreign_keys:
 columns:
   ctrl_contractor_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ctrl_from_date:
     data_type: DATE
+    physical_column_flag: true
   ctrl_license_number:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ctrl_note:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   ctrl_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ctrl_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   ctrl_through_date:
     data_type: DATE
+    physical_column_flag: true
   ctrl_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -5,22 +5,31 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   other_race_national_origin_description_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       calculation:
         string: $1 <> '' AND $1 IS NOT NULL
@@ -28,54 +37,67 @@ columns:
         - primary_source_table.columns.b_other_race_national_origin_description
   race_american_indian_or_alaska_native_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_american_indian_or_alaska_native
   race_asian_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_asian
   race_asian_indian_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_asian_indian
   race_black_or_african_american_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_black_or_african_american
   race_chinese_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_chinese
   race_filipino_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_filipino
   race_guamanian_or_chamorro_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_guamanian_or_chamorro
   race_japanese_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_japanese
   race_korean_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_korean
   race_native_hawaiian_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_native_hawaiian
   race_native_hawaiian_or_other_pacific_islander_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_native_hawaiian_or_other_pacific_islander
   race_not_applicable_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_not_applicable
   race_other_american_indian_or_alaska_native_description_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       calculation:
         string: $1 <> '' AND $1 IS NOT NULL
@@ -83,6 +105,7 @@ columns:
         - primary_source_table.columns.b_race_other_american_indian_or_alaska_native_description
   race_other_asian_description_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       calculation:
         string: $1 <> '' AND $1 IS NOT NULL
@@ -90,10 +113,12 @@ columns:
         - primary_source_table.columns.b_race_other_asian_description
   race_other_asian_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_other_asian
   race_other_pacific_islander_description_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       calculation:
         string: $1 <> '' AND $1 IS NOT NULL
@@ -101,18 +126,22 @@ columns:
         - primary_source_table.columns.b_race_other_pacific_islander_description
   race_other_pacific_islander_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_other_pacific_islander
   race_samoan_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_samoan
   race_vietnamese_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_vietnamese
   race_white_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_race_white
 step_functions:

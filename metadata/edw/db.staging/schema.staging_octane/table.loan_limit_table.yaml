@@ -21,15 +21,22 @@ foreign_keys:
 columns:
   llt_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   llt_from_date:
     data_type: DATE
+    physical_column_flag: true
   llt_loan_limit_table_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   llt_pid:
     data_type: BIGINT
+    physical_column_flag: true
   llt_upload_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   llt_uploader_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   llt_version:
     data_type: INTEGER
+    physical_column_flag: true

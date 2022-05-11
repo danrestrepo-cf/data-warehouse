@@ -23,32 +23,41 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   lci_absorb_cost:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lci_absorb_cost
   lci_allocation_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lci_allocation_amount
   lci_lender_concession_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lci_lender_concession_request_pid
   lci_loan_charge_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lci_loan_charge_pid
   lci_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lci_pid
   lci_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lci_version
 step_functions:

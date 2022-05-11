@@ -5,805 +5,969 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   product_terms_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_pid
     update_flag: true
   product_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_product_pid
     update_flag: true
   amortization_term_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_amortization_term_months
     update_flag: true
   arm_convertible_from_month:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_arm_convertible_from_month
     update_flag: true
   arm_convertible_through_month:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_arm_convertible_through_month
     update_flag: true
   arm_floor_rate_percent:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_arm_floor_rate_percent
     update_flag: true
   arm_index:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_arm_index_type.columns.value
     update_flag: true
   arm_index_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_arm_index_type
     update_flag: true
   arm_lookback_period_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_arm_lookback_period_days
     update_flag: true
   arm_payment_adjustment_calculation:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_arm_payment_adjustment_calculation_type.columns.value
     update_flag: true
   arm_payment_adjustment_calculation_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_arm_payment_adjustment_calculation_type
     update_flag: true
   buydown_base_date:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_buydown_base_date_type.columns.value
     update_flag: true
   buydown_base_date_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_buydown_base_date_type
     update_flag: true
   buydown_subsidy_calculation_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_buydown_subsidy_calculation_type
     update_flag: true
   buydown_subsidy_calculation:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_buydown_subsidy_calculation_type.columns.value
     update_flag: true
   community_lending:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_community_lending_type.columns.value
     update_flag: true
   community_lending_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_community_lending_type
     update_flag: true
   days_per_year:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_days_per_year_type.columns.value
     update_flag: true
   days_per_year_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_days_per_year_type
     update_flag: true
   decision_credit_score_calc:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_decision_credit_score_calc_type.columns.value
     update_flag: true
   decision_credit_score_calc_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_decision_credit_score_calc_type
     update_flag: true
   deed_page_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_deed_page_count
     update_flag: true
   deferred_payment_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_deferred_payment_months
     update_flag: true
   dsi_plan_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_dsi_plan_code
     update_flag: true
   due_in_term_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_due_in_term_months
     update_flag: true
   escrow_cushion_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_escrow_cushion_months
     update_flag: true
   fha_rehab_program:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_fha_rehab_program_type.columns.value
     update_flag: true
   fha_rehab_program_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_fha_rehab_program_type
     update_flag: true
   fha_special_program:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_fha_special_program_type.columns.value
     update_flag: true
   fha_special_program_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_fha_special_program_type
     update_flag: true
   fnm_arm_plan:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_fnm_arm_plan_type.columns.value
     update_flag: true
   fnm_arm_plan_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_fnm_arm_plan_type
     update_flag: true
   fnm_community_lending_product:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_fnm_community_lending_product_type.columns.value
     update_flag: true
   fnm_community_lending_product_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_fnm_community_lending_product_type
     update_flag: true
   fre_community_program:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_fre_community_program_type.columns.value
     update_flag: true
   fre_community_program_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_fre_community_program_type
     update_flag: true
   from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_from_date
     update_flag: true
   gpm_adjustment_percent:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_gpm_adjustment_percent
     update_flag: true
   gpm_adjustment_years:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_gpm_adjustment_years
     update_flag: true
   conditions_to_assumability_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_conditions_to_assumability
     update_flag: true
   demand_feature_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_demand_feature
     update_flag: true
   lender_hazard_insurance_available_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_lender_hazard_insurance_available
     update_flag: true
   prepayment_charge_refund_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_prepayment_finance_charge_refund
     update_flag: true
   heloc_cancel_fee_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_heloc_cancel_fee_amount
     update_flag: true
   heloc_cancel_fee_applicable:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_heloc_cancel_fee_applicable_type.columns.value
     update_flag: true
   heloc_cancel_fee_applicable_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_heloc_cancel_fee_applicable_type
     update_flag: true
   heloc_cancel_fee_period_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_heloc_cancel_fee_period_months
     update_flag: true
   heloc_draw_period_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_heloc_draw_period_months
     update_flag: true
   heloc_maximum_initial_draw_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_heloc_maximum_initial_draw_amount
     update_flag: true
   heloc_minimum_draw_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_heloc_minimum_draw_amount
     update_flag: true
   heloc_repayment_period_duration_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_heloc_repayment_period_duration_months
     update_flag: true
   high_balance:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_high_balance_temp.columns.value
     update_flag: true
   high_balance_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_high_balance
     update_flag: true
   initial_payment_adjustment_term_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_initial_payment_adjustment_term_months
     update_flag: true
   initial_rate_adjustment_cap_percent:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_initial_rate_adjustment_cap_percent
     update_flag: true
   initial_rate_adjustment_term_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_initial_rate_adjustment_term_months
     update_flag: true
   ipc_calc:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_ipc_calc_type.columns.value
     update_flag: true
   ipc_calc_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_calc_type
     update_flag: true
   ipc_cltv_ratio_percent1:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_cltv_ratio_percent1
     update_flag: true
   ipc_cltv_ratio_percent2:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_cltv_ratio_percent2
     update_flag: true
   ipc_cltv_ratio_percent3:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_cltv_ratio_percent3
     update_flag: true
   ipc_cltv_ratio_percent4:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_cltv_ratio_percent4
     update_flag: true
   ipc_comparison_operator_code1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_comparison_operator_type1
     update_flag: true
   ipc_comparison_operator_code2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_comparison_operator_type2
     update_flag: true
   ipc_comparison_operator_code3:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_comparison_operator_type3
     update_flag: true
   ipc_comparison_operator_code4:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_comparison_operator_type4
     update_flag: true
   ipc_comparison_operator1:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_ipc_comparison_operator_type1.columns.value
     update_flag: true
   ipc_comparison_operator2:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_ipc_comparison_operator_type2.columns.value
     update_flag: true
   ipc_comparison_operator3:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_ipc_comparison_operator_type3.columns.value
     update_flag: true
   ipc_comparison_operator4:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_ipc_comparison_operator_type4.columns.value
     update_flag: true
   ipc_limit_percent1:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_limit_percent1
     update_flag: true
   ipc_limit_percent2:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_limit_percent2
     update_flag: true
   ipc_limit_percent3:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_limit_percent3
     update_flag: true
   ipc_limit_percent4:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_limit_percent4
     update_flag: true
   ipc_property_usage_code1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_property_usage_type1
     update_flag: true
   ipc_property_usage_code2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_property_usage_type2
     update_flag: true
   ipc_property_usage_code3:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_property_usage_type3
     update_flag: true
   ipc_property_usage_code4:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_ipc_property_usage_type4
     update_flag: true
   ipc_property_usage1:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_ipc_property_usage_type1.columns.value
     update_flag: true
   ipc_property_usage2:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_ipc_property_usage_type2.columns.value
     update_flag: true
   ipc_property_usage3:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_ipc_property_usage_type3.columns.value
     update_flag: true
   ipc_property_usage4:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_ipc_property_usage_type4.columns.value
     update_flag: true
   allow_loan_amount_cents_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_allow_loan_amount_cents
     update_flag: true
   always_current_market_price_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_always_current_market_price
     update_flag: true
   arm_convertible_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_arm_convertible
     update_flag: true
   assumable_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_assumable
     update_flag: true
   credit_qualifying_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_credit_qualifying
     update_flag: true
   du_risk_assessment_accepted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_du_risk_assessment_accepted
     update_flag: true
   escrow_waiver_allowed_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_escrow_waiver_allowed
     update_flag: true
   external_fha_underwrite_accepted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_external_fha_underwrite_accepted
     update_flag: true
   external_investor_underwrite_accepted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_external_investor_underwrite_accepted
     update_flag: true
   external_usda_underwrite_accepted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_external_usda_underwrite_accepted
     update_flag: true
   external_va_underwrite_accepted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_external_va_underwrite_accepted
     update_flag: true
   family_advantage_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_family_advantage
     update_flag: true
   heloc_maximum_initial_draw_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_heloc_maximum_initial_draw
     update_flag: true
   heloc_minimum_draw_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_heloc_minimum_draw
     update_flag: true
   internal_underwrite_accepted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_internal_underwrite_accepted
     update_flag: true
   loan_requires_hazard_insurance_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_loan_requires_hazard_insurance
     update_flag: true
   lp_risk_assessment_accepted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_lp_risk_assessment_accepted
     update_flag: true
   manual_risk_assessment_accepted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_manual_risk_assessment_accepted
     update_flag: true
   mortgage_credit_certificate_eligible_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_mortgage_credit_certificate_eligible
     update_flag: true
   new_york_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_new_york
     update_flag: true
   no_mi_product_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_no_mi_product
     update_flag: true
   non_conforming_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_non_conforming
     update_flag: true
   rate_protect_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_rate_protect
     update_flag: true
   texas_veterans_land_board:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_texas_veterans_land_board.columns.value
     update_flag: true
   texas_veterans_land_board_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_texas_veterans_land_board
     update_flag: true
   third_party_grant_eligible_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_third_party_grant_eligible
     update_flag: true
   zero_note_rate_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_zero_note_rate
     update_flag: true
   lender_hazard_insurance_premium_amount:
     data_type: NUMERIC(21,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_lender_hazard_insurance_premium_amount
     update_flag: true
   lender_hazard_insurance_term_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_lender_hazard_insurance_term_months
     update_flag: true
   lien_priority:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_lien_priority_type.columns.value
     update_flag: true
   lien_priority_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_lien_priority_type
     update_flag: true
   loan_amortization:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_loan_amortization_type.columns.value
     update_flag: true
   loan_amortization_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_loan_amortization_type
     update_flag: true
   minimum_payment_rate_percent:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_minimum_payment_rate_percent
     update_flag: true
   minimum_rate_term_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_minimum_rate_term_months
     update_flag: true
   mortgage_type:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_mortgage_type.columns.value
     update_flag: true
   mortgage_type_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_mortgage_type
     update_flag: true
   negative_amortization:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_negative_amortization_type.columns.value
     update_flag: true
   negative_amortization_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_negative_amortization_type
     update_flag: true
   negative_amortization_limit_percent:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_negative_amortization_limit_percent
     update_flag: true
   negative_amortization_recast_period_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_negative_amortization_recast_period_months
     update_flag: true
   partial_payment_policy:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_partial_payment_policy_type.columns.value
     update_flag: true
   partial_payment_policy_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_partial_payment_policy_type
     update_flag: true
   payment_adjustment_lifetime_cap_percent:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_payment_adjustment_lifetime_cap_percent
     update_flag: true
   payment_adjustment_periodic_cap:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_payment_adjustment_periodic_cap
     update_flag: true
   payment_frequency:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_payment_frequency_type.columns.value
     update_flag: true
   payment_frequency_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_payment_frequency_type
     update_flag: true
   payment_structure:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_payment_structure_type.columns.value
     update_flag: true
   payment_structure_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_payment_structure_type
     update_flag: true
   prepaid_interest_rate:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_prepaid_interest_rate_type.columns.value
     update_flag: true
   prepaid_interest_rate_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_prepaid_interest_rate_type
     update_flag: true
   prepay_penalty:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_prepay_penalty_type.columns.value
     update_flag: true
   prepay_penalty_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_prepay_penalty_type
     update_flag: true
   product_appraisal_requirement:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_product_appraisal_requirement_type.columns.value
     update_flag: true
   product_appraisal_requirement_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_product_appraisal_requirement_type
     update_flag: true
   product_category:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_product_category
     update_flag: true
   product_special_program:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_product_special_program_type.columns.value
     update_flag: true
   product_special_program_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_product_special_program_type
     update_flag: true
   qualifying_monthly_payment:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_qualifying_monthly_payment_type.columns.value
     update_flag: true
   qualifying_monthly_payment_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_qualifying_monthly_payment_type
     update_flag: true
   qualifying_rate:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_qualifying_rate_type.columns.value
     update_flag: true
   qualifying_rate_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_qualifying_rate_type
     update_flag: true
   qualifying_rate_input_percent:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_qualifying_rate_input_percent
     update_flag: true
   rate_adjustment_lifetime_cap_percent:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_rate_adjustment_lifetime_cap_percent
     update_flag: true
   section_of_act_coarse:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_section_of_act_coarse_type.columns.value
     update_flag: true
   section_of_act_coarse_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_section_of_act_coarse_type
     update_flag: true
   security_instrument_page_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_security_instrument_page_count
     update_flag: true
   servicing_transfer:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_servicing_transfer_type.columns.value
     update_flag: true
   servicing_transfer_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_servicing_transfer_type
     update_flag: true
   subsequent_payment_adjustment_term_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_subsequent_payment_adjustment_term_months
     update_flag: true
   subsequent_rate_adjustment_cap_percent:
     data_type: NUMERIC(15,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_subsequent_rate_adjustment_cap_percent
     update_flag: true
   subsequent_rate_adjustment_term_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_subsequent_rate_adjustment_term_months
     update_flag: true
   third_party_community_second_program_eligibility:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_pt_third_party_community_second_program_eligibility_type.columns.value
     update_flag: true
   third_party_community_second_program_eligibility_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pt_third_party_community_second_program_eligibility_type
     update_flag: true

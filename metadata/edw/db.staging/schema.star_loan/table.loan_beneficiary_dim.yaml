@@ -5,135 +5,165 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   loan_beneficiary_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_pid
     update_flag: true
   loan_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_loan_pid
     update_flag: true
   collateral_courier:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_lb_collateral_courier_type.columns.value
     update_flag: true
   collateral_courier_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_collateral_courier_type
     update_flag: true
   delivery_aus:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_lb_delivery_aus_type.columns.value
     update_flag: true
   delivery_aus_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_delivery_aus_type
     update_flag: true
   early_funding:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_lb_early_funding.columns.value
     update_flag: true
   early_funding_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_early_funding
     update_flag: true
   investor_loan_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_investor_loan_id
     update_flag: true
   current_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_current
     update_flag: true
   initial_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_initial
     update_flag: true
   mers_mom_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_mers_mom
     update_flag: true
   mers_transfer_override_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_mers_transfer_override
     update_flag: true
   loan_file_courier:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_lb_loan_file_courier_type.columns.value
     update_flag: true
   loan_file_courier_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_loan_file_courier_type
     update_flag: true
   loan_file_delivery_method:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_lb_loan_file_delivery_method_type.columns.value
     update_flag: true
   loan_file_delivery_method_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_loan_file_delivery_method_type
     update_flag: true
   mers_transfer_status:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_lb_mers_transfer_status_type.columns.value
     update_flag: true
   mers_transfer_status_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_mers_transfer_status_type
     update_flag: true
   pool_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_pool_id
     update_flag: true
   transfer_status:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_lb_loan_benef_transfer_status_type.columns.value
     update_flag: true
   transfer_status_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lb_loan_benef_transfer_status_type
     update_flag: true

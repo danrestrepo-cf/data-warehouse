@@ -31,88 +31,111 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   prpc_any_utilities_inoperable:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_any_utilities_inoperable
   prpc_architectural_exhibits:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_architectural_exhibits
   prpc_certificate_of_occupancy_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_certificate_of_occupancy_date
   prpc_construction_confirmed_start_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_construction_confirmed_start_date
   prpc_contingency_reserve_required:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_contingency_reserve_required
   prpc_effective_construction_completion_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_effective_construction_completion_date
   prpc_estimated_permit_amount_applicable:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_estimated_permit_amount_applicable
   prpc_expected_months_to_complete:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_expected_months_to_complete
   prpc_extension_needed:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_extension_needed
   prpc_extension_period_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_extension_period_days
   prpc_extension_period_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_extension_period_months
   prpc_feasibility_study:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_feasibility_study
   prpc_loan_in_process_account_closed_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_loan_in_process_account_closed_date
   prpc_mortgage_payment_reserves_required:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_mortgage_payment_reserves_required
   prpc_non_habitable_months:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_non_habitable_months
   prpc_non_habitable_units:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_non_habitable_units
   prpc_number_of_draws:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_number_of_draws
   prpc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_pid
   prpc_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_proposal_pid
   prpc_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpc_version
 step_functions:

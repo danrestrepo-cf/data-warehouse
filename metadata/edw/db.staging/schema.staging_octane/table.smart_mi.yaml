@@ -21,9 +21,13 @@ foreign_keys:
 columns:
   sm_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sm_mi_company_name_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sm_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sm_version:
     data_type: INTEGER
+    physical_column_flag: true

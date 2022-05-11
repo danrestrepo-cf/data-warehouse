@@ -5,30 +5,39 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   piggyback_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       calculation:
         string: $1 = 'COMBO'
@@ -37,41 +46,49 @@ columns:
     update_flag: false
   mi_required_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prp_mi_required
     update_flag: false
   is_test_loan_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_test_loan
     update_flag: false
   structure:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_prp_structure_type.columns.value
     update_flag: true
   loan_purpose:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_prp_loan_purpose_type.columns.value
     update_flag: true
   structure_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prp_structure_type
     update_flag: false
   loan_purpose_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prp_loan_purpose_type
     update_flag: false
   property_usage_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prp_property_usage_type
     update_flag: false
   property_usage:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_prp_property_usage_type.columns.value
     update_flag: true

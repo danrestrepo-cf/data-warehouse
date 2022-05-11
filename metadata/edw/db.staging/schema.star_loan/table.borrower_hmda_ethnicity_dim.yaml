@@ -5,38 +5,51 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   ethnicity_cuban_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_ethnicity_cuban
   ethnicity_hispanic_or_latino_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_ethnicity_hispanic_or_latino
   ethnicity_mexican_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_ethnicity_mexican
   ethnicity_not_hispanic_or_latino_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_ethnicity_not_hispanic_or_latino
   ethnicity_other_hispanic_or_latino_description_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       calculation:
         string: $1 <> '' AND $1 IS NOT NULL
@@ -44,10 +57,12 @@ columns:
         - primary_source_table.columns.b_ethnicity_other_hispanic_or_latino_description
   ethnicity_other_hispanic_or_latino_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_ethnicity_other_hispanic_or_latino
   ethnicity_puerto_rican_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_ethnicity_puerto_rican
 step_functions:

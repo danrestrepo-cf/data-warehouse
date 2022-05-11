@@ -23,36 +23,46 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   prpdss_deal_signer_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdss_deal_signer_pid
   prpdss_esign_complete:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdss_esign_complete
   prpdss_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdss_pid
   prpdss_proposal_doc_set_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdss_proposal_doc_set_pid
   prpdss_received_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdss_received_datetime
   prpdss_signed_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdss_signed_datetime
   prpdss_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpdss_version
 step_functions:

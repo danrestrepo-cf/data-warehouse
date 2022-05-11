@@ -21,13 +21,19 @@ foreign_keys:
 columns:
   df_archive:
     data_type: BOOLEAN
+    physical_column_flag: true
   df_borrower_uploaded:
     data_type: BOOLEAN
+    physical_column_flag: true
   df_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   df_pid:
     data_type: BIGINT
+    physical_column_flag: true
   df_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   df_version:
     data_type: INTEGER
+    physical_column_flag: true

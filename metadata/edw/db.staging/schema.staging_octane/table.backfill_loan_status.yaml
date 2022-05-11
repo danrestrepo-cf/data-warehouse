@@ -21,21 +21,31 @@ foreign_keys:
 columns:
   bfls_backfill_status_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bfls_backfill_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   bfls_completed_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   bfls_failure_info:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   bfls_los_loan_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   bfls_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bfls_raw_loan_row:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   bfls_started_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   bfls_version:
     data_type: INTEGER
+    physical_column_flag: true
   bfls_warning_info:
     data_type: VARCHAR(16000)
+    physical_column_flag: true

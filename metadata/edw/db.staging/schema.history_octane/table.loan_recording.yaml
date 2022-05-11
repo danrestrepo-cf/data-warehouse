@@ -23,76 +23,96 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   lr_loan_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_loan_pid
   lr_mers_registration_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_mers_registration_date
   lr_mers_registration_errors:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_mers_registration_errors
   lr_mers_registration_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_mers_registration_status_type
   lr_mers_registration_warnings:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_mers_registration_warnings
   lr_mers_transfer_errors:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_mers_transfer_errors
   lr_mers_transfer_warnings:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_mers_transfer_warnings
   lr_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_pid
   lr_re_recording:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_re_recording
   lr_recording_book_number:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_recording_book_number
   lr_recording_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_recording_date
   lr_recording_instrument_number:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_recording_instrument_number
   lr_recording_jurisdiction_name:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_recording_jurisdiction_name
   lr_recording_page_number:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_recording_page_number
   lr_recording_volume_number:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_recording_volume_number
   lr_recording_witness_unparsed_name:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_recording_witness_unparsed_name
   lr_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lr_version
 step_functions:

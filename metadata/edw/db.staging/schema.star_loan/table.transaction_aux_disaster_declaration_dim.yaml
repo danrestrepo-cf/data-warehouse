@@ -5,65 +5,81 @@ primary_key:
 columns:
   transaction_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: true
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.d_pid
     update_flag: true
   active_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_pid
     update_flag: true
   any_disaster_declaration_after_appraisal_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_any_disaster_declaration_after_appraisal
     update_flag: true
   any_disaster_declaration_before_appraisal_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_any_disaster_declaration_before_appraisal
     update_flag: true
   any_disaster_declaration_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_any_disaster_declaration
     update_flag: true
   disaster_declaration_check_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_disaster_declaration_check_date
     update_flag: true
   disaster_declaration_check_date_type:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.foreign_keys.fkt_prp_disaster_declaration_check_date_type.columns.value
     update_flag: true
   disaster_declaration_check_date_type_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fk_deal_2.columns.prp_disaster_declaration_check_date_type
     update_flag: true

@@ -37,15 +37,22 @@ foreign_keys:
 columns:
   prpdf_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpdf_included_file:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpdf_key_doc:
     data_type: BOOLEAN
+    physical_column_flag: true
   prpdf_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpdf_proposal_doc_file_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   prpdf_proposal_doc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpdf_version:
     data_type: INTEGER
+    physical_column_flag: true

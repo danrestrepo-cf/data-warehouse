@@ -29,29 +29,43 @@ foreign_keys:
 columns:
   rp_accessible_only:
     data_type: BOOLEAN
+    physical_column_flag: true
   rp_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rp_allow_excel_export:
     data_type: BOOLEAN
+    physical_column_flag: true
   rp_allow_view:
     data_type: BOOLEAN
+    physical_column_flag: true
   rp_analysis_report:
     data_type: BOOLEAN
+    physical_column_flag: true
   rp_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rp_description:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   rp_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rp_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rp_publish:
     data_type: BOOLEAN
+    physical_column_flag: true
   rp_report_row_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rp_report_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rp_test_data_report:
     data_type: BOOLEAN
+    physical_column_flag: true
   rp_version:
     data_type: INTEGER
+    physical_column_flag: true

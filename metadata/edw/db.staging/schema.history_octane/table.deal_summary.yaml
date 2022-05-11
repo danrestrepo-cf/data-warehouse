@@ -63,122 +63,153 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   ds_any_unrequested_packages:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_any_unrequested_packages
   ds_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_deal_pid
   ds_deal_stage_from_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_deal_stage_from_datetime
   ds_deal_stage_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_deal_stage_type
   ds_decision_appraisal_condition_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_decision_appraisal_condition_type
   ds_decision_appraisal_cu_risk_score:
     data_type: NUMERIC(10,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_decision_appraisal_cu_risk_score
   ds_eligible_investor_ids_main:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_eligible_investor_ids_main
   ds_eligible_investor_ids_piggyback:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_eligible_investor_ids_piggyback
   ds_funded_main:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_funded_main
   ds_funded_piggyback:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_funded_piggyback
   ds_funding_status_type_main:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_funding_status_type_main
   ds_funding_status_type_piggyback:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_funding_status_type_piggyback
   ds_last_wf_phase_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_last_wf_phase_name
   ds_last_wf_phase_number:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_last_wf_phase_number
   ds_lender_lock_datetime_main:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_lender_lock_datetime_main
   ds_lender_lock_datetime_piggyback:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_lender_lock_datetime_piggyback
   ds_lender_lock_expiration_datetime_main:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_lender_lock_expiration_datetime_main
   ds_lender_lock_expiration_datetime_piggyback:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_lender_lock_expiration_datetime_piggyback
   ds_lender_lock_status_type_main:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_lender_lock_status_type_main
   ds_lender_lock_status_type_piggyback:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_lender_lock_status_type_piggyback
   ds_lock_vintage_date_main:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_lock_vintage_date_main
   ds_lock_vintage_date_piggyback:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_lock_vintage_date_piggyback
   ds_most_recent_user_update_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_most_recent_user_update_date
   ds_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_pid
   ds_proposal_review_requested_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_proposal_review_requested_count
   ds_purchase_advice_date_main:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_purchase_advice_date_main
   ds_purchase_advice_date_piggyback:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_purchase_advice_date_piggyback
   ds_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ds_version
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100087:
     etls:

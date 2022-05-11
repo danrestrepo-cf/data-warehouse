@@ -37,13 +37,19 @@ foreign_keys:
 columns:
   smr_email_recipient_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   smr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   smr_recipient_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   smr_role_pid:
     data_type: BIGINT
+    physical_column_flag: true
   smr_smart_message_pid:
     data_type: BIGINT
+    physical_column_flag: true
   smr_version:
     data_type: INTEGER
+    physical_column_flag: true

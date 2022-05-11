@@ -39,178 +39,223 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   desn_appraisal_required:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_appraisal_required
   desn_appraisal_rush_request:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_appraisal_rush_request
   desn_appraisal_transfer_specified:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_appraisal_transfer_specified
   desn_borrower_requires_appraisal:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_borrower_requires_appraisal
   desn_charge_credit_for_interest_rate_main:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_charge_credit_for_interest_rate_main
   desn_charge_credit_for_interest_rate_piggyback:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_charge_credit_for_interest_rate_piggyback
   desn_decision_appraisal_appraised_value_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_decision_appraisal_appraised_value_amount
   desn_decision_appraisal_condition_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_decision_appraisal_condition_type
   desn_lead_source_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lead_source_name
   desn_lender_concession_remaining_amount_main:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_concession_remaining_amount_main
   desn_lender_concession_remaining_amount_piggyback:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_concession_remaining_amount_piggyback
   desn_lender_concession_total_approved_amount_main:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_concession_total_approved_amount_main
   desn_lender_concession_total_approved_amount_piggyback:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_concession_total_approved_amount_piggyback
   desn_lender_lock_effective_duration_days_main:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_lock_effective_duration_days_main
   desn_lender_lock_effective_duration_days_piggyback:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_lock_effective_duration_days_piggyback
   desn_lender_lock_effective_expiration_datetime_main:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_lock_effective_expiration_datetime_main
   desn_lender_lock_effective_expiration_datetime_piggyback:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_lock_effective_expiration_datetime_piggyback
   desn_lender_lock_id_main:
     data_type: VARCHAR(11)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_lock_id_main
   desn_lender_lock_id_piggyback:
     data_type: VARCHAR(11)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_lock_id_piggyback
   desn_lender_lock_start_datetime_main:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_lock_start_datetime_main
   desn_lender_lock_start_datetime_piggyback:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_lock_start_datetime_piggyback
   desn_lender_lock_status_type_main:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_lock_status_type_main
   desn_lender_lock_status_type_piggyback:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_lock_status_type_piggyback
   desn_lender_requires_appraisal:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lender_requires_appraisal
   desn_lock_extension_fee_amount_concessed_main:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lock_extension_fee_amount_concessed_main
   desn_lock_extension_fee_amount_concessed_piggyback:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lock_extension_fee_amount_concessed_piggyback
   desn_lock_extension_fee_amount_less_concessions_main:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lock_extension_fee_amount_less_concessions_main
   desn_lock_extension_fee_amount_less_concessions_piggyback:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lock_extension_fee_amount_less_concessions_piggyback
   desn_lock_extension_fee_gross_amount_main:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lock_extension_fee_gross_amount_main
   desn_lock_extension_fee_gross_amount_piggyback:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_lock_extension_fee_gross_amount_piggyback
   desn_override_calculated_appraisal_required:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_override_calculated_appraisal_required
   desn_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_pid
   desn_preferred_vendor_used:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_preferred_vendor_used
   desn_product_requires_appraisal:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_product_requires_appraisal
   desn_relock_fee_amount_concessed_main:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_relock_fee_amount_concessed_main
   desn_relock_fee_amount_concessed_piggyback:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_relock_fee_amount_concessed_piggyback
   desn_relock_fee_amount_less_concessions_main:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_relock_fee_amount_less_concessions_main
   desn_relock_fee_amount_less_concessions_piggyback:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_relock_fee_amount_less_concessions_piggyback
   desn_relock_fee_gross_amount_main:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_relock_fee_gross_amount_main
   desn_relock_fee_gross_amount_piggyback:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_relock_fee_gross_amount_piggyback
   desn_snapshot_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_snapshot_proposal_pid
   desn_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.desn_version
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100315:
     etls:

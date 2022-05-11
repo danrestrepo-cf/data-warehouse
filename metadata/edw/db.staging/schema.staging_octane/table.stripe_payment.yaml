@@ -29,31 +29,46 @@ foreign_keys:
 columns:
   stpm_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   stpm_invoice_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   stpm_payer_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   stpm_payment_request_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   stpm_payment_status_messages:
     data_type: TEXT
+    physical_column_flag: true
   stpm_pid:
     data_type: BIGINT
+    physical_column_flag: true
   stpm_receipt_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   stpm_receipt_url:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   stpm_refund_stripe_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   stpm_status_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   stpm_stripe_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   stpm_stripe_payment_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   stpm_submit_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   stpm_token:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   stpm_version:
     data_type: INTEGER
+    physical_column_flag: true

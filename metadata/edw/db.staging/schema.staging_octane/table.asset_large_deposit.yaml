@@ -13,13 +13,19 @@ foreign_keys:
 columns:
   ald_asset_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ald_deposit_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   ald_deposit_date:
     data_type: DATE
+    physical_column_flag: true
   ald_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ald_snapshotted_pid:
     data_type: BIGINT
+    physical_column_flag: true
   ald_version:
     data_type: INTEGER
+    physical_column_flag: true

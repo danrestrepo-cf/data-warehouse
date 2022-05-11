@@ -269,243 +269,364 @@ foreign_keys:
 columns:
   l_apor_date:
     data_type: DATE
+    physical_column_flag: true
   l_apor_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_apr:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_arm_index_current_value_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_arm_index_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   l_arm_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_aus_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_base_arm_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_base_guaranty_fee_basis_points:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_base_loan_amount:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
   l_base_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_base_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_buydown_contributor_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_buydown_schedule_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_buyup_buydown_basis_points:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_durp_eligibility_opt_out:
     data_type: BOOLEAN
+    physical_column_flag: true
   l_effective_undiscounted_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_fha_agency_case_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   l_fha_agency_case_id_assigned_date:
     data_type: DATE
+    physical_column_flag: true
   l_fha_case_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_fha_endorsement_date:
     data_type: DATE
+    physical_column_flag: true
   l_fha_principal_write_down:
     data_type: BOOLEAN
+    physical_column_flag: true
   l_fha_program_code_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_fhac_case_assignment_messages:
     data_type: TEXT
+    physical_column_flag: true
   l_finance_charge_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_financed_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   l_fnm_investor_product_plan_id:
     data_type: VARCHAR(5)
+    physical_column_flag: true
   l_fnm_mbs_investor_contract_id:
     data_type: VARCHAR(6)
+    physical_column_flag: true
   l_guaranty_fee_after_alternate_payment_method_basis_points:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_guaranty_fee_basis_points:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_heloc_maximum_balance_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
   l_hmda_hoepa_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_hmda_purchaser_of_loan_2017_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_hmda_purchaser_of_loan_2018_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_hmda_rate_spread_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_hoepa_apr:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_hoepa_fees_dollar_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_hoepa_rate_spread:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_hpml:
     data_type: BOOLEAN
+    physical_column_flag: true
   l_initial_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_initial_pi_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_interest_only_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_interest_rate_fee_change_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_last_unprocessed_changes_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   l_lender_concession_candidate:
     data_type: BOOLEAN
+    physical_column_flag: true
   l_lien_priority_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_loan_amount:
     data_type: NUMERIC(17,2)
+    physical_column_flag: true
   l_lock_commitment_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_lock_duration_days:
     data_type: INTEGER
+    physical_column_flag: true
   l_lock_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_locked_price_change_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_lqa_purchase_eligibility_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_ltv_ratio_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_mi_actual_monthly_payment_count:
     data_type: INTEGER
+    physical_column_flag: true
   l_mi_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
   l_mi_base_monthly_payment_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_mi_base_monthly_payment_annual_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_mi_base_rate_label:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   l_mi_base_upfront_payment_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_mi_base_upfront_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_mi_certificate_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   l_mi_company_name_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_mi_coverage_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_mi_initial_calculated_rate_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_mi_initial_calculation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_mi_initial_duration_months:
     data_type: INTEGER
+    physical_column_flag: true
   l_mi_initial_monthly_payment_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_mi_initial_monthly_payment_annual_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_mi_input_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_mi_integration_vendor_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
   l_mi_lender_paid_rate_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_mi_ltv_cutoff_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_mi_midpoint_cutoff_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   l_mi_no_mi_product:
     data_type: BOOLEAN
+    physical_column_flag: true
   l_mi_payer_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_mi_payment_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_mi_premium_refundable_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_mi_rate_quote_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_mi_renewal_calculated_rate_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_mi_renewal_calculation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_mi_renewal_monthly_payment_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_mi_renewal_monthly_payment_annual_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_mi_required_monthly_payment_count:
     data_type: INTEGER
+    physical_column_flag: true
   l_mi_requirement_ltv_ratio_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_mi_upfront_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_mi_upfront_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_mortgage_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_note_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_offering_pid:
     data_type: BIGINT
+    physical_column_flag: true
   l_pid:
     data_type: BIGINT
+    physical_column_flag: true
   l_post_interest_only_first_payment_date:
     data_type: DATE
+    physical_column_flag: true
   l_prepay_penalty_schedule_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_principal_curtailment_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_product_choice_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   l_product_terms_pid:
     data_type: BIGINT
+    physical_column_flag: true
   l_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   l_qm_eligible:
     data_type: BOOLEAN
+    physical_column_flag: true
   l_qualified_mortgage:
     data_type: BOOLEAN
+    physical_column_flag: true
   l_qualified_mortgage_apr:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_qualified_mortgage_max_allowed_rate_spread:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_qualified_mortgage_rule_version_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_qualified_mortgage_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_qualifying_pi_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_qualifying_rate_input_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_qualifying_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_qualifying_rate_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_rate_sheet_undiscounted_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   l_secondary_clear_to_commit:
     data_type: BOOLEAN
+    physical_column_flag: true
   l_section_of_act_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_student_loan_cash_out_refinance:
     data_type: BOOLEAN
+    physical_column_flag: true
   l_target_cash_out_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   l_texas_equity:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_texas_equity_auto:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   l_uldd_loan_comment:
     data_type: VARCHAR(60)
+    physical_column_flag: true
   l_usda_agency_case_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   l_usda_agency_case_id_assigned_date:
     data_type: DATE
+    physical_column_flag: true
   l_usda_guarantee_date:
     data_type: DATE
+    physical_column_flag: true
   l_va_agency_case_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   l_va_agency_case_id_assigned_date:
     data_type: DATE
+    physical_column_flag: true
   l_va_guaranty_date:
     data_type: DATE
+    physical_column_flag: true
   l_version:
     data_type: INTEGER
+    physical_column_flag: true

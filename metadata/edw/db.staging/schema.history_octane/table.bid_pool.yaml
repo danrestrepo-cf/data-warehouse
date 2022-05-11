@@ -23,34 +23,43 @@ foreign_keys:
 columns:
   bp_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bp_account_pid
   bp_bid_pool_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bp_bid_pool_name
   bp_bid_pool_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bp_bid_pool_status_type
   bp_create_datetime:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bp_create_datetime
   bp_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bp_pid
   bp_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bp_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100219:
     etls:

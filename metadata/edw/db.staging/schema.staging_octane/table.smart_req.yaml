@@ -37,19 +37,28 @@ foreign_keys:
 columns:
   sr_active:
     data_type: BOOLEAN
+    physical_column_flag: true
   sr_borrower_access:
     data_type: BOOLEAN
+    physical_column_flag: true
   sr_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sr_deal_child_relationship_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sr_deal_child_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sr_req_name:
     data_type: VARCHAR(767)
+    physical_column_flag: true
   sr_smart_doc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sr_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -175,12 +175,14 @@ def construct_data_warehouse_metadata_from_dict(data_warehouse_dict: dict) -> Da
                                 'columns': {
                                     'col1': {
                                         'data_type': 'TEXT',
+                                        'physical_column_flag': True,
                                         'source': {
                                             'field': 'primary_source_table.foreign_keys.fk3.foreign_keys.fk67.columns.col1'
                                         }
                                     },
                                     'col2': {
-                                        'data_type': 'BOOLEAN'
+                                        'data_type': 'BOOLEAN',
+                                        'physical_column_flag': True,
                                         'source': {
                                             'calculation': {
                                                 'string': 'CASE WHEN $1 IS NULL OR $2 IS NULL THEN NULL
@@ -277,11 +279,16 @@ class DictToMetadataBuilder:
                 ))
         if 'columns' in table_dict:
             for column_name, column_data in table_dict['columns'].items():
-                column_metadata = ColumnMetadata(
-                    name=column_name,
-                    data_type=column_data.get('data_type'),
-                    update_flag=column_data.get('update_flag')
-                )
+                if column_data.get('physical_column_flag') is not None:
+                    column_metadata = ColumnMetadata(
+                        name=column_name,
+                        data_type=column_data.get('data_type'),
+                        update_flag=column_data.get('update_flag'),
+                        physical_column_flag=column_data.get('physical_column_flag')
+                    )
+                else:
+                    raise self.InvalidColumnMetadataException(f'Column "{column_name}" is missing the required '
+                                                              f'physical_column_flag attribute')
                 if 'source' in column_data:
                     column_metadata.source = self.parse_column_source_components(column_data['source'])
                 table.add_column(column_metadata)
@@ -475,6 +482,9 @@ class DictToMetadataBuilder:
                 table=parsed_path_components[2]
             )
 
+    class InvalidColumnMetadataException(Exception):
+        pass
+
     class InvalidTableMetadataException(Exception):
         pass
 
@@ -631,14 +641,13 @@ class MetadataWriter:
     def column_metadata_to_dict(self, column_metadata: ColumnMetadata) -> dict:
         """Convert a ColumnMetadata object to a dict in preparation for writing it to YAML."""
         column_dict = {
-            'data_type': column_metadata.data_type
+            'data_type': column_metadata.data_type,
+            'physical_column_flag': column_metadata.physical_column_flag
         }
         if column_metadata.source is not None:
             column_dict['source'] = self.column_source_metadata_to_source_dict(column_metadata.source)
         if column_metadata.update_flag is not None:
-            column_dict['update_flag'] = {
-                'update_flag': column_metadata.update_flag
-            }
+            column_dict['update_flag'] = column_metadata.update_flag
         return column_dict
 
     @staticmethod

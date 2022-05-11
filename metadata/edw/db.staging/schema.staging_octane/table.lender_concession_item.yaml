@@ -21,13 +21,19 @@ foreign_keys:
 columns:
   lci_absorb_cost:
     data_type: BOOLEAN
+    physical_column_flag: true
   lci_allocation_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lci_lender_concession_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lci_loan_charge_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lci_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lci_version:
     data_type: INTEGER
+    physical_column_flag: true

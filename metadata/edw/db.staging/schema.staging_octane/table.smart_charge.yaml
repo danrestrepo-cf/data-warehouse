@@ -45,17 +45,25 @@ foreign_keys:
 columns:
   sc_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sc_apr_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sc_charge_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sc_loan_position_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sc_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sc_smart_charge_apr_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sc_version:
     data_type: INTEGER
+    physical_column_flag: true

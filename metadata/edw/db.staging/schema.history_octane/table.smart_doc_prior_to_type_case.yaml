@@ -47,44 +47,56 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   sdpttc_active:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdpttc_active
   sdpttc_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdpttc_criteria_pid
   sdpttc_deal_child_relationship_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdpttc_deal_child_relationship_type
   sdpttc_deal_child_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdpttc_deal_child_type
   sdpttc_ordinal:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdpttc_ordinal
   sdpttc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdpttc_pid
   sdpttc_prior_to_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdpttc_prior_to_type
   sdpttc_smart_doc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdpttc_smart_doc_pid
   sdpttc_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.sdpttc_version
 step_functions:

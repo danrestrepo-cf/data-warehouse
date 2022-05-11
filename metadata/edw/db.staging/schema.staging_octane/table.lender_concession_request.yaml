@@ -61,41 +61,61 @@ foreign_keys:
 columns:
   lcr_approved_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lcr_approved_reason:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lcr_approver_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lcr_approver_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lcr_corporate_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lcr_decision_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   lcr_decision_explanation:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   lcr_lender_concession_request_number:
     data_type: INTEGER
+    physical_column_flag: true
   lcr_lender_concession_request_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lcr_lender_lock_major_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lcr_loan_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lcr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lcr_requested_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lcr_requested_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   lcr_requested_reason:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lcr_requested_reason_explanation:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   lcr_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lcr_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lcr_unallocated_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   lcr_version:
     data_type: INTEGER
+    physical_column_flag: true

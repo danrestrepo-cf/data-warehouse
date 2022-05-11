@@ -53,39 +53,58 @@ foreign_keys:
 columns:
   lle_auto_confirmed:
     data_type: BOOLEAN
+    physical_column_flag: true
   lle_confirm_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   lle_confirm_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lle_confirm_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lle_creator_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lle_creator_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lle_extension_days:
     data_type: INTEGER
+    physical_column_flag: true
   lle_fee_applicable:
     data_type: BOOLEAN
+    physical_column_flag: true
   lle_lender_lock_major_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lle_lock_extension_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lle_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lle_price_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   lle_reject_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   lle_reject_explanation:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   lle_reject_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lle_requested_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   lle_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lle_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lle_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -15,76 +15,96 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   phc_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_address_city
   phc_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_address_postal_code
   phc_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_address_state
   phc_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_address_street1
   phc_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_address_street2
   phc_company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_company_name
   phc_consultant_id:
     data_type: VARCHAR(8)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_consultant_id
   phc_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_email
   phc_fax:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_fax
   phc_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_first_name
   phc_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_last_name
   phc_mobile_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_mobile_phone
   phc_office_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_office_phone
   phc_office_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_office_phone_extension
   phc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_pid
   phc_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_proposal_pid
   phc_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.phc_version
 step_functions:

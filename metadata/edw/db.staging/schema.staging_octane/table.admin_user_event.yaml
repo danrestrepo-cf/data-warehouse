@@ -13,17 +13,25 @@ foreign_keys:
 columns:
   aue_admin_user_event_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   aue_client_agent:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   aue_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   aue_detail:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   aue_ip_address:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   aue_pid:
     data_type: BIGINT
+    physical_column_flag: true
   aue_source_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   aue_version:
     data_type: INTEGER
+    physical_column_flag: true

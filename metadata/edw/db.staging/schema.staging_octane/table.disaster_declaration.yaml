@@ -29,17 +29,25 @@ foreign_keys:
 columns:
   dd_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dd_county_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dd_declared_disaster_date:
     data_type: DATE
+    physical_column_flag: true
   dd_fema_incident_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   dd_last_processed_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dd_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dd_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dd_version:
     data_type: INTEGER
+    physical_column_flag: true

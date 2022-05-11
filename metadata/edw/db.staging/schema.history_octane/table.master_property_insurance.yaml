@@ -47,136 +47,171 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   mpi_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_address_city
   mpi_address_country:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_address_country
   mpi_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_address_postal_code
   mpi_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_address_state
   mpi_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_address_street1
   mpi_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_address_street2
   mpi_agreed_amount_endorsement:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_agreed_amount_endorsement
   mpi_coinsurance:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_coinsurance
   mpi_company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_company_name
   mpi_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_email
   mpi_fax:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_fax
   mpi_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_first_name
   mpi_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_last_name
   mpi_master_property_insurance_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_master_property_insurance_type
   mpi_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_middle_name
   mpi_mobile_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_mobile_phone
   mpi_name_suffix:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_name_suffix
   mpi_next_payment_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_next_payment_date
   mpi_office_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_office_phone
   mpi_office_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_office_phone_extension
   mpi_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_pid
   mpi_policy_deductible_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_policy_deductible_amount
   mpi_policy_effective_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_policy_effective_date
   mpi_policy_expiration_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_policy_expiration_date
   mpi_policy_fidelity_coverage_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_policy_fidelity_coverage_amount
   mpi_policy_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_policy_id
   mpi_policy_liability_coverage_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_policy_liability_coverage_amount
   mpi_policy_property_coverage_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_policy_property_coverage_amount
   mpi_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_proposal_pid
   mpi_replacement_cost_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_replacement_cost_amount
   mpi_title:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_title
   mpi_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.mpi_version
 step_functions:

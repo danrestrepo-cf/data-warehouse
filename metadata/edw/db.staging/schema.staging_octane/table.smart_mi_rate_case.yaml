@@ -21,29 +21,43 @@ foreign_keys:
 columns:
   smrc_amount_description:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   smrc_coverage_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   smrc_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
   smrc_else_case:
     data_type: BOOLEAN
+    physical_column_flag: true
   smrc_initial_duration_months:
     data_type: INTEGER
+    physical_column_flag: true
   smrc_initial_monthly_payment_annual_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   smrc_ltv_cutoff_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   smrc_midpoint_cutoff_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   smrc_ordinal:
     data_type: INTEGER
+    physical_column_flag: true
   smrc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   smrc_required_monthly_payment_count:
     data_type: INTEGER
+    physical_column_flag: true
   smrc_smart_mi_rate_card_pid:
     data_type: BIGINT
+    physical_column_flag: true
   smrc_upfront_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   smrc_version:
     data_type: INTEGER
+    physical_column_flag: true

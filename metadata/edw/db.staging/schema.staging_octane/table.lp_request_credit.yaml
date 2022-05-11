@@ -45,23 +45,34 @@ foreign_keys:
 columns:
   lprc_aus_credit_service_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lprc_borrower_1_borrower_tiny_id_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lprc_borrower_2_borrower_tiny_id_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lprc_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   lprc_credit_bureau_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lprc_credit_report_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   lprc_credit_report_identifier:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   lprc_credit_report_name:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   lprc_lp_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lprc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lprc_version:
     data_type: INTEGER
+    physical_column_flag: true

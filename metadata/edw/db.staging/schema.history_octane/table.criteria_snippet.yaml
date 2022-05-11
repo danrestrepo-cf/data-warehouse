@@ -31,82 +31,103 @@ foreign_keys:
 columns:
   crs_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_account_pid
   crs_compatible_with_investor_eligibility:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_compatible_with_investor_eligibility
   crs_compatible_with_smart_charge_apr:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_compatible_with_smart_charge_apr
   crs_compatible_with_smart_charge_case:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_compatible_with_smart_charge_case
   crs_compatible_with_smart_doc:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_compatible_with_smart_doc
   crs_compatible_with_smart_doc_prior_to_type_case:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_compatible_with_smart_doc_prior_to_type_case
   crs_compatible_with_smart_doc_validity_date_case:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_compatible_with_smart_doc_validity_date_case
   crs_compatible_with_smart_req:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_compatible_with_smart_req
   crs_compatible_with_stack_separator:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_compatible_with_stack_separator
   crs_compatible_with_wf_outcome:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_compatible_with_wf_outcome
   crs_compatible_with_wf_smart_process:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_compatible_with_wf_smart_process
   crs_compatible_with_wf_smart_task:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_compatible_with_wf_smart_task
   crs_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_criteria_pid
   crs_deal_child_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_deal_child_type
   crs_description:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_description
   crs_name:
     data_type: VARCHAR(35)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_name
   crs_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_pid
   crs_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.crs_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100026:
     etls:

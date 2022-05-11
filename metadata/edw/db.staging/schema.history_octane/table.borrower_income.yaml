@@ -47,98 +47,123 @@ foreign_keys:
 columns:
   bi_borrower_income_category_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_borrower_income_category_type
   bi_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_borrower_pid
   bi_business_ownership_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_business_ownership_type
   bi_current:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_current
   bi_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_from_date
   bi_job_gap_reason_explanation:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_job_gap_reason_explanation
   bi_job_gap_reason_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_job_gap_reason_type
   bi_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_pid
   bi_primary:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_primary
   bi_snapshotted_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_snapshotted_pid
   bi_source_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_source_address_city
   bi_source_address_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_source_address_country
   bi_source_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_source_address_postal_code
   bi_source_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_source_address_state
   bi_source_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_source_address_street1
   bi_source_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_source_address_street2
   bi_source_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_source_name
   bi_source_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_source_phone
   bi_source_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_source_phone_extension
   bi_synthetic_unique:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_synthetic_unique
   bi_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_through_date
   bi_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bi_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100133:
     etls:

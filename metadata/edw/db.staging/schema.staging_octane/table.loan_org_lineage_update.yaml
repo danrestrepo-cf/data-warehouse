@@ -13,13 +13,19 @@ foreign_keys:
 columns:
   lolu_latest_exception_message:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   lolu_loan_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lolu_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lolu_scheduled_date:
     data_type: DATE
+    physical_column_flag: true
   lolu_try_count:
     data_type: INTEGER
+    physical_column_flag: true
   lolu_version:
     data_type: INTEGER
+    physical_column_flag: true

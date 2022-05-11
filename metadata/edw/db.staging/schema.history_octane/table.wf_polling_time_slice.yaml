@@ -6,28 +6,36 @@ primary_key:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   wts_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wts_pid
   wts_time_slice:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wts_time_slice
   wts_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wts_version
   wts_when_complete:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wts_when_complete
   wts_when_fired:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.wts_when_fired
 step_functions:

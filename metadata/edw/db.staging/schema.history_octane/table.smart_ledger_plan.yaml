@@ -23,32 +23,41 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   slp_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slp_account_pid
   slp_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slp_org_node_pid
   slp_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slp_pid
   slp_plan_id:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slp_plan_id
   slp_plan_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slp_plan_name
   slp_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.slp_version
 step_functions:

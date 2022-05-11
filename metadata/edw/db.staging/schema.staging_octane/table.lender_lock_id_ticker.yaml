@@ -13,9 +13,13 @@ foreign_keys:
 columns:
   lltk_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lltk_next_lender_lock_id:
     data_type: BIGINT
+    physical_column_flag: true
   lltk_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lltk_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -29,25 +29,37 @@ foreign_keys:
 columns:
   leis_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   leis_batch_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   leis_batch_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   leis_complete_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   leis_entry_count:
     data_type: INTEGER
+    physical_column_flag: true
   leis_failure_info:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   leis_ledger_entry_import_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   leis_pid:
     data_type: BIGINT
+    physical_column_flag: true
   leis_raw_header_row:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   leis_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   leis_submit_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   leis_version:
     data_type: INTEGER
+    physical_column_flag: true

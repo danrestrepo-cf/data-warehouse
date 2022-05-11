@@ -77,49 +77,73 @@ foreign_keys:
 columns:
   mivr_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   mivr_eligible_mi_products:
     data_type: BOOLEAN
+    physical_column_flag: true
   mivr_input_errors:
     data_type: TEXT
+    physical_column_flag: true
   mivr_internal_errors:
     data_type: TEXT
+    physical_column_flag: true
   mivr_mi_certificate_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mivr_mi_company_name_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mivr_mi_coverage_percentage:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   mivr_mi_initial_duration_months:
     data_type: INTEGER
+    physical_column_flag: true
   mivr_mi_initial_monthly_annual_percentage:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   mivr_mi_payer_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mivr_mi_payment_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mivr_mi_rate_quote_id:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mivr_mi_renewal_monthly_annual_percentage:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   mivr_mi_upfront_percentage:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   mivr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mivr_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mivr_request_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mivr_request_time_to_completion_ms:
     data_type: BIGINT
+    physical_column_flag: true
   mivr_request_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   mivr_request_xml_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mivr_response_pdf_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mivr_response_xml_pid:
     data_type: BIGINT
+    physical_column_flag: true
   mivr_service_errors:
     data_type: TEXT
+    physical_column_flag: true
   mivr_version:
     data_type: INTEGER
+    physical_column_flag: true

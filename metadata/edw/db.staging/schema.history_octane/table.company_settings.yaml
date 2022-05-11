@@ -55,102 +55,128 @@ foreign_keys:
 columns:
   cs_company_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_company_pid
   cs_equifax_mortgage_services_internal_account_id:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_equifax_mortgage_services_internal_account_id
   cs_factual_data_internal_account_id:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_factual_data_internal_account_id
   cs_fha_home_office_location_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_fha_home_office_location_pid
   cs_fha_lender_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_fha_lender_id
   cs_fha_non_supervised_mortgagee:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_fha_non_supervised_mortgagee
   cs_fha_origination_sponsored:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_fha_origination_sponsored
   cs_fha_settings_present:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_fha_settings_present
   cs_fha_sponsor_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_fha_sponsor_address_city
   cs_fha_sponsor_address_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_fha_sponsor_address_country
   cs_fha_sponsor_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_fha_sponsor_address_postal_code
   cs_fha_sponsor_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_fha_sponsor_address_state
   cs_fha_sponsor_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_fha_sponsor_address_street1
   cs_fha_sponsor_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_fha_sponsor_address_street2
   cs_fha_sponsor_company_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_fha_sponsor_company_name
   cs_fha_sponsor_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_fha_sponsor_id
   cs_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_pid
   cs_sharper_lending_internal_account_id:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_sharper_lending_internal_account_id
   cs_usda_lender_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_usda_lender_id
   cs_usda_settings_present:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_usda_settings_present
   cs_va_lender_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_va_lender_id
   cs_va_settings_present:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_va_settings_present
   cs_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cs_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100884:
     etls:

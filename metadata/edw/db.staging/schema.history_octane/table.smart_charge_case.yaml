@@ -47,92 +47,116 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   scc_amount_description:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_amount_description
   scc_base_amount:
     data_type: NUMERIC(16,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_base_amount
   scc_case_label:
     data_type: VARCHAR(108)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_case_label
   scc_case_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_case_name
   scc_charge_input_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_charge_input_type
   scc_charge_input_type_currency:
     data_type: NUMERIC(16,3)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_charge_input_type_currency
   scc_charge_input_type_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_charge_input_type_percent
   scc_charge_payee_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_charge_payee_type
   scc_charge_payer_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_charge_payer_type
   scc_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_criteria_pid
   scc_financed:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_financed
   scc_financed_auto_compute:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_financed_auto_compute
   scc_ordinal:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_ordinal
   scc_paid_by:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_paid_by
   scc_paid_to:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_paid_to
   scc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_pid
   scc_poc:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_poc
   scc_reduction_amount:
     data_type: NUMERIC(15,0)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_reduction_amount
   scc_smart_charge_group_case_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_smart_charge_group_case_pid
   scc_subtract_lenders_title_insurance_amount:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_subtract_lenders_title_insurance_amount
   scc_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.scc_version
 step_functions:

@@ -15,40 +15,51 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   iles_auto_confirm:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.iles_auto_confirm
   iles_extension_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.iles_extension_days
   iles_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.iles_from_date
   iles_investor_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.iles_investor_pid
   iles_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.iles_pid
   iles_price_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.iles_price_adjustment_percent
   iles_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.iles_through_date
   iles_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.iles_version
 step_functions:

@@ -31,48 +31,61 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   medr_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.medr_account_pid
   medr_consolidated_report_text_repository_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.medr_consolidated_report_text_repository_file_pid
   medr_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.medr_create_datetime
   medr_import_attempt_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.medr_import_attempt_count
   medr_import_status_messages:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.medr_import_status_messages
   medr_import_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.medr_import_status_type
   medr_imported_loan_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.medr_imported_loan_count
   medr_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.medr_pid
   medr_report_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.medr_report_date
   medr_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.medr_version
 step_functions:

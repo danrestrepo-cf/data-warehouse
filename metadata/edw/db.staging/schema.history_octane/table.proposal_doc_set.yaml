@@ -119,128 +119,161 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   prpds_affects_earliest_allowed_consummation_date:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_affects_earliest_allowed_consummation_date
   prpds_canceled_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_canceled_datetime
   prpds_canceled_reason:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_canceled_reason
   prpds_canceled_reason_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_canceled_reason_type
   prpds_canceler_agent_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_canceler_agent_type
   prpds_canceler_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_canceler_lender_user_pid
   prpds_canceler_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_canceler_unparsed_name
   prpds_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_create_datetime
   prpds_creator_agent_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_creator_agent_type
   prpds_creator_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_creator_lender_user_pid
   prpds_creator_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_creator_unparsed_name
   prpds_delivered_or_mailed_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_delivered_or_mailed_datetime
   prpds_delivery_method_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_delivery_method_type
   prpds_doc_package_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_doc_package_status_type
   prpds_docs_last_updated_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_docs_last_updated_datetime
   prpds_docusign_package_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_docusign_package_pid
   prpds_esign_evidence_deal_file_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_esign_evidence_deal_file_pid
   prpds_esign_vendor_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_esign_vendor_type
   prpds_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_name
   prpds_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_pid
   prpds_proposal_doc_set_id:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_proposal_doc_set_id
   prpds_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_proposal_pid
   prpds_requested_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_requested_datetime
   prpds_requester_agent_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_requester_agent_type
   prpds_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_requester_lender_user_pid
   prpds_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_requester_unparsed_name
   prpds_signed_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_signed_date
   prpds_smart_doc_set_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_smart_doc_set_pid
   prpds_tracking_number:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_tracking_number
   prpds_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpds_version
 step_functions:

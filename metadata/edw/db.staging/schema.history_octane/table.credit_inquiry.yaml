@@ -63,102 +63,128 @@ foreign_keys:
 columns:
   ci_address_city:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_address_city
   ci_address_country:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_address_country
   ci_address_postal_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_address_postal_code
   ci_address_state:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_address_state
   ci_address_street1:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_address_street1
   ci_address_street2:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_address_street2
   ci_credit_business_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_credit_business_type
   ci_credit_inquiry_result_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_credit_inquiry_result_type
   ci_credit_loan_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_credit_loan_type
   ci_credit_report_identifier:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_credit_report_identifier
   ci_credit_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_credit_request_pid
   ci_equifax_included:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_equifax_included
   ci_experian_included:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_experian_included
   ci_explanation_info:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_explanation_info
   ci_explanation_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_explanation_type
   ci_inquiry_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_inquiry_date
   ci_inquiry_date_provided:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_inquiry_date_provided
   ci_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_name
   ci_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_phone
   ci_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_pid
   ci_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_proposal_pid
   ci_trans_union_included:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_trans_union_included
   ci_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.ci_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100138:
     etls:

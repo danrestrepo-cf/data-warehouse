@@ -29,11 +29,16 @@ foreign_keys:
 columns:
   sdc_criteria_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sdc_deal_child_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sdc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sdc_smart_doc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sdc_version:
     data_type: INTEGER
+    physical_column_flag: true

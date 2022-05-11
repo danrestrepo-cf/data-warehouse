@@ -23,32 +23,41 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   lsr_loan_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lsr_loan_pid
   lsr_org_lineage_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lsr_org_lineage_pid
   lsr_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lsr_pid
   lsr_series_id:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lsr_series_id
   lsr_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lsr_version
   lsr_vintage_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lsr_vintage_date
 step_functions:

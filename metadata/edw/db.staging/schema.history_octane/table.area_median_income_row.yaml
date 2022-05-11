@@ -31,38 +31,48 @@ foreign_keys:
 columns:
   amir_area_median_income:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.amir_area_median_income
   amir_area_median_income_table_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.amir_area_median_income_table_pid
   amir_census_tract:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.amir_census_tract
   amir_county_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.amir_county_pid
   amir_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.amir_pid
   amir_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.amir_state_type
   amir_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.amir_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100059:
     etls:

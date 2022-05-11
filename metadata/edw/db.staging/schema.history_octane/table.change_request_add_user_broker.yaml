@@ -31,74 +31,93 @@ foreign_keys:
 columns:
   chraub_branch_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_branch_pid
   chraub_change_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_change_request_pid
   chraub_email:
     data_type: VARCHAR(256)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_email
   chraub_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_first_name
   chraub_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_last_name
   chraub_lead_source_tier:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_lead_source_tier
   chraub_middle_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_middle_name
   chraub_nmls_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_nmls_id
   chraub_parent_org_node_id:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_parent_org_node_id
   chraub_performer_team_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_performer_team_pid
   chraub_phone:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_phone
   chraub_phone_extension:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_phone_extension
   chraub_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_pid
   chraub_suffix:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_suffix
   chraub_title:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_title
   chraub_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.chraub_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100910:
     etls:

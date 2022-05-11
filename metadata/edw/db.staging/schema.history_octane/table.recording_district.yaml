@@ -15,28 +15,36 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   rdi_district_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rdi_district_name
   rdi_district_name_with_qualifier:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rdi_district_name_with_qualifier
   rdi_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rdi_pid
   rdi_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rdi_state_type
   rdi_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.rdi_version
 step_functions:

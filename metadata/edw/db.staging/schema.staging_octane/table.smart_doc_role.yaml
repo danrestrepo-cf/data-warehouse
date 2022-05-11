@@ -29,11 +29,16 @@ foreign_keys:
 columns:
   sdr_doc_permission_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   sdr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sdr_role_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sdr_smart_doc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   sdr_version:
     data_type: INTEGER
+    physical_column_flag: true

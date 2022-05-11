@@ -6,28 +6,36 @@ primary_key:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   zci_latitude:
     data_type: NUMERIC(9,6)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.zci_latitude
   zci_longitude:
     data_type: NUMERIC(9,6)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.zci_longitude
   zci_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.zci_pid
   zci_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.zci_version
   zci_zip_code:
     data_type: VARCHAR(5)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.zci_zip_code
 step_functions:

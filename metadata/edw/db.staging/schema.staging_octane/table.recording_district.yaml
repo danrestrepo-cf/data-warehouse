@@ -13,11 +13,16 @@ foreign_keys:
 columns:
   rdi_district_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rdi_district_name_with_qualifier:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rdi_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rdi_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rdi_version:
     data_type: INTEGER
+    physical_column_flag: true

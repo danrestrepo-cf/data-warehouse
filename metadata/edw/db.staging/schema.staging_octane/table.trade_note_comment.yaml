@@ -21,15 +21,22 @@ foreign_keys:
 columns:
   tnc_author_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   tnc_author_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   tnc_content:
     data_type: VARCHAR(16000)
+    physical_column_flag: true
   tnc_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   tnc_pid:
     data_type: BIGINT
+    physical_column_flag: true
   tnc_trade_note_pid:
     data_type: BIGINT
+    physical_column_flag: true
   tnc_version:
     data_type: INTEGER
+    physical_column_flag: true

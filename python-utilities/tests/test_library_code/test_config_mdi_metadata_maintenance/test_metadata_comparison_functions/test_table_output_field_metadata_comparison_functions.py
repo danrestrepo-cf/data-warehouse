@@ -43,18 +43,25 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
                                         'columns': {
                                             't1_col1': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.t1_col1_src'
                                                 }
                                             },
                                             't1_col2': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.t1_col2_src'
                                                 }
                                             },
                                             't1_col3': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True,
+                                            },
+                                            't1_col4': {
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': False,
                                             }
                                         },
                                         'step_functions': {
@@ -75,6 +82,7 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
                                         'columns': {
                                             't2_col1': {
                                                 'data_type': 'TEXT',
+                                                'physical_column_flag': True,
                                                 'source': {
                                                     'field': 'primary_source_table.columns.t2_col1_src'
                                                 }
@@ -124,13 +132,20 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
                                         'primary_source_table': 'staging.staging_octane.table1',
                                         'columns': {
                                             'data_source_updated_datetime': {
-                                                'data_type': 'TIMESTAMPTZ'
+                                                'data_type': 'TIMESTAMPTZ',
+                                                'physical_column_flag': True,
                                             },
                                             'data_source_deleted_flag': {
-                                                'data_type': 'BOOLEAN'
+                                                'data_type': 'BOOLEAN',
+                                                'physical_column_flag': True,
                                             },
                                             'etl_batch_id': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': True,
+                                            },
+                                            'non_physical_column': {
+                                                'data_type': 'TEXT',
+                                                'physical_column_flag': False,
                                             }
                                         },
                                         'step_functions': {

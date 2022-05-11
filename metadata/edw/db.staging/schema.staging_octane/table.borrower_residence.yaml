@@ -29,19 +29,28 @@ foreign_keys:
 columns:
   bres_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bres_borrower_residency_basis_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   bres_current:
     data_type: BOOLEAN
+    physical_column_flag: true
   bres_from_date:
     data_type: DATE
+    physical_column_flag: true
   bres_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bres_place_pid:
     data_type: BIGINT
+    physical_column_flag: true
   bres_through_date:
     data_type: DATE
+    physical_column_flag: true
   bres_verification_required:
     data_type: BOOLEAN
+    physical_column_flag: true
   bres_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -13,11 +13,16 @@ foreign_keys:
 columns:
   prpe_borrower_engagement_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   prpe_lender_engagement_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   prpe_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpe_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   prpe_version:
     data_type: INTEGER
+    physical_column_flag: true

@@ -23,34 +23,43 @@ foreign_keys:
 columns:
   brlc_branch_license_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.brlc_branch_license_pid
   brlc_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.brlc_from_date
   brlc_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.brlc_lender_user_pid
   brlc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.brlc_pid
   brlc_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.brlc_through_date
   brlc_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.brlc_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100883:
     etls:

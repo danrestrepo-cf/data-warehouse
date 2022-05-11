@@ -47,64 +47,81 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   p_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_account_pid
   p_description:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_description
   p_fnm_product_name:
     data_type: VARCHAR(15)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_fnm_product_name
   p_from_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_from_date
   p_fund_source_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_fund_source_type
   p_investor_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_investor_pid
   p_investor_product_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_investor_product_id
   p_investor_product_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_investor_product_name
   p_lock_auto_confirm:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_lock_auto_confirm
   p_parent_product_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_parent_product_pid
   p_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_pid
   p_product_side_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_product_side_type
   p_through_date:
     data_type: DATE
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_through_date
   p_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.p_version
 step_functions:

@@ -29,19 +29,28 @@ foreign_keys:
 columns:
   luml_from_date:
     data_type: DATE
+    physical_column_flag: true
   luml_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   luml_license_number:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   luml_license_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   luml_note:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   luml_pid:
     data_type: BIGINT
+    physical_column_flag: true
   luml_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   luml_through_date:
     data_type: DATE
+    physical_column_flag: true
   luml_version:
     data_type: INTEGER
+    physical_column_flag: true

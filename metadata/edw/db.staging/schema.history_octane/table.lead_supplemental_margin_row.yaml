@@ -15,32 +15,41 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   lsmr_branch_supplemental_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lsmr_branch_supplemental_margin_percent
   lsmr_company_supplemental_margin_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lsmr_company_supplemental_margin_percent
   lsmr_lead_supplemental_margin_table_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lsmr_lead_supplemental_margin_table_pid
   lsmr_over_anchor_rate_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lsmr_over_anchor_rate_percent
   lsmr_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lsmr_pid
   lsmr_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lsmr_version
 step_functions:

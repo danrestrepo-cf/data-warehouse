@@ -45,27 +45,40 @@ foreign_keys:
 columns:
   lbk_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lbk_closed_by_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lbk_closed_by_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lbk_ledger_book_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   lbk_ledger_book_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lbk_ledger_book_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lbk_payroll_pay_date:
     data_type: DATE
+    physical_column_flag: true
   lbk_period_from_date:
     data_type: DATE
+    physical_column_flag: true
   lbk_period_through_date:
     data_type: DATE
+    physical_column_flag: true
   lbk_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lbk_processed_by_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
   lbk_processed_by_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   lbk_version:
     data_type: INTEGER
+    physical_column_flag: true

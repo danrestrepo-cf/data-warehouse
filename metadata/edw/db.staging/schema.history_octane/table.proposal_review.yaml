@@ -71,76 +71,96 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   prpre_completed_proposal_snapshot_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_completed_proposal_snapshot_pid
   prpre_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_create_datetime
   prpre_decision_by_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_decision_by_lender_user_pid
   prpre_decision_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_decision_datetime
   prpre_decision_summary:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_decision_summary
   prpre_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_pid
   prpre_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_proposal_pid
   prpre_proposal_review_request_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_proposal_review_request_type
   prpre_proposal_review_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_proposal_review_status_type
   prpre_request_by_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_request_by_lender_user_pid
   prpre_request_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_request_datetime
   prpre_request_id:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_request_id
   prpre_request_summary:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_request_summary
   prpre_requested_proposal_snapshot_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_requested_proposal_snapshot_pid
   prpre_scenario_proposal_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_scenario_proposal_name
   prpre_scenario_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_scenario_proposal_pid
   prpre_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.prpre_version
 step_functions:

@@ -21,13 +21,19 @@ foreign_keys:
 columns:
   rsp_lock_commitment_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rsp_lock_duration_days:
     data_type: INTEGER
+    physical_column_flag: true
   rsp_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rsp_price_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   rsp_rate_sheet_rate_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rsp_version:
     data_type: INTEGER
+    physical_column_flag: true

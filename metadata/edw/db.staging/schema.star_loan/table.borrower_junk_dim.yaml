@@ -5,75 +5,93 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
     update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
     update_flag: true
   citizenship_residency:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_citizenship_residency_type.columns.value
     update_flag: true
   citizenship_residency_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_citizenship_residency_type
     update_flag: false
   disabled:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_disabled.columns.value
     update_flag: true
   disabled_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_disabled
     update_flag: false
   on_gsa_list:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_on_gsa_list.columns.value
     update_flag: true
   on_gsa_list_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_on_gsa_list
     update_flag: false
   on_ldp_list:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_on_ldp_list.columns.value
     update_flag: true
   on_ldp_list_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_on_ldp_list
     update_flag: false
   titleholder:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
     source:
       field: primary_source_table.foreign_keys.fkt_b_titleholder.columns.value
     update_flag: true
   titleholder_code:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.b_titleholder
     update_flag: false

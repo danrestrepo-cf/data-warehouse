@@ -21,21 +21,31 @@ foreign_keys:
 columns:
   di_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   di_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   di_description:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   di_internal_notes:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   di_invoice_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   di_invoice_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   di_pid:
     data_type: BIGINT
+    physical_column_flag: true
   di_refund_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   di_smart_invoice:
     data_type: BOOLEAN
+    physical_column_flag: true
   di_version:
     data_type: INTEGER
+    physical_column_flag: true

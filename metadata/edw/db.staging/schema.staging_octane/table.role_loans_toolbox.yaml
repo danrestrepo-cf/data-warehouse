@@ -21,9 +21,13 @@ foreign_keys:
 columns:
   rlot_loans_toolbox_permission_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   rlot_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rlot_role_pid:
     data_type: BIGINT
+    physical_column_flag: true
   rlot_version:
     data_type: INTEGER
+    physical_column_flag: true

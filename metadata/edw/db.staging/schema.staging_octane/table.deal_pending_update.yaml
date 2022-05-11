@@ -21,21 +21,31 @@ foreign_keys:
 columns:
   dpu_args_json:
     data_type: TEXT
+    physical_column_flag: true
   dpu_completed_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dpu_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dpu_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dpu_deal_update_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dpu_last_attempt_end_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dpu_last_attempt_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
   dpu_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dpu_run_count:
     data_type: INTEGER
+    physical_column_flag: true
   dpu_version:
     data_type: INTEGER
+    physical_column_flag: true

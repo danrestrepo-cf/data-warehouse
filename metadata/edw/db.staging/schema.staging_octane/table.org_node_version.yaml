@@ -21,15 +21,22 @@ foreign_keys:
 columns:
   onv_from_date:
     data_type: DATE
+    physical_column_flag: true
   onv_org_node_name:
     data_type: VARCHAR(256)
+    physical_column_flag: true
   onv_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
   onv_parent_org_node_pid:
     data_type: BIGINT
+    physical_column_flag: true
   onv_pid:
     data_type: BIGINT
+    physical_column_flag: true
   onv_through_date:
     data_type: DATE
+    physical_column_flag: true
   onv_version:
     data_type: INTEGER
+    physical_column_flag: true

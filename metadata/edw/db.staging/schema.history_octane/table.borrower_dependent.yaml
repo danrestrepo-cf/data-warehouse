@@ -15,54 +15,68 @@ foreign_keys:
 columns:
   bd_age:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bd_age
   bd_borrower_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bd_borrower_pid
   bd_disabled:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bd_disabled
   bd_first_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bd_first_name
   bd_full_time_student:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bd_full_time_student
   bd_income_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bd_income_amount
   bd_income_source:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bd_income_source
   bd_last_name:
     data_type: VARCHAR(32)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bd_last_name
   bd_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bd_pid
   bd_receives_income:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bd_receives_income
   bd_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.bd_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100128:
     etls:

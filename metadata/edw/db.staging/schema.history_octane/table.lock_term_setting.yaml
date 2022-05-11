@@ -23,32 +23,41 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   lts_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lts_account_pid
   lts_borrower_app_enabled:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lts_borrower_app_enabled
   lts_lock_commitment_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lts_lock_commitment_type
   lts_lock_duration_days:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lts_lock_duration_days
   lts_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lts_pid
   lts_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.lts_version
 step_functions:

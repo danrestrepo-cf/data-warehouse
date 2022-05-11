@@ -7,26 +7,37 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    physical_column_flag: true
   data_source_dwid:
     data_type: BIGINT
+    physical_column_flag: true
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    physical_column_flag: true
   data_source_integration_id:
     data_type: TEXT
+    physical_column_flag: true
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   octane_username:
     data_type: TEXT
+    physical_column_flag: true
   loan_dwid:
     data_type: BIGINT
+    physical_column_flag: true
   account_pid:
     data_type: BIGINT
+    physical_column_flag: true
 step_functions:
   SP-200001-insert:
     etls:
@@ -145,9 +156,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_0.loan_dwid
@@ -215,9 +226,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_1.loan_dwid
@@ -285,9 +296,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_2.loan_dwid
@@ -355,9 +366,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_3.loan_dwid
@@ -425,9 +436,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_4.loan_dwid
@@ -495,9 +506,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_5.loan_dwid
@@ -565,9 +576,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_6.loan_dwid
@@ -635,9 +646,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_7.loan_dwid
@@ -705,9 +716,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_8.loan_dwid
@@ -775,9 +786,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_9.loan_dwid
@@ -845,9 +856,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_10.loan_dwid
@@ -915,9 +926,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_11.loan_dwid
@@ -985,9 +996,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_12.loan_dwid
@@ -1055,9 +1066,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_13.loan_dwid
@@ -1125,9 +1136,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_14.loan_dwid
@@ -1195,9 +1206,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_15.loan_dwid
@@ -1265,9 +1276,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_16.loan_dwid
@@ -1335,9 +1346,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_17.loan_dwid
@@ -1405,9 +1416,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_18.loan_dwid
@@ -1475,9 +1486,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_19.loan_dwid
@@ -1545,9 +1556,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_20.loan_dwid
@@ -1615,9 +1626,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_21.loan_dwid
@@ -1685,9 +1696,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_22.loan_dwid
@@ -1755,9 +1766,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_23.loan_dwid
@@ -1825,9 +1836,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_24.loan_dwid
@@ -1895,9 +1906,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_25.loan_dwid
@@ -1965,9 +1976,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_26.loan_dwid
@@ -2035,9 +2046,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_27.loan_dwid
@@ -2105,9 +2116,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_28.loan_dwid
@@ -2175,9 +2186,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_29.loan_dwid
@@ -2245,9 +2256,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_30.loan_dwid
@@ -2315,9 +2326,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_31.loan_dwid
@@ -2385,9 +2396,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_32.loan_dwid
@@ -2455,9 +2466,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_33.loan_dwid
@@ -2525,9 +2536,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_34.loan_dwid
@@ -2595,9 +2606,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_35.loan_dwid
@@ -2665,9 +2676,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_36.loan_dwid
@@ -2735,9 +2746,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_37.loan_dwid
@@ -2805,9 +2816,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_38.loan_dwid
@@ -2875,9 +2886,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_39.loan_dwid
@@ -2945,9 +2956,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_40.loan_dwid
@@ -3015,9 +3026,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_41.loan_dwid
@@ -3085,9 +3096,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_42.loan_dwid
@@ -3155,9 +3166,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_43.loan_dwid
@@ -3225,9 +3236,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_44.loan_dwid
@@ -3295,9 +3306,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_45.loan_dwid
@@ -3365,9 +3376,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_46.loan_dwid
@@ -3435,9 +3446,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_47.loan_dwid
@@ -3505,9 +3516,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_48.loan_dwid
@@ -3575,9 +3586,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_49.loan_dwid
@@ -3645,9 +3656,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_50.loan_dwid
@@ -3715,9 +3726,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_51.loan_dwid
@@ -3785,9 +3796,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_52.loan_dwid
@@ -3855,9 +3866,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_53.loan_dwid
@@ -3925,9 +3936,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_54.loan_dwid
@@ -3995,9 +4006,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_55.loan_dwid
@@ -4065,9 +4076,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_56.loan_dwid
@@ -4135,9 +4146,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_57.loan_dwid
@@ -4205,9 +4216,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_58.loan_dwid
@@ -4275,9 +4286,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_59.loan_dwid
@@ -4345,9 +4356,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_60.loan_dwid
@@ -4415,9 +4426,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_61.loan_dwid
@@ -4485,9 +4496,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_62.loan_dwid
@@ -4555,9 +4566,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_63.loan_dwid
@@ -4625,9 +4636,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_64.loan_dwid
@@ -4695,9 +4706,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_65.loan_dwid
@@ -4765,9 +4776,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_66.loan_dwid
@@ -4835,9 +4846,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_67.loan_dwid
@@ -4905,9 +4916,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_68.loan_dwid
@@ -4975,9 +4986,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_69.loan_dwid
@@ -5045,9 +5056,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_70.loan_dwid
@@ -5115,9 +5126,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_71.loan_dwid
@@ -5185,9 +5196,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_72.loan_dwid
@@ -5255,9 +5266,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_73.loan_dwid
@@ -5325,9 +5336,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_74.loan_dwid
@@ -5395,9 +5406,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_75.loan_dwid
@@ -5465,9 +5476,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_76.loan_dwid
@@ -5535,9 +5546,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_77.loan_dwid
@@ -5605,9 +5616,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_78.loan_dwid
@@ -5675,9 +5686,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_79.loan_dwid
@@ -5745,9 +5756,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_80.loan_dwid
@@ -5815,9 +5826,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_81.loan_dwid
@@ -5885,9 +5896,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_82.loan_dwid
@@ -5955,9 +5966,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_83.loan_dwid
@@ -6025,9 +6036,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_84.loan_dwid
@@ -6095,9 +6106,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_85.loan_dwid
@@ -6165,9 +6176,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_86.loan_dwid
@@ -6235,9 +6246,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_87.loan_dwid
@@ -6305,9 +6316,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_88.loan_dwid
@@ -6375,9 +6386,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_89.loan_dwid
@@ -6445,9 +6456,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_90.loan_dwid
@@ -6515,9 +6526,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_91.loan_dwid
@@ -6585,9 +6596,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_92.loan_dwid
@@ -6655,9 +6666,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_93.loan_dwid
@@ -6725,9 +6736,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_94.loan_dwid
@@ -6795,9 +6806,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_95.loan_dwid
@@ -6865,9 +6876,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_96.loan_dwid
@@ -6935,9 +6946,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_97.loan_dwid
@@ -7005,9 +7016,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_98.loan_dwid
@@ -7075,9 +7086,9 @@ step_functions:
         hardcoded_data_source: Octane
         json_output_field: dwid
         delete_keys:
-          - octane_username
-          - loan_dwid
-          - account_pid
+        - octane_username
+        - loan_dwid
+        - account_pid
         container_memory: 2048
         input_sql: |-
           SELECT loan_lender_user_access_99.loan_dwid

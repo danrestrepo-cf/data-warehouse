@@ -21,15 +21,22 @@ foreign_keys:
 columns:
   pbr_branch_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pbr_from_date:
     data_type: DATE
+    physical_column_flag: true
   pbr_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pbr_price_adjustment_percent:
     data_type: NUMERIC(11,9)
+    physical_column_flag: true
   pbr_product_pid:
     data_type: BIGINT
+    physical_column_flag: true
   pbr_through_date:
     data_type: DATE
+    physical_column_flag: true
   pbr_version:
     data_type: INTEGER
+    physical_column_flag: true

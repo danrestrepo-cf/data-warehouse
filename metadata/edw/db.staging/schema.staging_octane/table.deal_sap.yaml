@@ -37,19 +37,28 @@ foreign_keys:
 columns:
   dsap_borrower_step_type:
     data_type: INTEGER
+    physical_column_flag: true
   dsap_credit_pull_attempts:
     data_type: INTEGER
+    physical_column_flag: true
   dsap_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dsap_last_sap_deal_step_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dsap_last_sap_step_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dsap_pid:
     data_type: BIGINT
+    physical_column_flag: true
   dsap_retry_credit_pull:
     data_type: BOOLEAN
+    physical_column_flag: true
   dsap_sap_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   dsap_version:
     data_type: INTEGER
+    physical_column_flag: true

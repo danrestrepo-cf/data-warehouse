@@ -21,21 +21,31 @@ foreign_keys:
 columns:
   of_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
   of_adverse_action_offering:
     data_type: BOOLEAN
+    physical_column_flag: true
   of_from_date:
     data_type: DATE
+    physical_column_flag: true
   of_mortech_product_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   of_offering_group_pid:
     data_type: BIGINT
+    physical_column_flag: true
   of_offering_id:
     data_type: VARCHAR(32)
+    physical_column_flag: true
   of_offering_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   of_pid:
     data_type: BIGINT
+    physical_column_flag: true
   of_through_date:
     data_type: DATE
+    physical_column_flag: true
   of_version:
     data_type: INTEGER
+    physical_column_flag: true

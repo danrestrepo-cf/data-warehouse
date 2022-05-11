@@ -31,42 +31,53 @@ foreign_keys:
 columns:
   cdi_construction_cost_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cdi_construction_cost_pid
   cdi_construction_draw_item_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cdi_construction_draw_item_amount
   cdi_construction_draw_item_borrower_contribution_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cdi_construction_draw_item_borrower_contribution_amount
   cdi_construction_draw_item_lender_contribution_amount:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cdi_construction_draw_item_lender_contribution_amount
   cdi_construction_draw_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cdi_construction_draw_pid
   cdi_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cdi_pid
   cdi_proposal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cdi_proposal_pid
   cdi_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.cdi_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100162:
     etls:

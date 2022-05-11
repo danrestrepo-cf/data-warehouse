@@ -22,7 +22,7 @@ from lib.lura_information_schema_to_yaml.sql_queries import (get_octane_column_m
                                                              get_octane_foreign_key_metadata)
 from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging_octane_metadata,
                                                                    generate_history_octane_metadata,
-                                                                   add_deleted_tables_and_columns_to_history_octane_metadata)
+                                                                   restore_non_generated_objects_to_history_octane_metadata)
 
 
 def main():
@@ -51,7 +51,7 @@ def main():
         metadata_filterer = build_octane_metadata_filterer()
 
         # generate metadata
-        metadata = add_deleted_tables_and_columns_to_history_octane_metadata(
+        metadata = restore_non_generated_objects_to_history_octane_metadata(
             generate_history_octane_metadata(  # this generates what will be the new history_octane metadata from octane's metadata
                 metadata_filterer.filter(
                     build_staging_octane_metadata(

@@ -15,36 +15,46 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   tc_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tc_account_pid
   tc_active:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tc_active
   tc_admin_lock:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tc_admin_lock
   tc_company_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tc_company_name
   tc_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tc_pid
   tc_preferred_vendor:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tc_preferred_vendor
   tc_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.tc_version
 step_functions:

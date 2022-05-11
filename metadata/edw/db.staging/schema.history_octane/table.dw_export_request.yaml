@@ -31,58 +31,73 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   dwer_account_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dwer_account_pid
   dwer_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dwer_create_datetime
   dwer_end_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dwer_end_datetime
   dwer_export_id:
     data_type: VARCHAR(16)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dwer_export_id
   dwer_exported_deal_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dwer_exported_deal_count
   dwer_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dwer_pid
   dwer_request_status_messages:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dwer_request_status_messages
   dwer_request_status_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dwer_request_status_type
   dwer_requester_lender_user_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dwer_requester_lender_user_pid
   dwer_requester_unparsed_name:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dwer_requester_unparsed_name
   dwer_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dwer_start_datetime
   dwer_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dwer_version
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100094:
     etls:

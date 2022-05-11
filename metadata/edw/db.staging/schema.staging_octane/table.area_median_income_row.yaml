@@ -29,15 +29,22 @@ foreign_keys:
 columns:
   amir_area_median_income:
     data_type: NUMERIC(15,2)
+    physical_column_flag: true
   amir_area_median_income_table_pid:
     data_type: BIGINT
+    physical_column_flag: true
   amir_census_tract:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   amir_county_pid:
     data_type: BIGINT
+    physical_column_flag: true
   amir_pid:
     data_type: BIGINT
+    physical_column_flag: true
   amir_state_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
   amir_version:
     data_type: INTEGER
+    physical_column_flag: true

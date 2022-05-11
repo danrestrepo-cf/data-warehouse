@@ -23,50 +23,63 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   dpu_args_json:
     data_type: TEXT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dpu_args_json
   dpu_completed_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dpu_completed_datetime
   dpu_create_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dpu_create_datetime
   dpu_deal_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dpu_deal_pid
   dpu_deal_update_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dpu_deal_update_type
   dpu_last_attempt_end_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dpu_last_attempt_end_datetime
   dpu_last_attempt_start_datetime:
     data_type: TIMESTAMP
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dpu_last_attempt_start_datetime
   dpu_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dpu_pid
   dpu_run_count:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dpu_run_count
   dpu_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.dpu_version
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
 step_functions:
   SP-100897:
     etls:

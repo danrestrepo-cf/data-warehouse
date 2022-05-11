@@ -13,15 +13,22 @@ foreign_keys:
 columns:
   enstq_answer:
     data_type: VARCHAR(16)
+    physical_column_flag: true
   enstq_ernst_question_id:
     data_type: VARCHAR(8)
+    physical_column_flag: true
   enstq_ernst_request_pid:
     data_type: BIGINT
+    physical_column_flag: true
   enstq_pid:
     data_type: BIGINT
+    physical_column_flag: true
   enstq_question:
     data_type: VARCHAR(1024)
+    physical_column_flag: true
   enstq_version:
     data_type: INTEGER
+    physical_column_flag: true
   enstq_yes_no_answer:
     data_type: BOOLEAN
+    physical_column_flag: true

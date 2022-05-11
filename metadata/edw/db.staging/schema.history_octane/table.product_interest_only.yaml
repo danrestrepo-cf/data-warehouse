@@ -23,28 +23,36 @@ foreign_keys:
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
+    physical_column_flag: true
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
+    physical_column_flag: true
   etl_batch_id:
     data_type: TEXT
+    physical_column_flag: true
   pio_balloon_payment:
     data_type: BOOLEAN
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pio_balloon_payment
   pio_interest_only_type:
     data_type: VARCHAR(128)
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pio_interest_only_type
   pio_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pio_pid
   pio_product_terms_pid:
     data_type: BIGINT
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pio_product_terms_pid
   pio_version:
     data_type: INTEGER
+    physical_column_flag: true
     source:
       field: primary_source_table.columns.pio_version
 step_functions:
